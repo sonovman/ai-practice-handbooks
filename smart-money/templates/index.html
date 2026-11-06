@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>스마트 머니 차트 분석 템플릿</title>
+<link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+<div class="bar"><div class="bar-in">
+  <a class="brand" href="../../">AI 실무 핸드북</a>
+  <div class="links"><a href="../">← 본문으로</a></div>
+</div></div>
+<div class="wrap">
+  <div class="eyebrow">핸드북 14 · 자료</div>
+  <h1>템플릿 내려받기</h1>
+  <p class="lead">한 번에 받으려면 <a href="../downloads/smart-money-kit.zip" download>전체(ZIP)</a>, 스킬만 올리려면 <a href="../downloads/smart-money-chart-analyst.zip" download>스킬(ZIP)</a>. 시범 데이터는 실제 종목이 아닌 연습용 가상 데이터입니다.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>파일</th><th>내용</th></tr></thead>
+    <tbody>
+      <tr><th><a href="skill/smart-money-chart-analyst/SKILL.md" download>skill/…/SKILL.md</a></th><td>스킬 본문 — 입력 확인 · 사실 확보 · 3단 분석 · 점검표 · 조건부 시나리오</td></tr>
+      <tr><th><a href="skill/smart-money-chart-analyst/references/framework.md" download>references/framework.md</a></th><td>7가지 규칙 · 다우 3국면과 와이코프 4단계 · 핵심 요소 · 패턴 · 한국 주식에서 더 볼 것</td></tr>
+      <tr><th><a href="skill/smart-money-chart-analyst/references/output-template.md" download>references/output-template.md</a></th><td>출력 형식</td></tr>
+      <tr><th><a href="smc_tool.py" download>smc_tool.py</a></th><td><code>facts</code> 사실 추출 · <code>size</code> 수량·손익비 · <code>stats</code> 매매 기록 검증 — Python 3.8+, 추가 설치 없음 (스킬의 scripts/에도 같은 파일)</td></tr>
+      <tr><th><a href="test_smc_tool.py" download>test_smc_tool.py</a></th><td>도구 시험 13개</td></tr>
+      <tr><th><a href="journal-template.csv" download>journal-template.csv</a></th><td>매매 기록표 (엑셀에서 열기)</td></tr>
+      <tr><th><a href="data-guide.md" download>data-guide.md</a></th><td>차트 데이터(CSV) 준비하기 · 투자자별 매매동향 받는 곳</td></tr>
+      <tr><th><a href="platforms.md" download>platforms.md</a></th><td>Claude · ChatGPT · Gemini · Copilot 설치 안내</td></tr>
+      <tr><th><a href="sample/daily.csv" download>sample/daily.csv</a> · <a href="sample/hourly.csv" download>hourly.csv</a></th><td>가상종목A 일봉 140개 · 60분봉 120개 (가상 데이터)</td></tr>
+      <tr><th><a href="sample/chart-daily.svg">sample/chart-daily.svg</a></th><td>시범 차트</td></tr>
+      <tr><th><a href="sample/facts-daily.md">sample/facts-daily.md</a> · <a href="sample/facts-hourly.md">facts-hourly.md</a></th><td>facts 출력</td></tr>
+      <tr><th><a href="sample/report.md">sample/report.md</a></th><td>스킬의 시범 분석 보고서</td></tr>
+      <tr><th><a href="sample/journal-sample.csv" download>sample/journal-sample.csv</a> · <a href="sample/stats-output.md">stats-output.md</a></th><td>매매 기록 형식 예시(가상)와 stats 결과</td></tr>
+    </tbody>
+  </table></div>
+  <h2>빠른 시작</h2>
+  <div class="code"><div class="head"><span>터미널</span></div>
+<pre><code>python test_smc_tool.py
+python smc_tool.py facts sample/daily.csv --name 가상종목A --tf 일봉
+python smc_tool.py size --capital 10000000 --risk 1 --entry 12080 --stop 11860 --target 12940 --fee 0.2
+python smc_tool.py stats sample/journal-sample.csv</code></pre></div>
+  <footer>CC BY-NC 4.0 · 투자 권유가 아닙니다. 출처를 밝히면 비영리 목적으로 자유롭게 고쳐 쓸 수 있습니다.</footer>
+</div>
+</body>
+</html>

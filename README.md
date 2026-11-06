@@ -19,6 +19,7 @@
 | 11 | AI 합의 협의체 — 관점이 다른 에이전트의 토론과 합의 (4개 플랫폼) | [화면](https://sonovman.github.io/ai-practice-handbooks/council/) | [배포 키트](council/kit/) |
 | 12 | 정밀한 지시를 위한 AI 프롬프트 기호 사용법 | [화면](https://sonovman.github.io/ai-practice-handbooks/prompt-symbols/) | [템플릿](prompt-symbols/templates/) |
 | 13 | 지식 노트 6개와 Gemini 스킬 2개로 만드는 지속 가능한 AI 영상 제작 파이프라인 | [화면](https://sonovman.github.io/ai-practice-handbooks/video-pipeline/) | [템플릿](video-pipeline/templates/) |
+| 14 | 스마트 머니 관점으로 차트를 읽는 AI 스킬 | [화면](https://sonovman.github.io/ai-practice-handbooks/smart-money/) | [템플릿](smart-money/templates/) |
 
 ## 폴더 구성
 
@@ -43,6 +44,7 @@ ai-practice-handbooks/
 ├── council/            11편 (kit/ 4개 플랫폼 버전·위원·의장 에이전트·형식 점검기·실 사용 예제, downloads/ ZIP 2종)
 ├── prompt-symbols/     12편 (templates/ 업무 템플릿 4종·기호 약속표·점검 도구·A/B 시험표, downloads/ ZIP)
 ├── video-pipeline/     13편 (templates/ 노트북 요청문·스킬 2개·pipeline.py·도구 지도·실행 예, downloads/ ZIP)
+├── smart-money/        14편 (templates/ 스킬·smc_tool.py·가상 데이터 시범·매매 기록표·플랫폼 안내, downloads/ ZIP 2종)
 └── data/               공용 자료
 ```
 

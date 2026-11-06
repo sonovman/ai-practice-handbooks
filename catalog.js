@@ -243,8 +243,25 @@ window.CATALOG = [
     ]
   },
   {
-    id: "excel-analysis",
+    id: "smart-money",
     no: "14",
+    category: "투자",
+    title: "스마트 머니 관점으로 차트를 읽는 AI 스킬 — 시장의 큰 물결을 감지하기",
+    subtitle: "숫자는 데이터에서, 판단은 시나리오로, 실력은 기록으로",
+    summary: "차트를 넣으면 다우 이론·와이코프·SMC 관점에서 추세와 시장 단계, 큰 자금의 흔적(오더 블록·FVG·유동성 스윕·거래량)을 정리하고 무효 조건이 있는 조건부 매매 시나리오를 만듭니다. 사실 추출·수량 계산·매매 기록 검증 도구와 가상 데이터 시범을 함께 담았습니다. 투자 권유가 아닙니다.",
+    reader: "주식·코인 개인 투자자, 차트 분석을 공부하는 사람",
+    version: "1.0",
+    date: "2026-11-07",
+    length: "읽기 약 25분",
+    status: "published",
+    links: [
+      { label: "화면으로 읽기", href: "smart-money/", primary: true },
+      { label: "템플릿 내려받기", href: "smart-money/templates/" }
+    ]
+  },
+  {
+    id: "excel-analysis",
+    no: "15",
     category: "데이터",
     title: "엑셀 데이터를 AI로 분석하고 그래프까지 받기",
     subtitle: "준비 중",
