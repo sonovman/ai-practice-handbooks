@@ -107,8 +107,25 @@ window.CATALOG = [
     ]
   },
   {
-    id: "excel-analysis",
+    id: "claim-analyzer",
     no: "06",
+    category: "IP 실무",
+    title: "특허 구성특징 분석 도우미",
+    subtitle: "도면이 읽히는 청구항 분석 — Claude·ChatGPT·Gemini·Copilot 4개 버전",
+    summary: "급하게 청구항을 해석하고 FTO·침해 검토를 준비할 때, 독립항 구성요소와 공보 도면부호를 짝지어 도면이 바로 읽히게 하는 분석 스킬·에이전트입니다. 문헌 잠금·부호 점검·회피설계·중단 조건을 갖췄고, 4개 플랫폼 버전의 일치를 점검 스크립트로 확인했습니다.",
+    reader: "청구항 해석·FTO·침해 검토를 준비하는 IP 담당자, 변리사, 개발 엔지니어",
+    version: "1.0",
+    date: "2026-11-06",
+    length: "읽기 약 20분",
+    status: "published",
+    links: [
+      { label: "화면으로 읽기", href: "claim-analyzer/", primary: true },
+      { label: "배포 키트 받기", href: "claim-analyzer/kit/" }
+    ]
+  },
+  {
+    id: "excel-analysis",
+    no: "07",
     category: "데이터",
     title: "엑셀 데이터를 AI로 분석하고 그래프까지 받기",
     subtitle: "준비 중",

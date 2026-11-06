@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>구성특징 분석 키트</title>
+<link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+<div class="bar"><div class="bar-in">
+  <a class="brand" href="../../">AI 실무 핸드북</a>
+  <div class="links"><a href="../">← 본문으로</a></div>
+</div></div>
+<div class="wrap">
+  <div class="eyebrow">핸드북 06 · 배포 키트</div>
+  <h1>특허 구성특징 분석 도우미<br>4개 플랫폼 키트</h1>
+  <p class="lead">같은 분석 규칙을 Claude·ChatGPT·Gemini·Copilot에서 쓸 수 있게 만들었습니다. 쓰는 곳의 폴더만 보면 됩니다.</p>
+  <div class="btns">
+    <a class="btn primary" href="../downloads/claim-analyzer-kit.zip" download>키트 전체 받기 (ZIP)</a>
+    <a class="btn" href="../downloads/claim-design-around.zip" download>Claude 스킬만 받기</a>
+  </div>
+
+  <h3>플랫폼별 파일</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>플랫폼</th><th>파일</th><th>올리는 곳</th></tr></thead>
+    <tbody>
+      <tr><th>Claude</th><td><a href="claude/claim-design-around/SKILL.md">SKILL.md</a> · <a href="claude/claim-design-around/references/output-spec.md">output-spec.md</a> · <a href="claude/claim-design-around/references/design-around-types.md">design-around-types.md</a> · <a href="claude/claim-design-around/scripts/numeral_map.py">numeral_map.py</a> · <a href="claude/claim-design-around/assets/drawing-aid-template.html">drawing-aid-template.html</a><br><a href="claude/README.md">설치 안내</a></td><td>Customize → Skills (ZIP) 또는 .claude/skills/</td></tr>
+      <tr><th>ChatGPT</th><td><a href="chatgpt/skill-instructions.md">skill-instructions.md</a> + 공통 지식 3개<br><a href="chatgpt/README.md">설치 안내 · Plugin Creator 요청문</a></td><td>플러그인 → Plugin Creator</td></tr>
+      <tr><th>Gemini</th><td><a href="gemini/gem-instructions.md">gem-instructions.md</a> + 공통 지식 3개<br><a href="gemini/README.md">설치 안내</a></td><td>Gems 탐색하기 → 새 Gem</td></tr>
+      <tr><th>Copilot</th><td><a href="copilot/agent-instructions.md">agent-instructions.md</a> + 공통 지식 3개<br><a href="copilot/README.md">설치 안내 · 추천 프롬프트</a></td><td>Copilot Studio → Instructions · Knowledge</td></tr>
+      <tr><th>공통 지식</th><td><a href="knowledge/claim-rules.md">claim-rules.md</a> · <a href="knowledge/output-spec.md">output-spec.md</a> · <a href="knowledge/design-around-types.md">design-around-types.md</a></td><td>ChatGPT·Gemini·Copilot의 참조·지식 파일</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>시범 자료 (가상 공보, 실제 특허 아님)</h3>
+  <div class="tbl"><table>
+    <tbody>
+      <tr><th>입력</th><td><a href="sample/sample-patent.md">sample-patent.md</a> · <a href="sample/fig1.svg">fig1.svg (도 1)</a></td></tr>
+      <tr><th>부호 점검 결과</th><td><a href="sample/numeral-map-result.md">numeral-map-result.md</a></td></tr>
+      <tr><th>도면 읽기 보조자료</th><td><a href="sample/output/drawing-aid.html">drawing-aid.html</a> (구성요소 단추를 눌러 보세요)</td></tr>
+      <tr><th>분석 보고</th><td><a href="sample/output/analysis.md">analysis.md</a></td></tr>
+      <tr><th>버전 점검</th><td><a href="tools/check_versions.py">check_versions.py</a></td></tr>
+    </tbody>
+  </table></div>
+  <footer>CC BY-NC 4.0 · 원 설계: 작성자 원고 「특허 구성특징 분석 도우미」 · 결과는 분석 초안이며 법적 판단을 대신하지 않습니다.</footer>
+</div>
+</body>
+</html>

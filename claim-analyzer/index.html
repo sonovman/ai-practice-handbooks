@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>특허 구성특징 분석 도우미</title>
+<meta name="description" content="급하게 특허 청구항을 해석하고 FTO·침해 검토를 준비할 때, 공보 도면이 바로 읽히도록 독립항 구성요소와 도면부호를 대응시키는 분석 스킬·에이전트를 Claude·ChatGPT·Gemini·Copilot 네 가지 버전으로 설계하고 검증했습니다.">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<div class="bar"><div class="bar-in">
+  <a class="brand" href="../">AI 실무 핸드북</a>
+  <div class="links">
+    <a href="kit/">배포 키트</a>
+    <a href="https://github.com/sonovman/ai-practice-handbooks">GitHub ↗</a>
+  </div>
+</div></div>
+
+<div class="doc">
+  <aside class="side">
+    <div class="label">차례</div>
+    <ol>
+      <li><a href="#s0">한 줄 결론</a></li>
+      <li><a href="#s1">1. 언제 쓰나</a></li>
+      <li><a href="#s2">2. 설계의 뼈대</a></li>
+      <li><a href="#s3">3. 작동 흐름</a></li>
+      <li><a href="#s4">4. 도면 읽기 보조자료</a></li>
+      <li><a href="#s5">5. 4개 플랫폼 버전</a></li>
+      <li><a href="#s6">6. 시범 실행과 검증</a></li>
+      <li><a href="#s7">7. 쓸 때 주의</a></li>
+      <li><a href="#s8">부록 · 용어와 출처</a></li>
+    </ol>
+  </aside>
+
+<main>
+  <div class="eyebrow">핸드북 06 · IP 실무</div>
+  <h1>특허 구성특징 분석 도우미</h1>
+  <p class="lead">경고장을 받았거나 회의가 코앞인데 낯선 특허를 읽어야 할 때가 있습니다. 청구항을 구성요소로 나누고, 공보 도면의 부호와 하나씩 짝지어 도면이 바로 읽히게 하는 분석 스킬·에이전트입니다. 작성자의 원고를 바탕으로 Claude·ChatGPT·Gemini·Copilot 네 가지 버전으로 확장하고 검증했습니다.</p>
+  <div class="meta">
+    <b>독자</b><span>청구항 해석·FTO·침해 검토를 준비하는 IP 담당자, 변리사, 개발 엔지니어</span>
+    <b>분량</b><span>읽기 약 20분 · 배포 키트(4개 플랫폼, 파일 22개)</span>
+    <b>판</b><span>1.0 · 2026. 11. 6.</span>
+  </div>
+
+  <section id="s0">
+    <div class="key">
+      <div class="eyebrow">한 줄 결론</div>
+      <p style="font-size:19px;font-weight:600;line-height:1.6;margin:8px 0 10px">문헌을 먼저 잠그고, 구성요소와 도면부호를 짝짓고, 사실과 추론과 법률평가를 끝까지 나눈다.</p>
+      <p style="opacity:.75;font-size:15px">이 도우미는 판단을 대신하지 않습니다. 담당자가 판단에 쓸 재료를 빠르고 정확하게 정리해 줍니다. 제품자료 없이 침해·FTO 결론을 내지 않도록 멈추는 조건이 설계에 들어 있습니다.</p>
+    </div>
+  </section>
+
+  <!-- 1 -->
+  <section id="s1">
+    <h2><span class="no">01</span>언제 쓰나</h2>
+    <div class="grid3">
+      <div class="box"><div class="tag">긴급</div><h4>경고장·회의 직전</h4><p>“긴급 모드”로 문헌 잠금, 구성요소·도면 대응표, 도면 읽기 보조자료, 가장 위험한 한정 1개만 빠르게.</p></div>
+      <div class="box"><div class="tag">도면 이해</div><h4>도면이 안 읽힐 때</h4><p>부호 40개짜리 도면에서 청구항의 “적응형 필터부”가 어디인지 찾느라 시간을 쓰지 않도록.</p></div>
+      <div class="box"><div class="tag">회피설계</div><h4>설계팀과 협의할 때</h4><p>한정사항별 최소변경·강한 회피·조합안과 잔존위험을 표로 정리해 엔지니어와 같은 표를 봅니다.</p></div>
+    </div>
+    <p>하지 않는 일도 분명합니다. 여러 특허 모니터링, 포트폴리오 우선순위, 신규성·진보성 분석은 범위 밖이고, 제품자료 없이 침해·비침해·FTO를 판단하지 않습니다.</p>
+  </section>
+
+  <!-- 2 -->
+  <section id="s2">
+    <h2><span class="no">02</span>설계의 뼈대: 원고에서 가져온 것과 더한 것</h2>
+    <p>원고는 이미 실무 수준의 안전장치를 갖추고 있었습니다. 그 뼈대를 그대로 살리고, 배포에 필요한 부분을 보완했습니다.</p>
+    <div class="grid2">
+      <div class="box"><div class="tag">원고의 핵심 설계</div><h4>그대로 살린 것</h4>
+        <ul>
+          <li><strong>문헌 잠금</strong>: 파일명이 아니라 공보 표지로 대상 확정</li>
+          <li><strong>원문·도면 검증</strong>: 텍스트 추출만 믿지 않기</li>
+          <li><strong>네 가지 구분</strong>: 사실 / 추론 / 미확인 / 법률 예비평가</li>
+          <li><strong>기술적 필요성 ≠ 필수 문언</strong></li>
+          <li><strong>회피설계 7유형</strong>과 최소·강한·조합안</li>
+          <li><strong>중단 조건</strong>: 전체 중단과 부분 제한을 구분</li>
+        </ul></div>
+      <div class="box"><div class="tag">이번에 보완</div><h4>더한 것</h4>
+        <ul>
+          <li>원고가 가리키던 <strong>output-spec.md</strong>를 실제로 작성</li>
+          <li><strong>도면 읽기 보조자료</strong> 형식과 HTML 템플릿</li>
+          <li><strong>부호 점검 스크립트</strong>(numeral_map.py)</li>
+          <li><strong>긴급 모드</strong> / 전체 모드</li>
+          <li><strong>문서 속 지시문 무시</strong>, <strong>내기 전 자기점검</strong></li>
+          <li>4개 플랫폼 버전과 <strong>버전 일치 점검</strong></li>
+        </ul></div>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section id="s3">
+    <h2><span class="no">03</span>작동 흐름</h2>
+    <div class="graph">
+      <div class="node end"><span class="id">IN</span><b>번호 + 자료 위치 + 모드</b><p>SharePoint 경로·첨부 공보·(있으면) 제품자료</p></div>
+      <div class="edge"></div>
+      <div class="node dark"><span class="id">1</span><b>대상 문헌 잠금</b><p>표지 대조 → 불일치면 여기서 중단하고 자료 요청</p></div>
+      <div class="edge"><span>잠금 표</span></div>
+      <div class="node"><span class="id">2</span><b>원문·도면 검증 + 부호 점검</b><p>도면 페이지를 이미지로 대조, 부호 중복·오기·누락 표시</p></div>
+      <div class="edge"></div>
+      <div class="node"><span class="id">3</span><b>독립항 분해 → 도면 대응</b><p>원문 문언 그대로 E1, E2 … / 부호가 없으면 “독립항상 특정 부호 없음”</p></div>
+      <div class="edge"><span>긴급 모드는 여기서 보조자료·위험 1개로 마무리</span></div>
+      <div class="node"><span class="id">4</span><b>필요성 · 한정사항 · 종속항 · 공개/등록 비교</b><p>기술적 이유와 권리범위 문언을 구분</p></div>
+      <div class="edge"></div>
+      <div class="node"><span class="id">5</span><b>회피설계</b><p>최소변경 · 강한 회피 · 조합안, 문언·균등 잔존위험</p></div>
+      <div class="edge"></div>
+      <div class="node dark"><span class="id">6</span><b>법률적 경계 + 자기점검</b><p>제품자료 없으면 침해·FTO 판단 금지 / 7개 항목 점검</p></div>
+      <div class="edge"></div>
+      <div class="node end"><span class="id">OUT</span><b>분석 보고 + 도면 읽기 보조자료</b><p>마지막 줄: Recommended Next Action</p></div>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section id="s4">
+    <h2><span class="no">04</span>도면 읽기 보조자료</h2>
+    <p>이번 편의 핵심 결과물입니다. 왼쪽에 공보 도면, 오른쪽에 부호표를 두고, <strong>청구항 구성요소 단추(E1, E2 …)를 누르면 해당 부호 행과 도면 속 부품이 강조</strong>됩니다. 아래는 가상 공보로 만든 실제 결과물입니다. 단추를 눌러 보세요.</p>
+    <iframe src="kit/sample/output/drawing-aid.html" title="도면 읽기 보조자료 예시" style="width:100%;height:820px;border:1px solid var(--line);border-radius:12px;background:#fff" loading="lazy"></iframe>
+    <p class="cap">새 창에서 보기: <a href="kit/sample/output/drawing-aid.html">drawing-aid.html</a> · 도면을 SVG로 받은 경우 부품 강조까지, 이미지(PNG·PDF 캡처)인 경우 부호표 강조만 작동합니다. 도면은 사용자가 준 것만 넣고, 새로 그리거나 부호를 추정하지 않습니다.</p>
+  </section>
+
+  <!-- 5 -->
+  <section id="s5">
+    <h2><span class="no">05</span>4개 플랫폼 버전</h2>
+    <p>규칙은 하나, 담는 그릇은 넷입니다. 공통 규칙(<a href="kit/knowledge/claim-rules.md">claim-rules.md</a>)과 출력 형식·회피 유형 파일을 기준으로, 각 플랫폼은 짧은 지침에 자기 강점을 더했습니다.</p>
+    <div class="tbl"><table>
+      <thead><tr><th></th><th>Claude 스킬</th><th>ChatGPT 플러그인</th><th>Gemini Gem</th><th>Copilot 에이전트</th></tr></thead>
+      <tbody>
+        <tr><th>형태</th><td>스킬 폴더 (SKILL.md + 참고·스크립트·템플릿)</td><td>플러그인 안의 스킬 + 참조 파일</td><td>Gem 요청 사항 + 지식 파일</td><td>지침 + 지식 + SharePoint</td></tr>
+        <tr><th>강점</th><td>부호 점검 스크립트 실행, HTML 보조자료 파일 생성</td><td>코드 실행으로 PDF 렌더링·부호 추출</td><td>PDF 도면을 이미지로 직접 보기</td><td>사내 SharePoint 공보·제품자료 바로 연결, Teams 배포</td></tr>
+        <tr><th>도면 보조자료</th><td>HTML 파일</td><td>HTML 파일(가능 시) 또는 표</td><td>대화창 표</td><td>대화창 표</td></tr>
+        <tr><th>만드는 곳</th><td>Customize → Skills → Upload</td><td>플러그인 → Plugin Creator</td><td>Gems 탐색하기 → 새 Gem</td><td>Copilot Studio</td></tr>
+        <tr><th>지침 분량</th><td>107줄</td><td>약 2,500자</td><td>약 1,500자</td><td>약 1,600자</td></tr>
+        <tr><th>설치 안내</th><td><a href="kit/claude/README.md">claude/README</a></td><td><a href="kit/chatgpt/README.md">chatgpt/README</a></td><td><a href="kit/gemini/README.md">gemini/README</a></td><td><a href="kit/copilot/README.md">copilot/README</a></td></tr>
+      </tbody>
+    </table></div>
+    <div class="note"><b>ChatGPT는 GPT가 아니라 플러그인으로</b> — 원고의 “GPT 플러그인 용” 지침은 그대로 살렸지만, OpenAI가 맞춤형 GPT를 2026. 12. 11.에 종료하고 플러그인(지침은 스킬, 지식은 참조 파일)으로 옮기는 중이어서 Plugin Creator로 만드는 절차를 안내했습니다.</div>
+    <div class="btns">
+      <a class="btn primary" href="downloads/claim-analyzer-kit.zip" download>키트 전체 받기 (ZIP)</a>
+      <a class="btn" href="downloads/claim-design-around.zip" download>Claude 스킬만 받기</a>
+      <a class="btn" href="kit/">파일 하나씩 보기</a>
+    </div>
+  </section>
+
+  <!-- 6 -->
+  <section id="s6">
+    <h2><span class="no">06</span>시범 실행과 검증</h2>
+    <p>실제 특허 대신 <a href="kit/sample/sample-patent.md">가상 공보 「자동 급수 화분」</a>과 <a href="kit/sample/fig1.svg">도 1</a>을 만들어 시험했습니다. 점검 기능을 확인하려고 <strong>부호 오기 1곳(급수 조절 밸브 50 → 51)과 도면에 없는 부호 1곳(60)</strong>을 일부러 넣었습니다.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>검증 항목</th><th>방법</th><th>결과</th></tr></thead>
+      <tbody>
+        <tr><th>부호 점검</th><td>numeral_map.py 실행</td><td>부호 10개 추출, <strong>오기 후보 50/51과 도면 누락 51·60을 모두 검출</strong>. 청구항에 부호가 없는 경우에도 명세서 명칭으로 대응 부호 제시</td></tr>
+        <tr><th>Claude 스킬 형식</th><td>Anthropic 공식 skill-creator 검증 스크립트</td><td>“Skill is valid!” (설명 92자, 한도 200)</td></tr>
+        <tr><th>4개 버전 일치</th><td>check_versions.py — 핵심 규칙 14개 × 4개 버전</td><td>처음 실행에서 <strong>2건 누락 발견</strong>(Copilot 부호 점검, ChatGPT 명칭변경 금지) → 보완 후 모두 일치</td></tr>
+        <tr><th>ZIP</th><td>압축을 풀어 재검증</td><td>스킬 valid, 키트 버전 일치, 경로 구분자 표준(/)</td></tr>
+        <tr><th>분석 결과물</th><td>스킬 절차대로 작성</td><td><a href="kit/sample/output/analysis.md">analysis.md</a> (12개 항목, 사실·추론 표시, 침해 판단 보류) · <a href="kit/sample/output/drawing-aid.html">drawing-aid.html</a></td></tr>
+      </tbody>
+    </table></div>
+    <p class="cap">2026. 11. 6. 확인. 분석 결과물은 이 글을 만든 Claude 세션이 스킬 절차를 따라 작성했습니다. ChatGPT·Gemini·Copilot 화면에 실제로 등록해 돌려 보지는 않았으니, 처음 한 번은 가상 공보로 시험해 같은 형태가 나오는지 확인하세요.</p>
+  </section>
+
+  <!-- 7 -->
+  <section id="s7">
+    <h2><span class="no">07</span>쓸 때 주의</h2>
+    <div class="grid3">
+      <div class="box"><div class="tag">책임</div><h4>판단은 사람이</h4><p>결과는 분석 초안입니다. 침해·FTO·무효 판단과 책임은 변리사·담당자에게 있습니다.</p></div>
+      <div class="box"><div class="tag">기밀</div><h4>넣는 곳을 가려서</h4><p>미공개 제품자료·출원 전 발명·의뢰인 자료는 회사가 승인한 AI 환경에만. 개인 계정에 올리지 않습니다.</p></div>
+      <div class="box"><div class="tag">확인</div><h4>원문과 한 번 더</h4><p>부호 점검은 “후보”를 찾아 줄 뿐입니다. 최종 대응은 원문 도면을 보고 확정하세요.</p></div>
+    </div>
+    <div class="note"><b>최신 상태는 별도로</b> — 등록특허의 유지·소멸·권리자 변동, 심사이력은 도우미가 확인하지 못하면 “별도 확인대상”으로 남깁니다. 특허청 등록원부와 심사이력을 함께 확보하세요.</div>
+  </section>
+
+  <!-- 8 -->
+  <section id="s8">
+    <h2><span class="no">부록</span>용어와 출처</h2>
+    <div class="tbl"><table>
+      <tbody>
+        <tr><th>문헌 잠금</th><td>분석 대상 공보 한 건을 표지 대조로 확정하는 첫 단계</td></tr>
+        <tr><th>도면부호</th><td>공보 도면에서 부품을 가리키는 숫자. 명세서에 “명칭(부호)”로 적힘</td></tr>
+        <tr><th>종속형 제품 확장항</th><td>다른 항을 인용하면서 장치·완제품으로 카테고리를 넓히는 항</td></tr>
+        <tr><th>문언침해 / 균등론</th><td>청구항 문언 그대로 충족하는지 / 문언은 다르나 실질적으로 같은지의 판단</td></tr>
+        <tr><th>출원경과금반언</th><td>심사 중 보정·주장으로 포기한 범위를 나중에 다시 주장할 수 없다는 원칙</td></tr>
+        <tr><th>FTO</th><td>Freedom to Operate. 제품을 실시해도 타인 권리를 침해하지 않는지에 대한 검토</td></tr>
+      </tbody>
+    </table></div>
+    <h3>출처</h3>
+    <ul>
+      <li>작성자 원고 「특허 구성특징 분석 도우미」 (Copilot agent 용 · GPT 플러그인 용 지침) — 분석 절차·원칙·중단 조건의 원 설계</li>
+      <li>Claude 도움말 <a href="https://support.claude.com/en/articles/12512198-how-to-create-custom-skills">커스텀 스킬 만들기</a> · Anthropic <a href="https://github.com/anthropics/skills">공식 스킬 저장소</a>(skill-creator 검증 스크립트)</li>
+      <li>OpenAI 도움말 <a href="https://help.openai.com/articles/20001256">ChatGPT의 플러그인</a> · <a href="https://help.openai.com/articles/20001519">맞춤형 GPT 지원 종료 FAQ</a></li>
+      <li>Gemini 앱 고객센터 <a href="https://support.google.com/gemini/answer/15235603?hl=ko">맞춤 Gems를 만드는 방법</a></li>
+      <li>Microsoft Learn <a href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/authoring-instructions">Copilot Studio 에이전트 지침 작성</a></li>
+    </ul>
+    <p>함께 읽기: <a href="../engineering-evolution/">03편 하네스·루프·그래프 (청구항 대비표 워크플로우)</a> · <a href="../ssr-plus/">05편 SSR Plus (스킬 만들기)</a></p>
+  </section>
+
+  <footer>
+    작성: 이진수 (변리사) · 2026. 11. 6. · CC BY-NC 4.0<br>
+    작성자의 원고를 바탕으로 생성형 AI의 도움을 받아 확장·검증했으며, 사람이 검토했습니다. 오류 제보는 <a href="https://github.com/sonovman/ai-practice-handbooks/issues">Issues</a>로 남겨 주세요.
+  </footer>
+</main>
+</div>
+
+<script>
+  var links = [].slice.call(document.querySelectorAll('.side a'));
+  var io = new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+      if (e.isIntersecting) links.forEach(function (a) { a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id); });
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  document.querySelectorAll('main section[id]').forEach(function (s) { io.observe(s); });
+</script>
+</body>
+</html>
