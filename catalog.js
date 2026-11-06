@@ -73,8 +73,25 @@ window.CATALOG = [
     ]
   },
   {
-    id: "excel-analysis",
+    id: "personal-agent",
     no: "04",
+    category: "에이전트",
+    title: "개인 AI 에이전트, 챗봇과 무엇이 다른가",
+    subtitle: "개념부터 구축 5단계까지 — 자체 서버(Hermes)와 플랫폼 에이전트",
+    summary: "챗봇과 에이전트의 네 가지 차이, 자체 서버 에이전트와 플랫폼 에이전트 비교, Hermes Agent로 24시간 텔레그램 알림 에이전트를 만드는 5단계를 공식 문서로 확인한 명령어로 안내합니다. 바뀌었을 때만 알리는 감시 스킬과 실행 검증한 스크립트를 제공합니다.",
+    reader: "코딩 경험 없이 에이전트를 처음 만들어 보려는 실무자",
+    version: "1.0",
+    date: "2026-11-06",
+    length: "읽기 약 20분",
+    status: "published",
+    links: [
+      { label: "화면으로 읽기", href: "personal-agent/", primary: true },
+      { label: "템플릿 내려받기", href: "personal-agent/templates/" }
+    ]
+  },
+  {
+    id: "excel-analysis",
+    no: "05",
     category: "데이터",
     title: "엑셀 데이터를 AI로 분석하고 그래프까지 받기",
     subtitle: "준비 중",

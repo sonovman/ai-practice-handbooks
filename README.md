@@ -9,6 +9,7 @@
 | 01 | 에이전트는 한 명이면 충분하다 — 단독 vs 멀티 에이전트 | [화면](https://sonovman.github.io/ai-practice-handbooks/agent-guide/) | [템플릿](agent-guide/templates/) |
 | 02 | 보고서 초안을 AI에게 맡기는 프롬프트 5원칙 | [화면](https://sonovman.github.io/ai-practice-handbooks/prompt-basics/) | [CSV](data/prompt-templates.csv) |
 | 03 | AI에게 일을 시키는 5가지 방법의 진화 — 프롬프트에서 하네스·루프·그래프까지 | [화면](https://sonovman.github.io/ai-practice-handbooks/engineering-evolution/) | [템플릿](engineering-evolution/templates/) |
+| 04 | 개인 AI 에이전트, 챗봇과 무엇이 다른가 — 구축 5단계 | [화면](https://sonovman.github.io/ai-practice-handbooks/personal-agent/) | [템플릿](personal-agent/templates/) |
 
 ## 폴더 구성
 
@@ -23,6 +24,7 @@ ai-practice-handbooks/
 │   └── templates/      내려받는 자료 (CLAUDE.md, 리뷰어 프롬프트)
 ├── prompt-basics/      02편
 ├── engineering-evolution/  03편 (templates/ 에 IP 분석 템플릿 8종)
+├── personal-agent/     04편 (templates/ 에 지침·스킬·감시 스크립트)
 └── data/               공용 자료
 ```
 

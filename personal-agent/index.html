@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>개인 AI 에이전트 입문</title>
+<meta name="description" content="개인 AI 에이전트가 무엇이고 ChatGPT·Claude 같은 챗봇과 무엇이 다른지 설명하고, 자체 서버 에이전트와 플랫폼 에이전트를 구축하는 5단계 절차를 검증된 명령어와 템플릿으로 안내합니다.">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<div class="bar"><div class="bar-in">
+  <a class="brand" href="../">AI 실무 핸드북</a>
+  <div class="links">
+    <a href="templates/">템플릿</a>
+    <a href="https://github.com/sonovman/ai-practice-handbooks">GitHub ↗</a>
+  </div>
+</div></div>
+
+<div class="doc">
+  <aside class="side">
+    <div class="label">차례</div>
+    <ol>
+      <li><a href="#s0">한 줄 결론</a></li>
+      <li><a href="#s1">1. 챗봇과 무엇이 다른가</a></li>
+      <li><a href="#s2">2. 두 갈래 길</a></li>
+      <li><a href="#s3">3. 구축 5단계</a></li>
+      <li><a href="#s4">4. 실습: 변동 알림</a></li>
+      <li><a href="#s5">5. 플랫폼 에이전트 만들기</a></li>
+      <li><a href="#s6">6. 비용과 안전</a></li>
+      <li><a href="#s7">7. 무엇을 고를까</a></li>
+      <li><a href="#s8">부록 · 용어와 출처</a></li>
+    </ol>
+  </aside>
+
+<main>
+  <div class="eyebrow">핸드북 04 · 에이전트 활용</div>
+  <h1>개인 AI 에이전트,<br>챗봇과 무엇이 다른가</h1>
+  <p class="lead">“에이전트, 에이전트” 하는데 개인 AI 에이전트란 정확히 무엇일까요. ChatGPT·Claude 같은 챗봇과의 차이부터, 24시간 일하는 나만의 에이전트를 만드는 5단계 절차까지 정리했습니다. 명령어와 템플릿은 공식 문서와 실제 실행으로 확인했습니다.</p>
+  <div class="meta">
+    <b>독자</b><span>코딩 경험 없이 에이전트를 처음 만들어 보려는 실무자</span>
+    <b>분량</b><span>읽기 약 20분 · 따라 하기 30분~1시간 · 템플릿 3종</span>
+    <b>판</b><span>1.0 · 2026. 11. 6. (서비스 화면과 정책은 2026. 11. 6. 기준)</span>
+  </div>
+
+  <section id="s0">
+    <div class="key">
+      <div class="eyebrow">한 줄 결론</div>
+      <p style="font-size:19px;font-weight:600;line-height:1.6;margin:8px 0 10px">챗봇은 내 다음 질문을 기다리고, 에이전트는 내가 자는 동안에도 맡긴 일을 한다.</p>
+      <p style="opacity:.75;font-size:15px">차이는 모델의 똑똑함이 아니라 도구, 예약 실행, 기억, 알림 채널에 있습니다. 직접 서버에 띄우는 길(Hermes Agent)과 쓰던 서비스 안에서 만드는 길(Claude·Copilot·Gemini)이 있고, 처음이라면 둘 다 30분이면 첫 결과를 볼 수 있습니다.</p>
+    </div>
+  </section>
+
+  <!-- 1 -->
+  <section id="s1">
+    <h2><span class="no">01</span>챗봇과 무엇이 다른가</h2>
+    <p>챗봇은 질문하면 답하고 멈춥니다. 에이전트는 <strong>목표</strong>를 받으면 필요한 단계를 스스로 정하고, 도구를 써서 실행하고, 정해진 시간에 다시 일어나 같은 일을 반복합니다.</p>
+    <div class="grid2">
+      <div class="box"><div class="tag">① 도구</div><h4>직접 손을 쓴다</h4><p>웹 검색, 파일 읽기·쓰기, 명령어·코드 실행을 스스로 합니다. 답을 “말해 주는” 데서 끝나지 않고 일을 “해 놓습니다”.</p></div>
+      <div class="box"><div class="tag">② 예약</div><h4>시키지 않아도 일어난다</h4><p>“6시간마다 확인해”처럼 일정을 걸어 두면, 내가 대화창을 열지 않아도 정해진 시각에 실행합니다(cron).</p></div>
+      <div class="box"><div class="tag">③ 기억·스킬</div><h4>배운 것을 쌓는다</h4><p>내 선호와 지난 결과를 기억하고, 한 번 해 본 절차를 <strong>스킬</strong>(단계별 작업 메모)로 저장해 다음에 다시 씁니다.</p></div>
+      <div class="box"><div class="tag">④ 채널</div><h4>내가 있는 곳으로 온다</h4><p>전용 웹사이트에 들어가지 않아도 텔레그램·슬랙·Teams 같은 메신저로 결과를 보내 줍니다.</p></div>
+    </div>
+    <div class="flow"><span>목표</span><i>→</i><span class="dark">계획</span><i>→</i><span class="dark">도구로 실행</span><i>→</i><span class="dark">결과 확인</span><i>→</i><span>보고 · 기억</span><i>→ (예약 시각에 반복)</i></div>
+  </section>
+
+  <!-- 2 -->
+  <section id="s2">
+    <h2><span class="no">02</span>두 갈래 길: 직접 띄울까, 서비스 안에서 만들까</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>비교</th><th>자체 서버 에이전트<br><span class="cap">예: Hermes Agent</span></th><th>플랫폼 에이전트<br><span class="cap">예: Claude 프로젝트, Copilot Studio, Gemini Gem</span></th></tr></thead>
+      <tbody>
+        <tr><th>어디서 도나</th><td>내가 빌린 서버(VPS)나 내 PC</td><td>서비스 회사의 클라우드</td></tr>
+        <tr><th>모델</th><td>여러 회사 모델 중 골라 바꿈 (Nous Portal 기준 300개 이상)</td><td>대체로 그 서비스가 정한 모델</td></tr>
+        <tr><th>예약 실행</th><td>내장 cron. 서버가 켜져 있는 한 계속</td><td>서비스마다 다름. Claude는 유료 요금제에서 예약 작업 지원, Copilot은 Power Automate 흐름으로</td></tr>
+        <tr><th>할 수 있는 일</th><td>서버 안에서 명령어·파일·스크립트까지</td><td>서비스가 열어 준 도구와 연결 앱 범위</td></tr>
+        <tr><th>알림</th><td>텔레그램·디스코드·슬랙·왓츠앱·시그널 등</td><td>해당 앱, Copilot은 Teams 등</td></tr>
+        <tr><th>관리</th><td>설치·보안·업데이트를 내가 챙김</td><td>회사가 관리. 사내 보안 정책을 적용하기 쉬움</td></tr>
+        <tr><th>비용</th><td>서버 월 고정비 + 모델 사용료(쓴 만큼)</td><td>요금제 구독료</td></tr>
+      </tbody>
+    </table></div>
+    <div class="note"><b>원고·영상과 달라진 점</b> — 자체 서버 에이전트라도 “사용량 제한이 없다”는 뜻은 아닙니다. 모델 사용료와 모델 회사의 한도는 그대로 적용됩니다. 또 이제는 플랫폼 쪽에도 예약 실행(Claude 예약 작업 등)이 생겨, 둘의 차이는 “가능·불가능”보다 <strong>통제 범위와 관리 부담</strong>의 차이에 가깝습니다.</div>
+  </section>
+
+  <!-- 3 -->
+  <section id="s3">
+    <h2><span class="no">03</span>구축 5단계: Hermes Agent로 24시간 에이전트 만들기</h2>
+    <p>영상에서 쓴 방식입니다. 명령어는 2026. 11. 6. 기준 Hermes 공식 문서와 대조했습니다.</p>
+
+    <ol class="steps">
+      <li><b>에이전트 고르기 — Hermes Agent</b>
+        Nous Research가 만든 무료 오픈소스(MIT) 에이전트입니다. 스킬 자동 생성, 기억, 예약 실행, 메신저 연동이 기본으로 들어 있습니다.</li>
+      <li><b>일할 곳 정하기 — 24시간 켜진 서버(VPS)</b>
+        PC가 꺼져도 돌아야 하므로 월 몇 달러짜리 가상 서버를 빌립니다. 영상은 호스팅 업체의 원클릭 템플릿을 썼지만, 어느 리눅스 서버든 아래 한 줄로 설치됩니다. 개인 문서·금융 정보가 있는 PC와 떨어져 있다는 것도 장점입니다.
+<pre><code>curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash
+source ~/.bashrc</code></pre>
+        <span class="cap">먼저 맛만 보려면 Windows PC에도 설치할 수 있습니다(PowerShell: <code>iex (irm https://hermes-agent.nousresearch.com/install.ps1)</code>). 다만 PC를 끄면 예약 작업도 멈춥니다.</span></li>
+      <li><b>두뇌 연결 — 모델 고르기</b>
+        <pre><code>hermes setup --portal    # Nous Portal 로그인 + 모델 + 검색 등 도구를 한 번에
+hermes model             # 다른 회사 모델로 바꾸고 싶을 때</code></pre>
+        Nous Portal 하나로 300개 이상의 모델과 웹 검색 같은 도구를 함께 쓸 수 있고, OpenRouter·OpenAI 등 원하는 회사의 키를 직접 넣어도 됩니다. 영상은 감시 업무에 값싼 DeepSeek 계열 모델을 골랐습니다. 단순 반복 업무에는 싼 모델로 충분합니다.</li>
+      <li><b>메신저 연결 — 텔레그램</b>
+        <ol>
+          <li>텔레그램에서 <strong>@BotFather</strong>에게 <code>/newbot</code>을 보내고, 이름과 <code>bot</code>으로 끝나는 아이디를 정하면 <strong>봇 토큰</strong>을 줍니다.</li>
+          <li><strong>@userinfobot</strong>에게 말을 걸어 내 <strong>숫자 사용자 ID</strong>를 확인합니다.</li>
+          <li>서버에서 <code>hermes gateway setup</code> → Telegram을 고르고 토큰과 내 ID를 넣습니다. (대시보드의 “Create with QR”로도 할 수 있습니다.)</li>
+          <li><code>hermes gateway install</code>로 서비스 등록을 하면 서버가 재시작돼도 계속 돕니다.</li>
+          <li>봇과의 대화창에서 <code>/sethome</code>을 보내 이 대화를 <strong>홈 채널</strong>로 정합니다. 예약 작업 결과가 여기로 옵니다.</li>
+        </ol></li>
+      <li><b>첫 임무 맡기기 — 바뀌면 알려 줘</b>
+        텔레그램에서 이렇게 말하면 됩니다.
+        <pre><code>원-달러 환율을 6시간마다 확인해서, 0.5% 넘게 바뀌었을 때만 알려 줘.</code></pre>
+        직접 명령으로 걸 수도 있습니다. 다음 장의 <code>price-watch</code> 스킬을 붙이면 판단 기준이 일정해집니다.
+        <pre><code>/cron add "every 6h" "원-달러 환율 감시. 기준 0.5%" --skill price-watch
+/cron list               # 등록된 작업 보기
+hermes cron run &lt;작업&gt;   # 기다리지 않고 지금 한 번 실행</code></pre></li>
+    </ol>
+    <div class="note"><b>“바뀌었을 때만” 알리는 원리</b> — Hermes는 예약 작업의 최종 답이 정확히 <code>[SILENT]</code>이면 메시지를 보내지 않습니다. 그래서 스킬에 “변화가 없으면 <code>[SILENT]</code>로 끝내라”고 적어 둡니다.</div>
+  </section>
+
+  <!-- 4 -->
+  <section id="s4">
+    <h2><span class="no">04</span>실습: 바뀌었을 때만 알려 주는 감시자</h2>
+    <p>같은 일을 두 방식으로 만들 수 있습니다. 판단이 필요한 대상은 A, 값이 정해진 곳에 있는 대상은 B가 좋습니다.</p>
+    <div class="grid2">
+      <div class="box"><div class="tag">A · AI가 판단</div><h4>스킬 <code>price-watch</code></h4><p>에이전트가 웹을 찾아보고 지난 기록과 비교해 판단합니다. 페이지 구조가 바뀌어도 대처하지만, 실행할 때마다 모델 사용료가 듭니다.</p><p style="margin-top:8px"><a href="templates/price-watch/SKILL.md">SKILL.md 보기</a></p></div>
+      <div class="box"><div class="tag">B · 스크립트</div><h4><code>watch.py</code></h4><p>정해진 주소에서 값을 읽어 비교만 합니다. AI를 부르지 않아 <strong>모델 비용이 0</strong>이고 결과가 항상 같습니다. 대상 페이지 구조가 바뀌면 설정을 고쳐야 합니다.</p><p style="margin-top:8px"><a href="templates/watch.py">watch.py 보기</a></p></div>
+    </div>
+
+    <h3>A. 스킬 방식</h3>
+    <ol>
+      <li><code>price-watch</code> 폴더를 서버의 <code>~/.hermes/skills/</code> 안에 넣습니다.</li>
+      <li>텔레그램에서 <code>/price-watch 원-달러 환율, 기준 0.5%</code>로 한 번 시험합니다. 첫 실행은 “감시를 시작합니다”가 나와야 정상입니다.</li>
+      <li>3장의 <code>/cron add … --skill price-watch</code>로 예약합니다.</li>
+    </ol>
+
+    <h3>B. 스크립트 방식</h3>
+    <ol>
+      <li><code>watch.py</code> 맨 위 [설정]에서 이름·주소·값 위치·알림 기준을 정합니다. 기본값은 키 없이 쓰는 공개 환율 API입니다.</li>
+      <li>서버의 <code>~/.hermes/scripts/</code>에 넣고 예약합니다.
+<pre><code>hermes cron create "every 6h" --no-agent --script watch.py --deliver telegram --name fx-watch</code></pre></li>
+      <li>스크립트가 글자를 출력하면 그대로 텔레그램으로 가고, 아무것도 출력하지 않으면 조용히 넘어갑니다. 확인에 실패하면(오류 종료) Hermes가 오류 알림을 보냅니다.</li>
+    </ol>
+    <p class="cap">Hermes 없이 PC에서도 돌릴 수 있습니다. <code>python watch.py</code>로 확인하고, 환경변수 <code>TELEGRAM_BOT_TOKEN</code>·<code>TELEGRAM_CHAT_ID</code>를 넣은 뒤 <code>python watch.py --telegram</code>을 Windows 작업 스케줄러에 걸면 됩니다.</p>
+
+    <h3>실제로 시험한 결과</h3>
+    <div class="tbl"><table>
+      <thead><tr><th>상황</th><th>출력</th><th>결과</th></tr></thead>
+      <tbody>
+        <tr><th>첫 실행</th><td><code>[원-달러 환율] 감시를 시작합니다. 현재 값: 1347.69…</code></td><td>알림 1회</td></tr>
+        <tr><th>값 그대로</th><td>(출력 없음)</td><td>알림 없음</td></tr>
+        <tr><th>0.1% 변동</th><td>(출력 없음)</td><td>기준 0.5% 미만 → 알림 없음</td></tr>
+        <tr><th>2% 변동</th><td><code>[원-달러 환율] ▲ 1,320.74 → 1,347.69 (+2.04%)</code></td><td>알림</td></tr>
+        <tr><th>주소 오류</th><td><code>확인 실패: HTTP Error 404</code></td><td>오류 종료 → 오류 알림</td></tr>
+        <tr><th>기록 파일 손상</th><td>감시를 다시 시작</td><td>멈추지 않고 복구</td></tr>
+      </tbody>
+    </table></div>
+    <p class="cap">2026. 11. 6. Windows의 Python 3.12로 실행. 2% 변동은 기록 파일의 이전 값을 바꿔 재현했습니다. Hermes 서버 안에서의 실행은 독자 환경에서 <code>hermes cron run</code>으로 확인하세요.</p>
+
+    <div class="note"><b>IP 업무에 쓰려면</b> — 같은 구조로 경쟁사 보도자료 페이지, 공개 공보 목록 페이지의 변동을 감시할 수 있습니다. <code>watch.py</code>의 <code>REGEX</code>에 감시할 부분을 지정하거나, 스킬 방식으로 “새 항목이 생기면 제목과 링크만 알려 줘”라고 맡기면 됩니다. 사이트 이용약관이 자동 수집을 막는지 먼저 확인하고, 공식 API가 있으면 그쪽을 쓰세요.</div>
+  </section>
+
+  <!-- 5 -->
+  <section id="s5">
+    <h2><span class="no">05</span>플랫폼 에이전트 만들기</h2>
+    <p>서버를 다루기 부담스럽다면 이미 쓰는 서비스 안에서 시작하세요. 지침은 <a href="templates/agent-instructions.md">공용 지침 템플릿</a> 하나를 붙여 넣으면 됩니다.</p>
+
+    <h3>Claude — 프로젝트</h3>
+    <ol>
+      <li>왼쪽 <strong>Projects</strong> → <strong>+ New Project</strong> → 이름과 설명 입력</li>
+      <li><strong>Set project instructions</strong>에 지침 붙여 넣기 → Save</li>
+      <li>오른쪽 프로젝트 지식 영역의 <strong>+</strong>로 참고 문서 올리기</li>
+      <li>정기 실행이 필요하면 유료 요금제의 <strong>예약 작업</strong>: 대화에서 할 일과 주기를 말하고 Schedule (PC가 꺼져 있어도 원격으로 실행)</li>
+    </ol>
+    <p class="cap">프로젝트는 무료 계정도 쓸 수 있으며(최대 5개), 예약 작업은 유료 요금제에서 제공됩니다.</p>
+
+    <h3>Microsoft — Copilot Studio</h3>
+    <ol>
+      <li>copilotstudio.microsoft.com 홈에서 만들고 싶은 에이전트를 설명 → 이름·설명·지침이 자동 생성</li>
+      <li>Overview에서 <strong>Instructions</strong>를 공용 지침으로 다듬기</li>
+      <li><strong>Knowledge</strong>에 사내 사이트·문서 연결</li>
+      <li><strong>Tools → Add a tool</strong>에서 Agent flow(Power Automate)를 붙여 메일 발송·승인 같은 작업 연결</li>
+      <li><strong>Publish</strong> → <strong>Channels</strong>에서 Microsoft 365 and Microsoft Teams를 골라 배포</li>
+    </ol>
+    <p class="cap">회사 라이선스와 관리자 설정에 따라 메뉴와 가능한 기능이 다릅니다. 체험판 에이전트는 게시할 수 없습니다.</p>
+
+    <h3>Google — Gemini Gem</h3>
+    <ol>
+      <li>gemini.google.com 왼쪽 <strong>Gems 탐색하기</strong> → <strong>새 Gem</strong></li>
+      <li>이름을 정하고 <strong>요청 사항</strong>에 지침 붙여 넣기 (“Gemini를 사용해 요청 사항 다시 작성하기”로 다듬을 수도 있음)</li>
+      <li>파일 업로드나 Drive로 참고 자료 추가</li>
+      <li>오른쪽 미리보기로 시험한 뒤 반드시 <strong>저장</strong> (미리보기는 자동 저장되지 않음)</li>
+    </ol>
+
+    <h3>ChatGPT — 맞춤형 GPT는 종료 예정</h3>
+    <p>OpenAI는 맞춤형 GPT를 <strong>2026. 12. 11.</strong>에 종료하고 <strong>플러그인</strong>(지침은 스킬로, 지식 파일은 참조 파일로)으로 옮기는 중입니다. 개인 계정(Free·Go·Plus·Pro)에서는 이미 새 GPT를 만들 수 없습니다. 원고에 있던 “Explore GPTs → Create” 절차는 기존 GPT를 고치거나 플러그인으로 옮길 때만 해당합니다.</p>
+
+    <h3>지식 파일을 잘 올리는 법 (공통)</h3>
+    <ul>
+      <li><strong>제목 구조</strong>를 분명히: 문서 안에 큰 제목·작은 제목을 나눠 두면 필요한 부분을 정확히 찾습니다.</li>
+      <li><strong>용어집</strong>을 앞에: 사내 약어와 전문 용어 정의를 문서 첫머리에 둡니다.</li>
+      <li><strong>표는 단순하게</strong>: 셀 병합이 많은 표는 잘못 읽히기 쉽습니다. 표 아래 글로 요약을 덧붙이세요.</li>
+      <li><strong>파일 이름에 주제와 연도</strong>: <code>문서1.pdf</code>보다 <code>2026_선행조사_가이드.pdf</code></li>
+      <li><strong>글 위주 파일</strong>(.md, .txt, 글로 된 PDF)이 가장 잘 읽힙니다.</li>
+    </ul>
+  </section>
+
+  <!-- 6 -->
+  <section id="s6">
+    <h2><span class="no">06</span>비용과 안전</h2>
+    <h3>비용</h3>
+    <ul>
+      <li><strong>서버</strong>: 소형 VPS 월 몇 달러 수준(업체·사양에 따라 다름)</li>
+      <li><strong>모델</strong>: 쓴 만큼. 감시처럼 짧은 작업은 값싼 모델로 1회 몇 원 이하인 경우가 많습니다. 스크립트 방식(B)은 모델 비용이 들지 않습니다.</li>
+      <li>영상 설명란의 할인 링크는 제휴 링크라고 영상에 밝혀져 있습니다. 이 글은 공식 사이트만 안내합니다.</li>
+    </ul>
+    <h3>안전 체크리스트 (Hermes 공식 보안 문서 기준)</h3>
+    <div class="tbl"><table>
+      <thead><tr><th>항목</th><th>할 일</th></tr></thead>
+      <tbody>
+        <tr><th>누가 말을 걸 수 있나</th><td><code>TELEGRAM_ALLOWED_USERS</code>에 내 숫자 ID만. 모르는 사람은 기본으로 거부됨. <code>GATEWAY_ALLOW_ALL_USERS=true</code>는 쓰지 않기</td></tr>
+        <tr><th>위험 명령</th><td>승인 모드 기본값(smart) 유지. 위험한 명령은 실행 전에 확인을 받음</td></tr>
+        <tr><th>격리</th><td>개인 PC보다 별도 서버. 더 엄격히 하려면 <code>hermes config set terminal.backend docker</code></td></tr>
+        <tr><th>비밀 정보</th><td><code>~/.hermes/.env</code>(봇 토큰·키)는 <code>chmod 600</code>. 토큰이 새면 @BotFather에서 <code>/revoke</code></td></tr>
+        <tr><th>실행 계정</th><td>root가 아닌 일반 사용자로 게이트웨이 실행</td></tr>
+        <tr><th>회사 자료</th><td>개인 에이전트에 사내 문서·고객 정보·출원 전 발명을 넣지 않기. 업무용은 회사가 승인한 플랫폼에서</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <!-- 7 -->
+  <section id="s7">
+    <h2><span class="no">07</span>무엇을 고를까</h2>
+    <div class="grid2">
+      <div class="box"><div class="tag">플랫폼 에이전트</div><h4>이럴 때</h4>
+        <ul>
+          <li>사내 문서(SharePoint, Drive)를 바로 연결해야 할 때</li>
+          <li>회사 보안 정책 안에서 써야 할 때</li>
+          <li>서버 관리 없이 대화형 보조가 필요할 때</li>
+        </ul></div>
+      <div class="box"><div class="tag">자체 서버 에이전트</div><h4>이럴 때</h4>
+        <ul>
+          <li>24시간 감시·예약 작업을 여러 개 돌릴 때</li>
+          <li>텔레그램 등 개인 메신저로 알림을 받고 싶을 때</li>
+          <li>모델을 골라 비용을 낮추고 싶을 때 (개인 용도)</li>
+        </ul></div>
+    </div>
+    <p>어느 쪽이든 <a href="../engineering-evolution/">03편</a>의 원칙이 그대로 적용됩니다. 지침(하네스)을 먼저 쓰고, 검증 기준과 횟수 제한(루프)을 두고, 되돌리기 어려운 일 앞에는 사람 승인(그래프)을 둡니다.</p>
+  </section>
+
+  <!-- 8 -->
+  <section id="s8">
+    <h2><span class="no">부록</span>용어와 출처</h2>
+    <div class="tbl"><table>
+      <tbody>
+        <tr><th>에이전트</th><td>목표를 받아 스스로 계획하고 도구로 실행하는 AI</td></tr>
+        <tr><th>VPS</th><td>인터넷에서 월 단위로 빌리는 가상 서버. 24시간 켜져 있음</td></tr>
+        <tr><th>cron</th><td>정해진 시각·주기에 작업을 자동 실행하는 예약 기능</td></tr>
+        <tr><th>스킬</th><td>한 번 해 본 작업 절차를 적어 둔 재사용 메모(SKILL.md)</td></tr>
+        <tr><th>게이트웨이</th><td>Hermes와 텔레그램 등 메신저를 이어 주는 프로그램</td></tr>
+        <tr><th>홈 채널</th><td>예약 작업 결과가 도착하는 대화방. <code>/sethome</code>으로 지정</td></tr>
+        <tr><th>[SILENT]</th><td>예약 작업이 이 답으로 끝나면 알림을 보내지 않는 약속어</td></tr>
+      </tbody>
+    </table></div>
+    <h3>출처 (2026. 11. 6. 확인)</h3>
+    <ul>
+      <li>Metics Media, 「<a href="https://www.youtube.com/watch?v=rCkYVxOX-dI">Build Your First AI Agent in 20 Minutes (No Coding)</a>」, YouTube, 2026. 10. 19. — 1·3장의 구성</li>
+      <li>Nous Research, <a href="https://github.com/NousResearch/hermes-agent">Hermes Agent 저장소</a>와 <a href="https://hermes-agent.nousresearch.com/docs">공식 문서</a>(빠른 시작, Telegram, Cron, Skills, Security) — 3·4·6장의 명령어</li>
+      <li>OpenAI 도움말, 「<a href="https://help.openai.com/articles/20001519">맞춤형 GPT 지원 종료 및 마이그레이션 FAQ</a>」 — 5장</li>
+      <li>Claude 도움말, <a href="https://support.claude.com/en/articles/9519177-how-can-i-create-and-manage-projects">프로젝트 만들기</a> · <a href="https://support.claude.com/en/articles/13854387-schedule-recurring-tasks-in-claude-cowork">예약 작업</a> — 5장</li>
+      <li>Microsoft Learn, <a href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/fundamentals-get-started">Copilot Studio 시작하기</a> · <a href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/publication-add-bot-to-microsoft-teams">Teams 게시</a> — 5장</li>
+      <li>Gemini 앱 고객센터, 「<a href="https://support.google.com/gemini/answer/15235603?hl=ko">맞춤 Gems를 만드는 방법</a>」 — 5장</li>
+    </ul>
+    <p>함께 읽기: <a href="../agent-guide/">01편 단독 vs 멀티 에이전트</a> · <a href="../engineering-evolution/">03편 하네스·루프·그래프</a></p>
+  </section>
+
+  <footer>
+    작성: 이진수 (변리사) · 2026. 11. 6. · CC BY-NC 4.0<br>
+    이 글은 위 영상을 요약하고 작성자의 정리와 공식 문서 확인 결과를 더해 생성형 AI의 도움으로 작성했으며, 사람이 검토했습니다. 서비스 메뉴와 정책은 수시로 바뀌니 공식 도움말을 함께 확인하세요. 오류 제보는 <a href="https://github.com/sonovman/ai-practice-handbooks/issues">Issues</a>로 남겨 주세요.
+  </footer>
+</main>
+</div>
+
+<script>
+  var links = [].slice.call(document.querySelectorAll('.side a'));
+  var io = new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+      if (e.isIntersecting) links.forEach(function (a) { a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id); });
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  document.querySelectorAll('main section[id]').forEach(function (s) { io.observe(s); });
+</script>
+</body>
+</html>

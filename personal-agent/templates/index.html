@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>개인 에이전트 템플릿</title>
+<link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+<div class="bar"><div class="bar-in">
+  <a class="brand" href="../../">AI 실무 핸드북</a>
+  <div class="links"><a href="../">← 본문으로</a></div>
+</div></div>
+<div class="wrap">
+  <div class="eyebrow">핸드북 04 · 자료</div>
+  <h1>개인 에이전트 템플릿</h1>
+  <p class="lead">파일 이름을 누르면 내용을 볼 수 있고, 오른쪽 버튼으로 내려받을 수 있습니다.</p>
+
+  <div class="tbl"><table>
+    <thead><tr><th>파일</th><th>쓰는 곳</th><th></th></tr></thead>
+    <tbody>
+      <tr><th><a href="agent-instructions.md">agent-instructions.md</a></th><td>Claude 프로젝트 · Copilot Studio · Gemini Gem의 지침 칸에 붙여 넣는 공용 지침</td><td><a href="agent-instructions.md" download>받기</a></td></tr>
+      <tr><th><a href="price-watch/SKILL.md">price-watch/SKILL.md</a></th><td>Hermes Agent 스킬 · 바뀌었을 때만 알리는 감시 절차 (AI가 판단)</td><td><a href="price-watch/SKILL.md" download>받기</a></td></tr>
+      <tr><th><a href="watch.py">watch.py</a></th><td>감시 스크립트 · Hermes 스크립트 예약 작업용, 또는 PC에서 단독 실행 (AI 호출 없음)</td><td><a href="watch.py" download>받기</a></td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>어디에 두나 (Hermes Agent)</h3>
+<pre><code>~/.hermes/
+├── skills/
+│   └── price-watch/
+│       └── SKILL.md      ← 폴더째 넣기
+└── scripts/
+    └── watch.py          ← 스크립트 예약 작업은 이 폴더 안의 파일만 실행</code></pre>
+  <p class="cap">Windows에 Hermes를 직접 설치했다면 <code>%LOCALAPPDATA%\hermes</code> 아래에 같은 구조로 둡니다.</p>
+
+  <div class="note"><b>확인 범위</b> — <code>watch.py</code>는 Windows의 Python 3.12에서 실제 공개 환율 API로 8가지 경우를 시험했습니다(첫 실행, 변화 없음, 기준 미만 변동, 2% 변동, 정규식 모드, 주소 오류, 기록 파일 손상, 텔레그램 설정 누락). <code>SKILL.md</code>는 Hermes 공식 문서의 형식(name·description 머리말, When to Use·Procedure·Pitfalls·Verification)에 맞췄습니다. 두 파일 모두 <b>Hermes 안에서 직접 돌려 보지는 않았으니</b>, 처음 한 번은 <code>hermes cron run &lt;작업 이름&gt;</code>으로 바로 실행해 결과를 확인하세요.</div>
+
+  <footer>CC BY-NC 4.0 · 출처를 밝히면 비영리 목적으로 자유롭게 고쳐 쓸 수 있습니다.</footer>
+</div>
+</body>
+</html>
