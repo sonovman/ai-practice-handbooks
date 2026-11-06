@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 리서치, 인용은 사람이 확인한다</title>
+<meta name="description" content="AI로 판례·심결·선행문헌을 리서치할 때 쟁점 정리부터 미검증 표, 원문·효력 확인, 확인된 근거만으로 쓰는 메모까지 5단계로 정리하고, 인용 점검 스크립트와 프롬프트·지침·스킬을 제공합니다.">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<div class="bar"><div class="bar-in">
+  <a class="brand" href="../">AI 실무 핸드북</a>
+  <div class="links">
+    <a href="templates/">템플릿</a>
+    <a href="https://github.com/sonovman/ai-practice-handbooks">GitHub ↗</a>
+  </div>
+</div></div>
+
+<div class="doc">
+  <aside class="side">
+    <div class="label">차례</div>
+    <ol>
+      <li><a href="#s0">한 줄 결론</a></li>
+      <li><a href="#s1">1. 왜 지금인가</a></li>
+      <li><a href="#s2">2. AI가 틀리는 세 가지</a></li>
+      <li><a href="#s3">3. 다섯 단계 한눈에</a></li>
+      <li><a href="#s4">4. 단계별 프롬프트</a></li>
+      <li><a href="#s5">5. 어디서 확인하나</a></li>
+      <li><a href="#s6">6. 직접 해 보니</a></li>
+      <li><a href="#s7">7. 점검기와 키트</a></li>
+      <li><a href="#s8">8. 쓸 때 주의</a></li>
+      <li><a href="#s9">부록 · 원본과 출처</a></li>
+    </ol>
+  </aside>
+
+<main>
+  <div class="eyebrow">핸드북 07 · IP 실무</div>
+  <h1>AI 리서치, 인용은 사람이 확인한다</h1>
+  <p class="lead">AI는 쟁점을 빨리 나누고 자료를 잘 정리하지만, 없는 판례 번호와 그럴듯한 인용문도 만들어 냅니다. 판례·심결·조문·특허문헌을 근거로 메모를 쓸 때 <strong>AI의 출력은 단서로만 쓰고, 원문에서 확인한 것만 서면에 올리는</strong> 5단계 워크플로우를 국내 실무에 맞게 정리했습니다.</p>
+  <div class="meta">
+    <b>독자</b><span>심판·소송·의견서 준비에 AI를 쓰는 변리사, IP 담당자, 사내 법무</span>
+    <b>분량</b><span>읽기 약 20분 · 템플릿(프롬프트·인용 목록·지침·스킬·점검 스크립트)</span>
+    <b>판</b><span>1.0 · 2026. 11. 7.</span>
+  </div>
+
+  <section id="s0">
+    <div class="key">
+      <div class="eyebrow">한 줄 결론</div>
+      <p style="font-size:19px;font-weight:600;line-height:1.6;margin:8px 0 10px">AI가 말한 판례는 원문에서 찾기 전까지 없는 판례다.</p>
+      <p style="opacity:.75;font-size:15px">“사실만 말하라”는 지시를 넣어도 확인 의무는 사라지지 않습니다. 그래서 이 워크플로우는 프롬프트보다 <b>표 한 장(citation-log.csv)</b>을 중심에 둡니다. AI가 꺼낸 근거는 모두 ‘미검증’으로 표에 올리고, 사람이 원문으로 ‘확인됨’ 또는 ‘폐기’를 적고, 메모는 확인됨만으로 씁니다.</p>
+    </div>
+  </section>
+
+  <!-- 1 -->
+  <section id="s1">
+    <h2><span class="no">01</span>왜 지금인가</h2>
+    <p>남의 나라 이야기가 아닙니다. 2025년 하반기부터 국내 법원 판결문에 “존재하지 않는 사건번호”라는 표현이 등장했고, 2026년에는 제도 대응이 시작됐습니다.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>시기</th><th>있었던 일</th></tr></thead>
+      <tbody>
+        <tr><th>2025. 8. ~ 2026. 1.</th><td>인천지법·서울남부지법 등에서 당사자가 인용한 판례가 “존재하지 않는 사건번호”이거나 내용이 다르다고 판결문에 적고 주장을 배척. 5년 차 변호사가 수행한 사건도 포함 <small>(법률신문 2026. 4. 1.)</small></td></tr>
+        <tr><th>2026. 3.</th><td>재판부가 준비명령으로 “인용한 대법원 판결 전문 제출, 없는 판례 특정, 작성 경위 설명”을 요구한 사례 보도 <small>(노컷뉴스 2026. 3. 20.)</small></td></tr>
+        <tr><th>2026. 3.</th><td>법원행정처 ‘AI 활용 허위 주장·증거 제출 대응 TF’ 대책 발표 — AI 사용 고지와 인용 법령 확인을 담은 민사소송규칙 개정안, 허위 인용에 과태료를 매기는 소송법 개정안 제안 <small>(법률신문 2026. 7. 24.)</small></td></tr>
+        <tr><th>2026. 7.</th><td>법원 제출 서류에 AI 활용 여부를 표기하도록 의무화하는 방안 검토, 대한변협 의견 청취 <small>(같은 기사)</small></td></tr>
+        <tr><th>2026. 8.</th><td>허위 인용으로 절차가 지연되면 소송비용 부담, 검증 없이 제출한 변호사는 변협 징계 회부 가능 — 헌법재판소에서도 없는 사건번호를 적은 청구가 각하 <small>(한국경제 2026. 8. 2.)</small></td></tr>
+      </tbody>
+    </table></div>
+    <p class="cap">제도 내용은 기사 기준이며, 개정안은 2026. 11. 7. 현재 추진·검토 단계로 보도되었습니다. 제출 전에는 해당 법원·특허심판원의 최신 안내를 확인하세요.</p>
+  </section>
+
+  <!-- 2 -->
+  <section id="s2">
+    <h2><span class="no">02</span>AI가 틀리는 세 가지</h2>
+    <p>가짜 판례만 문제가 아닙니다. 실무에서 더 무서운 것은 진짜 판례에 없는 말을 붙이는 경우입니다. 번호를 검색해 보면 판결이 나오니 안심하게 됩니다.</p>
+    <div class="grid3">
+      <div class="box"><div class="tag">존재</div><h4>없는 번호</h4><p>형식이 완벽한 사건번호를 만들어 냅니다. 선고일이 미래이거나 사건번호 연도보다 앞서는 등 <b>형식으로 걸러지는 것</b>도 있지만, 대부분은 검색해야 압니다.</p></div>
+      <div class="box"><div class="tag">명제</div><h4>있는 판례, 없는 말</h4><p>실존 판례에 다른 판례의 법리나 그럴듯한 문장을 붙입니다. 번호 검색만으로는 못 잡고 <b>판결요지·이유를 읽어야</b> 잡힙니다. 6장에 실제 사례가 있습니다.</p></div>
+      <div class="box"><div class="tag">효력</div><h4>지금도 유효한가</h4><p>전원합의체로 변경된 판례, 상급심에서 취소된 판결·심결, 개정으로 번호가 바뀐 조문을 구별하지 못합니다. <b>AI가 판단할 수 없는 영역</b>입니다.</p></div>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section id="s3">
+    <h2><span class="no">03</span>다섯 단계 한눈에</h2>
+    <div class="graph">
+      <div class="node end"><span class="id">IN</span><b>질문 · 절차 · 입장 · 사실 · 기준 시점</b><p>의뢰인·회사 이름은 A사·B사로</p></div>
+      <div class="edge"></div>
+      <div class="node"><span class="id">1</span><b>쟁점 쪼개기 — 인용 금지</b><p>쟁점·요건·검색어·찾을 근거의 종류만. 번호는 하나도 쓰지 않게 합니다.</p></div>
+      <div class="edge"><span>사람이 검색해 원문 확보</span></div>
+      <div class="node"><span class="id">2</span><b>내가 준 원문만으로 법리 정리</b><p>자료 밖 근거는 “자료 밖 후보”로 격리. 인용문은 한 글자도 바꾸지 않게.</p></div>
+      <div class="edge"></div>
+      <div class="node"><span class="id">3</span><b>AI가 꺼낸 근거를 미검증 표로</b><p>citation-log.csv — 상태는 모두 “미검증”</p></div>
+      <div class="edge"></div>
+      <div class="node dark"><span class="id">4</span><b>사람이 원문·효력 확인 → 확인됨 / 폐기</b><p>존재 · 원문일치 · 효력 · 원문발췌. AI에게 맡기지 않는 단계</p></div>
+      <div class="edge"><span>확인됨만 AI에게 돌려줌</span></div>
+      <div class="node"><span class="id">5</span><b>확인됨 근거만으로 메모</b><p>폐기된 근거가 받치던 주장은 “미결 쟁점”으로</p></div>
+      <div class="edge"></div>
+      <div class="node dark"><span class="id">✓</span><b>cite_check.py 점검 + 눈으로 최종 대조</b><p>목록 밖 인용 · 폐기 인용 재등장 · 날짜 이상 · 인용문 불일치를 표로</p></div>
+      <div class="loop"><b>고치면 처음부터</b> — 수정 과정에서 새로 들어간 인용은 다시 3단계 “미검증”으로 올립니다.</div>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section id="s4">
+    <h2><span class="no">04</span>단계별 프롬프트</h2>
+    <p>핵심 문장만 실었습니다. 사안 입력 칸까지 갖춘 전체본은 <a href="templates/prompts.md">prompts.md</a>에 있습니다.</p>
+
+    <h3>1단계 · 쟁점 쪼개기</h3>
+    <div class="code">
+      <div class="head"><span>복사용 프롬프트</span><button class="copy">복사</button></div>
+<pre><code>너는 특허·법률 리서치를 돕는 조수다. 이 단계에서는 판례 번호, 심결 번호, 조문 번호를 하나도 쓰지 마라.
+번호가 떠오르더라도 적지 말고 "찾아볼 판례 유형"으로만 적어라.
+
+[사안] 질문 / 절차와 단계 / 우리 쪽 입장 / 핵심 사실(익명) / 기준 시점
+
+[출력]
+1. 쟁점과 하위 쟁점
+2. 쟁점별 요건과 그 요건을 가르는 사실
+3. 쟁점별 검색어 3~5개 (종합법률정보·KIPRIS·심결 검색용)
+4. 찾아야 할 근거의 종류 (대법원 판례 / 특허법원 판결 / 심결 / 법령 / 심사기준 / 선행문헌)
+5. 우리에게 불리할 수 있는 쟁점</code></pre>
+    </div>
+
+    <h3>2단계 · 원문만으로 법리 정리</h3>
+    <div class="code">
+      <div class="head"><span>복사용 프롬프트</span><button class="copy">복사</button></div>
+<pre><code>아래 [자료]는 내가 직접 검색해 확보한 원문이다. 이 자료만 근거로 분석하라.
+- 자료에 없는 판례·심결·조문은 쓰지 마라. 기억나는 것은 맨 끝 "자료 밖 후보"에만 적어라.
+- 인용문은 자료의 문장을 한 글자도 바꾸지 말고 따옴표로 옮겨라. 요약은 따옴표 없이.
+- 자료로 답이 안 되는 부분은 "자료 부족"이라고 써라.
+- 각 판결이 구법을 적용했는지 표시하라.
+
+[출력] 쟁점별 지배 법리 / 자료별 요지 표 / 자료 간 충돌 / 공백 / 자료 밖 후보(검증 전)
+
+[자료]
+--- 자료 1: [법원·선고일·사건번호] ---
+[판결요지와 관련 이유 원문]</code></pre>
+    </div>
+
+    <h3>3단계 · 미검증 표</h3>
+    <div class="code">
+      <div class="head"><span>복사용 프롬프트</span><button class="copy">복사</button></div>
+<pre><code>지금까지 대화에서 내가 원문으로 주지 않았는데 네가 언급한 판례·심결·조문·특허문헌·심사기준을
+하나도 빠뜨리지 말고 아래 CSV 형식으로만 출력하라.
+
+번호,인용,종류,주장 명제,출처,존재,원문일치,효력,원문발췌,확인처,확인일,확인자,상태,비고
+
+- 출처: "AI 제안" 또는 "제공 자료" / 확인 관련 칸은 비워 둔다 / 상태는 모두 "미검증"
+- 번호를 정확히 모르면 추측하지 말고 "번호 불명 — [기억나는 내용]"으로 적어라.</code></pre>
+    </div>
+
+    <h3>4단계 · 확인 후 AI에게 돌려줄 말</h3>
+    <div class="code">
+      <div class="head"><span>복사용 프롬프트</span><button class="copy">복사</button></div>
+<pre><code>첨부한 citation-log.csv에서 상태가 "확인됨"인 근거만 사용하라.
+"폐기"인 근거는 다시 언급하지 말고, 그 근거로 뒷받침하던 주장은 "미결 쟁점"으로 옮겨라.
+새 판례·심결·조문을 추가하지 마라. 필요하면 "추가 조사 필요"로만 적어라.
+따옴표 인용은 원문발췌 칸의 문장만, 한 글자도 바꾸지 말고 써라.</code></pre>
+    </div>
+
+    <h3>5단계 · 메모</h3>
+    <div class="code">
+      <div class="head"><span>복사용 프롬프트</span><button class="copy">복사</button></div>
+<pre><code>확인됨 근거만으로 리서치 메모를 써라.
+구성: 1 질문 / 2 짧은 답(3줄) / 3 적용 법리(인용 목록 번호 표시) / 4 분석(사실·추론·법률평가 구분)
+      / 5 결론과 남은 위험 / 6 미결 쟁점 / 7 인용 목록(번호·인용·확인처·확인일)
+- 확인됨 목록에 없는 인용을 넣었다면 그 문장을 지우고 6번으로 옮겨라.
+- 구법을 적용한 판결은 그 사실을 적어라.
+- 판단에 필요한 사실이 빠졌으면 무엇이 빠졌는지 적어라.</code></pre>
+    </div>
+    <div class="note"><b>왜 1단계에서 번호를 막나</b> — 처음부터 번호를 받으면 그 번호가 이후 대화의 출발점이 됩니다. 검색어와 근거의 ‘종류’만 받고, 실제 원문은 사람이 찾아 2단계에 넣는 것이 가장 안정적입니다.</div>
+  </section>
+
+  <!-- 5 -->
+  <section id="s5">
+    <h2><span class="no">05</span>어디서 확인하나</h2>
+    <p>4단계는 사람이 합니다. 인용 종류별로 확인처와 볼 것을 정리했습니다.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>인용 종류</th><th>확인처</th><th>존재·원문</th><th>효력</th></tr></thead>
+      <tbody>
+        <tr><th>대법원 판례</th><td><a href="https://glaw.scourt.go.kr/">대법원 종합법률정보</a>, <a href="https://www.law.go.kr/">국가법령정보센터</a>(판례)</td><td>선고일·사건번호·판결/결정 일치, 판결요지와 이유에 그 문장이 있는지</td><td>같은 쟁점의 이후 판결 검색, 특히 전원합의체 판결의 “변경” 여부</td></tr>
+        <tr><th>하급심·특허법원</th><td>대법원 판결서 인터넷 열람, 특허법원 홈페이지</td><td>사건부호(허·나 등)와 법원 일치</td><td>상고·상고심 결과, 확정 여부</td></tr>
+        <tr><th>특허심판원 심결</th><td><a href="https://www.kipris.or.kr/">KIPRIS</a> 심판 정보</td><td>심판번호(당·원 등), 심결일, 청구취지</td><td>심결취소소송 제기·결과</td></tr>
+        <tr><th>법령 조문</th><td><a href="https://www.law.go.kr/">국가법령정보센터</a></td><td>현행 조문 문언</td><td>개정 연혁·시행일, 판례가 적용한 <b>구법 조문</b>과의 차이</td></tr>
+        <tr><th>특허문헌</th><td>KIPRIS, 각국 특허청 DB</td><td>번호·종류(공개/등록)·공보 발행일, 인용한 단락·도면이 실제로 그 내용인지</td><td>심사·등록 상태, 정정 여부</td></tr>
+        <tr><th>심사기준</th><td>특허청 누리집</td><td>해당 판(개정일)과 쪽·항목</td><td>최신판에서 바뀌었는지</td></tr>
+      </tbody>
+    </table></div>
+    <div class="note"><b>국내에는 ‘한 번에 효력을 표시해 주는 도구’가 보편적이지 않습니다</b> — 원본 워크플로우가 전제하는 미국식 citator(판례의 파기·제한 여부를 표시하는 서비스) 대신, 위 표의 ‘효력’ 칸 네 가지(후속 판례 · 상급심 결과 · 조문 개정 · 문헌 상태)를 직접 확인하고 결과를 citation-log의 효력 칸에 적습니다. 상용 법률 DB를 쓰는 조직이라면 그 서비스의 인용 관계 기능을 함께 쓰세요.</div>
+    <h3>citation-log.csv 한 줄을 채우는 순서</h3>
+    <ol class="steps">
+      <li><b>존재</b>번호로 검색합니다. 없으면 바로 <code>폐기</code>. 비슷한 번호를 찾아 “아마 이것”으로 바꾸지 않습니다.</li>
+      <li><b>원문일치</b>주장 명제가 판결요지·이유에 있는지 읽습니다. 일부만 맞으면 명제를 고쳐 적습니다.</li>
+      <li><b>효력</b>변경·취소·확정·개정 여부를 위 표대로 보고 한 줄로 적습니다.</li>
+      <li><b>원문발췌</b>메모에서 따옴표로 쓸 문장을 원문에서 복사해 둡니다. 점검기가 이 칸과 대조합니다.</li>
+      <li><b>상태</b><code>확인됨</code> 또는 <code>폐기</code>. ‘아마’는 없습니다.</li>
+    </ol>
+  </section>
+
+  <!-- 6 -->
+  <section id="s6">
+    <h2><span class="no">06</span>직접 해 보니</h2>
+    <h3>이 글을 쓰는 동안 AI가 틀린 곳</h3>
+    <p>예시 메모를 만들면서 이 글을 작성한 AI도 기억에 기대 한 문장을 적었습니다. “대법원 2009. 11. 12. 선고 2007후3660 판결은 선행문헌에 결합의 <b>암시·동기</b>가 제시되어 있는지를 본다”는 내용입니다. 번호도, 선고일도, 사건의 주제(진보성)도 맞았습니다. 그런데 공개 판례 DB에서 판결요지와 본문을 확인하니 <b>‘암시’, ‘동기’라는 말이 없었습니다.</b> 이 판결의 요지는 사후적 고찰 금지였고, 참조판례로 적힌 2006후138 판결에도 그 표현은 없었습니다.</p>
+    <div class="grid2">
+      <div class="box"><div class="tag">AI 기억</div><h4>2007후3660 = 암시·동기 법리</h4><p>번호·날짜·주제가 모두 맞아 검색만 했다면 통과했을 인용</p></div>
+      <div class="box"><div class="tag">원문 확인</div><h4>2007후3660 = 사후적 고찰 금지</h4><p>“사후적으로 통상의 기술자가 그 발명을 용이하게 발명할 수 있는지를 판단해서는 안 된다.” / 참조조문은 구 특허법(2006. 3. 3. 법률 제7871호로 개정되기 전의 것) 제29조 제2항</p></div>
+    </div>
+    <p>2장의 두 번째 유형, ‘있는 판례, 없는 말’입니다. 이 문장은 예시 메모에서 폐기하고 “출처 판결 확인 필요”로 미결 쟁점에 남겼습니다. 덤으로 이 판결이 <b>구법 조문</b>을 적용했다는 사실도 확인돼 인용 목록 비고에 적었습니다.</p>
+
+    <h3>점검기로 돌려 본 결과</h3>
+    <p>가상 사안 「자동 급수 화분 거절결정불복」으로 AI 초안 메모(<a href="templates/sample/memo-draft.md">memo-draft.md</a>)를 만들고, 위 확인 결과를 담은 <a href="templates/sample/citation-log.csv">citation-log.csv</a>와 대조했습니다. 일부러 미래 날짜의 가짜 판례와 가짜 문헌번호도 넣었습니다.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>줄</th><th>인용</th><th>판정</th><th>문제</th></tr></thead>
+      <tbody>
+        <tr><th>17</th><td>특허법 제29조 제2항</td><td>통과</td><td>—</td></tr>
+        <tr><th>18</th><td>대법원 2009. 11. 12. 선고 2007후3660 판결</td><td>통과</td><td>—</td></tr>
+        <tr><th>19</th><td>대법원 2009. 11. 12. 선고 2007후3660 판결</td><td><b>확인 필요</b></td><td>인용문이 원문발췌와 다름 (“…암시나 동기가 명시적으로…”)</td></tr>
+        <tr><th>20</th><td>대법원 2007. 8. 24. 선고 2006후138 판결</td><td>통과</td><td>—</td></tr>
+        <tr><th>21</th><td>대법원 2027. 3. 18. 선고 2026후99999 판결 <small>(가짜)</small></td><td><b>확인 필요</b></td><td>폐기된 인용이 다시 나옴 · 선고일이 미래</td></tr>
+        <tr><th>25</th><td>공개특허공보 10-2099-0001234 <small>(가짜)</small></td><td><b>확인 필요</b></td><td>목록에 없음 · 문헌번호의 연도가 미래</td></tr>
+      </tbody>
+    </table></div>
+    <p class="cap">전체 결과: <a href="templates/sample/report-draft.md">report-draft.md</a> (6건 중 문제 3건, 종료코드 1) → 확인됨만으로 고친 <a href="templates/sample/memo-final.md">memo-final.md</a>는 <a href="templates/sample/report-final.md">report-final.md</a> (4건 모두 통과, 종료코드 0). 2026. 11. 7. 실행.</p>
+    <div class="note"><b>점검기가 잡는 것과 못 잡는 것</b> — 같은 번호인데 19줄만 걸린 것은 따옴표 인용문을 원문발췌와 대조했기 때문입니다. 반대로 따옴표 없이 요약으로 쓴 잘못된 명제는 잡지 못합니다. 그래서 2단계에서 “인용은 따옴표로, 요약은 따옴표 없이”를 강제하고, 마지막 눈 대조를 생략하지 않습니다.</div>
+  </section>
+
+  <!-- 7 -->
+  <section id="s7">
+    <h2><span class="no">07</span>점검기와 키트</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>파일</th><th>쓰는 곳</th></tr></thead>
+      <tbody>
+        <tr><th><a href="templates/prompts.md">prompts.md</a></th><td>5단계 프롬프트 전체본</td></tr>
+        <tr><th><a href="templates/citation-log.csv">citation-log.csv</a></th><td>미검증 표이자 확인 목록. 3단계에서 만들고 4단계에서 채움 (엑셀에서 바로 열림)</td></tr>
+        <tr><th><a href="templates/CLAUDE.md">CLAUDE.md</a></th><td>Claude 프로젝트 지침 · ChatGPT 프로젝트 · Gemini Gem · Copilot 지침 칸에 붙여 넣는 규칙 8개</td></tr>
+        <tr><th><a href="templates/skill/cite-check/SKILL.md">skill/cite-check</a></th><td>Claude 스킬 (절차 + 점검 스크립트 포함). Anthropic skill-creator 검증 통과</td></tr>
+        <tr><th><a href="templates/cite_check.py">cite_check.py</a></th><td>인용 점검기. Python 3.8 이상, 추가 설치 없음</td></tr>
+        <tr><th><a href="templates/#sample">sample/</a></th><td>6장 예시의 초안·최종 메모, 인용 목록, 점검 결과</td></tr>
+      </tbody>
+    </table></div>
+    <h3>점검기 실행</h3>
+    <div class="code">
+      <div class="head"><span>명령 프롬프트 · 터미널</span><button class="copy">복사</button></div>
+<pre><code>python cite_check.py memo.md citation-log.csv --out report.md</code></pre>
+    </div>
+    <p>메모에서 판결·결정(법원·선고일·사건번호), 사건·심판번호, 법령 조문(구법 구분), 국내외 특허문헌 번호를 뽑아 citation-log와 대조합니다. 판정은 네 가지입니다.</p>
+    <div class="grid2">
+      <div class="box"><h4>목록 밖 인용</h4><p>citation-log에 없거나 상태가 확인됨이 아닌 인용</p></div>
+      <div class="box"><h4>폐기 인용 재등장</h4><p>4단계에서 버린 인용이 수정 과정에서 다시 들어온 경우</p></div>
+      <div class="box"><h4>형식 이상</h4><p>없는 날짜, 미래 선고일, 선고연도 &lt; 사건번호 연도, 특허법원 판결에 ‘후’ 부호 등</p></div>
+      <div class="box"><h4>인용문 불일치</h4><p>인용과 같은 줄의 따옴표 문장이 원문발췌에 그대로 없음</p></div>
+    </div>
+    <p>인터넷에서 판례를 찾지는 않습니다. 통과는 “확인된 목록에 있는 것만 썼다”는 뜻이지 내용이 옳다는 뜻이 아닙니다. 문제가 하나라도 있으면 종료코드 1을 돌려주므로 Claude Code의 훅이나 루틴에 연결해 쓸 수 있습니다(<a href="../engineering-evolution/">03편</a> 참고).</p>
+    <div class="btns">
+      <a class="btn primary" href="downloads/cite-check-kit.zip" download>키트 전체 받기 (ZIP)</a>
+      <a class="btn" href="downloads/cite-check-skill.zip" download>Claude 스킬만 받기</a>
+      <a class="btn" href="templates/">파일 하나씩 보기</a>
+    </div>
+  </section>
+
+  <!-- 8 -->
+  <section id="s8">
+    <h2><span class="no">08</span>쓸 때 주의</h2>
+    <div class="grid3">
+      <div class="box"><div class="tag">책임</div><h4>서명하는 사람이 확인</h4><p>프롬프트 규칙과 점검기는 실수를 줄일 뿐 확인 의무를 대신하지 않습니다. 제출 서면의 인용은 서명자가 원문과 대조합니다.</p></div>
+      <div class="box"><div class="tag">기밀</div><h4>넣기 전에 익명화</h4><p>의뢰인·발명자 실명, 출원 전 발명, 비공개 심판·소송 기록은 회사가 승인한 환경에서만. 학습 제외 조건을 확인한 업무용 요금제를 씁니다.</p></div>
+      <div class="box"><div class="tag">제출</div><h4>제출처 안내 확인</h4><p>AI 활용 표기 등 제출 서류 관련 규칙이 논의 중입니다. 제출 직전에 해당 법원·특허심판원의 최신 안내를 확인합니다.</p></div>
+    </div>
+    <div class="note"><b>원문을 붙여 넣는 것이 가장 강력한 안전장치입니다</b> — 같은 질문이라도 AI의 기억에 묻는 것과 원문을 주고 묻는 것은 결과가 다릅니다. 판례 원문을 대화로 가져오는 커넥터(MCP)를 쓰더라도, 현재 효력 확인은 별도로 해야 합니다.</div>
+    <h3>최종 체크리스트</h3>
+    <ul>
+      <li>질문·절차·입장·사실·기준 시점을 정리했다</li>
+      <li>근거 원문을 직접 찾아 AI에게 주었다</li>
+      <li>AI가 꺼낸 근거를 모두 citation-log에 ‘미검증’으로 올렸다</li>
+      <li>모든 인용의 존재·원문일치를 원문에서 확인했다</li>
+      <li>후속 판례·상급심·조문 개정·문헌 상태로 효력을 확인했다</li>
+      <li>확인 못 한 근거는 폐기하고 미결 쟁점으로 옮겼다</li>
+      <li>cite_check.py 결과 문제 0건, 인용문을 눈으로 대조했다</li>
+      <li>제출처의 AI 관련 안내를 확인했다</li>
+    </ul>
+  </section>
+
+  <!-- 9 -->
+  <section id="s9">
+    <h2><span class="no">부록</span>원본 워크플로우와 출처</h2>
+    <p>이 편은 Claude for Lawyers의 <a href="https://claudeforlawyers.com/workflows/legal-research-and-cite-check">Legal Research and Cite-Check</a> 워크플로우의 5단계 구조를 기초로, 국내 IP 실무에 맞게 바꿨습니다.</p>
+    <div class="tbl"><table>
+      <thead><tr><th></th><th>원본 (미국 소송 실무)</th><th>이 편 (국내 IP 실무)</th></tr></thead>
+      <tbody>
+        <tr><th>대상</th><td>판례·법령</td><td>판례·심결·법령·특허문헌·심사기준</td></tr>
+        <tr><th>원문 확보</th><td>공식 판례집, CourtListener 커넥터</td><td>종합법률정보, 국가법령정보센터, 판결서 열람, KIPRIS</td></tr>
+        <tr><th>효력 확인</th><td>citator (부정적 처리 표시)</td><td>후속·전원합의체 판례, 상급심 결과, 조문 연혁, 문헌 상태를 직접 확인</td></tr>
+        <tr><th>미검증 표</th><td>대화 속 표</td><td>citation-log.csv 한 장으로 미검증 → 확인됨/폐기까지 관리</td></tr>
+        <tr><th>더한 것</th><td>—</td><td>인용 점검 스크립트, 구법 표시, 인용문 원문발췌 대조, 스킬·지침 파일</td></tr>
+        <tr><th>제출 전</th><td>법원별 AI 공개 요건 (standing order 등)</td><td>법원행정처 대책·제출처 최신 안내</td></tr>
+      </tbody>
+    </table></div>
+    <h3>용어</h3>
+    <div class="tbl"><table>
+      <tbody>
+        <tr><th>환각(hallucination)</th><td>AI가 사실이 아닌 내용을 사실처럼 만들어 내는 현상</td></tr>
+        <tr><th>citator</th><td>판례가 이후 파기·변경·제한되었는지 표시해 주는 미국식 인용 확인 서비스</td></tr>
+        <tr><th>사후적 고찰</th><td>발명 내용을 이미 안 상태에서 거꾸로 선행기술을 조합해 쉽다고 판단하는 오류</td></tr>
+        <tr><th>구법</th><td>사건 당시 적용된 개정 전 법률. 판례의 참조조문에 “구 ○○법(… 개정되기 전의 것)”으로 표시</td></tr>
+      </tbody>
+    </table></div>
+    <h3>출처</h3>
+    <ul>
+      <li>Claude for Lawyers, <a href="https://claudeforlawyers.com/workflows/legal-research-and-cite-check">Legal Research and Cite-Check</a> — 5단계 구조의 원본</li>
+      <li>법률신문, <a href="https://www.lawtimes.co.kr/news/articleViewAmp.html?idxno=218595">판결문에 “존재하지 않는 사건번호”</a> (2026. 4. 1.)</li>
+      <li>법률신문, <a href="https://www.lawtimes.co.kr/news/articleViewAmp.html?idxno=223942">법원행정처, 법원 제출 서류에 ‘AI 활용 여부’ 표기 의무화 검토</a> (2026. 7. 24.)</li>
+      <li>노컷뉴스, <a href="https://www.nocutnews.co.kr/news/6488019">‘가짜 판례 복붙’ AI 서면에 황당한 법원</a> (2026. 3. 20.)</li>
+      <li>한국경제, <a href="https://www.hankyung.com/article/2026080200981">AI가 만든 ‘유령 판례’에 법조계 골머리</a> (2026. 8. 2.)</li>
+      <li>6장 판례 확인: 공개 판례 DB <a href="https://www.nepla.ai/case/대법원/2007후3660">2007후3660</a> · <a href="https://www.nepla.ai/case/대법원/2006후138">2006후138</a> (2026. 11. 7. 확인. 서면에 쓸 때는 종합법률정보 원문으로 다시 확인하세요)</li>
+    </ul>
+    <p>함께 읽기: <a href="../claim-analyzer/">06편 특허 구성특징 분석 도우미</a> · <a href="../agent-guide/">01편 리뷰어 + 사람 승인 체계</a></p>
+  </section>
+
+  <footer>
+    작성: 이진수 (변리사) · 2026. 11. 7. · CC BY-NC 4.0<br>
+    생성형 AI의 도움을 받아 작성하고 사람이 검토했습니다. 예시 사안은 가상이며 법률 자문이 아닙니다. 오류 제보는 <a href="https://github.com/sonovman/ai-practice-handbooks/issues">Issues</a>로 남겨 주세요.
+  </footer>
+</main>
+</div>
+
+<script>
+  document.querySelectorAll('.copy').forEach(function (b) {
+    b.addEventListener('click', function () {
+      navigator.clipboard.writeText(b.closest('.code').querySelector('pre').innerText).then(function () {
+        b.textContent = '복사됨'; setTimeout(function () { b.textContent = '복사'; }, 1500);
+      });
+    });
+  });
+  var links = [].slice.call(document.querySelectorAll('.side a'));
+  var io = new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+      if (e.isIntersecting) links.forEach(function (a) { a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id); });
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  document.querySelectorAll('main section[id]').forEach(function (s) { io.observe(s); });
+</script>
+</body>
+</html>

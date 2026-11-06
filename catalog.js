@@ -124,8 +124,25 @@ window.CATALOG = [
     ]
   },
   {
-    id: "excel-analysis",
+    id: "cite-check",
     no: "07",
+    category: "IP 실무",
+    title: "AI 리서치, 인용은 사람이 확인한다",
+    subtitle: "판례·심결·선행문헌 리서치와 인용 검증 5단계",
+    summary: "AI는 없는 판례 번호와 원문에 없는 문장도 그럴듯하게 만듭니다. 쟁점 정리부터 미검증 표, 원문·효력 확인, 확인된 근거만으로 쓰는 메모까지 5단계를 국내 IP 실무에 맞게 정리하고, 인용 점검 스크립트와 프롬프트·지침·Claude 스킬을 함께 제공합니다.",
+    reader: "심판·소송·의견서 준비에 AI를 쓰는 변리사, IP 담당자, 사내 법무",
+    version: "1.0",
+    date: "2026-11-07",
+    length: "읽기 약 20분",
+    status: "published",
+    links: [
+      { label: "화면으로 읽기", href: "cite-check/", primary: true },
+      { label: "템플릿 내려받기", href: "cite-check/templates/" }
+    ]
+  },
+  {
+    id: "excel-analysis",
+    no: "08",
     category: "데이터",
     title: "엑셀 데이터를 AI로 분석하고 그래프까지 받기",
     subtitle: "준비 중",

@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>인용 검증 템플릿</title>
+<link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+<div class="bar"><div class="bar-in">
+  <a class="brand" href="../../">AI 실무 핸드북</a>
+  <div class="links"><a href="../">← 본문으로</a></div>
+</div></div>
+<div class="wrap">
+  <div class="eyebrow">핸드북 07 · 자료</div>
+  <h1>템플릿 내려받기</h1>
+  <p class="lead">[대괄호] 부분만 바꿔 쓰세요. 한 번에 받으려면 <a href="../downloads/cite-check-kit.zip" download>키트 전체(ZIP)</a>를 받으세요.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>파일</th><th>내용</th></tr></thead>
+    <tbody>
+      <tr><th><a href="prompts.md" download>prompts.md</a></th><td>5단계 프롬프트 전체본 (1 쟁점 · 2 원문 분석 · 3 미검증 표 · 4 확인 후 지시 · 5 메모)</td></tr>
+      <tr><th><a href="citation-log.csv" download>citation-log.csv</a></th><td>미검증 표이자 확인 목록. 상태는 미검증 → 확인됨 / 폐기 (UTF-8 BOM, 엑셀에서 바로 열림)</td></tr>
+      <tr><th><a href="CLAUDE.md" download>CLAUDE.md</a></th><td>리서치 프로젝트 지침 — 절대 규칙 8개. 다른 AI의 지침 칸에도 그대로 사용</td></tr>
+      <tr><th><a href="cite_check.py" download>cite_check.py</a></th><td>인용 점검기 — <code>python cite_check.py memo.md citation-log.csv --out report.md</code></td></tr>
+      <tr><th><a href="skill/cite-check/SKILL.md">skill/cite-check/</a></th><td>Claude 스킬 (SKILL.md + scripts/cite_check.py). <a href="../downloads/cite-check-skill.zip" download>스킬 ZIP</a>을 Claude의 Customize → Skills에 올립니다.</td></tr>
+    </tbody>
+  </table></div>
+  <h2 id="sample">예시 (가상 사안 · 2026. 11. 7. 실행)</h2>
+  <div class="tbl"><table>
+    <tbody>
+      <tr><th><a href="sample/memo-draft.md">memo-draft.md</a></th><td>AI 초안 v1 — 일부러 틀린 인용 포함</td></tr>
+      <tr><th><a href="sample/citation-log.csv" download>citation-log.csv</a></th><td>사람이 원문으로 채운 인용 목록 (확인됨 3 · 폐기 1)</td></tr>
+      <tr><th><a href="sample/report-draft.md">report-draft.md</a></th><td>초안 점검 결과 — 6건 중 문제 3건</td></tr>
+      <tr><th><a href="sample/memo-final.md">memo-final.md</a></th><td>확인됨 근거만으로 고친 메모 v2, 미결 쟁점 포함</td></tr>
+      <tr><th><a href="sample/report-final.md">report-final.md</a></th><td>최종 점검 결과 — 4건 모두 통과</td></tr>
+    </tbody>
+  </table></div>
+  <footer>CC BY-NC 4.0 · 출처를 밝히면 비영리 목적으로 자유롭게 고쳐 쓸 수 있습니다. 예시 사안은 가상이며 법률 자문이 아닙니다.</footer>
+</div>
+</body>
+</html>

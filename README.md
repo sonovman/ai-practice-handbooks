@@ -12,6 +12,7 @@
 | 04 | 개인 AI 에이전트, 챗봇과 무엇이 다른가 — 구축 5단계 | [화면](https://sonovman.github.io/ai-practice-handbooks/personal-agent/) | [템플릿](personal-agent/templates/) |
 | 05 | AI를 손발처럼 쓰는 SSR Plus 4단계 — Claude 실행 환경 구축 | [화면](https://sonovman.github.io/ai-practice-handbooks/ssr-plus/) | [구축 키트](ssr-plus/kit/) |
 | 06 | 특허 구성특징 분석 도우미 — 도면이 읽히는 청구항 분석 (4개 플랫폼) | [화면](https://sonovman.github.io/ai-practice-handbooks/claim-analyzer/) | [배포 키트](claim-analyzer/kit/) |
+| 07 | AI 리서치, 인용은 사람이 확인한다 — 판례·심결 리서치와 인용 검증 5단계 | [화면](https://sonovman.github.io/ai-practice-handbooks/cite-check/) | [템플릿](cite-check/templates/) |
 
 ## 폴더 구성
 
@@ -29,6 +30,7 @@ ai-practice-handbooks/
 ├── personal-agent/     04편 (templates/ 에 지침·스킬·감시 스크립트)
 ├── ssr-plus/           05편 (kit/ 구축 사례 폴더, downloads/ ZIP 2종)
 ├── claim-analyzer/     06편 (kit/ 4개 플랫폼 버전, downloads/ ZIP 2종)
+├── cite-check/         07편 (templates/ 프롬프트·인용 목록·점검기·스킬, downloads/ ZIP 2종)
 └── data/               공용 자료
 ```
 
