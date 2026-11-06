@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IP 분석 템플릿</title>
+<link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+<div class="bar"><div class="bar-in">
+  <a class="brand" href="../../">AI 실무 핸드북</a>
+  <div class="links"><a href="../">← 본문으로</a></div>
+</div></div>
+<div class="wrap">
+  <div class="eyebrow">핸드북 03 · 자료</div>
+  <h1>IP 분석 템플릿 내려받기</h1>
+  <p class="lead">파일 이름을 누르면 내용을 볼 수 있고, 오른쪽 버튼으로 내려받을 수 있습니다. 앞의 세 개만으로도 시작할 수 있습니다.</p>
+
+  <h3>기본 (누구나)</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>파일</th><th>쓰는 곳</th><th></th></tr></thead>
+    <tbody>
+      <tr><th><a href="CLAUDE.md">CLAUDE.md</a></th><td>하네스 · 에이전트가 가장 먼저 읽는 IP 분석 업무 지침</td><td><a href="CLAUDE.md" download>받기</a></td></tr>
+      <tr><th><a href="ip-reviewer-prompt.md">ip-reviewer-prompt.md</a></th><td>루프 · 독립 IP 리뷰어에게 주는 검수 프롬프트</td><td><a href="ip-reviewer-prompt.md" download>받기</a></td></tr>
+      <tr><th><a href="claim-chart-template.md">claim-chart-template.md</a></th><td>결과물 · 청구항 대비표 빈 양식</td><td><a href="claim-chart-template.md" download>받기</a></td></tr>
+      <tr><th><a href="claim-chart-example.md">claim-chart-example.md</a></th><td>결과물 · 가상 사례로 채운 대비표 예시</td><td><a href="claim-chart-example.md" download>받기</a></td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>고급 (Claude Code 사용자)</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>파일</th><th>쓰는 곳</th><th></th></tr></thead>
+    <tbody>
+      <tr><th><a href="check_claim_chart.py">check_claim_chart.py</a></th><td>루프의 검증자 · 대비표 형식 검사. 단독 실행과 Stop Hook 모두 가능</td><td><a href="check_claim_chart.py" download>받기</a></td></tr>
+      <tr><th><a href="block_danger.py">block_danger.py</a></th><td>하네스의 Hook · 삭제·외부 전송 명령을 실행 전에 차단</td><td><a href="block_danger.py" download>받기</a></td></tr>
+      <tr><th><a href="settings.example.json">settings.example.json</a></th><td>위 두 Hook을 등록하는 Claude Code 설정 예시</td><td><a href="settings.example.json" download>받기</a></td></tr>
+      <tr><th><a href="state-example.json">state-example.json</a></th><td>그래프 · 단계끼리 주고받는 공유 정보(상태)의 예시</td><td><a href="state-example.json" download>받기</a></td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>권장 폴더 구성</h3>
+<pre><code>내-분석-프로젝트/
+├── CLAUDE.md
+├── input/
+│   ├── target/        대상 특허 (청구범위 + 상세한 설명)
+│   ├── prior-art/     선행문헌
+│   └── guidelines/    심사기준 발췌
+├── output/            claim-chart.md 가 여기 만들어짐
+└── .claude/           (고급) Hook 쓸 때만
+    ├── settings.json  ← settings.example.json 이름 바꿔 넣기
+    └── hooks/
+        ├── block_danger.py
+        └── check_claim_chart.py</code></pre>
+
+  <div class="note"><b>확인 범위</b> — 두 Python 파일은 표준 라이브러리만 쓰며, Python 3.12에서 예시 파일로 실행해 PASS·FAIL·차단 동작을 확인했습니다. 검사기는 <b>형식</b>만 봅니다. 법적 판단이 맞는지는 사람이 검토해야 합니다.</div>
+
+  <footer>CC BY-NC 4.0 · 출처를 밝히면 비영리 목적으로 자유롭게 고쳐 쓸 수 있습니다.</footer>
+</div>
+</body>
+</html>

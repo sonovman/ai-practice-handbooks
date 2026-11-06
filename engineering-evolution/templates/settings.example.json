@@ -1,0 +1,19 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          { "type": "command", "command": "python .claude/hooks/block_danger.py" }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          { "type": "command", "command": "python .claude/hooks/check_claim_chart.py output/claim-chart.md --hook" }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI에게 일 시키는 5단계</title>
+<meta name="description" content="프롬프트·컨텍스트·하네스·루프·그래프 엔지니어링으로 이어진 AI 활용법의 진화를 정리하고, 청구항 대비 분석 업무에 직접 적용하는 워크플로우와 템플릿을 제시합니다.">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<div class="bar"><div class="bar-in">
+  <a class="brand" href="../">AI 실무 핸드북</a>
+  <div class="links">
+    <a href="templates/">템플릿</a>
+    <a href="https://github.com/sonovman/ai-practice-handbooks">GitHub ↗</a>
+  </div>
+</div></div>
+
+<div class="doc">
+  <aside class="side">
+    <div class="label">차례</div>
+    <ol>
+      <li><a href="#s0">한 줄 결론</a></li>
+      <li><a href="#s1">1. 5단계 한눈에</a></li>
+      <li><a href="#s2">2. 프롬프트</a></li>
+      <li><a href="#s3">3. 컨텍스트</a></li>
+      <li><a href="#s4">4. 하네스</a></li>
+      <li><a href="#s5">5. 루프</a></li>
+      <li><a href="#s6">6. 그래프</a></li>
+      <li><a href="#s7">7. IP 분석 워크플로우</a></li>
+      <li><a href="#s8">8. 단계별 적용표</a></li>
+      <li><a href="#s9">9. 따라 하기</a></li>
+      <li><a href="#s10">10. 안전과 책임</a></li>
+      <li><a href="#s11">부록 · 용어와 출처</a></li>
+    </ol>
+  </aside>
+
+<main>
+  <div class="eyebrow">핸드북 03 · 에이전트 활용</div>
+  <h1>AI에게 일을 시키는<br>5가지 방법의 진화</h1>
+  <p class="lead">프롬프트 엔지니어링에서 하네스·루프·그래프 엔지니어링까지, 지난 몇 년간 AI에게 일을 맡기는 방법이 어떻게 바뀌었는지 정리했습니다. 그리고 청구항 대비 분석이라는 실제 IP 업무에 다섯 단계를 차례로 적용해 봅니다.</p>
+  <div class="meta">
+    <b>독자</b><span>“하네스 엔지니어링”이 궁금한 비개발 실무자, IP 분석 담당자</span>
+    <b>분량</b><span>읽기 약 25분 · 템플릿 8종</span>
+    <b>판</b><span>1.0 · 2026. 11. 6.</span>
+  </div>
+
+  <section id="s0">
+    <div class="key">
+      <div class="eyebrow">한 줄 결론</div>
+      <p style="font-size:19px;font-weight:600;line-height:1.6;margin:8px 0 10px">이제 성패는 AI를 더 똑똑하게 만드는 데가 아니라, 이미 똑똑한 AI가 안전하게 일할 판을 짜는 데 달려 있다.</p>
+      <p style="opacity:.75;font-size:15px">다섯 단계는 서로를 대체하지 않고 쌓입니다. 좋은 프롬프트 위에 자료를 얹고(컨텍스트), 규칙과 차단 장치로 울타리를 치고(하네스), 스스로 검사·수정하게 하고(루프), 마지막으로 전체 업무 흐름과 사람의 승인을 설계합니다(그래프).</p>
+    </div>
+  </section>
+
+  <!-- 1 -->
+  <section id="s1">
+    <h2><span class="no">01</span>5단계 한눈에</h2>
+    <p>각 단계는 바로 앞 단계의 한계를 메우려고 나왔습니다. 아래 계단을 누르면 해당 설명으로 갑니다. 1~2단계는 <strong>말로 시키는 법</strong>, 3~5단계는 <strong>일하는 환경을 짓는 법</strong>입니다.</p>
+    <div class="stairs">
+      <a href="#s2"><span class="n">1단계</span><b>프롬프트</b><small>잘 시키기</small></a>
+      <a href="#s3"><span class="n">2단계</span><b>컨텍스트</b><small>자료 건네기</small></a>
+      <a href="#s4"><span class="n">3단계</span><b>하네스</b><small>울타리 치기</small></a>
+      <a href="#s5"><span class="n">4단계</span><b>루프</b><small>스스로 고치기</small></a>
+      <a href="#s6"><span class="n">5단계</span><b>그래프</b><small>흐름 설계</small></a>
+    </div>
+    <div class="tbl"><table>
+      <thead><tr><th>단계</th><th>더하는 것</th><th>남는 한계 → 다음 단계로</th></tr></thead>
+      <tbody>
+        <tr><th>프롬프트</th><td>역할과 구체적 지시</td><td>최신 정보·사내 사정을 모름</td></tr>
+        <tr><th>컨텍스트</th><td>사내 문서·회의록 같은 자료</td><td>자료를 매번 사람이 찾아 건네야 함</td></tr>
+        <tr><th>하네스</th><td>업무 매뉴얼·도구·차단 장치</td><td>틀린 결과를 사람이 일일이 다시 지시해야 함</td></tr>
+        <tr><th>루프</th><td>성공 기준·검증자·종료 조건</td><td>여러 단계와 사람이 얽힌 업무 전체는 못 다룸</td></tr>
+        <tr><th>그래프</th><td>작업 단위·이동 조건·공유 정보·사람 승인</td><td>—</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <!-- 2 -->
+  <section id="s2">
+    <h2><span class="no">02 · 1단계</span>프롬프트 엔지니어링 — 잘 시키기</h2>
+    <p>AI에게 역할을 주고 구체적으로 지시하는 방법입니다. “요약해 줘” 대신 “10년 차 마케터로서, 임원 보고용으로, 다섯 줄로”라고 쓰는 식입니다. 자세한 원칙은 <a href="../prompt-basics/">02편 「프롬프트 5원칙」</a>에 정리했습니다.</p>
+    <div class="grid2">
+      <div class="box"><div class="tag">IP 적용</div><h4>역할과 목표 정하기</h4><p>“15년 차 변리사로서, 청구항을 구성요소별로 나누고 기술적·법적 관점에서 비교 분석하라.” 단순 요약이 아니라 분석의 틀을 정합니다.</p></div>
+      <div class="box"><div class="tag">한계</div><h4>모르는 것은 모른다</h4><p>AI는 학습한 시점까지의 지식만 압니다. 오늘 받은 선행문헌이나 우리 회사 사정은 알 수 없습니다.</p></div>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section id="s3">
+    <h2><span class="no">03 · 2단계</span>컨텍스트 엔지니어링 — 자료 건네기</h2>
+    <p>지시와 함께 업무에 필요한 자료를 넣어 주는 방법입니다. AI가 넣어 준 자료 범위 안에서 판단하게 되어, 그럴듯하게 지어내는 오류(환각)가 크게 줄어듭니다.</p>
+    <div class="grid2">
+      <div class="box"><div class="tag">IP 적용</div><h4>세 가지 자료를 함께</h4>
+        <ul>
+          <li>대상 특허의 청구범위와 발명의 상세한 설명</li>
+          <li>비교할 선행문헌 전문</li>
+          <li>특허법 제29조 제1항(신규성)·제2항(진보성) 관련 심사기준 발췌</li>
+        </ul>
+      </div>
+      <div class="box"><div class="tag">한계</div><h4>매번 사람이 챙겨야 한다</h4><p>건마다 자료를 찾아 붙여 넣는 일이 사람 몫으로 남습니다. 빠뜨리면 그만큼 품질이 떨어집니다.</p></div>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section id="s4">
+    <h2><span class="no">04 · 3단계</span>하네스 엔지니어링 — 울타리 치기</h2>
+    <p>하네스는 말이나 반려견에 채우는 마구입니다. 힘은 그대로 쓰게 하되 엉뚱한 길로 가지 않게 잡아 줍니다. AI에게는 <strong>일하는 환경 전체</strong>, 곧 업무 매뉴얼·쓸 수 있는 도구·자료 위치·금지 규칙을 미리 갖춰 두는 일입니다. 한 번 만들어 두면 매번 설명할 필요가 없습니다.</p>
+    <div class="grid2">
+      <div class="box"><div class="tag">안내</div><h4>업무 매뉴얼 <code>CLAUDE.md</code></h4><p>에이전트가 일을 시작할 때 가장 먼저 읽는 파일입니다. 역할, 자료 위치, 분석 규칙, 금지 사항을 적습니다. <code>AGENTS.md</code>라는 이름을 쓰는 도구도 있습니다.</p></div>
+      <div class="box"><div class="tag">강제</div><h4>차단 장치 Hook</h4><p>위험한 명령이 실행되기 <strong>직전에</strong> 자동으로 검사해 막는 장치입니다. 매뉴얼은 무시될 수 있지만, Hook은 프로그램이 막기 때문에 우회되지 않습니다.</p></div>
+    </div>
+    <h3>IP 적용: 무엇을 매뉴얼에, 무엇을 Hook에</h3>
+    <div class="tbl"><table>
+      <thead><tr><th></th><th>매뉴얼(CLAUDE.md)에 적을 것</th><th>Hook으로 막을 것</th></tr></thead>
+      <tbody>
+        <tr><th>분석 규칙</th><td>구성요소 완비 원칙, 상세한 설명의 정의 우선, 용어 고정, 기술·법리 분리</td><td>—</td></tr>
+        <tr><th>근거</th><td>선행문헌 인용 시 단락 번호【0000】 필수</td><td>인용 없는 대비표로는 작업을 끝내지 못하게</td></tr>
+        <tr><th>원본 보호</th><td>원본 자료 수정·삭제 금지</td><td>삭제·이동 명령 자체를 차단</td></tr>
+        <tr><th>유출 방지</th><td>분석 자료 외부 전송 금지</td><td>외부 전송 명령 차단</td></tr>
+      </tbody>
+    </table></div>
+    <p class="cap">매뉴얼 전문은 <a href="templates/CLAUDE.md">CLAUDE.md</a>, Hook 예시는 <a href="templates/block_danger.py">block_danger.py</a>에 있습니다.</p>
+  </section>
+
+  <!-- 5 -->
+  <section id="s5">
+    <h2><span class="no">05 · 4단계</span>루프 엔지니어링 — 스스로 고치기</h2>
+    <p>결과에 문제가 있을 때 사람이 매번 확인하고 다시 지시하는 대신, AI가 <strong>검사 → 수정 → 재검사</strong>를 스스로 반복하게 만드는 방법입니다. 사람은 마지막 결과만 봅니다.</p>
+    <p>루프가 제대로 돌려면 세 가지가 꼭 있어야 합니다.</p>
+    <div class="grid3">
+      <div class="box"><div class="tag">① 성공 기준</div><h4>무엇이 통과인가</h4><p>모든 구성요소가 1:1로 대응되고 인용 단락이 붙었는가. 진보성에 곤란성과 효과의 근거가 모두 있는가.</p></div>
+      <div class="box"><div class="tag">② 검증자</div><h4>누가 검사하나</h4><p>작성한 에이전트가 아닌 <strong>독립 IP 리뷰어</strong>. 형식은 검사 스크립트가 기계적으로 보조합니다.</p></div>
+      <div class="box"><div class="tag">③ 종료 조건</div><h4>언제 멈추나</h4><p>통과하면 종료. 3번 고쳐도 안 되면 멈추고 담당자에게 알립니다. 무한 반복과 비용 낭비를 막습니다.</p></div>
+    </div>
+    <div class="flow"><span class="dark">작성</span><i>→</i><span>리뷰어 검수</span><i>→ PASS →</i><span class="dark">다음 단계</span><i>/ FAIL → 지적대로 수정 → 재검수 (최대 3회)</i></div>
+    <div class="note"><b>검사기는 형식만 본다</b> — <a href="templates/check_claim_chart.py">check_claim_chart.py</a>는 인용 번호가 있는지, 빈칸이 남았는지 같은 형식을 봅니다. 그 단락에 정말 그 내용이 있는지, 진보성 판단이 타당한지는 리뷰어 에이전트와 사람이 봅니다.</div>
+  </section>
+
+  <!-- 6 -->
+  <section id="s6">
+    <h2><span class="no">06 · 5단계</span>그래프 엔지니어링 — 흐름 설계</h2>
+    <p>업무 전체를 지하철 노선도처럼 그리는 방법입니다. 루프가 한 작업의 품질을 다룬다면, 그래프는 <strong>여러 작업의 순서와 갈림길</strong>, 그리고 <strong>사람이 개입할 지점</strong>을 다룹니다.</p>
+    <div class="grid3">
+      <div class="box"><div class="tag">노드 Node</div><h4>작업 단위</h4><p>역, 곧 하나의 일. “청구항 분해”, “대비 분석”, “팀장 승인”</p></div>
+      <div class="box"><div class="tag">엣지 Edge</div><h4>이동 경로와 조건</h4><p>선로. “검수 PASS면 승인으로, FAIL이면 수정으로”</p></div>
+      <div class="box"><div class="tag">상태 State</div><h4>공유 정보</h4><p>모든 역이 함께 보는 게시판. 구성요소 목록, 대응 결과, 검수 횟수</p></div>
+    </div>
+    <p>노드에는 AI 에이전트만 오는 것이 아닙니다. 일반 프로그램(검사 스크립트)도, <strong>사람</strong>도 노드가 될 수 있습니다. 법적 책임이 따르는 판단 앞에 사람 승인 노드를 두는 설계를 <strong>Human-in-the-Loop</strong>라고 부릅니다.</p>
+    <p class="cap">노드끼리 주고받는 공유 정보의 예는 <a href="templates/state-example.json">state-example.json</a>에 있습니다.</p>
+  </section>
+
+  <!-- 7 -->
+  <section id="s7">
+    <h2><span class="no">07</span>IP 분석 워크플로우 설계</h2>
+    <p>다섯 단계를 모두 적용해 <strong>청구항 대비 분석</strong> 업무를 하나의 그래프로 설계하면 다음과 같습니다.</p>
+    <div class="graph">
+      <div class="node end"><span class="id">START</span><b>입력: 대상 청구항 + 선행문헌</b><p>input/ 폴더에 넣기 (컨텍스트)</p></div>
+      <div class="edge"></div>
+      <div class="node"><span class="id">N1</span><b>청구범위 해석·구성요소 분해</b><p>독립항을 E1, E2, E3 … 로 나누고 용어를 정의 (프롬프트 + 하네스)</p></div>
+      <div class="edge"><span>상태: 구성요소 목록</span></div>
+      <div class="node"><span class="id">N2</span><b>선행문헌 대응 기재 추출</b><p>구성요소마다 대응 단락【0000】을 찾거나 “미개시” 표시</p></div>
+      <div class="edge"><span>상태: 1:1 대응표</span></div>
+      <div class="node"><span class="id">N3</span><b>기술적·특허법적 대비 분석</b><p>구조·작용효과 비교, 신규성·진보성(곤란성·효과) 판단 초안</p></div>
+      <div class="edge"></div>
+      <div class="node"><span class="id">N4</span><b>독립 IP 리뷰어 검수</b><p>리뷰어 프롬프트 + 형식 검사 스크립트 (루프의 검증자)</p></div>
+      <div class="loop"><b>FAIL</b> → N3로 돌아가 지적 사항 수정 → 다시 N4 · <b>최대 3회</b><br><b>3회 초과</b> → 멈추고 담당자에게 보고</div>
+      <div class="edge"><span>PASS</span></div>
+      <div class="node dark"><span class="id">N5</span><b>사람 승인: 변리사·IP 담당자</b><p>최종 판단과 책임은 사람에게 (Human-in-the-Loop)</p></div>
+      <div class="edge"><span>승인</span></div>
+      <div class="node end"><span class="id">END</span><b>청구항 대비표·분석 보고서 확정</b><p>output/claim-chart.md</p></div>
+    </div>
+    <div class="note"><b>01편과 함께 읽기</b> — N1~N3를 서로 다른 에이전트에게 나눠 맡기면 구성요소 이름과 용어가 단계마다 조금씩 바뀌는 “전화 게임”이 생기기 쉽습니다. <a href="../agent-guide/">01편</a>의 결론대로, N1~N3는 <strong>메인 에이전트 하나가 이어서</strong> 처리하고 N4 검수만 독립 리뷰어에게 맡기는 구성을 권합니다. 그래프는 사람이 흐름을 이해하고 통제하기 위한 설계도이지, 노드마다 에이전트를 따로 두라는 뜻이 아닙니다.</div>
+  </section>
+
+  <!-- 8 -->
+  <section id="s8">
+    <h2><span class="no">08</span>단계별 적용표</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>단계</th><th>IP 분석에서 하는 일</th><th>준비물</th></tr></thead>
+      <tbody>
+        <tr><th>프롬프트</th><td>변리사 역할 부여, 구성요소별 분해 분석이라는 목표 정의</td><td>CLAUDE.md 1장</td></tr>
+        <tr><th>컨텍스트</th><td>대상 특허·선행문헌·심사기준을 넣어 그 범위 안에서만 판단</td><td>input/ 폴더</td></tr>
+        <tr><th>하네스</th><td>분해·인용·법리 분리 규칙 고정, 원본 삭제·외부 전송 차단</td><td>CLAUDE.md, block_danger.py</td></tr>
+        <tr><th>루프</th><td>리뷰어 검수 FAIL 시 자동 수정, 최대 3회</td><td>ip-reviewer-prompt.md, check_claim_chart.py</td></tr>
+        <tr><th>그래프</th><td>N1~N5 흐름과 승인 노드, 공유 정보 설계</td><td>위 흐름도, state-example.json</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <!-- 9 -->
+  <section id="s9">
+    <h2><span class="no">09</span>따라 하기</h2>
+    <p>처음에는 <strong>A. 기본</strong>만으로 충분합니다. 채팅형 AI(Claude, ChatGPT, Copilot 등)에서 바로 할 수 있습니다.</p>
+
+    <h3>A. 기본 — 채팅창에서 (1~4단계 맛보기)</h3>
+    <ol class="steps">
+      <li><b>매뉴얼 붙이기</b><a href="templates/CLAUDE.md">CLAUDE.md</a> 내용을 대화 첫머리에 붙여 넣습니다. 프로젝트 기능이 있는 도구라면 프로젝트 지침에 넣어 두면 매번 붙일 필요가 없습니다.</li>
+      <li><b>자료 올리기</b>대상 특허 청구범위·상세한 설명, 선행문헌, 심사기준 발췌를 올립니다.</li>
+      <li><b>대비표 요청</b>“<a href="templates/claim-chart-template.md">대비표 양식</a>대로 청구항 1항을 분석해 줘.” 완성본이 어떤 모양인지는 <a href="templates/claim-chart-example.md">가상 예시</a>를 보세요.</li>
+      <li><b>새 대화에서 검수</b>새 대화(또는 다른 AI)를 열고 <a href="templates/ip-reviewer-prompt.md">리뷰어 프롬프트</a>와 결과물을 넣습니다. 작성한 대화와 분리해야 “제 눈의 들보”를 피할 수 있습니다.</li>
+      <li><b>FAIL이면 되돌려 주기</b>리뷰어의 지적 목록을 처음 대화에 붙여 고치게 합니다. 세 번 해도 안 되면 직접 봅니다. 이것이 사람이 손으로 돌리는 루프입니다.</li>
+    </ol>
+
+    <h3>B. 고급 — Claude Code로 자동화 (하네스·루프 자동 실행)</h3>
+    <ol class="steps">
+      <li><b>폴더 만들기</b><a href="templates/">템플릿 페이지</a>의 권장 폴더 구성대로 만들고 CLAUDE.md를 맨 위에 둡니다.</li>
+      <li><b>Hook 넣기</b><code>.claude/hooks/</code>에 두 Python 파일을, <code>.claude/settings.json</code>에 <a href="templates/settings.example.json">설정 예시</a>를 넣습니다.</li>
+      <li><b>실행</b>“input 자료로 청구항 1항 대비표를 output/claim-chart.md에 작성해 줘.”</li>
+      <li><b>자동 루프 확인</b>에이전트가 작업을 끝내려 하면 검사기가 돌아갑니다. 빈칸이나 인용 누락이 있으면 끝내지 못하고 고치러 돌아가며, 3회 실패하면 <code>output/REVIEW_NEEDED.txt</code>를 남기고 멈춥니다.</li>
+      <li><b>사람 승인</b>결과를 변리사·담당자가 검토하고 확정합니다.</li>
+    </ol>
+    <p class="cap">Microsoft 365 환경이라면 같은 구조를 Copilot Studio(지침·지식)와 Power Automate(반복·승인)로 옮길 수 있습니다. 대응 관계는 <a href="../agent-guide/#s9">01편 9장</a>을 참고하세요.</p>
+  </section>
+
+  <!-- 10 -->
+  <section id="s10">
+    <h2><span class="no">10</span>안전과 책임</h2>
+    <div class="grid3">
+      <div class="box"><div class="tag">격리</div><h4>따로 떨어진 작업 공간</h4><p>에이전트가 파일을 만들고 명령을 실행한다면 개인 PC가 아닌 별도 환경에서 돌립니다.</p></div>
+      <div class="box"><div class="tag">이중 안전망</div><h4>매뉴얼 + Hook</h4><p>매뉴얼로 안내하고, 원본 삭제·DB 삭제·외부 전송은 Hook으로 막습니다.</p></div>
+      <div class="box"><div class="tag">통제</div><h4>횟수 제한 + 승인</h4><p>루프는 3회로 끊고, 법적 판단이 담긴 보고서는 승인 뒤에만 저장·발송합니다.</p></div>
+    </div>
+    <div class="note"><b>책임의 위치</b> — AI가 만든 대비표와 특허성 의견은 <strong>초안</strong>입니다. 신규성·진보성·침해에 관한 최종 판단과 그 책임은 변리사와 담당자에게 있습니다. 출원 전 발명 내용, 의뢰인 자료는 회사가 승인한 AI 도구에만 넣으세요.</div>
+  </section>
+
+  <!-- 11 -->
+  <section id="s11">
+    <h2><span class="no">부록</span>용어와 출처</h2>
+    <div class="tbl"><table>
+      <tbody>
+        <tr><th>환각</th><td>AI가 사실이 아닌 내용을 그럴듯하게 만들어 내는 현상</td></tr>
+        <tr><th>하네스</th><td>지침 문서·도구·자료 위치·차단 장치 등 에이전트가 일하는 환경 전체</td></tr>
+        <tr><th>Hook</th><td>특정 동작 직전·직후에 자동 실행되는 검사 프로그램. 위험 명령을 막거나 작업 종료를 붙잡을 수 있음</td></tr>
+        <tr><th>루프</th><td>성공 기준을 통과할 때까지 검사와 수정을 반복하는 자동 흐름</td></tr>
+        <tr><th>노드·엣지·상태</th><td>그래프의 작업 단위, 이동 경로와 조건, 단계끼리 공유하는 정보</td></tr>
+        <tr><th>Human-in-the-Loop</th><td>흐름 중간에 사람의 승인을 반드시 거치게 하는 설계</td></tr>
+        <tr><th>구성요소 완비 원칙</th><td>청구항의 모든 구성요소를 빠짐없이 대비해야 한다는 원칙 (All-Elements Rule)</td></tr>
+        <tr><th>통상의 기술자</th><td>그 기술 분야의 평균적 지식을 가진 사람. 진보성 판단의 기준이 되는 가상의 인물</td></tr>
+      </tbody>
+    </table></div>
+    <h3>출처</h3>
+    <ul>
+      <li>보스턴빌더 | AI 시대 생존기, 「<a href="https://www.youtube.com/watch?v=uKbw2Lfn3wI">하네스·루프·그래프 엔지니어링? | 비개발자도 20분안에 완벽히 이해하기</a>」, YouTube, 2026. 11. 4. — 1~6장의 5단계 구분과 개념</li>
+      <li>Anthropic, <a href="https://code.claude.com/docs">Claude Code 문서</a> — CLAUDE.md, Hook 동작 방식</li>
+      <li>특허법 제29조 제1항·제2항, 특허청 「특허·실용신안 심사기준」 — 7~9장의 법리 구분</li>
+    </ul>
+    <p>함께 읽기: <a href="../agent-guide/">01편 「에이전트는 한 명이면 충분하다」</a> · <a href="../prompt-basics/">02편 「프롬프트 5원칙」</a></p>
+  </section>
+
+  <footer>
+    작성: 이진수 (변리사) · 2026. 11. 6. · CC BY-NC 4.0<br>
+    이 글은 위 영상을 요약하고 작성자의 IP 업무 적용 방안을 더해 생성형 AI의 도움으로 정리했으며, 사람이 검토했습니다. 오류 제보는 <a href="https://github.com/sonovman/ai-practice-handbooks/issues">Issues</a>로 남겨 주세요.
+  </footer>
+</main>
+</div>
+
+<script>
+  var links = [].slice.call(document.querySelectorAll('.side a'));
+  var io = new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+      if (e.isIntersecting) links.forEach(function (a) { a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id); });
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  document.querySelectorAll('main section[id]').forEach(function (s) { io.observe(s); });
+</script>
+</body>
+</html>
