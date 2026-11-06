@@ -226,8 +226,25 @@ window.CATALOG = [
     ]
   },
   {
-    id: "excel-analysis",
+    id: "video-pipeline",
     no: "13",
+    category: "콘텐츠",
+    title: "지식 노트 6개와 Gemini 스킬 2개로 만드는 지속 가능한 AI 영상 제작 파이프라인",
+    subtitle: "조사는 한 번, 계산은 코드로, 생성은 도구가 바뀌어도",
+    summary: "NotebookLM 노트북 6개에 니치 조사를 쌓고, 그 보고서를 넣은 Gemini 스킬 2개(스토리 엔진·에셋 생성기)로 대본과 장면 프롬프트를 계속 만들어 냅니다. Gems → Skills 전환과 2026년 영상 도구 생태계, 장면 계산·스킬 묶음 도구를 함께 담았습니다.",
+    reader: "유튜브·쇼츠 운영자, 홍보 영상을 직접 만드는 실무자",
+    version: "1.0",
+    date: "2026-11-07",
+    length: "읽기 약 25분",
+    status: "published",
+    links: [
+      { label: "화면으로 읽기", href: "video-pipeline/", primary: true },
+      { label: "템플릿 내려받기", href: "video-pipeline/templates/" }
+    ]
+  },
+  {
+    id: "excel-analysis",
+    no: "14",
     category: "데이터",
     title: "엑셀 데이터를 AI로 분석하고 그래프까지 받기",
     subtitle: "준비 중",

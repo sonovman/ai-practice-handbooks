@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 영상 파이프라인 템플릿</title>
+<link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+<div class="bar"><div class="bar-in">
+  <a class="brand" href="../../">AI 실무 핸드북</a>
+  <div class="links"><a href="../">← 본문으로</a></div>
+</div></div>
+<div class="wrap">
+  <div class="eyebrow">핸드북 13 · 자료</div>
+  <h1>템플릿 내려받기</h1>
+  <p class="lead">폴더 구조를 그대로 써야 <code>pipeline.py pack</code>이 동작합니다. 한 번에 받으려면 <a href="../downloads/video-pipeline-kit.zip" download>전체(ZIP)</a>.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>파일</th><th>내용</th></tr></thead>
+    <tbody>
+      <tr><th><a href="notebook-prompts.md" download>notebook-prompts.md</a></th><td>NotebookLM 노트북 6개의 소스 구성과 요청문(국문, 영어 항목명 병기) · Deep Research 조사 주제</td></tr>
+      <tr><th><a href="knowledge/01-competitor.md" download>knowledge/</a></th><td>노트북 보고서를 붙여 넣을 파일 6개(01~06) — 갱신일·갱신 주기 포함</td></tr>
+      <tr><th><a href="skills/story-engine/SKILL.md" download>skills/story-engine/SKILL.md</a></th><td>스킬 1 · 스토리 엔진 — 주제 → TTS용 대본</td></tr>
+      <tr><th><a href="skills/asset-generator/SKILL.md" download>skills/asset-generator/SKILL.md</a></th><td>스킬 2 · 에셋 생성기 — 대본 + 장면 계획 → 이미지·비디오 프롬프트·제작표</td></tr>
+      <tr><th><a href="skills/asset-generator/references/clip-lengths.md" download>…/references/clip-lengths.md</a></th><td>도구별 클립 길이표(확인일 2026-11-07)</td></tr>
+      <tr><th><a href="pipeline.py" download>pipeline.py</a></th><td><code>check-script</code> 대본 점검 · <code>plan</code> 장면 계산·제작표 · <code>pack</code> 스킬 ZIP 만들기 — Python 3.8+, 추가 설치 없음</td></tr>
+      <tr><th><a href="test_pipeline.py" download>test_pipeline.py</a></th><td>도구 시험 13개</td></tr>
+      <tr><th><a href="tool-ecosystem.csv" download>tool-ecosystem.csv</a></th><td>2026 영상·이미지·음성 도구 지도 (엑셀에서 바로 열림)</td></tr>
+      <tr><th><a href="example/script.txt" download>example/script.txt</a></th><td>실행 예 대본 (재테크 쇼츠 36초)</td></tr>
+      <tr><th><a href="example/check-output.txt" download>example/check-output.txt</a></th><td>대본 점검 결과</td></tr>
+      <tr><th><a href="example/plan-output.txt" download>example/plan-output.txt</a> · <a href="example/plan-veo31-lite.csv" download>plan-veo31-lite.csv</a></th><td>장면 계획 결과와 제작표</td></tr>
+      <tr><th><a href="example/asset-input.md" download>example/asset-input.md</a></th><td><code>/asset-generator</code>에 붙여 넣는 입력문</td></tr>
+      <tr><th><a href="example/asset-output.md" download>example/asset-output.md</a></th><td>에셋 생성기 출력 모양 예</td></tr>
+    </tbody>
+  </table></div>
+  <h2>빠른 시작</h2>
+  <div class="code"><div class="head"><span>터미널</span></div>
+<pre><code>python test_pipeline.py                                   # 도구 확인
+python pipeline.py check-script example/script.txt --target 36
+python pipeline.py plan --seconds 36 --script example/script.txt --tool veo31-lite --asset-input 입력.md
+python pipeline.py pack                                   # knowledge/ + skills/ → dist/*.zip</code></pre></div>
+  <footer>CC BY-NC 4.0 · 출처를 밝히면 비영리 목적으로 자유롭게 고쳐 쓸 수 있습니다.</footer>
+</div>
+</body>
+</html>
