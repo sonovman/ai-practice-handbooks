@@ -141,8 +141,25 @@ window.CATALOG = [
     ]
   },
   {
-    id: "excel-analysis",
+    id: "korean-law-mcp",
     no: "08",
+    category: "Claude 활용",
+    title: "법제처에 직접 연결해 Claude로 법령·판례 리서치하기",
+    subtitle: "Korean Law MCP 로컬 설치 — 공개 서버 없이, 내 인증키로, 버전 고정",
+    summary: "오픈소스 Korean Law MCP를 내 컴퓨터에 버전 고정 설치해 중간 서버 없이 법제처 Open API에 직접 연결하는 방법을 소스 코드와 실행 시험으로 확인했습니다. 설치·Claude Desktop/Code 연결·사용법·검증 범위와 설정 점검기를 제공하고, 떠도는 안내 자료 15개 주장을 원문과 대조한 결과도 싣습니다.",
+    reader: "Claude에 법령·판례 조회를 붙이려는 사내 법무·IP 담당자, 실무자",
+    version: "1.0",
+    date: "2026-11-07",
+    length: "읽기 약 20분",
+    status: "published",
+    links: [
+      { label: "화면으로 읽기", href: "korean-law-mcp/", primary: true },
+      { label: "템플릿 내려받기", href: "korean-law-mcp/templates/" }
+    ]
+  },
+  {
+    id: "excel-analysis",
+    no: "09",
     category: "데이터",
     title: "엑셀 데이터를 AI로 분석하고 그래프까지 받기",
     subtitle: "준비 중",
