@@ -90,8 +90,25 @@ window.CATALOG = [
     ]
   },
   {
-    id: "excel-analysis",
+    id: "ssr-plus",
     no: "05",
+    category: "Claude 활용",
+    title: "AI를 손발처럼 쓰는 SSR Plus 4단계",
+    subtitle: "스킬 · 세컨드 브레인 · 루틴 · 익스텐션으로 Claude 실행 환경 세팅하기",
+    summary: "AI 성능보다 실행 환경이 업무 부담을 줄입니다. 네 단계를 초급·중급·고급으로 나눠 설명하고, IP팀 업무 시스템을 실제 폴더로 만든 구축 키트(공보 브리프 스킬·대문 파일·루틴·링크 점검기)를 공식 검증 도구로 확인해 제공합니다.",
+    reader: "Claude를 매일 쓰지만 매번 같은 설명을 반복하고 있는 실무자",
+    version: "1.0",
+    date: "2026-11-06",
+    length: "읽기 약 20분",
+    status: "published",
+    links: [
+      { label: "화면으로 읽기", href: "ssr-plus/", primary: true },
+      { label: "구축 키트 받기", href: "ssr-plus/kit/" }
+    ]
+  },
+  {
+    id: "excel-analysis",
+    no: "06",
     category: "데이터",
     title: "엑셀 데이터를 AI로 분석하고 그래프까지 받기",
     subtitle: "준비 중",

@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Claude SSR Plus 4단계</title>
+<meta name="description" content="AI를 손발처럼 쓰기 위한 Claude 실행 환경 구축 프레임워크 SSR Plus(스킬·세컨드 브레인·루틴·익스텐션)를 소개하고, IP팀 업무 시스템 구축 사례를 검증된 키트로 시연합니다.">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<div class="bar"><div class="bar-in">
+  <a class="brand" href="../">AI 실무 핸드북</a>
+  <div class="links">
+    <a href="kit/">구축 키트</a>
+    <a href="https://github.com/sonovman/ai-practice-handbooks">GitHub ↗</a>
+  </div>
+</div></div>
+
+<div class="doc">
+  <aside class="side">
+    <div class="label">차례</div>
+    <ol>
+      <li><a href="#s0">한 줄 결론</a></li>
+      <li><a href="#s1">1. 왜 실행 환경인가</a></li>
+      <li><a href="#s2">2. S · 스킬</a></li>
+      <li><a href="#s3">3. S · 세컨드 브레인</a></li>
+      <li><a href="#s4">4. R · 루틴</a></li>
+      <li><a href="#s5">5. + · 익스텐션·커넥터</a></li>
+      <li><a href="#s6">6. 구축 사례: IP팀</a></li>
+      <li><a href="#s7">7. 원고와 달라진 점</a></li>
+      <li><a href="#s8">부록 · 용어와 출처</a></li>
+    </ol>
+  </aside>
+
+<main>
+  <div class="eyebrow">핸드북 05 · Claude 활용</div>
+  <h1>AI를 손발처럼 쓰는<br>SSR Plus 4단계</h1>
+  <p class="lead">AI 성능이 아무리 좋아도 일할 환경이 갖춰져 있지 않으면 업무 부담은 줄지 않습니다. 스킬·세컨드 브레인·루틴·익스텐션, 네 단계로 Claude의 실행 환경을 세팅하는 법을 소개하고, IP팀 업무 시스템을 실제로 만들어 시범을 보입니다.</p>
+  <div class="meta">
+    <b>독자</b><span>Claude를 매일 쓰지만 매번 같은 설명을 반복하고 있는 실무자</span>
+    <b>분량</b><span>읽기 약 20분 · 구축 키트 1종(파일 14개)</span>
+    <b>판</b><span>1.0 · 2026. 11. 6. (Claude 메뉴와 요금제는 2026. 11. 6. 기준)</span>
+  </div>
+
+  <section id="s0">
+    <div class="key">
+      <div class="eyebrow">한 줄 결론</div>
+      <p style="font-size:19px;font-weight:600;line-height:1.6;margin:8px 0 10px">두 번 반복한 일은 스킬로, 매번 하는 설명은 대문 파일로, 정해진 시간의 일은 루틴으로, 손이 닿지 않는 곳은 커넥터로.</p>
+      <p style="opacity:.75;font-size:15px">SSR Plus는 Skills · Second brain · Routines에 Extensions(+)를 더한 이름입니다. 네 단계 모두 초급부터 시작할 수 있고, 이 글의 구축 키트를 받으면 1~4단계 초급이 한 번에 갖춰집니다.</p>
+    </div>
+  </section>
+
+  <!-- 1 -->
+  <section id="s1">
+    <h2><span class="no">01</span>왜 실행 환경인가</h2>
+    <p>대화창에서만 AI를 쓰면 매번 같은 배경을 설명하고, 같은 양식을 붙여 넣고, 결과를 직접 옮겨야 합니다. 일은 AI가 했는데 손은 사람이 바쁩니다. 실행 환경을 세팅한다는 것은 이 반복을 <strong>파일과 설정으로 한 번 고정</strong>해 두는 일입니다.</p>
+    <div class="grid2">
+      <div class="box"><div class="tag">S · Skills</div><h4>스킬</h4><p>반복 업무를 AI 단축키로. 지침 + 양식 + 예시를 한 폴더에.</p></div>
+      <div class="box"><div class="tag">S · Second brain</div><h4>세컨드 브레인</h4><p>AI가 필요한 자료만 정확히 찾아가게 하는 대문과 길잡이 파일.</p></div>
+      <div class="box"><div class="tag">R · Routines</div><h4>루틴</h4><p>정해진 시각에 AI가 알아서 일하도록 예약.</p></div>
+      <div class="box"><div class="tag">+ · Extensions</div><h4>익스텐션·커넥터</h4><p>메일·드라이브·브라우저처럼 AI의 손이 닿는 곳을 넓히기.</p></div>
+    </div>
+    <div class="tbl"><table>
+      <thead><tr><th>단계</th><th>초급</th><th>중급</th><th>고급</th></tr></thead>
+      <tbody>
+        <tr><th>스킬</th><td>Claude에게 스킬 만들기를 맡기기</td><td>양식·예시 등 참고 파일을 함께 넣기</td><td>스킬을 고치는 스킬 운용</td></tr>
+        <tr><th>세컨드 브레인</th><td>작업 폴더에 CLAUDE.md</td><td>업무별 길잡이 파일(위키 대문 방식)</td><td>나만의 지식 뷰어 만들기</td></tr>
+        <tr><th>루틴</th><td>Desktop 예약 작업(PC 켜짐)</td><td>클라우드 예약 작업(PC 꺼져도)</td><td>상시 서버 + 파일 동기화</td></tr>
+        <tr><th>익스텐션</th><td>기본 커넥터 연결</td><td>MCP 커스텀 커넥터·데스크톱 확장</td><td>나만의 도구 직접 만들기</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <!-- 2 -->
+  <section id="s2">
+    <h2><span class="no">02 · S</span>스킬 — 두 번 했으면 단축키로</h2>
+    <p>스킬은 “이 일은 이렇게 한다”를 적어 둔 폴더입니다. Claude는 평소에는 스킬의 이름과 설명만 알고 있다가, 요청이 설명과 맞을 때 폴더 전체를 열어 지침대로 일합니다.</p>
+    <h3>스킬 폴더의 정확한 모양</h3>
+<pre><code>patent-brief/            ← 폴더 이름 = 스킬 이름 (영문 소문자·숫자·하이픈)
+├── SKILL.md             ← 필수. 이름이 정확히 SKILL.md 여야 인식됨
+├── style.md             ← 참고 파일 (이름 자유)
+└── template.html        ← 참고 파일 (양식·코드 조각)</code></pre>
+<pre><code>---
+name: patent-brief
+description: 특허 공보 한 건을 한 장짜리 브리프로 정리한다. 공보 요약 요청에 쓴다.
+---
+# 본문: 언제 쓰나 / 먼저 읽을 것 / 순서 / 점검</code></pre>
+    <div class="note"><b>원고와 다른 점</b> — 원고는 지침 파일을 <code>스킬.md</code>, 참고 파일을 <code>스타일.md</code>로 적었습니다. Claude는 <strong><code>SKILL.md</code>라는 이름만 스킬로 인식</strong>하고, 맨 위에 <code>name</code>·<code>description</code> 머리말이 있어야 합니다. 참고 파일 이름은 자유지만 영문(<code>style.md</code>)이 안전합니다. claude.ai에 올릴 때 이름은 64자, 설명은 200자까지입니다.</div>
+
+    <h3>초급 — Claude에게 맡기기</h3>
+    <p>대화로 “방금 한 작업을 스킬로 만들어 줘”라고 요청하면 됩니다. Anthropic은 스킬 작성을 돕는 <code>skill-creator</code> 스킬을 공식 저장소(anthropics/skills)에 공개해 두었고, Claude Code에서는 공식 플러그인으로 설치해 쓸 수 있습니다.</p>
+    <h3>설치 위치</h3>
+    <div class="tbl"><table>
+      <thead><tr><th>어디서 쓰나</th><th>설치 방법</th></tr></thead>
+      <tbody>
+        <tr><th>claude.ai · Desktop 채팅</th><td>설정에서 코드 실행(파일 만들기) 켜기 → <strong>Customize → Skills → + → Create skill → Upload a skill</strong> → 스킬 폴더를 ZIP으로 올리기 (ZIP 맨 위에 스킬 폴더가 있어야 함)</td></tr>
+        <tr><th>Claude Code · Desktop Code 탭</th><td>작업 폴더의 <code>.claude/skills/&lt;이름&gt;/SKILL.md</code> (이 프로젝트에서만) 또는 <code>~/.claude/skills/&lt;이름&gt;/SKILL.md</code> (모든 프로젝트). <code>/이름</code>으로 바로 실행</td></tr>
+      </tbody>
+    </table></div>
+    <h3>중급 — 참고 파일을 함께</h3>
+    <p>지침만으로는 모양이 매번 달라집니다. 문체·디자인 규칙(<code>style.md</code>), 결과물 뼈대(<code>template.html</code>), 잘된 예시를 같은 폴더에 두고 SKILL.md에서 “먼저 읽어라”라고 가리키면 결과가 일정해집니다.</p>
+    <h3>고급 — 스킬을 고치는 스킬</h3>
+    <p>양식이 바뀌면 스킬도 낡습니다. 키트의 <a href="kit/skills/skill-improver/SKILL.md">skill-improver</a>는 최근 결과물과 대화 속 지적을 근거로 수정안을 만들고, <strong>승인을 받은 뒤에만</strong> 고칩니다.</p>
+  </section>
+
+  <!-- 3 -->
+  <section id="s3">
+    <h2><span class="no">03 · S</span>세컨드 브레인 — 폴더 정리 대신 길잡이</h2>
+    <p>자료를 완벽하게 폴더별로 정리하려 애쓰는 대신, AI와 사람이 길을 찾을 수 있는 <strong>안내 파일</strong>을 만듭니다. 위키의 대문 페이지와 같은 방식입니다.</p>
+    <div class="flow"><span class="dark">CLAUDE.md (대문)</span><i>→ 업무 종류 판단 →</i><span>docs/선행조사_안내.md</span><i>→</i><span>필요한 자료·스킬만 열기</span></div>
+    <ol class="steps">
+      <li><b>초급 — 대문 파일 하나</b>작업 폴더 맨 위에 <code>CLAUDE.md</code>를 둡니다. Claude Code와 Desktop Code 탭은 이 파일을 자동으로 읽습니다. 역할, 늘 지킬 규칙, 결과물 저장 위치를 적습니다.</li>
+      <li><b>중급 — 업무별 길잡이</b>대문에는 “선행조사는 이 파일, 보고서는 저 파일”이라는 표만 두고, 자세한 자료 위치는 <code>docs/○○_안내.md</code>에 적습니다. 자료가 늘어도 AI가 길을 잃지 않습니다.</li>
+      <li><b>고급 — 나만의 뷰어</b>길잡이 파일들의 연결을 그림으로 보여 주는 화면을 Claude에게 만들게 할 수 있습니다. 노션·옵시디언을 대신하는 개인 도구입니다.</li>
+    </ol>
+    <div class="note"><b>AGENTS.md를 쓰던 분께</b> — Claude Code는 최근 버전부터 <code>AGENTS.md</code>도 읽지만, 기본값으로는 <strong>CLAUDE.md가 없을 때만</strong> 읽습니다. 다른 도구와 함께 쓰려면 <code>CLAUDE.md</code> 첫 줄에 <code>@AGENTS.md</code>라고 적어 불러오세요.</div>
+    <p>길잡이 파일이 많아지면 링크가 끊기기 쉽습니다. 키트의 <a href="kit/tools/check_links.py">check_links.py</a>로 점검하세요.</p>
+  </section>
+
+  <!-- 4 -->
+  <section id="s4">
+    <h2><span class="no">04 · R</span>루틴 — 정해진 시각에 알아서</h2>
+    <p>“매일 아침 8시 반에 일정·메일·할 일을 정리해 줘”처럼 같은 시각에 반복하는 일을 예약합니다. Claude에는 여러 방식이 있고, <strong>PC가 꺼져 있어도 도는지</strong>가 가장 큰 차이입니다.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>방식</th><th>만드는 곳</th><th>PC 꺼져도?</th><th>요금제</th></tr></thead>
+      <tbody>
+        <tr><th>Desktop 로컬 예약</th><td>Desktop <strong>Code 탭 → Scheduled → New task</strong> → 고급 설정에서 “Only on this computer”</td><td>아니요 (앱 실행·PC 깨어 있어야)</td><td>—</td></tr>
+        <tr><th>클라우드 예약 작업</th><td>claude.ai/code/routines 또는 Code 탭 Scheduled → New task, CLI는 <code>/schedule</code></td><td>예 (Anthropic 클라우드에서 실행)</td><td>Pro 이상</td></tr>
+        <tr><th>Cowork 예약 작업</th><td>Cowork 왼쪽 <strong>Scheduled → New task</strong> (Claude와 대화로 만들거나 직접 설정)</td><td>예 (단, 내 PC 파일·앱이 필요한 작업은 PC에서만)</td><td>Pro 이상</td></tr>
+        <tr><th>상시 서버</th><td>VPS·남는 PC에 에이전트 설치 + Syncthing 등으로 파일 동기화</td><td>예</td><td>서버 비용 별도</td></tr>
+      </tbody>
+    </table></div>
+    <p class="cap">로컬 예약은 PC가 잠들어 있다가 깨어나면 놓친 실행을 한 번 따라잡습니다(7일 이내). 클라우드 예약은 미리보기(research preview) 단계 기능입니다.</p>
+    <h3>아침 브리핑 루틴 만들기 (Desktop 로컬)</h3>
+    <ol>
+      <li>Desktop 앱 <strong>Code</strong> 탭 → 왼쪽 <strong>Scheduled</strong> → <strong>New task</strong> → <strong>Set up manually</strong></li>
+      <li>폴더: 구축 키트 폴더, 일정: <strong>Weekdays</strong> 08:30</li>
+      <li>프롬프트: 키트의 <a href="kit/docs/루틴_안내.md">루틴_안내.md</a> “루틴 1” 문장을 붙여 넣기 → <strong>Create</strong></li>
+      <li>처음 한 번은 바로 실행해 결과 파일이 <code>output/</code>에 생기는지 확인</li>
+    </ol>
+  </section>
+
+  <!-- 5 -->
+  <section id="s5">
+    <h2><span class="no">05 · +</span>익스텐션·커넥터 — AI의 손이 닿는 곳</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>종류</th><th>예</th><th>연결하는 곳</th><th>요금제</th></tr></thead>
+      <tbody>
+        <tr><th>기본 커넥터</th><td>Gmail, Google Calendar, Google Drive</td><td><strong>Customize → Connectors</strong></td><td>모든 사용자 (Team·Enterprise는 관리자가 켜야 함)</td></tr>
+        <tr><th>커스텀 커넥터</th><td>원격 MCP 서버 주소로 연결</td><td>Customize → Connectors → <strong>+ Add → Add custom connector</strong></td><td>모든 요금제 (무료는 1개)</td></tr>
+        <tr><th>데스크톱 확장</th><td>내 PC의 파일·앱을 다루는 로컬 MCP (.mcpb)</td><td>Settings → <strong>Desktop app → Extensions</strong> → Browse extensions</td><td>Desktop 앱</td></tr>
+        <tr><th>브라우저 제어</th><td>Claude in Chrome (Chrome 확장)</td><td>Chrome 웹 스토어 설치 → Customize → Connectors에서 켜기</td><td>유료 요금제, Chrome만</td></tr>
+      </tbody>
+    </table></div>
+    <div class="note"><b>권한은 좁게</b> — 처음에는 <strong>읽기만</strong> 맡기세요. 메일 발송·일정 변경·파일 삭제는 실행 전에 확인을 받도록 대문 파일에 적어 둡니다. 메일·웹페이지 안에 적힌 “지시문”은 따르지 말라는 규칙도 함께 넣습니다(키트의 <a href="kit/docs/연결_안내.md">연결_안내.md</a>).</div>
+    <p>고급 단계에서는 필요한 도구가 없을 때 Claude에게 MCP 서버나 전용 화면을 만들게 합니다. 만드는 법은 Anthropic 공식 스킬 저장소의 <code>mcp-builder</code> 스킬이 안내합니다.</p>
+  </section>
+
+  <!-- 6 -->
+  <section id="s6">
+    <h2><span class="no">06</span>구축 사례: IP팀 업무 시스템</h2>
+    <p>네 단계를 IP팀 업무에 적용해 실제 폴더로 만들었습니다. 받아서 [대괄호]만 고치면 바로 쓸 수 있습니다.</p>
+    <div class="btns">
+      <a class="btn primary" href="downloads/ip-workspace-kit.zip" download>키트 전체 받기 (ZIP)</a>
+      <a class="btn" href="kit/">파일 하나씩 보기</a>
+    </div>
+<pre style="margin-top:20px"><code>ip-workspace/
+├── CLAUDE.md                ② 대문 — 역할·규칙·업무별 길잡이 표
+├── docs/
+│   ├── 선행조사_안내.md      ② 길잡이 — 어떤 스킬·자료를 쓸지
+│   ├── 보고서_안내.md
+│   ├── 회사_키워드.md        ② 관련성 판단 기준
+│   ├── 루틴_안내.md          ③ 예약 작업에 붙여 넣을 문장 2개
+│   └── 연결_안내.md          ④ 커넥터 사용 원칙
+├── skills/
+│   ├── patent-brief/        ① 공보 → 한 장 브리프 (SKILL.md + style.md + template.html)
+│   └── skill-improver/      ① 고급: 스킬을 고치는 스킬
+├── input/sample-patent.md   연습용 가상 공보
+├── output/                  결과물 (실행 예시 1건 포함)
+└── tools/check_links.py     길잡이 링크 점검</code></pre>
+
+    <h3>설치</h3>
+    <div class="grid2">
+      <div class="box"><div class="tag">A · Desktop Code 탭 / Claude Code</div><h4>폴더째 쓰기</h4>
+        <ol style="font-size:15px;color:var(--sub);padding-left:20px">
+          <li>키트를 풀고 그 폴더를 작업 폴더로 열기</li>
+          <li><code>skills/</code> 안의 두 폴더를 <code>.claude/skills/</code>로 옮기기</li>
+          <li><code>/patent-brief input/sample-patent.md</code></li>
+        </ol></div>
+      <div class="box"><div class="tag">B · claude.ai / Desktop 채팅</div><h4>스킬만 올리기</h4>
+        <ol style="font-size:15px;color:var(--sub);padding-left:20px">
+          <li><a href="downloads/patent-brief.zip">patent-brief.zip</a> 받기</li>
+          <li>Customize → Skills → + → Create skill → Upload a skill</li>
+          <li>가상 공보를 첨부하고 “브리프로 정리해 줘”</li>
+        </ol></div>
+    </div>
+
+    <h3>시범 실행 결과</h3>
+    <p>가상 공보(<a href="kit/input/sample-patent.md">sample-patent.md</a>)를 patent-brief 스킬 지침대로 처리한 결과입니다. → <a href="kit/output/2026-11-06_10-2026-9999999_brief.html"><strong>브리프 열어 보기</strong></a></p>
+    <div class="tbl"><table>
+      <thead><tr><th>검증 항목</th><th>방법</th><th>결과</th></tr></thead>
+      <tbody>
+        <tr><th>스킬 형식</th><td>Anthropic 공식 skill-creator의 검증 스크립트(quick_validate.py)</td><td>2개 모두 “Skill is valid!”</td></tr>
+        <tr><th>claude.ai 업로드 한도</th><td>이름·설명 글자 수, 폴더 이름 = 스킬 이름</td><td>설명 96자·81자 (한도 200), 일치</td></tr>
+        <tr><th>ZIP 구조</th><td>압축을 풀어 다시 공식 검증</td><td>맨 위에 스킬 폴더, “Skill is valid!”</td></tr>
+        <tr><th>길잡이 링크</th><td>check_links.py</td><td>파일 11개·링크 17개 정상, 일부러 끊은 링크 1개 검출</td></tr>
+        <tr><th>브리프 결과</th><td>스킬의 “점검” 항목 대조</td><td>자리표시 0개, 구성요소 E1~E4 원문 일치, 효과 3개 모두 원문 단락 번호</td></tr>
+      </tbody>
+    </table></div>
+    <p class="cap">2026. 11. 6. 확인. 브리프는 이 글을 만든 Claude 세션이 SKILL.md 지침을 따라 작성했습니다. claude.ai 업로드 화면과 예약 작업 실행은 계정이 필요해 시험하지 않았으니, 처음 한 번은 직접 실행해 확인하세요.</p>
+  </section>
+
+  <!-- 7 -->
+  <section id="s7">
+    <h2><span class="no">07</span>원고·영상과 달라진 점</h2>
+    <p>공식 문서와 대조하면서 고친 부분입니다. Claude의 메뉴와 기능은 빠르게 바뀌니, 따라 할 때는 공식 도움말도 함께 보세요.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>원고</th><th>확인 결과 (2026. 11. 6.)</th></tr></thead>
+      <tbody>
+        <tr><th>스킬 파일 <code>스킬.md</code></th><td><code>SKILL.md</code>라는 이름과 name·description 머리말이 있어야 인식</td></tr>
+        <tr><th><code>agent.md</code> 또는 <code>claude.md</code></th><td>Claude는 <code>CLAUDE.md</code>를 자동으로 읽음. <code>AGENTS.md</code>는 CLAUDE.md가 없을 때만</td></tr>
+        <tr><th>예약 작업은 PC가 켜져 있어야만</th><td>Desktop 로컬 예약은 그렇지만, 클라우드 예약 작업과 Cowork 예약 작업은 PC가 꺼져도 실행(Pro 이상)</td></tr>
+        <tr><th>사용자 지정 → 스킬 메뉴</th><td>현재 메뉴 이름은 <strong>Customize → Skills</strong></td></tr>
+        <tr><th>기본 커넥터 클릭 연결</th><td><strong>Customize → Connectors</strong>. Team·Enterprise는 관리자가 먼저 허용해야 함</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <!-- 8 -->
+  <section id="s8">
+    <h2><span class="no">부록</span>용어와 출처</h2>
+    <div class="tbl"><table>
+      <tbody>
+        <tr><th>스킬</th><td>지침(SKILL.md)과 참고 파일을 담은 폴더. 요청이 설명과 맞으면 Claude가 열어 씀</td></tr>
+        <tr><th>CLAUDE.md</th><td>작업 폴더에서 Claude가 자동으로 읽는 기본 지침 파일</td></tr>
+        <tr><th>길잡이 파일</th><td>업무별로 어떤 자료·스킬을 볼지 안내하는 파일</td></tr>
+        <tr><th>예약 작업</th><td>정해진 시각에 자동 실행되는 작업. 이 글의 “루틴”</td></tr>
+        <tr><th>커넥터</th><td>Gmail·드라이브 등 외부 서비스를 Claude에 연결하는 기능</td></tr>
+        <tr><th>MCP</th><td>AI와 외부 도구를 잇는 공개 규격. 커스텀 커넥터·데스크톱 확장의 바탕</td></tr>
+      </tbody>
+    </table></div>
+    <h3>출처 (2026. 11. 6. 확인)</h3>
+    <ul>
+      <li>챗대리의 AI연구소, 「<a href="https://www.youtube.com/watch?v=3Me5BJgsG7E">클로드는 이렇게 쓰는 겁니다: 나만의 'AI 업무 시스템' 4단계 구축법</a>」, YouTube, 2026. 10. 30. — 4단계 구분과 초·중·고급</li>
+      <li>Claude 도움말: <a href="https://support.claude.com/en/articles/12512198-how-to-create-custom-skills">커스텀 스킬 만들기</a> · <a href="https://support.claude.com/en/articles/12512180-use-skills-in-claude">스킬 사용</a> · <a href="https://support.claude.com/en/articles/13854387-schedule-recurring-tasks-in-claude-cowork">Cowork 예약 작업</a> · <a href="https://support.claude.com/en/articles/10166901-use-google-workspace-connectors">Google Workspace 커넥터</a> · <a href="https://support.claude.com/en/articles/11175166-get-started-with-custom-connectors-using-remote-mcp">커스텀 커넥터</a> · <a href="https://support.claude.com/en/articles/12012173-get-started-with-claude-in-chrome">Claude in Chrome</a></li>
+      <li>Claude Code 문서: <a href="https://code.claude.com/docs/en/skills">Skills</a> · <a href="https://code.claude.com/docs/en/memory">Memory(CLAUDE.md)</a> · <a href="https://code.claude.com/docs/en/desktop-scheduled-tasks">Desktop 예약 작업</a> · <a href="https://code.claude.com/docs/en/routines">클라우드 예약 작업</a></li>
+      <li>Anthropic, <a href="https://github.com/anthropics/skills">공식 스킬 저장소</a> — skill-creator, mcp-builder</li>
+    </ul>
+    <p>함께 읽기: <a href="../engineering-evolution/">03편 하네스·루프·그래프</a> · <a href="../personal-agent/">04편 개인 AI 에이전트</a></p>
+  </section>
+
+  <footer>
+    작성: 이진수 (변리사) · 2026. 11. 6. · CC BY-NC 4.0<br>
+    이 글은 위 영상을 요약하고 작성자의 정리와 공식 문서 확인 결과를 더해 생성형 AI의 도움으로 작성했으며, 사람이 검토했습니다. 오류 제보는 <a href="https://github.com/sonovman/ai-practice-handbooks/issues">Issues</a>로 남겨 주세요.
+  </footer>
+</main>
+</div>
+
+<script>
+  var links = [].slice.call(document.querySelectorAll('.side a'));
+  var io = new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+      if (e.isIntersecting) links.forEach(function (a) { a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id); });
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  document.querySelectorAll('main section[id]').forEach(function (s) { io.observe(s); });
+</script>
+</body>
+</html>

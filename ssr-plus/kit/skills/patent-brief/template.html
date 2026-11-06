@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{공보번호}} 브리프</title>
+<style>
+  body { margin: 0; background: #fff; color: #111; font-family: "Pretendard", "Malgun Gothic", system-ui, sans-serif; line-height: 1.7; word-break: keep-all; }
+  .page { max-width: 760px; margin: 0 auto; padding: 40px 20px 60px; }
+  .no { font-size: 13px; color: #555; letter-spacing: .04em; }
+  h1 { font-size: 26px; line-height: 1.35; margin: 4px 0 20px; }
+  h2 { font-size: 16px; margin: 32px 0 10px; padding-bottom: 6px; border-bottom: 1px solid #ddd; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th, td { text-align: left; padding: 7px 8px; border-bottom: 1px solid #eee; vertical-align: top; }
+  th { width: 110px; color: #555; font-weight: 600; }
+  ol.el { padding-left: 0; list-style: none; margin: 0; }
+  ol.el li { padding: 6px 0; border-bottom: 1px solid #eee; font-size: 15px; }
+  ol.el b { display: inline-block; width: 36px; }
+  ul { padding-left: 20px; margin: 0; }
+  .badge { display: inline-block; padding: 2px 12px; border-radius: 999px; font-size: 13px; font-weight: 700; border: 1px solid #111; }
+  .badge.high { background: #111; color: #fff; }
+  .badge.mid { background: #fff; color: #111; }
+  .badge.low { border-color: #bbb; color: #888; }
+  .why { margin: 8px 0 0; font-size: 15px; }
+  .foot { margin-top: 40px; padding-top: 12px; border-top: 1px solid #ddd; font-size: 12px; color: #888; }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="no">{{공보번호}}</div>
+  <h1>{{발명의 명칭}}</h1>
+
+  <h2>서지사항</h2>
+  <table>
+    <tr><th>출원인</th><td>{{출원인}}</td></tr>
+    <tr><th>출원일</th><td>{{출원일}}</td></tr>
+    <tr><th>공개·등록일</th><td>{{공개·등록일}}</td></tr>
+    <tr><th>IPC</th><td>{{IPC}}</td></tr>
+  </table>
+
+  <h2>독립항 구성요소 (청구항 {{청구항 번호}})</h2>
+  <ol class="el">
+    {{구성요소 목록: <li><b>E1</b>원문 표현</li> 형태로 반복}}
+  </ol>
+
+  <h2>발명의 효과</h2>
+  <ul>
+    {{효과 목록: <li>효과 요지 【단락】</li> 형태로 3개 이내}}
+  </ul>
+
+  <h2>우리 회사 관련성</h2>
+  <span class="badge {{high|mid|low}}">{{높음|보통|낮음|판단 보류}}</span>
+  <p class="why">{{이유 한 줄}}</p>
+
+  <h2>다음 할 일</h2>
+  <ul>
+    {{할 일 1~2개: <li>…</li>}}
+  </ul>
+
+  <div class="foot">AI 작성 초안 · 담당자 검토 전 · 작성일 {{작성일}} · patent-brief 스킬</div>
+</div>
+</body>
+</html>

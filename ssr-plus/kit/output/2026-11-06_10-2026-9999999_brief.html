@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>10-2026-9999999 브리프</title>
+<style>
+  body { margin: 0; background: #fff; color: #111; font-family: "Pretendard", "Malgun Gothic", system-ui, sans-serif; line-height: 1.7; word-break: keep-all; }
+  .page { max-width: 760px; margin: 0 auto; padding: 40px 20px 60px; }
+  .no { font-size: 13px; color: #555; letter-spacing: .04em; }
+  h1 { font-size: 26px; line-height: 1.35; margin: 4px 0 20px; }
+  h2 { font-size: 16px; margin: 32px 0 10px; padding-bottom: 6px; border-bottom: 1px solid #ddd; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th, td { text-align: left; padding: 7px 8px; border-bottom: 1px solid #eee; vertical-align: top; }
+  th { width: 110px; color: #555; font-weight: 600; }
+  ol.el { padding-left: 0; list-style: none; margin: 0; }
+  ol.el li { padding: 6px 0; border-bottom: 1px solid #eee; font-size: 15px; }
+  ol.el b { display: inline-block; width: 36px; }
+  ul { padding-left: 20px; margin: 0; }
+  .badge { display: inline-block; padding: 2px 12px; border-radius: 999px; font-size: 13px; font-weight: 700; border: 1px solid #111; }
+  .badge.high { background: #111; color: #fff; }
+  .badge.mid { background: #fff; color: #111; }
+  .badge.low { border-color: #bbb; color: #888; }
+  .why { margin: 8px 0 0; font-size: 15px; }
+  .foot { margin-top: 40px; padding-top: 12px; border-top: 1px solid #ddd; font-size: 12px; color: #888; }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="no">공개번호 10-2026-9999999 (연습용 가상 공보)</div>
+  <h1>진동 데이터를 이용한 설비 이상 조기 탐지 장치 및 방법</h1>
+
+  <h2>서지사항</h2>
+  <table>
+    <tr><th>출원인</th><td>가상테크 주식회사</td></tr>
+    <tr><th>출원일</th><td>2025. 3. 10. (출원번호 10-2025-0123456)</td></tr>
+    <tr><th>공개·등록일</th><td>2026. 9. 15. 공개</td></tr>
+    <tr><th>IPC</th><td>G05B 23/02, G01H 1/00</td></tr>
+  </table>
+
+  <h2>독립항 구성요소 (청구항 1)</h2>
+  <ol class="el">
+    <li><b>E1</b>설비에 부착되어 진동 신호를 측정하는 진동 센서부</li>
+    <li><b>E2</b>상기 진동 신호에서 설비의 운전 주파수 대역 외의 잡음을 적응적으로 제거하는 적응형 필터부</li>
+    <li><b>E3</b>정상 운전 시의 진동 패턴을 학습하여 기준 패턴을 생성하는 패턴 학습부</li>
+    <li><b>E4</b>상기 필터링된 진동 신호와 상기 기준 패턴의 차이가 임계값을 초과하면 실시간으로 이상 경보를 발생시키는 이상 판단부</li>
+  </ol>
+
+  <h2>발명의 효과</h2>
+  <ul>
+    <li>종래 일괄 분석 대비 이상 탐지 시점이 평균 4.2시간 앞당겨짐 【0040】</li>
+    <li>오경보율이 12%에서 3%로 감소함 【0040】</li>
+    <li>운전 조건이 바뀌어도 잡음 제거 성능이 유지됨 【0025】</li>
+  </ul>
+
+  <h2>우리 회사 관련성</h2>
+  <span class="badge high">높음</span>
+  <p class="why">E1·E4가 설비 감시 솔루션 키워드(진동 센서, 이상 탐지, 실시간 모니터링)와, E2가 산업용 게이트웨이 키워드(신호 필터링)와 겹침.</p>
+
+  <h2>다음 할 일</h2>
+  <ul>
+    <li>자사 설비 감시 솔루션의 필터 방식이 E2(운전 주파수 추적형 적응 필터)에 해당하는지 사양 확인</li>
+    <li>청구항 2(부하에 따른 임계값 가변)와 자사 경보 로직 비교</li>
+  </ul>
+
+  <div class="foot">AI 작성 초안 · 담당자 검토 전 · 작성일 2026. 11. 6. · patent-brief 스킬</div>
+</div>
+</body>
+</html>

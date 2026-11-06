@@ -10,6 +10,7 @@
 | 02 | 보고서 초안을 AI에게 맡기는 프롬프트 5원칙 | [화면](https://sonovman.github.io/ai-practice-handbooks/prompt-basics/) | [CSV](data/prompt-templates.csv) |
 | 03 | AI에게 일을 시키는 5가지 방법의 진화 — 프롬프트에서 하네스·루프·그래프까지 | [화면](https://sonovman.github.io/ai-practice-handbooks/engineering-evolution/) | [템플릿](engineering-evolution/templates/) |
 | 04 | 개인 AI 에이전트, 챗봇과 무엇이 다른가 — 구축 5단계 | [화면](https://sonovman.github.io/ai-practice-handbooks/personal-agent/) | [템플릿](personal-agent/templates/) |
+| 05 | AI를 손발처럼 쓰는 SSR Plus 4단계 — Claude 실행 환경 구축 | [화면](https://sonovman.github.io/ai-practice-handbooks/ssr-plus/) | [구축 키트](ssr-plus/kit/) |
 
 ## 폴더 구성
 
@@ -25,6 +26,7 @@ ai-practice-handbooks/
 ├── prompt-basics/      02편
 ├── engineering-evolution/  03편 (templates/ 에 IP 분석 템플릿 8종)
 ├── personal-agent/     04편 (templates/ 에 지침·스킬·감시 스크립트)
+├── ssr-plus/           05편 (kit/ 구축 사례 폴더, downloads/ ZIP 2종)
 └── data/               공용 자료
 ```
 
