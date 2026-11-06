@@ -209,8 +209,25 @@ window.CATALOG = [
     ]
   },
   {
-    id: "excel-analysis",
+    id: "prompt-symbols",
     no: "12",
+    category: "프롬프트",
+    title: "정밀한 지시를 위한 AI 프롬프트 기호 사용법",
+    subtitle: "#, -, *, {}, [], <>, \"\" 7가지 기호와 XML 태그 — 원리·약속·템플릿·점검 도구",
+    summary: "기호가 AI 지시를 정밀하게 만드는 이유를 토크나이저·Self-Attention·사전 학습 데이터·임베딩의 네 가지 원리와 근거 수준으로 설명하고, 7가지 기호와 XML 태그의 활용법을 처음 접근과 개선 방식으로 정리했습니다. 팀 공통 기호 약속표, 업무 템플릿 4종, 점검·변수 채우기 도구를 제공합니다.",
+    reader: "보고서·메일·분석을 AI에게 맡기는 실무자, 팀 공용 프롬프트를 관리하는 담당자",
+    version: "1.0",
+    date: "2026-11-07",
+    length: "읽기 약 20분",
+    status: "published",
+    links: [
+      { label: "화면으로 읽기", href: "prompt-symbols/", primary: true },
+      { label: "템플릿 내려받기", href: "prompt-symbols/templates/" }
+    ]
+  },
+  {
+    id: "excel-analysis",
+    no: "13",
     category: "데이터",
     title: "엑셀 데이터를 AI로 분석하고 그래프까지 받기",
     subtitle: "준비 중",

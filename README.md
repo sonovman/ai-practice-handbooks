@@ -17,6 +17,7 @@
 | 09 | 판례 심층 해설 도우미 — 원문·논증·소송 경과 검증 (4개 플랫폼) | [화면](https://sonovman.github.io/ai-practice-handbooks/case-study/) | [배포 키트](case-study/kit/) |
 | 10 | KIPRIS Plus 특허 API 활용과 Python 연동 | [화면](https://sonovman.github.io/ai-practice-handbooks/kipris-plus/) | [템플릿](kipris-plus/templates/) |
 | 11 | AI 합의 협의체 — 관점이 다른 에이전트의 토론과 합의 (4개 플랫폼) | [화면](https://sonovman.github.io/ai-practice-handbooks/council/) | [배포 키트](council/kit/) |
+| 12 | 정밀한 지시를 위한 AI 프롬프트 기호 사용법 | [화면](https://sonovman.github.io/ai-practice-handbooks/prompt-symbols/) | [템플릿](prompt-symbols/templates/) |
 
 ## 폴더 구성
 
@@ -39,6 +40,7 @@ ai-practice-handbooks/
 ├── case-study/         09편 (kit/ 4개 플랫폼 버전·검수 에이전트·형식 점검기·Alice 예제, downloads/ ZIP 3종)
 ├── kipris-plus/        10편 (templates/ Python 클라이언트·오프라인 시험·API 목록, downloads/ ZIP)
 ├── council/            11편 (kit/ 4개 플랫폼 버전·위원·의장 에이전트·형식 점검기·실 사용 예제, downloads/ ZIP 2종)
+├── prompt-symbols/     12편 (templates/ 업무 템플릿 4종·기호 약속표·점검 도구·A/B 시험표, downloads/ ZIP)
 └── data/               공용 자료
 ```
 
