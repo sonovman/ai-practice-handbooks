@@ -86,7 +86,7 @@ name: patent-brief
 description: 특허 공보 한 건을 한 장짜리 브리프로 정리한다. 공보 요약 요청에 쓴다.
 ---
 # 본문: 언제 쓰나 / 먼저 읽을 것 / 순서 / 점검</code></pre>
-    <div class="note"><b>원고와 다른 점</b> — 원고는 지침 파일을 <code>스킬.md</code>, 참고 파일을 <code>스타일.md</code>로 적었습니다. Claude는 <strong><code>SKILL.md</code>라는 이름만 스킬로 인식</strong>하고, 맨 위에 <code>name</code>·<code>description</code> 머리말이 있어야 합니다. 참고 파일 이름은 자유지만 영문(<code>style.md</code>)이 안전합니다. claude.ai에 올릴 때 이름은 64자, 설명은 200자까지입니다.</div>
+    <div class="note"><b>주의할 점</b> — 지침 파일을 <code>스킬.md</code>, 참고 파일을 <code>스타일.md</code>로 하지 않습니다. Claude는 <strong><code>SKILL.md</code>라는 이름만 스킬로 인식</strong>하고, 맨 위에 <code>name</code>·<code>description</code> 머리말이 있어야 합니다. 참고 파일 이름은 자유지만 영문(<code>style.md</code>)이 안전합니다. claude.ai에 올릴 때 이름은 64자, 설명은 200자까지입니다.</div>
 
     <h3>초급 — Claude에게 맡기기</h3>
     <p>대화로 “방금 한 작업을 스킬로 만들어 줘”라고 요청하면 됩니다. Anthropic은 스킬 작성을 돕는 <code>skill-creator</code> 스킬을 공식 저장소(anthropics/skills)에 공개해 두었고, Claude Code에서는 공식 플러그인으로 설치해 쓸 수 있습니다.</p>
@@ -216,7 +216,7 @@ description: 특허 공보 한 건을 한 장짜리 브리프로 정리한다. �
     <h2><span class="no">07</span>주의할 점</h2>
     <p>공식 문서와 대조하였습니다. Claude의 메뉴와 기능은 빠르게 바뀌니, 따라 할 때는 공식 도움말도 함께 보세요.</p>
     <div class="tbl"><table>
-      <thead><tr><th>원고</th><th>확인 결과 (2026. 11. 6.)</th></tr></thead>
+      <thead><tr><th>Before</th><th>After - 확인 결과 (2026. 11. 6.)</th></tr></thead>
       <tbody>
         <tr><th>스킬 파일 <code>스킬.md</code></th><td><code>SKILL.md</code>라는 이름과 name·description 머리말이 있어야 인식</td></tr>
         <tr><th><code>agent.md</code> 또는 <code>claude.md</code></th><td>Claude는 <code>CLAUDE.md</code>를 자동으로 읽음. <code>AGENTS.md</code>는 CLAUDE.md가 없을 때만</td></tr>
