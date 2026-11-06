@@ -192,8 +192,25 @@ window.CATALOG = [
     ]
   },
   {
-    id: "excel-analysis",
+    id: "council",
     no: "11",
+    category: "에이전트",
+    title: "AI 합의 협의체",
+    subtitle: "관점이 다른 에이전트들이 토론해 결론을 내게 하기 — Claude·ChatGPT·Gemini·Copilot 4개 버전",
+    summary: "LLM Council 계열 저장소 6곳을 보안·비용·구축·사용 기준으로 비교하고, 추가 키·중계 서버 없이 위원 5인이 독립 의견·익명 검토·반박을 거쳐 합의 수준을 밝힌 결론을 내는 스킬·에이전트를 만들었습니다. 이 추천 자체를 협의체에 올려 검증한 실 사용 예제와 형식 점검기를 제공합니다.",
+    reader: "중요한 결정·계획·문안을 다각도로 검증하고 싶은 실무자, IP·법무 담당자, 팀 리더",
+    version: "1.0",
+    date: "2026-11-07",
+    length: "읽기 약 20분",
+    status: "published",
+    links: [
+      { label: "화면으로 읽기", href: "council/", primary: true },
+      { label: "배포 키트 받기", href: "council/kit/" }
+    ]
+  },
+  {
+    id: "excel-analysis",
+    no: "12",
     category: "데이터",
     title: "엑셀 데이터를 AI로 분석하고 그래프까지 받기",
     subtitle: "준비 중",

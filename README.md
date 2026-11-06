@@ -16,6 +16,7 @@
 | 08 | 법제처에 직접 연결해 Claude로 법령·판례 리서치하기 — Korean Law MCP 로컬 설치 | [화면](https://sonovman.github.io/ai-practice-handbooks/korean-law-mcp/) | [템플릿](korean-law-mcp/templates/) |
 | 09 | 판례 심층 해설 도우미 — 원문·논증·소송 경과 검증 (4개 플랫폼) | [화면](https://sonovman.github.io/ai-practice-handbooks/case-study/) | [배포 키트](case-study/kit/) |
 | 10 | KIPRIS Plus 특허 API 활용과 Python 연동 | [화면](https://sonovman.github.io/ai-practice-handbooks/kipris-plus/) | [템플릿](kipris-plus/templates/) |
+| 11 | AI 합의 협의체 — 관점이 다른 에이전트의 토론과 합의 (4개 플랫폼) | [화면](https://sonovman.github.io/ai-practice-handbooks/council/) | [배포 키트](council/kit/) |
 
 ## 폴더 구성
 
@@ -37,6 +38,7 @@ ai-practice-handbooks/
 ├── korean-law-mcp/     08편 (templates/ 프롬프트·지침·설정 예시·설정 점검기·자료 검증표, downloads/ ZIP)
 ├── case-study/         09편 (kit/ 4개 플랫폼 버전·검수 에이전트·형식 점검기·Alice 예제, downloads/ ZIP 3종)
 ├── kipris-plus/        10편 (templates/ Python 클라이언트·오프라인 시험·API 목록, downloads/ ZIP)
+├── council/            11편 (kit/ 4개 플랫폼 버전·위원·의장 에이전트·형식 점검기·실 사용 예제, downloads/ ZIP 2종)
 └── data/               공용 자료
 ```
 

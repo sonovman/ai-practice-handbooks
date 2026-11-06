@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>합의 협의체 키트</title>
+<link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+<div class="bar"><div class="bar-in">
+  <a class="brand" href="../../">AI 실무 핸드북</a>
+  <div class="links"><a href="../">← 본문으로</a></div>
+</div></div>
+<div class="wrap">
+  <div class="eyebrow">핸드북 11 · 배포 키트</div>
+  <h1>합의 협의체 키트</h1>
+  <p class="lead">같은 규칙을 Claude·ChatGPT·Gemini·Copilot 네 곳에서. 한 번에 받으려면 <a href="../downloads/council-kit.zip" download>키트 전체(ZIP)</a>.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>파일</th><th>내용</th></tr></thead>
+    <tbody>
+      <tr><th><a href="README.md">README.md</a></th><td>키트 구성과 규칙 수정 절차</td></tr>
+      <tr><th colspan="2">공통 (knowledge/) — ChatGPT·Gemini·Copilot에 올림</th></tr>
+      <tr><th><a href="knowledge/council-rules.md">council-rules.md</a></th><td>절차·진행 방식·합의 판정 (Claude SKILL.md 본문과 같음)</td></tr>
+      <tr><th><a href="knowledge/roles.md">roles.md</a></th><td>위원 5인의 관점과 긴장 관계</td></tr>
+      <tr><th><a href="knowledge/output-template.md">output-template.md</a></th><td>결론 양식 1~7번, 합의 수준·신뢰도 값</td></tr>
+      <tr><th colspan="2">Claude (claude/)</th></tr>
+      <tr><th><a href="claude/decision-council/SKILL.md">decision-council/</a></th><td>스킬 — SKILL.md · references 2개 · scripts/check_verdict.py (<a href="../downloads/decision-council-skill.zip" download>ZIP</a>)</td></tr>
+      <tr><th><a href="claude/agents/council-advisor.md">agents/council-advisor.md</a> · <a href="claude/agents/council-chair.md">council-chair.md</a></th><td>Claude Code 위원·의장 에이전트 (병렬 진행)</td></tr>
+      <tr><th><a href="claude/README.md">claude/README.md</a></th><td>설치 안내</td></tr>
+      <tr><th colspan="2">ChatGPT · Gemini · Copilot</th></tr>
+      <tr><th><a href="chatgpt/skill-instructions.md">chatgpt/skill-instructions.md</a></th><td>플러그인 스킬 지침 · <a href="chatgpt/README.md">Plugin Creator 요청문</a></td></tr>
+      <tr><th><a href="gemini/gem-instructions.md">gemini/gem-instructions.md</a></th><td>Gem 요청 사항 · <a href="gemini/README.md">설치 안내</a></td></tr>
+      <tr><th><a href="copilot/agent-instructions.md">copilot/agent-instructions.md</a></th><td>에이전트 설명·지침 · <a href="copilot/README.md">설치 안내·추천 프롬프트</a></td></tr>
+      <tr><th colspan="2">예제·도구</th></tr>
+      <tr><th><a href="sample/question.md">sample/question.md</a></th><td>협의체에 올린 질문</td></tr>
+      <tr><th><a href="sample/output/council-run.md">sample/output/council-run.md</a></th><td>진행 기록 (독립 의견 5 · 익명 검토 5 · 반박 5)</td></tr>
+      <tr><th><a href="sample/output/verdict.md">sample/output/verdict.md</a></th><td>의장 결론 · <a href="sample/output/check-result.txt">형식 점검 결과</a></td></tr>
+      <tr><th><a href="comparison.csv">comparison.csv</a></th><td>참고 저장소 6곳 비교표 (엑셀에서 바로 열림)</td></tr>
+      <tr><th><a href="tools/check_versions.py">tools/check_versions.py</a></th><td>4개 버전 핵심 규칙 16개 일치 점검</td></tr>
+    </tbody>
+  </table></div>
+  <footer>CC BY-NC 4.0 · 출처를 밝히면 비영리 목적으로 자유롭게 고쳐 쓸 수 있습니다.</footer>
+</div>
+</body>
+</html>

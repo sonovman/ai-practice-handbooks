@@ -1,0 +1,7 @@
+﻿저장소,방식,관점 다양성,비용,데이터 경로·보안,구축,사용,라이선스·유지
+karpathy/llm-council,로컬 웹앱(FastAPI+React). 3단계: 독립 답변 → 익명 순위 → 의장 종합,다른 회사 모델 여러 개,OpenRouter 크레딧 구매 필요,질문이 OpenRouter(제3자 중계)를 거침. 키는 .env,"uv·npm 설치, 서버 2개 실행",브라우저 채팅,LICENSE 파일 없음. 저자가 지원·개선하지 않겠다고 명시
+sherifkozman/the-llm-council,"pip 패키지·CLI·에이전트 스킬. 초안·비평·종합, 스키마 검증",다른 모델(OpenAI·Anthropic·Google·OpenRouter·로컬 CLI),API 사용료 또는 CLI 구독,"비밀값 가림, 환경변수 허용 목록, 셸 주입 방지, 위험 실행 옵션 차단(fail closed) — 보안 설계가 가장 꼼꼼","pip + 키 설정, 옵션 많음",CLI 명령·스킬,"MIT, 활발히 갱신"
+am-will/llm-council,"코딩 CLI(Codex·Claude·Gemini·OpenCode) 병렬 계획 → 익명화 → 판정·병합, 웹 UI",다른 모델(CLI별),각 CLI 구독,"내 컴퓨터에서 CLI 실행. Claude는 권한 확인 생략 플래그+도구 비활성+1턴, 다른 CLI는 각 기본 권한 설정을 따름","설정 마법사, CLI 로그인 여러 개","스킬 호출, 최대 30분 세션",LICENSE 파일 없음
+aiwithremy/claude-skills-llm-council,SKILL.md 하나. Claude 서브에이전트 5관점 → 익명 검토 → 의장,"같은 모델, 다른 관점",기존 구독 외 추가 없음,"Claude 안에서만 처리, 추가 키 없음",파일 하나 업로드,'council this',LICENSE 파일 없음
+gist Chaitra-kshirsagar/…,위와 같은 계열의 스킬 문서,"같은 모델, 다른 관점",추가 없음,Claude 안에서만 처리,파일 하나,스킬 호출,라이선스 표기 없음. 출력 형식(채팅/파일)을 하나로 정해 쓸 것
+SriSatyaLokesh/free-llm-council (topic: free-llm-council),OpenCode 기반 로컬 웹앱. 독립 → 이름 공개 다라운드 토론 → 블라인드 검토 → 의장,다른 모델(무료 모델·BYOK),"무료 모델이면 0원, 질문당 25~40회 호출",로컬 우선. 무료 모델의 실행 위치는 OpenCode 설정에 따라 다름. 웹 검색 사용,Python·Node·OpenCode 설치,브라우저 UI,"MIT, 공개 관심도 낮음(별 0, 2026-10 갱신)"

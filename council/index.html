@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 합의 협의체</title>
+<meta name="description" content="LLM Council 계열 저장소 6곳을 보안·비용·구축·사용 기준으로 비교하고, 추가 키·중계 서버 없이 서로 다른 관점의 위원 5인이 토론해 합의 수준을 밝힌 결론을 내는 스킬·에이전트를 Claude·ChatGPT·Gemini·Copilot 네 가지 버전으로 만들었습니다.">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<div class="bar"><div class="bar-in">
+  <a class="brand" href="../">AI 실무 핸드북</a>
+  <div class="links">
+    <a href="kit/">배포 키트</a>
+    <a href="https://github.com/sonovman/ai-practice-handbooks">GitHub ↗</a>
+  </div>
+</div></div>
+
+<div class="doc">
+  <aside class="side">
+    <div class="label">차례</div>
+    <ol>
+      <li><a href="#s0">한 줄 결론</a></li>
+      <li><a href="#s1">1. 왜 협의체인가</a></li>
+      <li><a href="#s2">2. 저장소 6곳 비교</a></li>
+      <li><a href="#s3">3. 추천 방식과 이유</a></li>
+      <li><a href="#s4">4. 협의체 설계</a></li>
+      <li><a href="#s5">5. 4개 플랫폼에서 만들기</a></li>
+      <li><a href="#s6">6. 실 사용 예제</a></li>
+      <li><a href="#s7">7. 유용성 — 언제 쓰고 언제 쓰지 않나</a></li>
+      <li><a href="#s8">8. 주의할 점</a></li>
+      <li><a href="#s9">9. 시험과 한계</a></li>
+      <li><a href="#s10">부록 · 출처</a></li>
+    </ol>
+  </aside>
+
+<main>
+  <div class="eyebrow">핸드북 11 · 에이전트</div>
+  <h1>AI 합의 협의체 — 관점이 다른 에이전트들이 토론해 결론을 내게 하기</h1>
+  <p class="lead">한 AI에게 묻고 한 답을 받으면 그 답이 좋은지 알 길이 없습니다. <em>LLM Council</em>은 여러 AI가 각자 답하고, 서로 익명으로 평가하고, 의장이 종합하는 방식입니다. 공개된 구현 6곳을 비교한 뒤, <strong>보안상 안전하고 무료이며 만들고 쓰기 쉬운 방식</strong>을 골라 토론·합의 규칙을 더한 스킬·에이전트를 Claude·ChatGPT·Gemini·Copilot 네 가지 버전으로 만들었습니다.</p>
+  <div class="meta">
+    <b>독자</b><span>중요한 결정·계획·문안을 다각도로 검증하고 싶은 실무자, IP·법무 담당자, 팀 리더</span>
+    <b>분량</b><span>읽기 약 20분 · 배포 키트(4개 플랫폼 + Claude Code 위원·의장 에이전트 + 형식 점검기)</span>
+    <b>판</b><span>1.0 · 2026. 11. 7.</span>
+  </div>
+
+  <section id="s0">
+    <div class="key">
+      <div class="eyebrow">한 줄 결론</div>
+      <p style="font-size:19px;font-weight:600;line-height:1.6;margin:8px 0 10px">효과는 모델 개수가 아니라 구조에서 나온다 — 독립, 익명 검토, 반박, 그리고 합의 규칙.</p>
+      <p style="opacity:.75;font-size:15px">이미 쓰는 AI 하나 안에서 관점을 나눠 토론시키는 방식이 추가 키·중계 서버·설치 없이 가장 안전하고 쉽습니다. 같은 모델이라 생기는 ‘다양성 착시’는 사실 확인을 원문 대조로 분리하고, 중요한 결정만 다른 플랫폼에서 한 번 더 돌려 보완합니다.</p>
+    </div>
+  </section>
+
+  <!-- 1 -->
+  <section id="s1">
+    <h2><span class="no">01</span>왜 협의체인가</h2>
+    <p>안드레이 카파시(<em>Andrej Karpathy</em>)가 공개한 <em>llm-council</em>은 세 단계로 움직입니다. ① 여러 모델이 각자 답하고, ② 서로의 답을 <b>이름을 가린 채</b> 평가·순위를 매기고, ③ 의장 모델이 종합합니다. 이름을 가리는 이유는 특정 모델에 대한 선호가 평가를 흐리지 않게 하기 위해서입니다. 이후 이 아이디어를 스킬·CLI·패키지·로컬 앱으로 옮긴 구현들이 나왔습니다.</p>
+    <div class="grid3">
+      <div class="box"><div class="tag">독립</div><h4>서로 못 보고 먼저 쓴다</h4><p>앞 사람 의견에 끌려가는 것(앵커링)을 막습니다.</p></div>
+      <div class="box"><div class="tag">익명 검토</div><h4>누가 썼는지 모르고 평가</h4><p>권위나 관점 선호 대신 내용으로 평가하게 합니다.</p></div>
+      <div class="box"><div class="tag">합의</div><h4>합의 정도를 밝힌다</h4><p>“모두 동의” “조건부” “합의 불가”를 구분해야 결론을 얼마나 믿을지 압니다.</p></div>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section id="s2">
+    <h2><span class="no">02</span>저장소 6곳 비교</h2>
+    <p>2026. 11. 7. 각 저장소의 README와 코드를 직접 읽어 비교했습니다. 표 전체는 <a href="kit/comparison.csv">comparison.csv</a>에 있습니다.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>저장소</th><th>방식</th><th>비용</th><th>데이터 경로·보안</th><th>구축·사용</th><th>라이선스</th></tr></thead>
+      <tbody>
+        <tr><th><a href="https://github.com/karpathy/llm-council">karpathy/llm-council</a></th><td>로컬 웹앱, 여러 회사 모델 → 익명 순위 → 의장</td><td>OpenRouter 크레딧</td><td>질문이 OpenRouter(제3자 중계)를 거침</td><td>uv·npm, 서버 2개 / 브라우저</td><td>파일 없음, 지원 안 함 명시</td></tr>
+        <tr><th><a href="https://github.com/sherifkozman/the-llm-council">sherifkozman/the-llm-council</a></th><td>pip 패키지·CLI·스킬, 초안·비평·종합 + 스키마 검증</td><td>API 사용료 또는 CLI 구독</td><td><b>보안 설계가 가장 꼼꼼</b>: 비밀값 가림, 환경변수 허용 목록, 위험 실행 옵션 차단</td><td>pip + 키 / CLI</td><td>MIT</td></tr>
+        <tr><th><a href="https://github.com/am-will/llm-council">am-will/llm-council</a></th><td>코딩 CLI 여러 개로 계획 병렬 작성 → 익명화 → 판정·병합</td><td>CLI별 구독</td><td>내 컴퓨터에서 CLI 실행. Claude는 도구를 끄고 1턴만, 다른 CLI는 각 기본 권한 설정을 따름</td><td>설정 마법사·CLI 로그인 / 스킬, 최대 30분</td><td>파일 없음</td></tr>
+        <tr><th><a href="https://github.com/aiwithremy/claude-skills-llm-council">aiwithremy/claude-skills-llm-council</a></th><td>SKILL.md 하나, Claude 서브에이전트 5관점 → 익명 검토 → 의장</td><td><b>추가 없음</b></td><td><b>Claude 안에서만</b>, 추가 키 없음</td><td><b>파일 하나</b> / “council this”</td><td>파일 없음</td></tr>
+        <tr><th><a href="https://gist.github.com/Chaitra-kshirsagar/1e606bff48ff22a8c76f1c31fad1f60d">gist (Chaitra-kshirsagar)</a></th><td>같은 계열의 스킬 문서</td><td>추가 없음</td><td>Claude 안에서만</td><td>파일 하나</td><td>표기 없음</td></tr>
+        <tr><th><a href="https://github.com/topics/free-llm-council">topic: free-llm-council</a> (SriSatyaLokesh)</th><td>OpenCode 로컬 웹앱, 이름 공개 다라운드 토론 + 블라인드 검토</td><td>무료 모델이면 0원, 질문당 25~40회 호출</td><td>로컬 우선, 무료 모델 실행 위치는 OpenCode 설정에 따름</td><td>Python·Node·OpenCode / 브라우저</td><td>MIT</td></tr>
+      </tbody>
+    </table></div>
+    <div class="note"><b>라이선스를 확인하고 가져다 쓰세요</b> — LICENSE 파일이 없는 저장소의 코드·문서는 그대로 복사해 배포하지 않는 것이 안전합니다. 이 편의 키트는 아이디어(독립·익명 검토·의장 종합)를 참고해 지침과 코드를 새로 작성했습니다.</div>
+  </section>
+
+  <!-- 3 -->
+  <section id="s3">
+    <h2><span class="no">03</span>추천 방식과 이유</h2>
+    <p>기준은 다섯 가지였습니다: ① 데이터가 제3자 중계를 거치지 않고 실행 권한이 안전할 것 ② 이미 쓰는 구독 외 추가 비용이 없을 것 ③ 구축이 쉬울 것 ④ 사용이 쉬울 것 ⑤ 네 플랫폼에서 재현될 것.</p>
+    <div class="tbl"><table>
+      <thead><tr><th></th><th>보안</th><th>무료</th><th>구축</th><th>사용</th><th>4개 플랫폼</th></tr></thead>
+      <tbody>
+        <tr><th>여러 모델 웹앱 (karpathy·free)</th><td>중계·로컬 서버</td><td>크레딧 / 무료 모델</td><td>어려움</td><td>쉬움</td><td>—</td></tr>
+        <tr><th>패키지·CLI (sherifkozman·am-will)</th><td>설계 우수 / 설정 확인 필요</td><td>API·구독</td><td>어려움</td><td>보통</td><td>일부</td></tr>
+        <tr><th><b>플랫폼 내장 관점 분리 (추천)</b></th><td><b>추가 키·중계 없음</b></td><td><b>추가 없음</b></td><td><b>파일 하나</b></td><td><b>한 문장 요청</b></td><td><b>모두</b></td></tr>
+      </tbody>
+    </table></div>
+    <p>추천 방식은 aiwithremy·gist 계열의 ‘플랫폼 안에서 관점 나누기’를 바탕으로, 다른 구현의 장점을 더했습니다.</p>
+    <div class="grid2">
+      <div class="box"><div class="tag">가져온 것</div><h4>각 구현에서</h4>
+        <ul>
+          <li>익명 상호 평가 (karpathy)</li>
+          <li>반박·입장 변경 라운드 (free-llm-council의 다라운드 토론을 1회로)</li>
+          <li>정해진 출력 형식과 점검 (am-will·sherifkozman의 구조화)</li>
+          <li>자료 속 명령문을 실행하지 않는 원칙 (am-will의 “출력은 신뢰하지 않는 입력”)</li>
+        </ul></div>
+      <div class="box"><div class="tag">새로 더한 것</div><h4>합의 규칙</h4>
+        <ul>
+          <li>합의 수준 4단계와 <b>치명적 반대</b> 규칙</li>
+          <li>입장 변경에는 이유 필수(동조 방지)</li>
+          <li>신뢰도 상·중·하, [확인 필요] 목록</li>
+          <li>교차 플랫폼 단계(추가 키 없이 다른 회사 모델 의견 추가)</li>
+        </ul></div>
+    </div>
+    <p>이 추천은 6장에서 협의체 자신에게 검증받았습니다. 결과는 <b>강한 합의, 신뢰도 중</b>이었습니다.</p>
+  </section>
+
+  <!-- 4 -->
+  <section id="s4">
+    <h2><span class="no">04</span>협의체 설계</h2>
+    <div class="graph">
+      <div class="node end"><span class="id">IN</span><b>질문 정리</b><p>결정할 것 · 선택지 · 맥락 · 걸린 것 · 판단 기준 2~4개. 진행자의 의견은 넣지 않음</p></div>
+      <div class="edge"></div>
+      <div class="node"><span class="id">1</span><b>독립 의견 — 위원 5인</b><p>레드팀 · 원점 질문자 · 기회 탐색자 · 외부인 · 실행가. 각 150~250단어, 서로 보지 않음</p></div>
+      <div class="edge"><span>이름 지우고 순서 섞기</span></div>
+      <div class="node"><span class="id">2</span><b>익명 상호 검토 — 응답 A~E</b><p>가장 강한 응답 · 가장 큰 맹점 · 모두 놓친 것 · 확인 필요 사실</p></div>
+      <div class="edge"></div>
+      <div class="node"><span class="id">3</span><b>반박과 수정 — 1회</b><p>각 위원이 변경 / 유지 + 이유. 이유 없는 동조 금지</p></div>
+      <div class="edge"></div>
+      <div class="node dark"><span class="id">4</span><b>합의 판정 — 의장</b><p>전원 합의 / 강한 합의 / 조건부 합의 / 합의 불가 · 치명적 반대 · 신뢰도</p></div>
+      <div class="edge"></div>
+      <div class="node end"><span class="id">OUT</span><b>권고 하나 + 첫 번째 할 일 하나 + 확인 필요 사항</b><p>다수와 달라도 근거가 더 강한 쪽을 따름</p></div>
+    </div>
+    <div class="tbl"><table>
+      <thead><tr><th>위원</th><th>묻는 질문</th><th>맞서는 위원</th></tr></thead>
+      <tbody>
+        <tr><th>레드팀</th><td>어디서 실패하는가, 무엇을 빠뜨렸는가</td><td>기회 탐색자</td></tr>
+        <tr><th>원점 질문자</th><td>진짜 문제는 무엇인가, 질문이 맞는가</td><td>실행가</td></tr>
+        <tr><th>기회 탐색자</th><td>잘되면 얼마나 커지는가, 놓친 이점은</td><td>레드팀</td></tr>
+        <tr><th>외부인</th><td>배경 없이 보면 무엇이 이해되지 않는가</td><td>모두를 점검</td></tr>
+        <tr><th>실행가</th><td>무엇부터 하는가, 정말 할 수 있는가</td><td>원점 질문자</td></tr>
+      </tbody>
+    </table></div>
+    <div class="tbl"><table>
+      <thead><tr><th>합의 수준</th><th>조건</th></tr></thead>
+      <tbody>
+        <tr><th>전원 합의</th><td>다섯 위원이 같은 결론</td></tr>
+        <tr><th>강한 합의</th><td>넷 이상 같은 결론, <b>치명적 반대 없음</b></td></tr>
+        <tr><th>조건부 합의</th><td>특정 조건(정보 확인·소규모 시험 등)을 충족하면 같은 결론</td></tr>
+        <tr><th>합의 불가</th><td>위에 해당하지 않거나 치명적 반대가 남음</td></tr>
+      </tbody>
+    </table></div>
+    <p class="cap">치명적 반대 = 사실 오류, 법적 위험, 되돌릴 수 없는 손실에 근거한 반대. 한 명이라도 있으면 다수여도 강한 합의가 되지 않습니다. 소수 의견이 무시되는 것을 막는 장치입니다.</p>
+    <h3>진행 방식 세 가지</h3>
+    <div class="grid3">
+      <div class="box"><div class="tag">독립성 높음</div><h4>병렬 서브에이전트</h4><p>Claude Code에서 위원 에이전트 5개를 동시에 띄움. 서로의 글을 아예 보지 못함.</p></div>
+      <div class="box"><div class="tag">어디서나</div><h4>단일 대화 순차</h4><p>claude.ai·ChatGPT·Gemini·Copilot. 한 대화에서 위원을 차례로 씀. 결론에 그 사실을 표시.</p></div>
+      <div class="box"><div class="tag">다양성 보완</div><h4>교차 플랫폼</h4><p>다른 AI에서 받은 의견을 붙여 넣어 위원 의견으로 추가. 추가 키·중계 없음.</p></div>
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section id="s5">
+    <h2><span class="no">05</span>4개 플랫폼에서 만들기</h2>
+    <div class="tbl"><table>
+      <thead><tr><th></th><th>Claude</th><th>ChatGPT</th><th>Gemini</th><th>Copilot</th></tr></thead>
+      <tbody>
+        <tr><th>형태</th><td>스킬 + Claude Code 위원·의장 에이전트</td><td>플러그인 안의 스킬 (또는 프로젝트)</td><td>Gem</td><td>Copilot Studio 에이전트</td></tr>
+        <tr><th>진행 방식</th><td>Claude Code: 병렬 / 채팅: 순차</td><td>순차</td><td>순차</td><td>순차</td></tr>
+        <tr><th>형식 점검</th><td>check_verdict.py 실행</td><td>코드 실행 가능 시</td><td>—</td><td>—</td></tr>
+        <tr><th>넣을 것</th><td><a href="downloads/decision-council-skill.zip">스킬 ZIP</a> · <a href="kit/claude/agents/council-advisor.md">에이전트 2개</a></td><td><a href="kit/chatgpt/skill-instructions.md">지침</a> + 지식 3개</td><td><a href="kit/gemini/gem-instructions.md">요청 사항</a> + 지식 3개</td><td><a href="kit/copilot/agent-instructions.md">설명·지침</a> + 지식 3개</td></tr>
+        <tr><th>설치 안내</th><td><a href="kit/claude/README.md">claude/README</a></td><td><a href="kit/chatgpt/README.md">chatgpt/README</a></td><td><a href="kit/gemini/README.md">gemini/README</a></td><td><a href="kit/copilot/README.md">copilot/README</a></td></tr>
+      </tbody>
+    </table></div>
+    <ol class="steps">
+      <li><b>Claude</b>Customize → Skills → Upload a skill에 <code>decision-council.zip</code>. Claude Code는 스킬을 <code>~/.claude/skills/</code>, 에이전트 2개를 <code>~/.claude/agents/</code>에 복사하면 위원 5명이 병렬로 돕니다.</li>
+      <li><b>ChatGPT</b>플러그인 → Plugin Creator에 지침과 지식 3개(<a href="kit/knowledge/council-rules.md">council-rules</a>·<a href="kit/knowledge/roles.md">roles</a>·<a href="kit/knowledge/output-template.md">output-template</a>)를 첨부해 요청문을 보냅니다. 플러그인을 만들 수 없으면 프로젝트의 지침·파일 칸에 같은 내용을 넣습니다.</li>
+      <li><b>Gemini</b>Gems 탐색하기 → 새 Gem → 요청 사항 붙여 넣기 → 지식 3개 업로드 → 저장.</li>
+      <li><b>Copilot</b>Copilot Studio에서 설명·지침 붙여 넣기 → 지식 3개 → 추천 프롬프트 4개 → Teams 배포.</li>
+    </ol>
+    <div class="code">
+      <div class="head"><span>어느 플랫폼에서나 — 요청 예</span><button class="copy">복사</button></div>
+<pre><code>협의체로 검토해 줘.
+결정할 것: [무엇을 정해야 하는지]
+선택지: [A / B / C]
+맥락: [예산·기한·사람·제약]
+판단 기준: [중요한 것 2~4개]</code></pre>
+    </div>
+    <div class="btns">
+      <a class="btn primary" href="downloads/council-kit.zip" download>키트 전체 받기 (ZIP)</a>
+      <a class="btn" href="downloads/decision-council-skill.zip" download>Claude 스킬만</a>
+      <a class="btn" href="kit/">파일 하나씩 보기</a>
+    </div>
+  </section>
+
+  <!-- 6 -->
+  <section id="s6">
+    <h2><span class="no">06</span>실 사용 예제 — 이 편의 추천을 협의체에 올리다</h2>
+    <p>3장의 추천이 맞는지 협의체 자신에게 물었습니다. 질문은 “소규모 IP 조직이 다관점 토론·합의 도구를 도입할 때 저장소 계열 A~E 중 무엇을 추천할까”입니다(<a href="kit/sample/question.md">질문 전문</a>). 이 글을 만든 Claude 세션이 <b>단일 대화 순차</b> 방식으로 진행했습니다.</p>
+    <h3>1단계 독립 의견 — 한 명은 반대했다</h3>
+    <div class="tbl"><table>
+      <thead><tr><th>위원</th><th>한 줄 입장</th></tr></thead>
+      <tbody>
+        <tr><th>레드팀</th><td>D, 단 같은 모델이 다섯 관점을 연기해 오류가 닮는 ‘다양성 착시’ 때문에 사실 판단 도구로 쓰지 말 것</td></tr>
+        <tr><th>원점 질문자</th><td>D — 효과는 모델 수가 아니라 구조(독립·익명·반대 역할·합의 규칙)에서 나온다</td></tr>
+        <tr><th>기회 탐색자</th><td>D — 4개 플랫폼 이식, IP 실무 판단 문제에 반복 활용</td></tr>
+        <tr><th>외부인</th><td><b>보류</b> — 결론을 얼마나 믿을지, ‘무료’가 어디까지인지 알 수 없다</td></tr>
+        <tr><th>실행가</th><td>D — 직원 혼자 10분 안에 시작할 수 있는 유일한 길</td></tr>
+      </tbody>
+    </table></div>
+    <h3>2~3단계 익명 검토와 반박 — 두 명이 입장을 바꿨다</h3>
+    <p>익명 검토에서 ‘다양성 착시’ 지적과 ‘구조가 효과의 원천’이라는 판단이 각 2표로 가장 강한 의견이 됐고, 교차 플랫폼의 번거로움을 가볍게 본 의견이 맹점으로 지목됐습니다. 반박 단계에서 <b>외부인</b>은 “결과에 합의 수준·신뢰도·확인 목록이 나온다면” 보류를 거두었고, <b>기회 탐색자</b>는 교차 플랫폼을 기본이 아닌 ‘중요한 결정에만 쓰는 선택 단계’로 낮췄습니다. 둘 다 이유를 밝혔습니다(<a href="kit/sample/output/council-run.md">진행 기록 전문</a>).</p>
+    <h3>4단계 합의 판정</h3>
+    <div class="code">
+      <div class="head"><span>결론 발췌 (verdict.md)</span><button class="copy">복사</button></div>
+<pre><code>- 합의 수준: 강한 합의
+- 합의된 점: D(플랫폼 내장 관점 분리 협의체)를 기본으로 추천. 결과에 합의 수준·신뢰도·확인 필요 목록을
+  반드시 표시. 사실 주장은 원문으로 따로 확인.
+- 남은 이견: 무료 요금제에서 어디까지 되는지, 교차 플랫폼을 얼마나 자주 쓸지
+- 치명적 반대: 없음 — 레드팀의 '다양성 착시'는 사용 범위 제한으로 해소
+- 신뢰도: 중 (같은 모델의 순차 진행, 무료 범위 미확인)
+
+## 6. 첫 번째 할 일
+이번 주에 실제로 고민 중인 결정 하나를 Claude 스킬로 돌리고, 같은 질문을 Gemini Gem에서 다시 돌려
+두 결론의 합의 수준을 비교한다.</code></pre>
+    </div>
+    <p>눈여겨볼 점은 결론이 단순한 “D가 좋다”가 아니라는 것입니다. 레드팀의 경고가 <b>사용 범위 제한</b>(사실 판단에 쓰지 않기)으로 결론에 들어갔고, 외부인의 요구가 <b>출력 형식</b>(합의 수준·신뢰도·확인 목록)으로 반영됐습니다. 이 두 가지가 실제로 키트 설계에 들어가 있습니다. 결론 전문은 <a href="kit/sample/output/verdict.md">verdict.md</a>, 형식 점검 결과는 <a href="kit/sample/output/check-result.txt">check-result.txt</a>입니다.</p>
+  </section>
+
+  <!-- 7 -->
+  <section id="s7">
+    <h2><span class="no">07</span>유용성 — 언제 쓰고 언제 쓰지 않나</h2>
+    <div class="grid2">
+      <div class="box"><div class="tag">쓴다</div><h4>판단이 필요한 질문</h4>
+        <ul>
+          <li>경고장을 받았을 때 회피설계·무효 조사·협상 중 무엇부터 할지</li>
+          <li>청구항 해석에서 두 가지 읽기 중 어느 쪽이 설득력 있는지</li>
+          <li>사내 AI 도구 도입, 업무 절차 변경 같은 되돌리기 어려운 결정</li>
+          <li>제안서·의견서·공지 문안의 약점과 받는 사람의 오해 가능성</li>
+        </ul></div>
+      <div class="box"><div class="tag">쓰지 않는다</div><h4>답이 정해진 질문</h4>
+        <ul>
+          <li>조문·판례·수치처럼 정답이 하나인 사실 질문 → 원문 확인(07·08편)</li>
+          <li>요약·번역·작성 같은 처리 작업</li>
+          <li>이미 정한 결정을 지지해 줄 말만 듣고 싶을 때(협의체는 불편한 말을 합니다)</li>
+        </ul></div>
+    </div>
+    <div class="tbl"><table>
+      <thead><tr><th>한 번 묻기와 비교해 얻는 것</th><th>대가</th></tr></thead>
+      <tbody>
+        <tr><td>숨은 가정과 맹점이 드러남(외부인·레드팀) · 반대 의견이 기록으로 남음 · 결론을 얼마나 믿을지(합의 수준·신뢰도) · 다음 행동이 하나로 좁혀짐</td><td>답이 길어지고 시간이 더 걸림(순차 방식은 한 번 답보다 몇 배 분량) · 같은 모델의 순차 진행은 독립성이 제한됨</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <!-- 8 -->
+  <section id="s8">
+    <h2><span class="no">08</span>주의할 점</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>주제</th><th>주의할 점</th><th>바르게 이해하기</th></tr></thead>
+      <tbody>
+        <tr><th>다양성</th><td>같은 모델의 다섯 관점을 서로 다른 다섯 전문가의 독립 검증으로 여기지 않는다</td><td>오류가 닮을 수 있다. 사실은 원문으로, 중요한 결정은 교차 플랫폼으로 보완</td></tr>
+        <tr><th>합의의 의미</th><td>‘강한 합의’를 정답 보증으로 읽지 않는다</td><td>주어진 정보 안에서 관점들이 수렴했다는 뜻. 신뢰도와 확인 필요 사항을 함께 본다</td></tr>
+        <tr><th>중계 서비스</th><td>여러 모델을 쓰려고 제3자 중계 API에 업무 자료를 보내지 않는다</td><td>각 플랫폼에서 따로 돌리고 결과만 붙여 넣는 교차 플랫폼으로 충분하다</td></tr>
+        <tr><th>실행 권한</th><td>CLI 기반 도구를 쓸 때 권한 확인을 끄는 설정을 그대로 두지 않는다</td><td>도구를 끄거나 읽기 전용으로 제한된 실행인지 확인한다</td></tr>
+        <tr><th>라이선스</th><td>LICENSE가 없는 저장소의 파일을 그대로 재배포하지 않는다</td><td>아이디어를 참고해 새로 쓰거나 저작자에게 확인한다</td></tr>
+        <tr><th>출력 형식</th><td>채팅 출력과 파일 저장 지시를 한 지침에 섞어 두지 않는다</td><td>형식은 하나로 정하고, 저장은 요청이 있을 때만</td></tr>
+        <tr><th>토론 횟수</th><td>합의가 안 된다고 토론을 계속 반복시키지 않는다</td><td>반박은 1회. 합의가 안 되면 ‘합의 불가’와 필요한 정보를 적는 것이 결론이다</td></tr>
+        <tr><th>전문 판단</th><td>법률·의료·투자 결정을 협의체 결론으로 대신하지 않는다</td><td>초안으로 표시하고 전문가 확인을 거친다</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <!-- 9 -->
+  <section id="s9">
+    <h2><span class="no">09</span>시험과 한계</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>시험</th><th>방법</th><th>결과</th></tr></thead>
+      <tbody>
+        <tr><th>Claude 스킬 형식</th><td>Anthropic 공식 skill-creator 검증 스크립트</td><td>“Skill is valid!”</td></tr>
+        <tr><th>4개 버전 일치</th><td>check_versions.py — 핵심 규칙 16개 × 4개 버전 + 사본 2개</td><td>모두 일치</td></tr>
+        <tr><th>예제 결론 형식</th><td>check_verdict.py</td><td>10개 점검 모두 통과</td></tr>
+        <tr><th>점검기가 잡는지</th><td>위원 이름이 드러난 검토, 치명적 반대가 있는데 ‘강한 합의’, 첫 할 일 2개인 가짜 결론</td><td>3건 모두 실패로 검출</td></tr>
+        <tr><th>저장소 사실 확인</th><td>4개 저장소를 받아 README·코드 확인, gist·토픽은 웹으로 확인</td><td>am-will의 권한 생략 플래그는 도구 비활성·1턴 실행과 함께 쓰인다는 점까지 코드로 확인해 비교표에 반영</td></tr>
+      </tbody>
+    </table></div>
+    <p class="cap">2026. 11. 7. 확인. 예제는 이 글을 만든 Claude 세션이 단일 대화 순차 방식으로 진행했습니다. Claude Code의 병렬 서브에이전트 실행과 ChatGPT·Gemini·Copilot 화면 등록은 직접 해 보지 않았으니, 처음 한 번은 예제 질문으로 같은 형식이 나오는지 확인하세요. 각 플랫폼의 무료 요금제에서 스킬·Gem·플러그인·에이전트를 어디까지 쓸 수 있는지는 확인하지 못했습니다.</p>
+  </section>
+
+  <!-- 10 -->
+  <section id="s10">
+    <h2><span class="no">부록</span>출처</h2>
+    <ul>
+      <li><a href="https://github.com/karpathy/llm-council">karpathy/llm-council</a> — README, backend/config.py·council.py</li>
+      <li><a href="https://github.com/sherifkozman/the-llm-council">sherifkozman/the-llm-council</a> — README, SECURITY.md, LICENSE(MIT), providers/cli</li>
+      <li><a href="https://github.com/am-will/llm-council">am-will/llm-council</a> — README, SKILL.md, scripts/llm_council.py</li>
+      <li><a href="https://github.com/aiwithremy/claude-skills-llm-council">aiwithremy/claude-skills-llm-council</a> — README, SKILL.md</li>
+      <li><a href="https://gist.github.com/Chaitra-kshirsagar/1e606bff48ff22a8c76f1c31fad1f60d">gist Chaitra-kshirsagar/llm-council-skill.md</a></li>
+      <li><a href="https://github.com/topics/free-llm-council">GitHub topic: free-llm-council</a> — <a href="https://github.com/SriSatyaLokesh/free-llm-council">SriSatyaLokesh/free-llm-council</a> README</li>
+      <li>Claude 도움말 <a href="https://support.claude.com/en/articles/12512198-how-to-create-custom-skills">커스텀 스킬 만들기</a> · OpenAI 도움말 <a href="https://help.openai.com/articles/20001256">ChatGPT의 플러그인</a> · Gemini <a href="https://support.google.com/gemini/answer/15235603?hl=ko">맞춤 Gems</a> · Microsoft Learn <a href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/authoring-instructions">Copilot Studio 지침</a></li>
+    </ul>
+    <p>함께 읽기: <a href="../agent-guide/">01편 에이전트는 한 명이면 충분하다(리뷰어 원칙)</a> · <a href="../cite-check/">07편 인용은 사람이 확인한다</a> · <a href="../case-study/">09편 판례 심층 해설(4개 플랫폼)</a></p>
+  </section>
+
+  <footer>
+    작성: 이진수 (변리사) · 2026. 11. 7. · CC BY-NC 4.0<br>
+    공개 저장소들의 아이디어를 참고해 생성형 AI의 도움을 받아 새로 작성·검증했으며, 사람이 검토했습니다. 오류 제보는 <a href="https://github.com/sonovman/ai-practice-handbooks/issues">Issues</a>로 남겨 주세요.
+  </footer>
+</main>
+</div>
+
+<script>
+  document.querySelectorAll('.copy').forEach(function (b) {
+    b.addEventListener('click', function () {
+      navigator.clipboard.writeText(b.closest('.code').querySelector('pre').innerText).then(function () {
+        b.textContent = '복사됨'; setTimeout(function () { b.textContent = '복사'; }, 1500);
+      });
+    });
+  });
+  var links = [].slice.call(document.querySelectorAll('.side a'));
+  var io = new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+      if (e.isIntersecting) links.forEach(function (a) { a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id); });
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  document.querySelectorAll('main section[id]').forEach(function (s) { io.observe(s); });
+</script>
+</body>
+</html>
