@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KIPRIS Plus API 가이드</title>
+<meta name="description" content="KIPRIS Plus(지식재산정보 활용 서비스)와 공공데이터포털의 특허·기술거래 Open API를 개요, 구성 종류, 요금 체계, 신청 방법, Python 호출까지 정리하고, 표준 라이브러리만 쓰는 호출 클라이언트와 오프라인 시험을 제공합니다.">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<div class="bar"><div class="bar-in">
+  <a class="brand" href="../">AI 실무 핸드북</a>
+  <div class="links">
+    <a href="templates/">템플릿</a>
+    <a href="https://github.com/sonovman/ai-practice-handbooks">GitHub ↗</a>
+  </div>
+</div></div>
+
+<div class="doc">
+  <aside class="side">
+    <div class="label">차례</div>
+    <ol>
+      <li><a href="#s0">한 줄 결론</a></li>
+      <li><a href="#s1">1. KIPRIS Plus란</a></li>
+      <li><a href="#s2">2. 구성과 종류</a></li>
+      <li><a href="#s3">3. 기술거래 데이터 4종</a></li>
+      <li><a href="#s4">4. 요금 체계</a></li>
+      <li><a href="#s5">5. 신청 방법</a></li>
+      <li><a href="#s6">6. Python으로 호출하기</a></li>
+      <li><a href="#s7">7. 데이터 수집 패턴</a></li>
+      <li><a href="#s8">8. 주의할 점</a></li>
+      <li><a href="#s9">9. AI와 함께 쓰기</a></li>
+      <li><a href="#s10">10. 시험과 한계</a></li>
+      <li><a href="#s11">부록 · 출처</a></li>
+    </ol>
+  </aside>
+
+<main>
+  <div class="eyebrow">핸드북 10 · 데이터</div>
+  <h1>KIPRIS Plus 특허 API 활용과 Python 연동</h1>
+  <p class="lead">KIPRIS Plus(지식재산정보 활용 서비스)는 한국특허정보원이 운영하는 특허·산업재산권 정보 제공 서비스로, 개방된 특허정보를 Open API와 대량(Bulk) 데이터로 내려 줍니다. 공공데이터 개방·공유·활용 체계의 하나로 <strong>특허기술거래정보·국유판매기술·이전희망기술·기관보유기술</strong> 같은 기술거래 데이터도 공개되어 있습니다. 서비스의 구성, 요금 체계, 신청 방법, Python 호출을 공식 이용 가이드와 공공데이터포털 정보로 정리했습니다.</p>
+  <div class="meta">
+    <b>독자</b><span>특허 데이터를 직접 받아 분석하려는 IP 담당자, 기술이전·사업화 담당자, 중소기업 실무자, 연구자</span>
+    <b>분량</b><span>읽기 약 20분 · 템플릿(Python 클라이언트·오프라인 시험·API 목록)</span>
+    <b>판</b><span>1.0 · 2026. 11. 7.</span>
+  </div>
+
+  <section id="s0">
+    <div class="key">
+      <div class="eyebrow">한 줄 결론</div>
+      <p style="font-size:19px;font-weight:600;line-height:1.6;margin:8px 0 10px">키는 환경변수에, 호출은 공식 주소로, 열 이름은 실제 응답에서.</p>
+      <p style="opacity:.75;font-size:15px">KIPRIS Plus는 공식 기관이 직접 여는 API라서 중간 서버 없이 내 컴퓨터에서 바로 부르면 됩니다. 무료 이용은 <b>계정당 월 1,000건(상품 합산)</b>이고 <b>초당 50건 이상</b> 부르면 제한되므로, 처음부터 호출량을 세며 쓰는 습관이 중요합니다.</p>
+    </div>
+  </section>
+
+  <!-- 1 -->
+  <section id="s1">
+    <h2><span class="no">01</span>KIPRIS Plus란</h2>
+    <p>특허청(2025년 지식재산처로 개편)이 만든 특허·실용신안·디자인·상표·심판 정보를 한국특허정보원이 매일 넘겨받아 Open API·Bulk 데이터로 제공합니다. 같은 데이터를 두 창구에서 받을 수 있습니다.</p>
+    <div class="grid2">
+      <div class="box"><div class="tag">plus.kipris.or.kr</div><h4>KIPRIS Plus</h4><p>상품 전체, 유료·대량 이용, Bulk 다운로드, 무료 학습 데이터. 회원가입 → 상품 신청 → 관리자 승인 → 마이페이지에서 인증키(REST AccessKey).</p></div>
+      <div class="box"><div class="tag">data.go.kr</div><h4>공공데이터포털</h4><p>KIPRIS Plus 상품 다수와 IP-Market 기술거래 API가 등록되어 있음. 개발계정은 대부분 자동승인. 무료 한도를 넘거나 Bulk가 필요하면 KIPRIS Plus로 안내됩니다.</p></div>
+    </div>
+    <p class="cap">공공데이터포털의 KIPRIS Plus 상품 페이지 제공기관은 ‘지식재산처’, 담당은 한국특허정보원 IP정보확산실로 표시됩니다(2026. 11. 7. 확인).</p>
+  </section>
+
+  <!-- 2 -->
+  <section id="s2">
+    <h2><span class="no">02</span>구성과 종류</h2>
+    <div class="grid3">
+      <div class="box"><div class="tag">실시간</div><h4>Open API</h4><p>상품별 기능을 호출해 XML로 받습니다. 2019년부터 신규 상품·기능은 <b>REST로만</b> 제공되므로 새로 개발한다면 REST를 고릅니다.</p></div>
+      <div class="box"><div class="tag">대량</div><h4>Bulk 데이터</h4><p>수십만 건 단위의 원천 데이터를 내려받아 내 DB에 적재. API 한도가 맞지 않는 분석·연구용.</p></div>
+      <div class="box"><div class="tag">무료</div><h4>무료 데이터 정보</h4><p>번역 코퍼스·기술용어 사전 등 AI 학습용 데이터. 메뉴 ‘데이터목록 → 무료 상품정보’.</p></div>
+    </div>
+    <p>상품은 메뉴 <b>데이터목록 → 서비스 유형별 / 분류 체계별 / 무료 상품정보</b> 또는 오른쪽 위 검색으로 찾습니다. 상품 화면에서 서비스 유형(SOAP·REST) → API 분류 → 기능을 고르면 기능마다 입력·출력 명세서와 샘플이 나옵니다.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>분야</th><th>대표 상품(API)</th><th>담는 것</th></tr></thead>
+      <tbody>
+        <tr><th>특허·실용</th><td>특허·실용 공개·등록공보</td><td>항목별·자유 검색, 서지정보, 대표도면·전문 경로, 변동정보</td></tr>
+        <tr><th>공통</th><td>공통</td><td>출원인·대리인·발명자·창작자·등록권자·심판 당사자 검색</td></tr>
+        <tr><th>관계</th><td>피인용문헌 · 특허 패밀리</td><td>선행–후행 인용 관계, 패밀리 문헌</td></tr>
+        <tr><th>해외·용어</th><td>해외특허 · 시소러스</td><td>해외 공보, 기술용어 동의어</td></tr>
+        <tr><th>출원인 분석</th><td>출원인 법인 · 출원인 기술분야</td><td>법인 정보, 출원인별 기술분야</td></tr>
+        <tr><th>기술거래</th><td>국유특허 (+ IP-Market 거래정보)</td><td>3장 참고</td></tr>
+      </tbody>
+    </table></div>
+    <p class="cap">전체 목록과 링크: <a href="templates/api-catalog.csv">api-catalog.csv</a>. 상품 구성은 수시로 바뀌므로 신청 전 상품 화면에서 확인하세요.</p>
+  </section>
+
+  <!-- 3 -->
+  <section id="s3">
+    <h2><span class="no">03</span>기술거래 데이터 4종</h2>
+    <p>기술거래 시장 확대와 중소기업의 정보 접근성 개선을 위해 공개된 데이터입니다. 원천은 한국발명진흥회가 운영하는 지식재산거래정보시스템 <a href="http://www.ipmarket.or.kr/">IP-Market</a>이고, 국유특허 목록은 KIPRIS Plus 상품으로도 제공됩니다.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>유형</th><th>무엇인가</th><th>어디서 받나</th></tr></thead>
+      <tbody>
+        <tr><th>일반판매기술</th><td>대학·공공연구기관·민간기업이 이전·매각을 위해 등록한 특허·실용신안·디자인·상표. 권리자, 기술 설명, 활용 분야, 거래 조건 포함</td><td>공공데이터포털 <a href="https://www.data.go.kr/data/15158850/openapi.do">일반판매기술정보_GW</a> · End Point <code>…/1431000/CommonTradePatentInfoService</code></td></tr>
+        <tr><th>국유판매기술</th><td>국가 소유 특허권·실용신안권·디자인권 중 매각(양도) 대상으로 공고된 권리</td><td>공공데이터포털 <a href="https://www.data.go.kr/data/15158849/openapi.do">국유판매기술정보_GW</a> · End Point <code>…/1431000/StaownTradePatentInfoService</code></td></tr>
+        <tr><th>이전희망기술</th><td>권리자가 통상실시권·전용실시권 설정 등 기술이전을 희망하는 기술 (출원 단계에서 이전 희망 의사를 밝힌 기술 포함)</td><td>IP-Market. API 제공 위치는 공공데이터포털에서 ‘특허기술거래’로 검색해 확인</td></tr>
+        <tr><th>기관보유기술</th><td>정부출연연구기관·공공기관·대학이 보유한 기술 중 이전 대상이 될 수 있는 권리</td><td>IP-Market. 위와 같음</td></tr>
+        <tr><th>(참고) 국유특허</th><td>국가공무원 등의 직무발명을 국가가 승계해 국가 명의로 등록한 권리. 응답: 등록번호·발명기관·발명의 명칭·등록일자·존속기간·무상구분·평가등급 등</td><td>KIPRIS Plus·공공데이터포털 <a href="https://www.data.go.kr/data/15075968/openapi.do">국유특허 REST</a> · <a href="https://www.data.go.kr/data/15014996/fileData.do">파일데이터</a></td></tr>
+      </tbody>
+    </table></div>
+    <div class="note"><b>국유특허를 쓰려면</b> — 국가직무발명 특허는 IP-Market에서 목록과 등록공보를 확인하고 실시권 또는 양수 계약을 신청합니다(발명진흥법 제10조 제2항·제4항, 제15조 제7항 근거로 안내됨). 대한민국 외 권리자와 공동 소유한 특허는 그 공동권리자의 사전 동의가 있어야 계약할 수 있습니다.</div>
+  </section>
+
+  <!-- 4 -->
+  <section id="s4">
+    <h2><span class="no">04</span>요금 체계</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>구분</th><th>내용</th><th>근거</th></tr></thead>
+      <tbody>
+        <tr><th>무료</th><td><b>월 1,000건 이하</b>. 상품별 호출을 모두 합산해 1,000건을 넘으면 제한, <b>매월 1일 초기화</b></td><td>KIPRIS Plus 이용 가이드 FAQ (2020·2024)</td></tr>
+        <tr><th>속도 제한</th><td>회원 계정별 <b>초당 50건 이상</b>이면 이용 제한. 가이드는 초당 40건 정도를 권장</td><td>같은 FAQ</td></tr>
+        <tr><th>유료</th><td>무료 한도 초과·대량 이용. 상품별 수수료는 메뉴 <b>이용안내 → 서비스 수수료 안내</b>에서 확인. 유료 신청은 결재 유형에 따라 관리자 승인 절차를 거침</td><td>2020 가이드 2.2, 3.2</td></tr>
+        <tr><th>기타 승인</th><td>무료 외에 ‘데이터기프트’ 등 기타 유형의 승인 절차가 따로 있음</td><td>2020 가이드 3.2</td></tr>
+        <tr><th>공공데이터포털</th><td>KIPRIS Plus 상품: 무료(월 1,000건), 초과·Bulk는 KIPRIS Plus. IP-Market 거래정보 API: 무료, 개발계정 일 100건, 활용사례 등록 시 증가 신청</td><td>각 데이터 페이지</td></tr>
+      </tbody>
+    </table></div>
+    <p class="cap">구체적인 유료 금액은 이 글에서 확인하지 못했습니다. 상품·수량별로 다르므로 서비스 수수료 안내 화면을 기준으로 하세요. 법인 카드·계좌로 수수료를 처리하거나 대량 데이터를 쓰는 기관은 단체회원으로 가입합니다(단체회원은 가입 후 관리자 승인 필요).</p>
+  </section>
+
+  <!-- 5 -->
+  <section id="s5">
+    <h2><span class="no">05</span>신청 방법</h2>
+    <ol class="steps">
+      <li><b>회원가입</b><a href="https://plus.kipris.or.kr">plus.kipris.or.kr</a> 오른쪽 위 회원가입 → 일반회원 / 단체회원 선택 → 약관 동의 → 이메일 인증 → 회원정보 입력. 단체회원은 관리자 승인 후 사용.</li>
+      <li><b>상품 확인</b>데이터목록 → 서비스 유형별 → API에서 상품을 고르고, REST 기능별 명세서(입력·출력값)와 샘플을 봅니다.</li>
+      <li><b>서비스 신청</b>상품 화면의 <b>서비스 신청</b>(여러 상품이면 <b>서비스 일괄 신청</b>) → 활용 용도·목적·이용 기간·회원 분류 입력 → 약관 동의 → 이용 신청.</li>
+      <li><b>승인 확인</b>결재 유형(무료·유료·기타)에 따라 관리자 승인 → 마이페이지 → <b>서비스 구매내역</b>에서 승인된 상품과 API 유형 확인.</li>
+      <li><b>인증키 확인</b>마이페이지 → <b>API KEY 관리</b>에서 SOAP·REST 인증키 확인(필요 시 재발급). REST 기능에는 REST AccessKey를 씁니다.</li>
+      <li><b>브라우저로 시험</b>상품 화면의 샘플 입력값으로 아래 주소를 열어 XML이 나오면 정상입니다.</li>
+    </ol>
+    <div class="code">
+      <div class="head"><span>브라우저 시험 주소 (공식 가이드 예시)</span><button class="copy">복사</button></div>
+<pre><code>http://plus.kipris.or.kr/kipo-api/kipi/patUtiModInfoSearchSevice/getBibliographySumryInfoSearch?applicationNumber=출원번호&amp;ServiceKey=본인의_REST_AccessKey</code></pre>
+    </div>
+    <p class="cap">주소에 인증키가 그대로 들어가므로 이 화면을 캡처해 공유하지 않습니다. 공공데이터포털은 데이터 페이지에서 <b>활용신청</b> → 마이페이지의 인증키(Encoding/Decoding)를 씁니다.</p>
+  </section>
+
+  <!-- 6 -->
+  <section id="s6">
+    <h2><span class="no">06</span>Python으로 호출하기</h2>
+    <p>공식 샘플은 <code>requests</code>·<code>xmltodict</code>를 씁니다. 이 편의 <a href="templates/kipris_client.py">kipris_client.py</a>는 같은 일을 <b>표준 라이브러리만으로</b> 하면서, 실무에서 자주 겪는 문제(키 노출, 1건이면 형식이 달라짐, 한도 초과)를 미리 막았습니다.</p>
+    <h3>준비</h3>
+    <ol class="steps">
+      <li><b>Python 3.8 이상</b>명령 프롬프트에서 <code>python --version</code>.</li>
+      <li><b>인증키를 환경변수로</b>코드나 프롬프트에 키를 적지 않습니다.</li>
+    </ol>
+    <div class="code">
+      <div class="head"><span>Windows 명령 프롬프트 (Mac·Linux는 export)</span><button class="copy">복사</button></div>
+<pre><code>set KIPRIS_KEY=본인의_REST_AccessKey
+python kipris_client.py biblio 1020050050026
+python kipris_client.py search --title 자율주행 --rows 10 --csv result.csv
+python kipris_client.py raw /kipo-api/kipi/patUtiModInfoSearchSevice/getBibliographySumryInfoSearch applicationNumber=1020050050026 --show-xml
+python kipris_client.py usage</code></pre>
+    </div>
+    <div class="tbl"><table>
+      <thead><tr><th>명령</th><th>하는 일</th></tr></thead>
+      <tbody>
+        <tr><th><code>biblio 출원번호</code></th><td>공식 샘플과 같은 서지요약정보(getBibliographySumryInfoSearch)</td></tr>
+        <tr><th><code>search --title 단어</code></th><td>발명의 명칭으로 항목별 검색(getAdvancedSearch). 입력값 이름(inventionTitle·numOfRows·pageNo)은 상품 명세서로 확인하고, 다르면 raw로</td></tr>
+        <tr><th><code>raw 경로 이름=값 …</code></th><td>명세서의 기능 경로와 입력값을 그대로 넣어 아무 기능이나 호출</td></tr>
+        <tr><th><code>datagokr 주소/오퍼레이션 …</code></th><td>공공데이터포털 API 호출(키는 <code>DATA_GO_KR_KEY</code>). 예: 국유판매기술정보 End Point + 상세기능의 오퍼레이션</td></tr>
+        <tr><th><code>--csv 파일</code> · <code>--show-xml</code></th><td>엑셀에서 바로 열리는 CSV 저장 · XML 원문 출력(태그 이름 확인용)</td></tr>
+        <tr><th><code>usage</code></th><td>이 컴퓨터에서 이번 달 부른 횟수. 800건부터 경고</td></tr>
+      </tbody>
+    </table></div>
+    <h3>핵심 코드 — 응답을 표로</h3>
+    <div class="code">
+      <div class="head"><span>kipris_client.py 발췌</span><button class="copy">복사</button></div>
+<pre><code>def parse_items(xml_bytes):
+    root = ET.fromstring(xml_bytes)
+    check_error(root)                       # 인증키 오류·한도 초과 등 오류 응답이면 멈춤
+    rows = []
+    for item in root.iter():
+        if _local(item.tag) != "item":
+            continue
+        row = {}
+        for child in item:                  # 열 이름을 미리 정하지 않고 받은 태그 그대로
+            kids = list(child)
+            if kids:
+                for g in kids:
+                    row[f"{_local(child.tag)}.{_local(g.tag)}"] = _text(g)
+            else:
+                row[_local(child.tag)] = _text(child)
+        rows.append(row)                    # 1건이어도 항상 목록
+    return rows</code></pre>
+    </div>
+    <p>공식 Java 샘플의 주석도 “웹 페이지에 기재된 출력값은 잘못 기재된 경우가 있을 수 있으니 샘플 호출 결과로 확인된 태그를 쓰라”고 권합니다. 그래서 이 클라이언트는 열 이름을 가정하지 않고, 처음에는 <code>--show-xml</code>로 실제 태그를 본 뒤 필요한 열을 고르게 했습니다.</p>
+  </section>
+
+  <!-- 7 -->
+  <section id="s7">
+    <h2><span class="no">07</span>데이터 수집 패턴</h2>
+    <p>공식 FAQ가 안내하는 세 가지 방법은 모두 “<b>먼저 출원번호 목록을 얻고, 그 번호로 필요한 기능을 다시 부른다</b>”는 구조입니다.</p>
+    <div class="grid3">
+      <div class="box"><div class="tag">Case 1</div><h4>변동정보</h4><p>변동정보 기능으로 날짜별 출원번호 확인 → 그 번호로 필요한 기능 재호출. 매일 새로 바뀐 것만 따라갈 때.</p></div>
+      <div class="box"><div class="tag">Case 2</div><h4>항목별 전체검색</h4><p>전체검색으로 출원번호와 기본 정보 → 부족한 정보만 재호출.</p></div>
+      <div class="box"><div class="tag">Case 3</div><h4>자유검색</h4><p>자유검색으로 출원번호 → 필요한 기능 재호출. 키워드 중심 조사.</p></div>
+    </div>
+    <div class="note"><b>호출량을 먼저 계산하세요</b> — 검색 결과 300건마다 서지·IPC·대표도면을 하나씩 더 부르면 300 + 300×3 = 1,200건으로 무료 한도를 넘습니다. 목록 검색에 이미 있는 열은 다시 부르지 않고, 대량이면 Bulk 데이터를 검토합니다.</div>
+  </section>
+
+  <!-- 8 -->
+  <section id="s8">
+    <h2><span class="no">08</span>주의할 점</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>주제</th><th>주의할 점</th><th>바르게 이해하기</th></tr></thead>
+      <tbody>
+        <tr><th>주소 철자</th><td>서비스 경로의 <code>patUtiModInfoSearchSevice</code>를 ‘Service’로 고치지 않는다</td><td>공식 주소가 ‘Sevice’ 철자다. 고치면 호출이 안 된다</td></tr>
+        <tr><th>인증키 이름</th><td>예전 자료의 <code>/openapi/rest/…?accessKey=</code> 형식을 그대로 쓰지 않는다</td><td>현재 매뉴얼의 REST 주소는 <code>/kipo-api/kipi/…?ServiceKey=</code>. 상품 명세서 주소를 따른다</td></tr>
+        <tr><th>결과 1건</th><td>결과가 1건일 때 목록이 아닌 하나의 값으로 오는 경우를 놓치지 않는다</td><td>항상 목록으로 바꿔 처리(클라이언트가 자동 처리)</td></tr>
+        <tr><th>출력 태그</th><td>웹 명세서의 출력값 이름만 믿고 열을 고정하지 않는다</td><td>실제 응답(<code>--show-xml</code>)에서 태그를 확인</td></tr>
+        <tr><th>인증키 보안</th><td>키를 코드·스크린샷·AI 대화창에 넣지 않는다</td><td>환경변수에 두고, 로그·오류 메시지에서는 가린다(클라이언트가 자동 처리)</td></tr>
+        <tr><th>무료 한도</th><td>상품마다 1,000건씩이라고 생각하지 않는다</td><td>모든 상품 합산 월 1,000건, 매월 1일 초기화</td></tr>
+        <tr><th>호출 속도</th><td>반복문으로 쉬지 않고 부르지 않는다</td><td>초당 50건 이상이면 제한, 비정상 호출로 판단되면 해제에 소명 필요. 클라이언트 기본값은 초당 5건</td></tr>
+        <tr><th>사내망</th><td>접속 실패를 키 문제로 단정하지 않는다</td><td>외부 인터넷·<code>plus.kipris.or.kr</code> 접속이 막혔는지 먼저 확인</td></tr>
+        <tr><th>데이터 누락</th><td>API 결과만으로 “없음”이라고 결론 내리지 않는다</td><td><a href="https://www.kipris.or.kr">KIPRIS</a> 검색 화면과 비교하고, 이상하면 KIPRIS Plus에 문의</td></tr>
+        <tr><th>응답 속도</th><td>느린 응답을 모두 내 코드 문제로 보지 않는다</td><td>KIPRIS Plus의 API 상태 화면에서 시간대별 응답시간 확인</td></tr>
+        <tr><th>개발 지원 범위</th><td>내가 짠 코드의 수정까지 고객센터에 기대하지 않는다</td><td>공식 지원은 단순 호출 오류 안내까지라고 FAQ에 적혀 있다</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <!-- 9 -->
+  <section id="s9">
+    <h2><span class="no">09</span>AI와 함께 쓰기</h2>
+    <p>KIPRIS Plus는 공식 기관 API이므로 <b>내 컴퓨터의 스크립트가 직접 부르고, 그 결과만 AI에게 넘기는 방식</b>이 가장 깔끔합니다. 인증키는 AI에게 주지 않습니다.</p>
+    <ol class="steps">
+      <li><b>수집은 스크립트로</b><code>kipris_client.py … --csv result.csv</code>로 내 컴퓨터에 저장합니다. Claude Code를 쓴다면 같은 명령을 Claude Code에게 실행시켜도 키는 환경변수에만 있습니다.</li>
+      <li><b>분석은 AI로</b>CSV를 Claude·ChatGPT 등에 올려 연도별 출원 추이, 출원인 분포, 등록 상태 비율을 표·그림으로 요청합니다.</li>
+      <li><b>검증은 원문으로</b>보고서에 쓰는 특허는 KIPRIS 공보로 다시 확인합니다(07편의 인용 확인 원칙).</li>
+    </ol>
+    <div class="note"><b>중계 서버를 거치는 도구는 피하세요</b> — KIPRIS용 MCP 서버나 수집 서비스 가운데는 개인이나 제3자가 운영하는 서버를 거쳐 인증키와 검색어를 보내는 것도 있습니다. 공식 API에 직접 붙을 수 있으므로 그런 방식은 쓸 이유가 없습니다(08편과 같은 원칙).</div>
+  </section>
+
+  <!-- 10 -->
+  <section id="s10">
+    <h2><span class="no">10</span>시험과 한계</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>시험</th><th>방법</th><th>결과</th></tr></thead>
+      <tbody>
+        <tr><th>응답 처리</th><td><a href="templates/test_kipris_client.py">test_kipris_client.py</a> — 공식 Java 샘플의 태그 이름으로 만든 시험용 XML(값은 가상)</td><td>11개 시험 모두 통과: 1건·여러 건·하위 태그, 오류 응답 2종, XML 아닌 응답, 키 가림, 키를 인자로 넣지 못하게, 속도 상한, 호출량 경고, CSV, 공공데이터포털 주소</td></tr>
+        <tr><th>접속 실패</th><td>외부망이 막힌 환경에서 실제 호출</td><td>원인 안내와 함께, 출력된 주소의 인증키가 <code>****</code>로 가려짐</td></tr>
+      </tbody>
+    </table></div>
+    <p class="cap">2026. 11. 7. 확인. 이 작업 환경과 연결된 컴퓨터 모두 KIPRIS Plus·공공데이터포털 API 서버에 접속할 수 없어 <b>실제 응답으로는 시험하지 못했습니다</b>. 인증키를 받은 뒤 <code>biblio</code> 명령과 <code>--show-xml</code>로 먼저 확인하세요. 공공데이터포털 기술거래 API의 오퍼레이션 이름과 요청변수는 각 데이터 페이지의 상세기능·Swagger에서 확인해야 합니다.</p>
+    <div class="btns">
+      <a class="btn primary" href="downloads/kipris-plus-kit.zip" download>템플릿 전체 받기 (ZIP)</a>
+      <a class="btn" href="templates/">파일 하나씩 보기</a>
+    </div>
+  </section>
+
+  <!-- 11 -->
+  <section id="s11">
+    <h2><span class="no">부록</span>출처</h2>
+    <ul>
+      <li>한국특허정보원, 「특허정보활용서비스(KIPRISPlus) Open API 이용 가이드」 v1.01 (2020. 10) · 「KIPRISPlus Open API 개발 가이드」 (2024. 3) · REST API Java·Python 샘플 (작성자 제공)</li>
+      <li>공공데이터포털: <a href="https://www.data.go.kr/data/15065437/openapi.do">특허·실용 공개·등록공보 REST</a> · <a href="https://www.data.go.kr/data/15057631/openapi.do">공통 REST</a> · <a href="https://www.data.go.kr/data/15058549/openapi.do">피인용문헌 REST</a> · <a href="https://www.data.go.kr/data/15075968/openapi.do">국유특허 REST</a> · <a href="https://www.data.go.kr/data/15158850/openapi.do">특허기술거래 일반판매기술정보_GW</a> · <a href="https://www.data.go.kr/data/15158849/openapi.do">특허기술거래 국유판매기술정보_GW</a> (2026. 11. 7. 확인)</li>
+      <li>정책브리핑, <a href="https://m.korea.kr/news/policyNewsView.do?newsId=148788755">“특허청 공공데이터, 이제 손쉽게 활용하세요”</a> (2014. 12. 18.) — 특허기술거래 등 4종 Open API 개방</li>
+      <li><a href="http://www.ipmarket.or.kr/">IP-Market 지식재산거래정보시스템</a> · <a href="https://plus.kipris.or.kr">KIPRIS Plus</a> · <a href="https://www.kipris.or.kr">KIPRIS</a></li>
+    </ul>
+    <p>함께 읽기: <a href="../korean-law-mcp/">08편 법제처 직접 연결</a> · <a href="../cite-check/">07편 인용은 사람이 확인한다</a> · <a href="../claim-analyzer/">06편 특허 구성특징 분석 도우미</a></p>
+  </section>
+
+  <footer>
+    작성: 이진수 (변리사) · 2026. 11. 7. · CC BY-NC 4.0<br>
+    작성자가 제공한 공식 가이드와 샘플을 바탕으로 생성형 AI의 도움을 받아 정리·확장했으며, 사람이 검토했습니다. KIPRIS Plus의 상품·요금·메뉴는 바뀔 수 있으니 신청 전 공식 화면을 확인하세요. 오류 제보는 <a href="https://github.com/sonovman/ai-practice-handbooks/issues">Issues</a>로 남겨 주세요.
+  </footer>
+</main>
+</div>
+
+<script>
+  document.querySelectorAll('.copy').forEach(function (b) {
+    b.addEventListener('click', function () {
+      navigator.clipboard.writeText(b.closest('.code').querySelector('pre').innerText).then(function () {
+        b.textContent = '복사됨'; setTimeout(function () { b.textContent = '복사'; }, 1500);
+      });
+    });
+  });
+  var links = [].slice.call(document.querySelectorAll('.side a'));
+  var io = new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+      if (e.isIntersecting) links.forEach(function (a) { a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id); });
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  document.querySelectorAll('main section[id]').forEach(function (s) { io.observe(s); });
+</script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 시험용 구조 예시: 태그 이름은 KIPRIS Plus 공식 Java 샘플(REST_API2.java)에서 가져왔고, 값은 지어낸 것입니다. -->
+<response>
+  <header><resultCode></resultCode><resultMsg></resultMsg></header>
+  <body>
+    <items>
+      <item>
+        <applicationNumber>1020990000001</applicationNumber>
+        <applicationDate>20990101</applicationDate>
+        <inventionTitle>자동 급수 화분</inventionTitle>
+        <inventionTitleEng>Self-watering flowerpot</inventionTitleEng>
+        <registerStatus>등록</registerStatus>
+        <registerNumber>1099000000001</registerNumber>
+        <claimCount>7</claimCount>
+      </item>
+    </items>
+  </body>
+</response>

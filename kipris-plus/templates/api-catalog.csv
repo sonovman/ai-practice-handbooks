@@ -1,0 +1,10 @@
+﻿구분,데이터(API),창구,제공 내용,비용·한도,확인 링크
+특허 공보,KIPRISPlus 특허·실용 공개·등록공보 REST,KIPRIS Plus / 공공데이터포털,"검색, 서지정보, 대표도면·전문 경로","무료 월 1,000건(상품 합산), 초과·Bulk는 KIPRIS Plus",https://www.data.go.kr/data/15065437/openapi.do
+특허 공보,KIPRISPlus 공통 REST,KIPRIS Plus / 공공데이터포털,출원인·대리인·발명자·창작자·등록권자·심판 당사자 검색,"무료 월 1,000건",https://www.data.go.kr/data/15057631/openapi.do
+특허 공보,KIPRISPlus 피인용문헌 REST,KIPRIS Plus / 공공데이터포털,선행기술–후행기술 인용 관계,"무료 월 1,000건",https://www.data.go.kr/data/15058549/openapi.do
+특허 공보,KIPRISPlus 특허 패밀리 / 해외특허 / 시소러스 / 출원인 법인 / 출원인 기술분야 / 인터넷기술공지 REST,KIPRIS Plus / 공공데이터포털,각 상품 설명 참조,상품 페이지 확인,https://www.data.go.kr (데이터명으로 검색)
+기술거래,KIPRISPlus 국유특허 REST,KIPRIS Plus / 공공데이터포털,"국가 명의 등록 특허 목록: 등록번호, 발명기관, 발명의 명칭, 등록일자, 존속기간, 무상구분, 평가등급, 출원번호, 지식재산유형","무료 월 1,000건, Bulk는 KIPRIS Plus",https://www.data.go.kr/data/15075968/openapi.do
+기술거래,국유특허 파일데이터,공공데이터포털,국유특허 목록 파일,무료,https://www.data.go.kr/data/15014996/fileData.do
+기술거래,특허기술거래 일반판매기술정보_GW,공공데이터포털 (출처 IP-Market),"민간 권리자가 판매·라이선스용으로 등록한 특허·실용신안·디자인·상표, 권리자·기술설명·거래조건","무료, 개발계정 일 100건(활용사례 등록 시 증가 신청)",https://www.data.go.kr/data/15158850/openapi.do · End Point https://apis.data.go.kr/1431000/CommonTradePatentInfoService
+기술거래,특허기술거래 국유판매기술정보_GW,공공데이터포털 (출처 IP-Market),국가 소유 특허권·실용신안권·디자인권 중 매각(양도) 대상으로 공고된 권리,"무료, 개발계정 일 100건",https://www.data.go.kr/data/15158849/openapi.do · End Point https://apis.data.go.kr/1431000/StaownTradePatentInfoService
+기술거래,이전희망기술 · 기관보유기술,IP-Market (지식재산거래정보시스템),이전희망기술: 권리자가 실시권 설정 등 이전을 희망하는 기술 / 기관보유기술: 출연연·공공기관·대학 보유 기술,API 제공 위치는 공공데이터포털에서 '특허기술거래'로 검색해 확인,http://www.ipmarket.or.kr/

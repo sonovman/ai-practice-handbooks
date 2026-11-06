@@ -175,8 +175,25 @@ window.CATALOG = [
     ]
   },
   {
-    id: "excel-analysis",
+    id: "kipris-plus",
     no: "10",
+    category: "데이터",
+    title: "KIPRIS Plus 특허 API 활용과 Python 연동",
+    subtitle: "개요 · 구성 · 요금 · 신청 · Python 호출 — 특허기술거래·국유특허 데이터까지",
+    summary: "KIPRIS Plus와 공공데이터포털의 특허·기술거래 Open API를 공식 이용 가이드 기준으로 정리했습니다. 무료 한도(월 1,000건)와 속도 제한, 신청부터 인증키·브라우저 시험까지 안내하고, 키 노출·한도 초과를 막는 표준 라이브러리 Python 클라이언트와 오프라인 시험을 제공합니다.",
+    reader: "특허 데이터를 직접 받아 분석하려는 IP·기술이전 담당자, 중소기업 실무자, 연구자",
+    version: "1.0",
+    date: "2026-11-07",
+    length: "읽기 약 20분",
+    status: "published",
+    links: [
+      { label: "화면으로 읽기", href: "kipris-plus/", primary: true },
+      { label: "템플릿 내려받기", href: "kipris-plus/templates/" }
+    ]
+  },
+  {
+    id: "excel-analysis",
+    no: "11",
     category: "데이터",
     title: "엑셀 데이터를 AI로 분석하고 그래프까지 받기",
     subtitle: "준비 중",

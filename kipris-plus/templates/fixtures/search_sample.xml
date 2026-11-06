@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 시험용 구조 예시: 여러 건 + 하위 태그가 있는 경우. 값은 지어낸 것입니다. -->
+<response>
+  <header><resultCode>00</resultCode><resultMsg>NORMAL SERVICE.</resultMsg></header>
+  <body>
+    <items>
+      <item><applicationNumber>1020990000001</applicationNumber><inventionTitle>센서 A</inventionTitle><ipc><code>G01D 5/00</code></ipc></item>
+      <item><applicationNumber>1020990000002</applicationNumber><inventionTitle>센서 B</inventionTitle><registerStatus>공개</registerStatus></item>
+    </items>
+    <totalCount>2</totalCount>
+  </body>
+</response>
