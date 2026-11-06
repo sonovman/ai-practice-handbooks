@@ -14,6 +14,7 @@
 | 06 | 특허 구성특징 분석 도우미 — 도면이 읽히는 청구항 분석 (4개 플랫폼) | [화면](https://sonovman.github.io/ai-practice-handbooks/claim-analyzer/) | [배포 키트](claim-analyzer/kit/) |
 | 07 | AI 리서치, 인용은 사람이 확인한다 — 판례·심결 리서치와 인용 검증 5단계 | [화면](https://sonovman.github.io/ai-practice-handbooks/cite-check/) | [템플릿](cite-check/templates/) |
 | 08 | 법제처에 직접 연결해 Claude로 법령·판례 리서치하기 — Korean Law MCP 로컬 설치 | [화면](https://sonovman.github.io/ai-practice-handbooks/korean-law-mcp/) | [템플릿](korean-law-mcp/templates/) |
+| 09 | 판례 심층 해설 도우미 — 원문·논증·소송 경과 검증 (4개 플랫폼) | [화면](https://sonovman.github.io/ai-practice-handbooks/case-study/) | [배포 키트](case-study/kit/) |
 
 ## 폴더 구성
 
@@ -33,6 +34,7 @@ ai-practice-handbooks/
 ├── claim-analyzer/     06편 (kit/ 4개 플랫폼 버전, downloads/ ZIP 2종)
 ├── cite-check/         07편 (templates/ 프롬프트·인용 목록·점검기·스킬, downloads/ ZIP 2종)
 ├── korean-law-mcp/     08편 (templates/ 프롬프트·지침·설정 예시·설정 점검기·자료 검증표, downloads/ ZIP)
+├── case-study/         09편 (kit/ 4개 플랫폼 버전·검수 에이전트·형식 점검기·Alice 예제, downloads/ ZIP 3종)
 └── data/               공용 자료
 ```
 

@@ -146,7 +146,7 @@ window.CATALOG = [
     category: "Claude 활용",
     title: "법제처에 직접 연결해 Claude로 법령·판례 리서치하기",
     subtitle: "Korean Law MCP 로컬 설치 — 공개 서버 없이, 내 인증키로, 버전 고정",
-    summary: "오픈소스 Korean Law MCP를 내 컴퓨터에 버전 고정 설치해 중간 서버 없이 법제처 Open API에 직접 연결하는 방법을 소스 코드와 실행 시험으로 확인했습니다. 설치·Claude Desktop/Code 연결·사용법·검증 범위와 설정 점검기를 제공하고, 떠도는 안내 자료 15개 주장을 원문과 대조한 결과도 싣습니다.",
+    summary: "오픈소스 Korean Law MCP를 내 컴퓨터에 버전 고정 설치해 중간 서버 없이 법제처 Open API에 직접 연결하는 방법을 소스 코드와 실행 시험으로 확인했습니다. 설치·Claude Desktop/Code 연결·사용법·검증 범위와 설정 점검기를 제공하고, 처음 설정하고 쓸 때 헷갈리기 쉬운 14가지 주의할 점도 정리했습니다.",
     reader: "Claude에 법령·판례 조회를 붙이려는 사내 법무·IP 담당자, 실무자",
     version: "1.0",
     date: "2026-11-07",
@@ -158,8 +158,25 @@ window.CATALOG = [
     ]
   },
   {
-    id: "excel-analysis",
+    id: "case-study",
     no: "09",
+    category: "IP 실무",
+    title: "판례 심층 해설 도우미",
+    subtitle: "원문·법원 논증·소송 경과 검증 — Claude·ChatGPT·Gemini·Copilot 4개 버전",
+    summary: "교재·논문·서면에 인용된 판례의 공식 원문을 먼저 찾아 당사자 주장과 인정 사실을 나누고, 법원의 논증과 심급 이력, 교재 설명을 11개 항목으로 해설하는 스킬·에이전트입니다. 근거마다 출처 등급과 쪽수를 붙이고, Alice 판결로 실제 사용 예제를 보이며, 형식 점검기와 4개 버전 일치 점검을 제공합니다.",
+    reader: "판례를 공부하거나 서면·강의에 인용하는 변리사, IP·법무 담당자, 수험생",
+    version: "1.0",
+    date: "2026-11-07",
+    length: "읽기 약 20분",
+    status: "published",
+    links: [
+      { label: "화면으로 읽기", href: "case-study/", primary: true },
+      { label: "배포 키트 받기", href: "case-study/kit/" }
+    ]
+  },
+  {
+    id: "excel-analysis",
+    no: "10",
     category: "데이터",
     title: "엑셀 데이터를 AI로 분석하고 그래프까지 받기",
     subtitle: "준비 중",

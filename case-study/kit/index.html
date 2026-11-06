@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>판례 해설 배포 키트</title>
+<link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+<div class="bar"><div class="bar-in">
+  <a class="brand" href="../../">AI 실무 핸드북</a>
+  <div class="links"><a href="../">← 본문으로</a></div>
+</div></div>
+<div class="wrap">
+  <div class="eyebrow">핸드북 09 · 배포 키트</div>
+  <h1>판례 원문 조사·심층 해설 키트</h1>
+  <p class="lead">같은 규칙을 Claude·ChatGPT·Gemini·Copilot 네 곳에서. 한 번에 받으려면 <a href="../downloads/case-study-kit.zip" download>키트 전체(ZIP)</a>.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>파일</th><th>내용</th></tr></thead>
+    <tbody>
+      <tr><th><a href="README.md">README.md</a></th><td>키트 구성과 규칙 수정 절차</td></tr>
+      <tr><th colspan="2">공통 (knowledge/) — ChatGPT·Gemini·Copilot에 올림</th></tr>
+      <tr><th><a href="knowledge/case-rules.md">case-rules.md</a></th><td>실행 흐름·필수 분석 내용·출력·분량 관리 (Claude SKILL.md 본문과 같음)</td></tr>
+      <tr><th><a href="knowledge/research.md">research.md</a></th><td>관할별 출처 우선순위, 문서별 기록, 소송 경과, 해설 검수 10항목</td></tr>
+      <tr><th><a href="knowledge/output-template.md">output-template.md</a></th><td>헤더 7개 + 11개 항목 양식, 출처 등급, 분량 기준</td></tr>
+      <tr><th colspan="2">Claude (claude/)</th></tr>
+      <tr><th><a href="claude/case-study-research/SKILL.md">case-study-research/</a></th><td>스킬 — SKILL.md · references 2개 · scripts/check_report.py (<a href="../downloads/case-study-research-skill.zip" download>ZIP</a>)</td></tr>
+      <tr><th><a href="claude/agents/case-reviewer.md">agents/case-reviewer.md</a></th><td>Claude Code 검수 에이전트</td></tr>
+      <tr><th><a href="claude/README.md">claude/README.md</a></th><td>설치 안내</td></tr>
+      <tr><th colspan="2">ChatGPT (chatgpt/)</th></tr>
+      <tr><th><a href="chatgpt/skill-instructions.md">skill-instructions.md</a></th><td>플러그인 스킬 이름·설명·지침 13개</td></tr>
+      <tr><th><a href="chatgpt/README.md">chatgpt/README.md</a></th><td>Plugin Creator 요청문과 순서</td></tr>
+      <tr><th>plugin-source/</th><td>플러그인 원본 1.1.0 (plugin.json, .codex-plugin/plugin.json, skills/) — <a href="../downloads/case-study-research-plugin.zip" download>ZIP</a></td></tr>
+      <tr><th colspan="2">Gemini · Copilot</th></tr>
+      <tr><th><a href="gemini/gem-instructions.md">gemini/gem-instructions.md</a></th><td>Gem 요청 사항 · <a href="gemini/README.md">설치 안내</a></td></tr>
+      <tr><th><a href="copilot/agent-instructions.md">copilot/agent-instructions.md</a></th><td>에이전트 설명·지침·공식 법원 사이트 목록 · <a href="copilot/README.md">설치 안내·추천 프롬프트</a></td></tr>
+      <tr><th colspan="2">예제·도구</th></tr>
+      <tr><th><a href="sample/textbook-excerpt.md">sample/textbook-excerpt.md</a></th><td>가상 교재 문단 (Alice 판결 인용, 단순화 2곳 포함)</td></tr>
+      <tr><th><a href="sample/output/alice-case-study.md">sample/output/alice-case-study.md</a></th><td>11개 항목 해설 결과</td></tr>
+      <tr><th><a href="sample/output/check-result.txt">sample/output/check-result.txt</a></th><td>형식 점검 결과</td></tr>
+      <tr><th><a href="tools/check_versions.py">tools/check_versions.py</a></th><td>4개 버전 핵심 규칙 15개 · 사본 6개 일치 점검</td></tr>
+    </tbody>
+  </table></div>
+  <footer>CC BY-NC 4.0 · 출처를 밝히면 비영리 목적으로 자유롭게 고쳐 쓸 수 있습니다. 예제는 학습용이며 법률 자문이 아닙니다.</footer>
+</div>
+</body>
+</html>

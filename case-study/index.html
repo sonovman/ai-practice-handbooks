@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>판례 심층 해설 도우미</title>
+<meta name="description" content="교재·논문·법률문서에 인용된 판례의 공식 원문을 찾아 당사자 주장·인정 사실·법원 논증·심급 이력·교재 설명 비교를 11개 항목으로 해설하는 스킬과 에이전트를 Claude·ChatGPT·Gemini·Copilot 네 가지 버전으로 만들고, Alice 판결로 실제 사용 예제를 보여 줍니다.">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<div class="bar"><div class="bar-in">
+  <a class="brand" href="../">AI 실무 핸드북</a>
+  <div class="links">
+    <a href="kit/">배포 키트</a>
+    <a href="https://github.com/sonovman/ai-practice-handbooks">GitHub ↗</a>
+  </div>
+</div></div>
+
+<div class="doc">
+  <aside class="side">
+    <div class="label">차례</div>
+    <ol>
+      <li><a href="#s0">한 줄 결론</a></li>
+      <li><a href="#s1">1. 언제 쓰나</a></li>
+      <li><a href="#s2">2. 설계의 뼈대</a></li>
+      <li><a href="#s3">3. 작동 흐름</a></li>
+      <li><a href="#s4">4. 11개 항목과 출처 등급</a></li>
+      <li><a href="#s5">5. 4개 플랫폼에서 만들기</a></li>
+      <li><a href="#s6">6. 실 사용 예제 — Alice 판결</a></li>
+      <li><a href="#s7">7. 시범 실행과 검증</a></li>
+      <li><a href="#s8">8. 쓸 때 주의</a></li>
+      <li><a href="#s9">부록 · 출처</a></li>
+    </ol>
+  </aside>
+
+<main>
+  <div class="eyebrow">핸드북 09 · IP 실무</div>
+  <h1>판례 심층 해설 도우미</h1>
+  <p class="lead">교재 한 줄로 요약된 판례는 결론만 남고 이유가 사라집니다. 인용된 판례의 <strong>공식 원문을 먼저 찾아</strong> 당사자 주장과 인정 사실을 나누고, 법원의 논증을 재구성하고, 심급 이력과 교재 설명을 대조해 11개 항목으로 해설하는 스킬·에이전트입니다. 작성자의 원고와 플러그인을 바탕으로 Claude·ChatGPT·Gemini·Copilot 네 가지 버전을 만들고 실제 판결로 시험했습니다.</p>
+  <div class="meta">
+    <b>독자</b><span>판례를 공부하거나 서면·강의에 인용하는 변리사, IP·법무 담당자, 법학·특허 수험생</span>
+    <b>분량</b><span>읽기 약 20분 · 배포 키트(4개 플랫폼 + 검수 에이전트 + 형식 점검기)</span>
+    <b>판</b><span>1.0 · 2026. 11. 7.</span>
+  </div>
+
+  <section id="s0">
+    <div class="key">
+      <div class="eyebrow">한 줄 결론</div>
+      <p style="font-size:19px;font-weight:600;line-height:1.6;margin:8px 0 10px">결론이 아니라 이유를, 요약이 아니라 원문을, 확정이 아니라 확인 범위를.</p>
+      <p style="opacity:.75;font-size:15px">이 도우미의 핵심은 해설 내용보다 <b>표시</b>에 있습니다. 근거마다 [공식 원문]·[원문 사본]·[2차 자료]·[미확인] 중 무엇인지, 몇 쪽인지 붙입니다. 그래서 독자는 어느 문장을 믿고 어느 문장을 다시 확인해야 하는지 바로 압니다(07편의 원칙을 판례 해설에 적용한 것).</p>
+    </div>
+  </section>
+
+  <!-- 1 -->
+  <section id="s1">
+    <h2><span class="no">01</span>언제 쓰나</h2>
+    <div class="grid3">
+      <div class="box"><div class="tag">공부</div><h4>교재·논문 속 판례</h4><p>교재 문단을 첨부하면 인용 판례를 모두 찾아 목록표를 만들고, 한 건씩 독립 Case Study로 해설한 뒤 교재 설명과 대조합니다.</p></div>
+      <div class="box"><div class="tag">실무</div><h4>서면·의견서에 쓰기 전</h4><p>인용하려는 판례가 정말 그 말을 했는지, 그 판단이 결론에 필수였는지, 이후 심급에서 뒤집히지 않았는지를 한 문서로 확인합니다.</p></div>
+      <div class="box"><div class="tag">외국 판례</div><h4>미국·유럽·일본</h4><p>연방대법원·CAFC, EPO 심판부·UPC·CURIA, 일본 최고재판소·지재고재 등 관할별 공식 출처를 먼저 찾고, en banc·certiorari·환송을 구별해 이력을 정리합니다.</p></div>
+    </div>
+    <p>하지 않는 일도 분명합니다. 유료 법률 DB 접근권을 주지 않고, 판례의 현재 유효성이나 사건 확정을 보장하지 않습니다. 원문을 확보하지 못하면 확보한 범위에서 해설하되 “원문 미확보”라고 적습니다.</p>
+  </section>
+
+  <!-- 2 -->
+  <section id="s2">
+    <h2><span class="no">02</span>설계의 뼈대: 원본과 보완</h2>
+    <p>작성자가 만든 원고와 플러그인(Claude 스킬 형식 + OpenAI 플러그인 메타데이터)이 출발점입니다. 실행 흐름 8단계, 필수 분석 내용, 11개 항목 출력, 조사·신뢰성 기준과 검수 10항목은 그대로 살렸습니다.</p>
+    <div class="grid2">
+      <div class="box"><div class="tag">원본에서</div><h4>그대로 살린 것</h4>
+        <ul>
+          <li><strong>공식 원문 우선</strong>과 관할별 출처 목록</li>
+          <li><strong>주장 / 인정 사실 / 판단 / 해설</strong> 구별</li>
+          <li>법리 → 사실 → 증거 → 적용 → 주장 평가 → 결론의 <strong>논증 재구성</strong></li>
+          <li>심급 이력과 <strong>후속 취급</strong>(overruled·limited·distinguished) 구별</li>
+          <li>검색 부재를 확정의 증거로 쓰지 않기</li>
+          <li><strong>해설 검수 10항목</strong></li>
+        </ul></div>
+      <div class="box"><div class="tag">이번에 보완</div><h4>더한 것</h4>
+        <ul>
+          <li>여러 판례일 때 <strong>판례 목록표</strong>부터 (0단계)</li>
+          <li><strong>출처 등급 4종</strong> 표시</li>
+          <li>출력 양식 파일 <strong>output-template.md</strong></li>
+          <li>형식 점검기 <strong>check_report.py</strong></li>
+          <li>Claude Code <strong>검수 에이전트</strong>(작성과 분리)</li>
+          <li>4개 플랫폼 버전과 <strong>버전 일치 점검</strong></li>
+        </ul></div>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section id="s3">
+    <h2><span class="no">03</span>작동 흐름</h2>
+    <div class="graph">
+      <div class="node end"><span class="id">IN</span><b>교재·논문·서면 문단 또는 사건명</b><p>자료가 없으면 판례 자체를 해설하고 교재 비교는 “자료 미제공”</p></div>
+      <div class="edge"></div>
+      <div class="node"><span class="id">0</span><b>판례 목록표</b><p>인용 표기 · 자료 속 위치 · 해설 대상/배경 인용 · 진행 상태</p></div>
+      <div class="edge"></div>
+      <div class="node"><span class="id">1–2</span><b>인용 추출 → 사건 확정</b><p>사건명·번호·법원·선고일·관할·판결 종류. 별개 사건과 같은 사건의 심급 구분</p></div>
+      <div class="edge"><span>웹 검색 · 파일 열람</span></div>
+      <div class="node dark"><span class="id">3–4</span><b>원문 확보 · 문서별 기록</b><p>공식 원문 우선. 검색 요약으로 열람 주장 금지. 근거마다 출처 등급과 쪽·문단</p></div>
+      <div class="edge"></div>
+      <div class="node"><span class="id">5</span><b>논증 재구성</b><p>쟁점 → 법리 → 필요한 사실 → 증거·사실 인정 → 적용 → 주장 평가 → 결론. 빈 이유는 추측하지 않음</p></div>
+      <div class="edge"></div>
+      <div class="node"><span class="id">6</span><b>심급 이력 · 후속 취급</b><p>확인된 것만 표에, 나머지는 “미확인”. 조사 기준일 명시</p></div>
+      <div class="edge"></div>
+      <div class="node"><span class="id">7–8</span><b>11개 항목 해설 · 교재 대조</b><p>6번(판단 이유)이 가장 길게</p></div>
+      <div class="edge"></div>
+      <div class="node dark"><span class="id">9</span><b>자기점검 + 형식 점검 (+ 검수 에이전트)</b><p>검수 10항목 · check_report.py · Claude Code는 case-reviewer가 원문 재대조</p></div>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section id="s4">
+    <h2><span class="no">04</span>11개 항목과 출처 등급</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>항목</th><th>담는 것</th><th>흔한 실수 (도우미가 막는 것)</th></tr></thead>
+      <tbody>
+        <tr><th>헤더 7개</th><td>사건명 · 법원·사건번호 · 선고일 · 원문 링크 · 조사 기준일 · 판결문 확인 상태 · 후속 이력 확인 상태</td><td>무엇을 읽고 쓴 해설인지 모름</td></tr>
+        <tr><th>1 한눈에</th><td>비전문가용 5문장</td><td>—</td></tr>
+        <tr><th>2 배경</th><td>인정 사실 기준 시간순</td><td>당사자 주장을 사실처럼 씀</td></tr>
+        <tr><th>3 주장</th><td>청구·항변·반박·근거·구제</td><td>기록에 없는 주장을 지어냄 → “확인 불가”</td></tr>
+        <tr><th>4 쟁점</th><td>판단된 쟁점 / 제기됐으나 판단 안 된 쟁점</td><td>판단하지 않은 것을 판시로 소개</td></tr>
+        <tr><th>5 법리</th><td>법원 적용 법리 / 해설자 보충 법리</td><td>둘을 섞음</td></tr>
+        <tr><th>6 판단 이유</th><td>쟁점별 법리–사실–적용–주장 평가–결론, 필수 판단 / 부수 언급</td><td>결론만 쓰고 이유를 건너뜀</td></tr>
+        <tr><th>7 결론</th><td>주문 / 쟁점별 판단, 절차적·실체법적 효과</td><td>잠정 판단과 확정 판결 혼동</td></tr>
+        <tr><th>8 이력</th><td>심급 표 8칸 + 마지막 확인 상태 + 미확인 사항</td><td>날짜 추측, certiorari 거절을 승인으로</td></tr>
+        <tr><th>9 의의</th><td>후속 법원의 취급 / 독자적 평가</td><td>평가를 후속 판례처럼</td></tr>
+        <tr><th>10 교재 비교</th><td>교재 문구(위치) ↔ 원문(위치) ↔ 일치·생략·보완</td><td>근거 없이 “교재 오류” 단정</td></tr>
+        <tr><th>11 정리</th><td>핵심 법리 · 한계 · 결론을 바꿀 사실 · 실무 · 질문 3개</td><td>가상 사례를 실제처럼</td></tr>
+      </tbody>
+    </table></div>
+    <div class="grid2">
+      <div class="box"><h4>[공식 원문] · [원문 사본]</h4><p>법원 공식 사이트의 판결문 / 공식본을 그대로 옮긴 사본(다른 기관이 게시한 PDF 등). 판단 내용의 근거로 쓸 수 있는 등급.</p></div>
+      <div class="box"><h4>[2차 자료] · [미확인]</h4><p>해설 기사·위키·논문 요약 / 확인하지 못함. 사건 식별의 단서일 뿐이며, 이 등급의 문장은 원문으로 다시 확인할 대상입니다.</p></div>
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section id="s5">
+    <h2><span class="no">05</span>4개 플랫폼에서 만들기</h2>
+    <p>규칙은 하나, 담는 그릇은 넷입니다. 공통 규칙(<a href="kit/knowledge/case-rules.md">case-rules.md</a>)과 출처 기준(<a href="kit/knowledge/research.md">research.md</a>), 출력 양식(<a href="kit/knowledge/output-template.md">output-template.md</a>)을 기준으로, 각 플랫폼은 짧은 지침에 자기 강점을 더했습니다.</p>
+    <div class="tbl"><table>
+      <thead><tr><th></th><th>Claude</th><th>ChatGPT</th><th>Gemini</th><th>Copilot</th></tr></thead>
+      <tbody>
+        <tr><th>형태</th><td>스킬 + Claude Code 검수 에이전트</td><td>플러그인 안의 스킬 + 참조 파일</td><td>Gem 요청 사항 + 지식 파일</td><td>Copilot Studio 에이전트 + 지식</td></tr>
+        <tr><th>원문 조사</th><td>웹 검색 켜기 · 판결문 PDF 첨부</td><td>웹 검색 · 파일 첨부</td><td>긴 판결문 PDF 첨부에 강함</td><td>공식 법원 사이트를 지식으로 등록 · SharePoint 판결문</td></tr>
+        <tr><th>형식 점검</th><td>check_report.py 실행</td><td>코드 실행 가능 시 check_report.py</td><td>자기점검(검수 10항목)</td><td>자기점검(검수 10항목)</td></tr>
+        <tr><th>만드는 곳</th><td>Customize → Skills → Upload / <code>~/.claude/skills</code>·<code>agents</code></td><td>플러그인 → Plugin Creator</td><td>Gems 탐색하기 → 새 Gem</td><td>copilotstudio.microsoft.com</td></tr>
+        <tr><th>설치 안내</th><td><a href="kit/claude/README.md">claude/README</a></td><td><a href="kit/chatgpt/README.md">chatgpt/README</a></td><td><a href="kit/gemini/README.md">gemini/README</a></td><td><a href="kit/copilot/README.md">copilot/README</a></td></tr>
+      </tbody>
+    </table></div>
+
+    <h3>Claude — 스킬 + 검수 에이전트</h3>
+    <ol class="steps">
+      <li><b>웹 검색·코드 실행 켜기</b>설정에서 둘 다 켭니다. 웹 검색이 꺼져 있으면 모든 해설이 “원문 미확보”가 됩니다.</li>
+      <li><b>스킬 올리기</b>Customize → Skills → + → Create skill → Upload a skill에서 <a href="downloads/case-study-research-skill.zip">case-study-research-skill.zip</a>. Claude Code는 폴더째 <code>~/.claude/skills/</code>에 복사.</li>
+      <li><b>(Claude Code) 검수 에이전트</b><a href="kit/claude/agents/case-reviewer.md">case-reviewer.md</a>를 <code>~/.claude/agents/</code>에. 해설을 쓴 대화와 분리된 맥락에서 인용문을 원문과 다시 대조합니다(01편의 리뷰어 원칙).</li>
+    </ol>
+    <h3>ChatGPT — 플러그인</h3>
+    <ol class="steps">
+      <li><b>Plugin Creator</b>플러그인 → Plugin Creator를 설치하고, <a href="kit/chatgpt/skill-instructions.md">skill-instructions.md</a>와 knowledge 3개 파일을 첨부해 <a href="kit/chatgpt/README.md">요청문</a>을 보냅니다.</li>
+      <li><b>플러그인 원본</b>작성자가 만든 플러그인 폴더(<code>plugin.json</code>, <code>.codex-plugin/plugin.json</code>, <code>skills/</code>)를 이번 보완판(1.1.0)으로 맞춰 <a href="downloads/case-study-research-plugin.zip">ZIP</a>으로 넣었습니다. 플러그인 폴더를 직접 쓸 수 있는 환경이면 이것을 씁니다.</li>
+    </ol>
+    <h3>Gemini — Gem</h3>
+    <ol class="steps">
+      <li><b>새 Gem</b>Gems 탐색하기 → 새 Gem → <a href="kit/gemini/gem-instructions.md">요청 사항</a> 붙여 넣기 → 지식 파일 3개 업로드 → 미리보기로 시험 → <b>저장</b>.</li>
+    </ol>
+    <h3>Copilot — Copilot Studio 에이전트</h3>
+    <ol class="steps">
+      <li><b>에이전트 만들기</b>Description·Instructions에 <a href="kit/copilot/agent-instructions.md">agent-instructions.md</a>, Knowledge에 파일 3개와 <b>공식 법원 사이트 목록</b>(대법원 종합법률정보, 연방대법원, CAFC, EPO, UPC, CURIA, 일본 재판소 등)을 추가 → 추천 프롬프트 등록 → Teams로 배포.</li>
+    </ol>
+    <div class="btns">
+      <a class="btn primary" href="downloads/case-study-kit.zip" download>키트 전체 받기 (ZIP)</a>
+      <a class="btn" href="downloads/case-study-research-skill.zip" download>Claude 스킬만</a>
+      <a class="btn" href="downloads/case-study-research-plugin.zip" download>ChatGPT 플러그인 원본</a>
+      <a class="btn" href="kit/">파일 하나씩 보기</a>
+    </div>
+  </section>
+
+  <!-- 6 -->
+  <section id="s6">
+    <h2><span class="no">06</span>실 사용 예제 — <em>Alice v. CLS Bank</em></h2>
+    <p>교재에서 자주 단순화되는 미국 연방대법원 <em>Alice Corp. v. CLS Bank International</em>, 573 U.S. 208 (2014)로 시험했습니다. 흔한 단순화 두 가지를 넣은 <a href="kit/sample/textbook-excerpt.md">가상 교재 문단</a>을 주고 이렇게 요청했습니다.</p>
+    <div class="code">
+      <div class="head"><span>요청</span><button class="copy">복사</button></div>
+<pre><code>첨부한 교재 문단(textbook-excerpt.md)에 인용된 판례를 case-study-research 방식으로 심층 해설해 줘.
+공식 원문을 먼저 찾고, 근거마다 출처 등급과 쪽수를 붙여 줘. 교재 설명과 실제 판결도 대조해 줘.</code></pre>
+    </div>
+    <p>결과 전문은 <a href="kit/sample/output/alice-case-study.md">alice-case-study.md</a>입니다. 눈여겨볼 곳만 옮깁니다.</p>
+
+    <h3>헤더 — 무엇을 읽고 썼는지부터</h3>
+    <div class="code">
+      <div class="head"><span>결과 발췌</span><button class="copy">복사</button></div>
+<pre><code>**원문 출처 및 링크:** 연방대법원 슬립 오피니언 사본 — https://kittens.eff.org/... [원문 사본].
+                     연방대법원 공식 사이트의 원본 PDF는 이 작업 환경에서 열지 못했다.
+**판결문 확인 상태:** 일부 열람 — 법정의견 pp. 1–17 가운데 사실관계·절차 경과·판단 부분과
+                     보충의견의 요지를 확인. 각주 전체와 보충의견 전문은 정밀 대조하지 않았다.
+**후속 소송 이력 확인 상태:** 하급심 경과는 법정의견 pp. 3–4로 확인. 하급심 인용과 후속 판례는
+                     2차 자료로만 확인. 하급심 정확한 선고일은 미확인.</code></pre>
+    </div>
+    <p>공식 사이트 원본을 열지 못한 사실, 원문 사본을 쓴 사실, 어디까지 읽었는지를 첫 화면에 밝힙니다. 이것이 “원문 미확보 시 확정적 분석이라고 표현하지 않는다”는 규칙이 실제로 드러나는 모습입니다.</p>
+
+    <h3>6번 판단 이유 — 결정적 논거와 경계 설정</h3>
+    <p>판단 이유는 쟁점마다 법리 → 사실 → 적용 → 주장 평가로 나뉩니다. 2단계(발명적 개념)에서 결론에 필수적인 판단은 “the mere recitation of a generic computer cannot transform a patent-ineligible abstract idea into a patent-eligible invention”(p. 13)이고, 청구항이 컴퓨터 자체의 기능이나 다른 기술 분야를 개선하지 않는다는 판단(p. 15)이 결정적 논거입니다. 동시에 법원은 “many computer-implemented claims are formally addressed to patent-eligible subject matter”(p. 14)라고 경계를 그었습니다. 결과물은 이 세 문장을 쪽수와 함께 구별해 적었습니다.</p>
+
+    <h3>8번 심급 표 — 확인된 것만</h3>
+    <div class="tbl"><table>
+      <thead><tr><th>심급</th><th>사건번호·인용</th><th>판결일</th><th>판단 결과</th><th>출처</th></tr></thead>
+      <tbody>
+        <tr><th>D.D.C.</th><td>768 F. Supp. 2d 221</td><td>2011년 (일자 미확인)</td><td>전 청구항 부적격</td><td>[원문 사본] p. 3 · 인용 [2차 자료]</td></tr>
+        <tr><th>Fed. Cir. 패널</th><td>685 F.3d 1341</td><td>2012년 (일자 미확인)</td><td>파기(2:1) → 이후 vacated</td><td>[원문 사본] p. 4 · 인용 [2차 자료]</td></tr>
+        <tr><th>Fed. Cir. en banc</th><td>717 F.3d 1269</td><td>2013년 (일자 미확인)</td><td>한 문단 per curiam으로 제1심 유지</td><td>[원문 사본] p. 4</td></tr>
+        <tr><th>연방대법원</th><td>No. 13-298 · 573 U.S. 208</td><td>2014-06-19</td><td>원심 유지(전원일치)</td><td>[원문 사본] pp. 1, 17</td></tr>
+      </tbody>
+    </table></div>
+    <p class="cap">하급심 정확한 선고일은 원문으로 확인하지 못해 연도만 적고 “미확인”으로 남겼습니다. 날짜를 기억으로 채우지 않는 것이 이 표의 요점입니다.</p>
+
+    <h3>10번 교재 비교 — 단정하지 않고 대응시키기</h3>
+    <div class="tbl"><table>
+      <thead><tr><th>교재 문구</th><th>판결문 해당 부분</th><th>판정</th></tr></thead>
+      <tbody>
+        <tr><td>“소프트웨어 발명은 추상적 아이디어에 불과하므로 특허를 받을 수 없다고 판시”</td><td>“many computer-implemented claims are formally addressed to patent-eligible subject matter” (p. 14). 판단 대상은 중개 결제 관행 + 일반 컴퓨터 (pp. 7, 9, 15)</td><td><b>과도한 일반화</b></td></tr>
+        <tr><td>“2단계 테스트를 처음으로 제시”</td><td><em>Mayo</em> (2012)에서 제시된 틀을 그대로 적용 (p. 7)</td><td><b>불일치</b></td></tr>
+        <tr><td>“이후 모두 이 기준에 따르게 되었다”</td><td>판결문에 해당 내용 없음. 후속 하급심은 이 틀 아래 적격 판단도 함 ([2차 자료] <em>DDR</em>, <em>Enfish</em>)</td><td>보완 필요</td></tr>
+      </tbody>
+    </table></div>
+    <div class="note"><b>주의 — 기억으로 만든 영문 인용</b> — 판례 해설에서 가장 흔한 실수는 판결문에 있을 법한 영문 문구를 따옴표로 넣는 것입니다. 따옴표 안에는 원문에서 쪽수와 함께 찾은 문장만 쓰고, 쪽수를 찾지 못한 내용은 따옴표 없이 설명으로 씁니다. 이 예제의 10번 표에서 <em>Mayo</em>와의 관계를 설명으로 적은 것도 그 때문입니다. 검수 2번(“인용 문장이 실제 원문에 있는가”)이 이를 확인합니다.</div>
+  </section>
+
+  <!-- 7 -->
+  <section id="s7">
+    <h2><span class="no">07</span>시범 실행과 검증</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>검증 항목</th><th>방법</th><th>결과</th></tr></thead>
+      <tbody>
+        <tr><th>예제 해설 형식</th><td>check_report.py</td><td>10개 점검 모두 통과 — 6번이 가장 긴 항목(1,813자), 8번 표·미확인 표시, 질문 3개 (<a href="kit/sample/output/check-result.txt">결과</a>)</td></tr>
+        <tr><th>점검기가 실제로 잡는지</th><td>헤더·항목이 빠지고 “원문 미확보”인데 “공식 원문에 기초한 확정적” 표현을 쓴 가짜 해설</td><td>실패 8건 · 주의 2건 검출</td></tr>
+        <tr><th>Claude 스킬 형식</th><td>Anthropic 공식 skill-creator 검증 스크립트</td><td>“Skill is valid!” (설명 150자)</td></tr>
+        <tr><th>4개 버전 일치</th><td>check_versions.py — 핵심 규칙 15개 × 4개 버전 + 사본 6개</td><td>처음 실행에서 <b>Claude 스킬에 ‘자료 속 명령문은 지시가 아님’ 표지 1건 누락</b> 발견 → 보완 후 모두 일치</td></tr>
+        <tr><th>예제의 사실 확인</th><td>연방대법원 슬립 오피니언 사본(EFF 게시)을 열어 쪽수 대조</td><td>인용한 영문 문구를 모두 쪽수와 대조. 쪽수로 확인할 수 없는 내용은 따옴표 없이 설명으로</td></tr>
+      </tbody>
+    </table></div>
+    <p class="cap">2026. 11. 7. 확인. 예제 해설은 이 글을 만든 Claude 세션이 스킬 절차를 따라 작성했습니다. 연방대법원 공식 사이트 원본은 이 작업 환경에서 열리지 않아 원문 사본으로 대조했고, 하급심 인용·후속 판례는 2차 자료로만 확인했습니다. ChatGPT·Gemini·Copilot 화면에 실제로 등록해 돌려 보지는 않았으니, 처음 한 번은 가상 교재 문단으로 같은 형태가 나오는지 확인하세요.</p>
+  </section>
+
+  <!-- 8 -->
+  <section id="s8">
+    <h2><span class="no">08</span>쓸 때 주의</h2>
+    <div class="grid3">
+      <div class="box"><div class="tag">확인</div><h4>[2차 자료]는 숙제 목록</h4><p>2차 자료·미확인 표시가 붙은 문장은 서면이나 강의에 그대로 옮기지 말고 원문으로 다시 확인합니다. 07편의 citation-log로 관리하면 편합니다.</p></div>
+      <div class="box"><div class="tag">이용조건</div><h4>인용은 짧게</h4><p>판결문 자체는 대부분 자유롭게 이용할 수 있지만, 교재·논문·유료 DB 해설은 저작물입니다. 교재 문구는 비교에 필요한 만큼만 인용합니다.</p></div>
+      <div class="box"><div class="tag">기밀</div><h4>넣는 곳을 가려서</h4><p>의뢰인 사건의 미공개 서면·내부 메모는 회사가 승인한 AI 환경에만. 공개 판례 공부는 어디서든 괜찮습니다.</p></div>
+    </div>
+    <div class="note"><b>현재 유효성은 별도로</b> — 도우미는 후속 취급을 조사하지만 완전한 citator 조사를 보장하지 않습니다. 국내 판례는 08편의 로컬 법령 MCP(<code>cite_check</code>)나 종합법률정보로, 미국 판례는 사용 가능한 citator로 한 번 더 확인하세요.</div>
+  </section>
+
+  <!-- 9 -->
+  <section id="s9">
+    <h2><span class="no">부록</span>출처</h2>
+    <ul>
+      <li>작성자 원고 「판례 원문 조사·심층 해설」과 플러그인 case-study-research 1.0.0(SKILL.md, references/research.md, plugin.json, .codex-plugin/plugin.json) — 실행 흐름·분석 내용·출력 형식·조사 기준의 원 설계</li>
+      <li><em>Alice Corp. v. CLS Bank Int'l</em>, No. 13-298, slip opinion (June 19, 2014) — <a href="https://kittens.eff.org/files/2014/06/19/alice-corp._v._cls-bank_opinion.pdf">EFF 게시 사본</a> [원문 사본]</li>
+      <li>Wikipedia, <a href="https://en.wikipedia.org/wiki/Alice_Corp._v._CLS_Bank_International">Alice Corp. v. CLS Bank International</a> — 하급심 인용·후속 판례 [2차 자료]</li>
+      <li>Claude 도움말 <a href="https://support.claude.com/en/articles/12512198-how-to-create-custom-skills">커스텀 스킬 만들기</a> · Anthropic <a href="https://github.com/anthropics/skills">공식 스킬 저장소</a>(skill-creator 검증 스크립트)</li>
+      <li>OpenAI 도움말 <a href="https://help.openai.com/articles/20001256">ChatGPT의 플러그인</a> · <a href="https://help.openai.com/articles/20001519">맞춤형 GPT 지원 종료 FAQ</a> (06편에서 확인)</li>
+      <li>Gemini 앱 고객센터 <a href="https://support.google.com/gemini/answer/15235603?hl=ko">맞춤 Gems를 만드는 방법</a> · Microsoft Learn <a href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/authoring-instructions">Copilot Studio 에이전트 지침 작성</a></li>
+    </ul>
+    <p>함께 읽기: <a href="../cite-check/">07편 인용은 사람이 확인한다</a> · <a href="../korean-law-mcp/">08편 법제처 직접 연결</a> · <a href="../claim-analyzer/">06편 특허 구성특징 분석 도우미(4개 플랫폼)</a> · <a href="../agent-guide/">01편 리뷰어 원칙</a></p>
+  </section>
+
+  <footer>
+    작성: 이진수 (변리사) · 2026. 11. 7. · CC BY-NC 4.0<br>
+    작성자의 원고와 플러그인을 바탕으로 생성형 AI의 도움을 받아 확장·검증했으며, 사람이 검토했습니다. 예제는 학습용이며 법률 자문이 아닙니다. 오류 제보는 <a href="https://github.com/sonovman/ai-practice-handbooks/issues">Issues</a>로 남겨 주세요.
+  </footer>
+</main>
+</div>
+
+<script>
+  document.querySelectorAll('.copy').forEach(function (b) {
+    b.addEventListener('click', function () {
+      navigator.clipboard.writeText(b.closest('.code').querySelector('pre').innerText).then(function () {
+        b.textContent = '복사됨'; setTimeout(function () { b.textContent = '복사'; }, 1500);
+      });
+    });
+  });
+  var links = [].slice.call(document.querySelectorAll('.side a'));
+  var io = new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+      if (e.isIntersecting) links.forEach(function (a) { a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id); });
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  document.querySelectorAll('main section[id]').forEach(function (s) { io.observe(s); });
+</script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "author": {
+    "name": "CS Lee"
+  },
+  "description": "인용 판례의 원문을 조사하고 사실관계, 당사자 주장, 법원의 논증, 심급별 경과와 교재 설명을 비교하는 심층 해설 워크플로.",
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "category": "Productivity",
+        "defaultPrompt": "제공한 자료에 인용된 판례를 찾아 공식 판결문을 우선 조사하고, 법원의 판단 이유와 심급별 소송 경과를 중심으로 독립적인 판례 심층 해설을 작성해 주세요.",
+        "developerName": "CS Lee",
+        "displayName": "판례 원문 조사·심층 해설",
+        "longDescription": "한국·미국·유럽·일본 등 인용 판례를 정확하게 식별하고 공식 원문을 우선 조사합니다. 당사자 주장, 인정 사실, 법원 판단과 해설을 구별하며, 심급별 소송 경과와 교재의 인용 내용을 검증하여 11개 항목으로 해설합니다. 검색과 파일 열람은 실행 환경에서 사용 가능한 도구를 활용하며, 전용 법률 데이터베이스 연결이나 유료 서비스 접근권을 제공하지 않습니다.",
+        "shortDescription": "원문·법원 논증·소송 경과 검증"
+      }
+    }
+  },
+  "name": "case-study-research",
+  "version": "1.1.0"
+}
