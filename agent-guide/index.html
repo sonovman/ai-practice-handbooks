@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>단독 vs 멀티 에이전트</title>
+<meta name="description" content="단독 에이전트와 멀티 에이전트 팀을 실제 테스트 결과로 비교하고, 기업 일반 업무와 IP 업무에 맞게 구축·운영하는 방법을 정리한 실무 가이드">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<div class="bar"><div class="bar-in">
+  <a class="brand" href="../">AI 실무 핸드북</a>
+  <div class="links">
+    <a href="templates/">템플릿</a>
+    <a href="https://github.com/sonovman/ai-practice-handbooks">GitHub ↗</a>
+  </div>
+</div></div>
+
+<div class="doc">
+  <aside class="side">
+    <div class="label">차례</div>
+    <ol>
+      <li><a href="#s0">한 줄 결론</a></li>
+      <li><a href="#s1">1. 실험 결과</a></li>
+      <li><a href="#s2">2. 팀이 느린 이유</a></li>
+      <li><a href="#s3">3. 언제 무엇을 쓰나</a></li>
+      <li><a href="#s4">4. 구축 3단계</a></li>
+      <li><a href="#s5">5. 바로 쓰는 템플릿</a></li>
+      <li><a href="#s6">6. 안전 장치</a></li>
+      <li><a href="#s7">7. 일반 업무 적용</a></li>
+      <li><a href="#s8">8. IP 업무 적용</a></li>
+      <li><a href="#s9">9. MS Copilot으로 구현</a></li>
+      <li><a href="#s10">부록 · 용어와 출처</a></li>
+    </ol>
+  </aside>
+
+<main>
+  <div class="eyebrow">핸드북 01 · 에이전트 활용</div>
+  <h1>에이전트는 한 명이면 충분하다</h1>
+  <p class="lead">단독 에이전트와 멀티 에이전트 팀을 실제 테스트 결과로 비교하고, 기업 일반 업무와 지식재산(IP) 업무에 맞게 구축·운영하는 방법을 정리했습니다.</p>
+  <div class="meta">
+    <b>독자</b><span>AI 에이전트를 업무에 들이려는 기업 실무자, IP 부서 담당자</span>
+    <b>분량</b><span>읽기 약 20분 · 템플릿 2종 포함</span>
+    <b>판</b><span>1.0 · 2026. 11. 6.</span>
+  </div>
+
+  <!-- 0 -->
+  <section id="s0">
+    <div class="key">
+      <div class="eyebrow">한 줄 결론</div>
+      <p style="font-size:19px;font-weight:600;line-height:1.6;margin:8px 0 10px">메인 일은 단독 에이전트 하나에 맡기고, 검수·대규모 조사가 필요한 순간에만 보조 에이전트를 부른다.</p>
+      <p style="opacity:.75;font-size:15px">같은 과제에서 5인 에이전트 팀은 단독보다 최대 7배 느렸고 토큰은 약 2배 썼으며, 정답률도 높지 않았습니다. 단독 에이전트에 리뷰어 1명을 붙인 2인 체제가 속도와 완성도를 모두 챙겼습니다.</p>
+    </div>
+  </section>
+
+  <!-- 1 -->
+  <section id="s1">
+    <h2><span class="no">01</span>실험 결과: 같은 과제, 세 가지 팀 구성</h2>
+    <p>같은 개발 과제를 세 가지 구성에 맡기고 시간·토큰·완성도를 비교한 실험입니다.</p>
+    <div class="grid3">
+      <div class="box"><div class="tag">A</div><h4>단독 에이전트</h4><p>한 세션이 계획부터 테스트까지 처리</p></div>
+      <div class="box"><div class="tag">B</div><h4>5인 팀</h4><p>기획·개발·검수·보안 등으로 역할 분담</p></div>
+      <div class="box"><div class="tag">C</div><h4>2인 체제</h4><p>단독 에이전트 + 코드 리뷰어 1명</p></div>
+    </div>
+
+    <h3>테스트 1 · 미니 칸반보드 만들기</h3>
+    <div class="bars">
+      <div class="row"><span>A 단독</span><div class="track"><div class="fill" style="width:15%"></div></div><span class="val">6분</span></div>
+      <div class="row"><span>B 5인 팀</span><div class="track"><div class="fill light" style="width:100%"></div></div><span class="val">40분</span></div>
+    </div>
+    <p class="cap">결과물 품질은 비슷했고, 2인 체제는 검수 시간만큼 단독보다 조금 더 걸렸습니다.</p>
+
+    <h3>테스트 2 · 실무 규모 과제 (MCP 서버, 과제 14개)</h3>
+    <div class="tbl"><table>
+      <thead><tr><th>구성</th><th>시간·비용</th><th>완성도</th><th>순위</th></tr></thead>
+      <tbody>
+        <tr><th>A 단독</th><td>가장 적음</td><td>자잘한 버그가 남음</td><td>공동 1위</td></tr>
+        <tr><th>C 2인 체제</th><td>단독보다 조금 더</td><td>리뷰어가 버그 5개 포착</td><td>공동 1위</td></tr>
+        <tr><th>B 5인 팀</th><td>약 80분, 토큰 약 2배</td><td>정답 테스트 최저점</td><td>3위</td></tr>
+      </tbody>
+    </table></div>
+    <p class="cap">단독 세션에서 코드 리뷰 명령(<code>/code-review</code>)을 불러도 2인 체제와 비슷한 효과가 났습니다.</p>
+
+    <h3>테스트 3 · 상위 모델(Opus)로 바꿔 보면</h3>
+    <div class="bars">
+      <div class="row"><span>A 단독</span><div class="track"><div class="fill" style="width:67%"></div></div><span class="val">약 40분</span></div>
+      <div class="row"><span>B 팀</span><div class="track"><div class="fill light" style="width:100%"></div></div><span class="val">약 60분</span></div>
+    </div>
+    <p class="cap">품질은 비슷했지만 팀 구성의 토큰 사용량이 약 2배였습니다. 단독 에이전트는 필요할 때 스스로 탐색용 보조 에이전트를 불러 썼습니다.</p>
+
+    <div class="note"><b>읽을 때 주의</b> — 위 수치는 한 채널이 진행한 개발 과제 실험의 결과입니다. 업무 종류와 도구에 따라 차이는 달라질 수 있으니, 방향을 잡는 근거로 쓰고 절대 수치로 인용하지는 마세요.</div>
+  </section>
+
+  <!-- 2 -->
+  <section id="s2">
+    <h2><span class="no">02</span>팀으로 쪼개면 왜 느려질까</h2>
+    <div class="grid2">
+      <div class="box"><h4>① 같은 일을 여러 번 한다</h4><p>단계마다 인수인계 문서를 쓰고, 같은 자료를 에이전트마다 다시 읽습니다. 시간과 토큰이 2~3배로 늘어납니다.</p></div>
+      <div class="box"><h4>② 전화 게임이 일어난다</h4><p>작은 일까지 쪼개 넘기면, 맥락이 전달되면서 조금씩 빠지고 바뀝니다. 마지막 에이전트는 처음 의도와 다른 일을 하게 됩니다.</p></div>
+    </div>
+    <div class="flow"><span>기획</span><i>→ 요약 →</i><span>개발</span><i>→ 요약 →</i><span>검수</span><i>→ 요약 →</i><span>보안</span><i>= 맥락 손실 누적</i></div>
+    <p>사람 조직도 마찬가지입니다. 한 사람이 처음부터 끝까지 맡는 편이 빠른 일이 있고, 그런 일은 나눌수록 손해입니다.</p>
+  </section>
+
+  <!-- 3 -->
+  <section id="s3">
+    <h2><span class="no">03</span>언제 무엇을 쓰나</h2>
+    <div class="grid2">
+      <div class="box">
+        <div class="tag">기본값</div><h4>단독 에이전트</h4>
+        <ul>
+          <li>기획→작성→점검까지 <strong>맥락이 이어져야</strong> 하는 일</li>
+          <li>작은 수정, 대화하며 다듬는 일</li>
+          <li>순서대로 진행되는 일</li>
+        </ul>
+      </div>
+      <div class="box">
+        <div class="tag">필요할 때만</div><h4>보조(서브) 에이전트</h4>
+        <ul>
+          <li><strong>독립 검수</strong>: 끝난 결과를 새 눈으로 점검</li>
+          <li><strong>대규모 사전 조사</strong>: 넓은 범위를 나눠 동시에 훑기</li>
+          <li><strong>서로 무관한 병렬 작업</strong></li>
+        </ul>
+      </div>
+    </div>
+    <h3>30초 판단표</h3>
+    <div class="tbl"><table>
+      <thead><tr><th>질문</th><th>예</th><th>아니오</th></tr></thead>
+      <tbody>
+        <tr><td>앞 단계의 결과를 계속 기억해야 하나?</td><td>단독</td><td>다음 질문</td></tr>
+        <tr><td>작업을 서로 무관한 조각으로 나눌 수 있나?</td><td>병렬 보조 에이전트</td><td>단독</td></tr>
+        <tr><td>틀리면 비용이 큰 결과물인가?</td><td>+ 리뷰어 1명</td><td>단독으로 끝</td></tr>
+        <tr><td>법적·대외적 책임이 따르나?</td><td>+ 사람 승인 단계</td><td>—</td></tr>
+      </tbody>
+    </table></div>
+    <p>Anthropic의 Claude Code 문서도 비슷하게 안내합니다. 에이전트 팀은 조율 비용과 토큰이 더 들고, 순서대로 하는 일이나 같은 파일을 고치는 일은 단일 세션이 낫다는 것입니다.</p>
+  </section>
+
+  <!-- 4 -->
+  <section id="s4">
+    <h2><span class="no">04</span>구축 3단계</h2>
+    <ol class="steps">
+      <li><b>하네스 세팅: 에이전트 한 명의 업무 환경 만들기</b>
+        에이전트를 늘리기 전에, 메인 에이전트가 읽을 업무 매뉴얼(<code>CLAUDE.md</code> 또는 <code>AGENTS.md</code>)을 씁니다. 지켜야 할 규칙, 쓸 도구, “원본 삭제 금지” 같은 안전 규칙을 먼저 정합니다. 이렇게 환경을 갖추는 일을 <strong>하네스 엔지니어링</strong>이라고 부릅니다.</li>
+      <li><b>2인 체제: 메인 + 핀포인트 리뷰어</b>
+        기획과 작성은 메인 에이전트가 끝까지 맡습니다. 다 끝난 뒤에만 독립된 리뷰어 1명(또는 <code>/code-review</code> 같은 검수 명령)을 불러 놓친 오류를 잡습니다.</li>
+      <li><b>루프: 기준을 통과할 때까지 스스로 고치게 하기</b>
+        사람이 매번 확인하는 대신, “검수 → 수정 → 재검수”를 자동으로 돌립니다. 끝없이 돌지 않도록 <strong>① 성공 기준</strong>, <strong>② 검증자</strong>, <strong>③ 최대 횟수(3~5회)</strong>를 미리 정해 둡니다.</li>
+    </ol>
+    <div class="flow"><span class="dark">메인 작성</span><i>→</i><span>리뷰어 검수</span><i>→ 통과? →</i><span class="dark">완료</span><i>/ 아니면 수정 후 재검수 (최대 3회)</i></div>
+  </section>
+
+  <!-- 5 -->
+  <section id="s5">
+    <h2><span class="no">05</span>바로 쓰는 템플릿</h2>
+    <p>아래 두 파일은 <a href="templates/">템플릿 폴더</a>에서 파일로도 받을 수 있습니다. [프로젝트명] 같은 괄호 부분만 바꿔 쓰세요.</p>
+
+    <div class="code">
+      <div class="head"><span>템플릿 A · 업무 지침 문서 <code>CLAUDE.md</code></span><button class="copy">복사</button></div>
+<pre><code># [프로젝트명] 업무 지침 (CLAUDE.md)
+
+## 1. 역할과 목표
+- 너는 이 프로젝트의 메인 에이전트다. 기획부터 작성, 기본 점검까지
+  하나의 맥락을 유지하며 처리한다.
+
+## 2. 작업 원칙
+- 맥락 유지: 같은 세션의 이전 대화와 결과를 이어받아 작업한다.
+- 길잡이 먼저: 자료를 찾을 때는 index.md 또는 docs/ 폴더를 먼저 본다.
+- 작게 확인: 수정할 때마다 그 부분이 제대로 되는지 먼저 확인한다.
+
+## 3. 안전 규칙
+- 원본 보존: 원본 데이터와 설정 파일은 직접 지우지 않는다.
+- 위험 명령: 삭제·초기화 명령은 실행 전에 사용자 승인을 받는다.
+- 오류 반복: 같은 오류가 3번 반복되면 멈추고 상황을 보고한다.
+
+## 4. 마무리 절차
+- 작업이 끝나면 바로 종료하지 말고, 검수 프롬프트로 남은 오류를 점검한다.</code></pre>
+    </div>
+
+    <div class="code">
+      <div class="head"><span>템플릿 B · 핀포인트 리뷰어 프롬프트</span><button class="copy">복사</button></div>
+<pre><code>너는 방금 완성된 결과물을 검증하는 독립 리뷰어다.
+작성 과정은 모른다고 가정하고, 제3자의 눈으로 아래를 점검하라.
+
+1. 요구사항: 요청한 기능과 예외 처리가 빠짐없이 들어갔는가?
+2. 오류: 빈 값, 경계값, 논리 오류 등 잠재적 문제가 있는가?
+3. 안전: 원본 훼손, 무단 삭제, 보안 누락의 위험이 있는가?
+
+[출력 형식]
+- 발견한 문제 (심각한 순서대로)
+- 문제 위치와 수정 제안
+- 종합 점수(10점 만점)와 통과/불통과</code></pre>
+    </div>
+  </section>
+
+  <!-- 6 -->
+  <section id="s6">
+    <h2><span class="no">06</span>안전 장치 3겹</h2>
+    <div class="grid3">
+      <div class="box"><div class="tag">1겹 · 격리</div><h4>따로 떨어진 작업 공간</h4><p>개인 문서·비밀번호·금융 정보가 있는 PC와 분리된 가상 서버나 실습 환경에서 돌립니다.</p></div>
+      <div class="box"><div class="tag">2겹 · 규칙 + 차단</div><h4>매뉴얼과 Hook</h4><p><code>CLAUDE.md</code>로 “삭제 금지”를 안내하고, Hook으로 위험 명령 자체를 막습니다. 안내는 무시될 수 있지만 차단은 무시되지 않습니다.</p></div>
+      <div class="box"><div class="tag">3겹 · 종료 조건</div><h4>루프 상한</h4><p>성공 기준과 최대 시도 횟수(3~5회)를 정해 시간과 비용이 새지 않게 합니다.</p></div>
+    </div>
+    <div class="note"><b>회사 자료</b> — 고객 정보, 미공개 실적, 출원 전 발명 내용은 회사가 승인한 AI 도구에만 넣으세요.</div>
+  </section>
+
+  <!-- 7 -->
+  <section id="s7">
+    <h2><span class="no">07</span>일반 업무에 적용하기</h2>
+    <p>기획·마케팅·영업 지원 같은 일은 <strong>빠른 처리, 낮은 비용, 일관된 맥락</strong>이 핵심입니다. 단독 에이전트 하나에 업무 지침과 스킬, 예약 실행을 붙이는 구성이면 충분합니다.</p>
+    <div class="flow"><span class="dark">단독 에이전트</span><i>+</i><span>업무 지침·양식</span><i>+</i><span>예약 실행</span><i>+</i><span>메신저 알림</span></div>
+    <div class="tbl"><table>
+      <thead><tr><th>사례</th><th>구축</th><th>운영</th></tr></thead>
+      <tbody>
+        <tr><th>아침 브리핑</th><td>메일·캘린더 커넥터 연결</td><td>매일 아침 정해진 시각에 메일과 일정을 훑어 핵심만 메신저로 보냄</td></tr>
+        <tr><th>견적서·제안서 초안</th><td>사업자 정보·단가표·양식을 스킬로 등록</td><td>“A사 맞춤 제안서” 한 줄 요청으로 양식에 맞춘 초안 생성</td></tr>
+        <tr><th>경쟁사 모니터링</th><td>웹 검색 도구 + 모니터링 스킬</td><td>6시간마다 확인하고 변동이 있을 때만 보고</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <!-- 8 -->
+  <section id="s8">
+    <h2><span class="no">08</span>IP 업무에 적용하기</h2>
+    <p>선행기술 조사, 명세서 작성, 침해 분석은 <strong>기술 맥락의 일관성</strong>과 <strong>엄격한 검증</strong>이 모두 필요합니다. 그래서 단독 메인 에이전트를 중심에 두고, 조사·검수·사람 승인을 필요한 지점에만 붙입니다.</p>
+    <div class="flow"><span class="dark">메인 에이전트</span><i>+</i><span>병렬 조사</span><i>+</i><span>IP 리뷰어</span><i>+</i><span>담당자 승인</span></div>
+
+    <h3>① 선행기술 조사·특허 맵 → 병렬 조사</h3>
+    <p>메인 에이전트가 조사 방향을 잡으면, 보조 에이전트들이 IPC 분류별로 문헌을 <strong>동시에</strong> 모읍니다. 서로 겹치지 않는 조사라 병렬이 효과를 봅니다. 마지막 합성은 메인 에이전트가 맡아 맥락을 하나로 묶습니다.</p>
+
+    <h3>② 명세서·청구항 작성 → 단독 전담</h3>
+    <p>기술 개요부터 청구범위까지 <strong>에이전트 하나가 끝까지</strong> 씁니다. 나눠 맡기면 청구항과 상세한 설명 사이에 용어가 어긋나는 전화 게임이 생기기 쉽습니다.</p>
+
+    <h3>③ 청구항 검토 → 리뷰어 루프</h3>
+    <ol>
+      <li>메인 에이전트가 쓴 청구항을 IP 리뷰어에게 넘깁니다.</li>
+      <li>리뷰어가 “신규성·진보성 부정 가능성 2건”처럼 지적합니다.</li>
+      <li>메인 에이전트가 고치고 다시 검수받습니다. 지적이 0건이 되거나 3회에 이르면 멈춥니다.</li>
+    </ol>
+
+    <h3>④ FTO 분석·출원 결재 → 사람 승인 단계</h3>
+    <p>법적 책임이 따르는 판단은 AI가 혼자 내보내지 못하게 합니다. 보고서가 검수를 통과해도 <strong>IP 팀장이 승인해야만</strong> 외부 사무소로 전달되도록 흐름을 짭니다(Human-in-the-Loop).</p>
+    <div class="flow"><span>초안 작성</span><i>→</i><span>리뷰어 루프</span><i>→</i><span class="dark">팀장 승인</span><i>→</i><span>외부 전달</span></div>
+
+    <div class="note"><b>책임의 위치</b> — AI의 검토 결과는 초안입니다. 특허성, 침해 여부에 대한 최종 판단은 변리사와 담당자가 합니다.</div>
+  </section>
+
+  <!-- 9 -->
+  <section id="s9">
+    <h2><span class="no">09</span>MS Copilot Studio · Power Automate로 구현하기</h2>
+    <p>Microsoft 365를 쓰는 회사라면 Copilot Studio로 에이전트의 역할과 지침을 만들고, Power Automate로 예약 실행·반복·승인을 연결하면 됩니다.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>개념</th><th>MS 기능</th><th>하는 일</th></tr></thead>
+      <tbody>
+        <tr><th>하네스</th><td>Copilot Studio 지침·지식</td><td>역할, 업무 매뉴얼, 사내 파일을 연결해 작업 환경과 규칙을 세팅</td></tr>
+        <tr><th>스킬·커넥터</th><td>Copilot 작업(Actions)·커스텀 커넥터</td><td>자주 쓰는 양식과 외부 API·DB 연동</td></tr>
+        <tr><th>예약 실행</th><td>Power Automate 예약 트리거</td><td>매일 아침 브리핑, 6시간 간격 모니터링</td></tr>
+        <tr><th>루프</th><td>Power Automate 조건 반복</td><td>검수 통과까지 수정 반복, 최대 횟수 제한</td></tr>
+        <tr><th>사람 승인</th><td>Power Automate 승인(Approvals)</td><td>Teams·Outlook으로 승인 카드 발송, 승인 시에만 다음 단계 진행</td></tr>
+      </tbody>
+    </table></div>
+    <h3>예: 아침 브리핑 흐름</h3>
+    <ol class="steps">
+      <li><b>예약 트리거</b>매일 08:30에 Power Automate 흐름이 시작됩니다.</li>
+      <li><b>수집</b>Outlook 메일과 캘린더에서 오늘 항목을 가져옵니다.</li>
+      <li><b>요약</b>Copilot 에이전트가 업무 지침에 따라 우선순위를 매겨 요약합니다.</li>
+      <li><b>알림</b>Teams 채팅으로 담당자에게 보냅니다.</li>
+    </ol>
+  </section>
+
+  <!-- 10 -->
+  <section id="s10">
+    <h2><span class="no">부록</span>용어와 출처</h2>
+    <div class="tbl"><table>
+      <tbody>
+        <tr><th>단독 에이전트</th><td>하나의 AI 세션이 처음부터 끝까지 맥락을 유지하며 일하는 방식</td></tr>
+        <tr><th>서브 에이전트</th><td>메인 에이전트가 필요할 때 불러 쓰는 보조 에이전트. 결과만 메인에게 돌려줌</td></tr>
+        <tr><th>에이전트 팀</th><td>역할을 나눈 여러 에이전트가 결과를 주고받으며 협업하는 방식</td></tr>
+        <tr><th>하네스</th><td>지침 문서·도구·안전 규칙 등 에이전트가 일하는 환경 전체</td></tr>
+        <tr><th>Hook</th><td>특정 동작 직전·직후에 자동 실행되는 검사. 위험 명령을 강제로 막을 수 있음</td></tr>
+        <tr><th>루프</th><td>성공 기준을 넘을 때까지 검수·수정을 반복하는 자동 흐름</td></tr>
+        <tr><th>Human-in-the-Loop</th><td>흐름 중간에 사람의 승인을 반드시 거치게 하는 설계</td></tr>
+      </tbody>
+    </table></div>
+    <h3>출처</h3>
+    <ul>
+      <li>챗대리의 AI연구소, 「<a href="https://www.youtube.com/watch?v=cIGRF-acSzs">멀티 에이전트 쓰지 마세요.. (실제 테스트 결과)</a>」, YouTube, 2026. 11. 4. — 1장의 실험 수치</li>
+      <li>Anthropic, <a href="https://code.claude.com/docs">Claude Code 문서</a> — 서브 에이전트·에이전트 팀·Hook 개념</li>
+    </ul>
+  </section>
+
+  <footer>
+    작성: (이름·소속) · 2026. 11. 6. · CC BY-NC 4.0<br>
+    이 글은 위 영상을 요약하고 작성자의 구축·활용 방안을 더해 생성형 AI의 도움으로 정리했으며, 사람이 검토했습니다. 오류 제보는 <a href="https://github.com/sonovman/ai-practice-handbooks/issues">Issues</a>로 남겨 주세요.
+  </footer>
+</main>
+</div>
+
+<script>
+  document.querySelectorAll('.copy').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var t = b.closest('.code').querySelector('pre').innerText;
+      navigator.clipboard.writeText(t).then(function () {
+        b.textContent = '복사됨'; setTimeout(function () { b.textContent = '복사'; }, 1500);
+      });
+    });
+  });
+  var links = [].slice.call(document.querySelectorAll('.side a'));
+  var io = new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+      if (e.isIntersecting) {
+        links.forEach(function (a) { a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id); });
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  document.querySelectorAll('main section[id]').forEach(function (s) { io.observe(s); });
+</script>
+</body>
+</html>

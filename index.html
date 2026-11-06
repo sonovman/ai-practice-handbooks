@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 실무 핸드북</title>
+<meta name="description" content="현업에서 직접 써 보고 효과를 본 AI 활용 기법과 가이드를 한 편씩 정리해 공개합니다.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="bar"><div class="bar-in">
+  <a class="brand" href="./">AI 실무 핸드북</a>
+  <div class="links">
+    <a href="#list">목록</a>
+    <a href="#about">소개</a>
+    <a href="https://github.com/sonovman/ai-practice-handbooks">GitHub ↗</a>
+  </div>
+</div></div>
+
+<div class="wrap">
+  <div class="eyebrow">AI-Assisted Practice Handbooks</div>
+  <h1>현업에서 바로 쓰는<br>AI 기법 모음</h1>
+  <p class="lead">직접 써 보고 효과를 본 AI 활용법을 한 편씩 정리해 공개합니다. 모든 편은 화면으로 읽을 수 있고, 템플릿과 자료는 내려받아 바로 쓸 수 있습니다.</p>
+
+  <div class="stats" id="stats"></div>
+
+  <section id="list">
+    <div class="chips" id="chips"></div>
+    <div id="books"></div>
+  </section>
+
+  <section id="about">
+    <h2>이 사이트에 대하여</h2>
+    <div class="grid2">
+      <div class="box"><h4>읽는 법</h4><p>각 편은 독립적으로 읽을 수 있습니다. 처음이라면 번호가 낮은 기초편부터 권합니다. 인쇄가 필요하면 본문에서 Ctrl+P → “PDF로 저장”을 쓰세요.</p></div>
+      <div class="box"><h4>질문과 제보</h4><p>내용 오류나 질문은 <a href="https://github.com/sonovman/ai-practice-handbooks/issues">GitHub Issues</a>에 남겨 주세요. 수정되면 각 편의 판 번호가 올라갑니다.</p></div>
+    </div>
+  </section>
+
+  <footer>
+    본문 CC BY-NC 4.0 (출처 표시 · 비영리) · 각 편은 생성형 AI의 도움을 받아 작성하고 사람이 검토했습니다.<br>
+    원본과 자료: <a href="https://github.com/sonovman/ai-practice-handbooks">github.com/sonovman/ai-practice-handbooks</a>
+  </footer>
+</div>
+
+<script src="catalog.js"></script>
+<script>
+(function () {
+  var data = window.CATALOG || [];
+  var pub = data.filter(function (b) { return b.status === 'published'; });
+  var cats = [];
+  data.forEach(function (b) { if (cats.indexOf(b.category) < 0) cats.push(b.category); });
+  var latest = pub.map(function (b) { return b.date; }).sort().pop() || '';
+
+  function esc(s) { return String(s || '').replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function fmt(d) { return d ? d.replace(/-0?/g, '. ').replace(/^(\d+)\. /, '$1. ') + '.' : ''; }
+
+  document.getElementById('stats').innerHTML =
+    '<div><b>' + pub.length + '</b><span>공개된 편</span></div>' +
+    '<div><b>' + cats.length + '</b><span>분야</span></div>' +
+    '<div><b>' + esc(fmt(latest)) + '</b><span>최근 업데이트</span></div>';
+
+  var chips = document.getElementById('chips');
+  ['전체'].concat(cats).forEach(function (c, i) {
+    var b = document.createElement('button');
+    b.className = 'chip' + (i === 0 ? ' on' : '');
+    b.textContent = c;
+    b.onclick = function () {
+      [].forEach.call(chips.children, function (x) { x.classList.remove('on'); });
+      b.classList.add('on');
+      render(c === '전체' ? null : c);
+    };
+    chips.appendChild(b);
+  });
+
+  function render(cat) {
+    document.getElementById('books').innerHTML = data
+      .filter(function (b) { return !cat || b.category === cat; })
+      .map(function (b) {
+        var draft = b.status !== 'published';
+        var meta = draft ? '' :
+          '<div class="meta">' +
+            (b.reader ? '<b>독자</b><span>' + esc(b.reader) + '</span>' : '') +
+            '<b>판</b><span>' + esc(b.version) + ' · ' + esc(fmt(b.date)) + (b.length ? ' · ' + esc(b.length) : '') + '</span>' +
+          '</div>';
+        var links = (b.links || []).map(function (l) {
+          return '<a class="btn' + (l.primary ? ' primary' : '') + '" href="' + esc(l.href) + '">' + esc(l.label) + '</a>';
+        }).join('');
+        return '<article class="book' + (draft ? ' draft' : '') + '">' +
+          '<div class="book-no">' + esc(b.no) + '</div>' +
+          '<div class="book-body">' +
+            '<div class="eyebrow">' + esc(b.category) + (draft ? ' · 준비 중' : '') + '</div>' +
+            '<h3>' + esc(b.title) + '</h3>' +
+            (b.subtitle && !draft ? '<p class="book-sub">' + esc(b.subtitle) + '</p>' : '') +
+            '<p>' + esc(b.summary) + '</p>' + meta +
+            (links ? '<div class="btns">' + links + '</div>' : '') +
+          '</div></article>';
+      }).join('');
+  }
+  render(null);
+})();
+</script>
+<noscript><p class="wrap">목록을 보려면 자바스크립트를 켜 주세요.</p></noscript>
+</body>
+</html>
