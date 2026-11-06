@@ -152,6 +152,37 @@ pre code { background: none; padding: 0; font-size: inherit; }
 .flow span.dark { background: var(--invert-bg); color: var(--invert-text); }
 .flow i { font-style: normal; color: var(--faint); }
 
+/* ── 계단 (단계적 진화) ───────────────────── */
+.stairs { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; align-items: end; margin: 28px 0 12px; }
+.stairs a { display: flex; flex-direction: column; justify-content: flex-end; gap: 2px; text-decoration: none; border-radius: 10px 10px 0 0; padding: 12px 10px; background: var(--surface); border: 1px solid var(--line); border-bottom: 2px solid var(--strong); min-height: 60px; }
+.stairs a:nth-child(1) { height: 84px; }
+.stairs a:nth-child(2) { height: 116px; }
+.stairs a:nth-child(3) { height: 148px; background: var(--invert-bg); color: var(--invert-text); border-color: var(--invert-bg); }
+.stairs a:nth-child(4) { height: 180px; background: var(--invert-bg); color: var(--invert-text); border-color: var(--invert-bg); }
+.stairs a:nth-child(5) { height: 212px; background: var(--invert-bg); color: var(--invert-text); border-color: var(--invert-bg); }
+.stairs .n { font-size: 11px; letter-spacing: .1em; opacity: .6; font-weight: 600; }
+.stairs b { font-size: 15px; line-height: 1.3; }
+.stairs small { font-size: 12px; opacity: .7; line-height: 1.4; }
+@media (max-width: 560px) {
+  .stairs { grid-template-columns: 1fr; }
+  .stairs a { height: auto !important; min-height: 0; border-radius: 10px; }
+}
+
+/* ── 그래프 (작업 흐름도) ─────────────────── */
+.graph { margin: 24px 0; display: grid; gap: 0; }
+.graph .node { border: 1px solid var(--strong); border-radius: 12px; padding: 14px 18px; background: var(--bg); display: grid; grid-template-columns: 42px 1fr; gap: 4px 12px; align-items: start; }
+.graph .node .id { font-size: 12px; font-weight: 700; letter-spacing: .06em; color: var(--faint); padding-top: 3px; }
+.graph .node b { font-size: 15.5px; }
+.graph .node p { grid-column: 2; margin: 0; font-size: 13.5px; color: var(--sub); line-height: 1.6; }
+.graph .node.dark { background: var(--invert-bg); color: var(--invert-text); border-color: var(--invert-bg); }
+.graph .node.dark p, .graph .node.dark .id { color: inherit; opacity: .7; }
+.graph .node.end { border-style: dashed; }
+.graph .edge { position: relative; height: 38px; margin-left: 38px; border-left: 1.5px solid var(--strong); }
+.graph .edge::after { content: ""; position: absolute; left: -5.5px; bottom: 0; border: 5px solid transparent; border-top: 7px solid var(--strong); border-bottom: 0; }
+.graph .edge span { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); font-size: 12.5px; color: var(--faint); white-space: nowrap; }
+.graph .loop { margin: 0 0 0 38px; border-left: 1.5px dashed var(--faint); padding: 10px 0 10px 18px; font-size: 13px; color: var(--sub); }
+.graph .loop b { color: var(--text); }
+
 /* ── 표지 목록 ────────────────────────────── */
 .stats { display: grid; grid-template-columns: repeat(3, 1fr); margin: 36px 0 8px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
 .stats div { padding: 18px 0; }

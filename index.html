@@ -58,7 +58,7 @@
 
   document.getElementById('stats').innerHTML =
     '<div><b>' + pub.length + '</b><span>공개된 편</span></div>' +
-    '<div><b>' + cats.length + '</b><span>분야</span></div>' +
+    '<div><b>' + pub.map(function (b) { return b.category; }).filter(function (c, i, a) { return a.indexOf(c) === i; }).length + '</b><span>분야</span></div>' +
     '<div><b>' + esc(fmt(latest)) + '</b><span>최근 업데이트</span></div>';
 
   var chips = document.getElementById('chips');

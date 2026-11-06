@@ -56,8 +56,25 @@ window.CATALOG = [
     ]
   },
   {
-    id: "excel-analysis",
+    id: "engineering-evolution",
     no: "03",
+    category: "에이전트",
+    title: "AI에게 일을 시키는 5가지 방법의 진화",
+    subtitle: "프롬프트 엔지니어링에서 하네스·루프·그래프 엔지니어링까지",
+    summary: "AI 활용법이 프롬프트 → 컨텍스트 → 하네스 → 루프 → 그래프로 어떻게 발전했는지 비개발자 눈높이로 정리하고, 청구항 대비 분석 업무에 다섯 단계를 적용한 워크플로우와 템플릿 8종을 제공합니다.",
+    reader: "“하네스 엔지니어링”이 궁금한 비개발 실무자, IP 분석 담당자",
+    version: "1.0",
+    date: "2026-11-06",
+    length: "읽기 약 25분",
+    status: "published",
+    links: [
+      { label: "화면으로 읽기", href: "engineering-evolution/", primary: true },
+      { label: "템플릿 내려받기", href: "engineering-evolution/templates/" }
+    ]
+  },
+  {
+    id: "excel-analysis",
+    no: "04",
     category: "데이터",
     title: "엑셀 데이터를 AI로 분석하고 그래프까지 받기",
     subtitle: "준비 중",
