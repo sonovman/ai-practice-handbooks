@@ -26,6 +26,7 @@
 | 18 | AI 티 지우는 윤문 스킬 — 만들고, 설치하고, 점검까지 | [화면](https://sonovman.github.io/ai-practice-handbooks/ai-polish/) | [템플릿](ai-polish/templates/) |
 | 19 | Slow Think와 AI 회의 — 정확도를 올리는 생각 설계 | [화면](https://sonovman.github.io/ai-practice-handbooks/slow-think/) | [템플릿](slow-think/templates/) |
 | 20 | 경영진용 논문·보고서·판례 요약 — 추출, 점검, 결론, 검증 | [화면](https://sonovman.github.io/ai-practice-handbooks/exec-brief/) | [템플릿](exec-brief/templates/) |
+| 21 | REA로 역공학 하기 — 근거로 이해하고, 적법 범위에서 재구현 | [화면](https://sonovman.github.io/ai-practice-handbooks/rea-reverse-engineering/) | [템플릿](rea-reverse-engineering/templates/) |
 
 ## 폴더 구성
 
@@ -57,6 +58,7 @@ ai-practice-handbooks/
 ├── ai-polish/          18편 (templates/ starter 작업 폴더·upload 웹 앱용 스킬·polish_check.py·ollama_polish.py·시범 자료, downloads/ ZIP)
 ├── slow-think/         19편 (templates/ starter 작업 폴더·스킬 4개·prompts·meeting_pack.py·evidence_check.py·시범 자료, upload/ 웹 앱용, downloads/ ZIP)
 ├── exec-brief/         20편 (templates/ starter 작업 폴더·스킬 2개·분야별 틀·관할별 판례 구조·용어집·evidence/cite/term_check·시범 자료, upload/ 웹 앱용, downloads/ ZIP)
+├── rea-reverse-engineering/  21편 (templates/ starter 작업 폴더·reverse-engineer 스킬·scope_check·evidence_log·자작 바이너리 시범, upload/ 웹 앱용, downloads/ ZIP)
 └── data/               공용 자료
 ```
 

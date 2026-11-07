@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>REA로 역공학 하기</title>
+<meta name="description" content="오픈소스 MCP 도구 REA(Reverse Engineer Anything)를 Claude Code에 연결해, 내가 만든·오픈소스·분석 권한이 있는 프로그램의 동작 원리를 근거 기반으로 파악하고 적법 범위에서 재구현하는 방법. 저작권법 역분석 요건, 적법 범위 점검 도구, 자작 바이너리 시범까지.">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<div class="bar"><div class="bar-in">
+  <a class="brand" href="../">AI 실무 핸드북</a>
+  <div class="links">
+    <a href="templates/">템플릿</a>
+    <a href="https://github.com/sonovman/ai-practice-handbooks">GitHub ↗</a>
+  </div>
+</div></div>
+
+<div class="doc">
+  <aside class="side">
+    <div class="label">차례</div>
+    <ol>
+      <li><a href="#s0">한 줄 결론</a></li>
+      <li><a href="#s1">1. REA란 무엇이고 무엇이 아닌가</a></li>
+      <li><a href="#s2">2. 가장 먼저 — 적법한 범위인가</a></li>
+      <li><a href="#s3">3. 처음 접근과 바뀐 점</a></li>
+      <li><a href="#s4">4. 설치와 연결</a></li>
+      <li><a href="#s5">5. 작동 원리 — 근거 순환</a></li>
+      <li><a href="#s6">6. 대상별 분석</a></li>
+      <li><a href="#s7">7. 시범 — 내 바이너리 복원</a></li>
+      <li><a href="#s8">8. Antigravity에서 구축</a></li>
+      <li><a href="#s9">9. 다른 AI 도구에서</a></li>
+      <li><a href="#s10">10. 주의할 점</a></li>
+      <li><a href="#s11">부록 · 출처</a></li>
+    </ol>
+  </aside>
+
+<main>
+  <div class="eyebrow">핸드북 21 · 개발 도구</div>
+  <h1>REA로 역공학 하기 — 근거로 이해하고, 적법 범위에서 재구현</h1>
+  <p class="lead">소스 코드가 없는 프로그램의 동작 원리를, 디컴파일러(Ghidra·IDA·Hopper)를 Claude Code에 연결해 주는 오픈소스 MCP 도구 <strong>REA(Reverse Engineer Anything)</strong>로 파악합니다. 이 편은 REA를 <strong>내가 만든 프로그램, 역공학을 허용하는 오픈소스, 분석 권한이 있는 대상</strong>에 쓰는 적법한 사용을 중심에 둡니다. 보호장치 우회나 상용 앱 복제는 다루지 않고, 어디까지가 되는지의 경계를 저작권법 조문과 함께 짚습니다.</p>
+  <div class="meta">
+    <b>독자</b><span>레거시 시스템·독자 파일 포맷에서 내 데이터를 꺼내야 하는 개발자, 호환성·보안 연구·교육 목적으로 바이너리를 분석하려는 사람, IP 실무자</span>
+    <b>분량</b><span>읽기 약 30분 · 설치까지 약 15분 · 템플릿(적법 범위 점검 도구 · 근거 로그 도구 · 스킬 · 프롬프트 4종 · 자작 바이너리 시범)</span>
+    <b>판</b><span>1.0 · 2026. 11. 8.</span>
+  </div>
+
+  <section id="s0">
+    <div class="key">
+      <div class="eyebrow">한 줄 결론</div>
+      <p style="font-size:19px;font-weight:600;line-height:1.6;margin:8px 0 10px">먼저 “해도 되는 대상·목적인가”를 점검하고, 그다음 “근거를 남기며 분석”합니다 — 역공학의 위험은 기술이 아니라 권한과 범위에 있습니다.</p>
+      <p style="opacity:.75;font-size:15px">REA는 새 디컴파일 기술이 아니라 기존 도구를 AI 에이전트에 연결하는 레이어입니다. 원본 소스 코드를 복원하지도 않습니다. 그래서 이 편은 설치법만큼이나 ① 적법 범위 점검(저작권법 제101조의3·4)과 ② 추측과 근거를 구분하는 규율에 무게를 둡니다.</p>
+    </div>
+    <div class="note"><b>무엇을 확인했나</b> — 도구 사실은 REA 저장소·스킬 문서로, 법 조문은 저작권법 제101조의3·4로 확인했습니다. 적법 범위 점검 도구와 근거 로그 도구는 시험 10개로 동작을 확인했고, 7장 시범은 <b>제가 직접 작성해 컴파일한 바이너리</b>를 표준 도구(gcc·objdump·nm)로 실제 분석해 재구현·검증까지 돌린 결과입니다(REA가 자동화하는 과정을 손으로 보인 것).</div>
+  </section>
+
+  <!-- 1 -->
+  <section id="s1">
+    <h2><span class="no">01</span>REA란 무엇이고 무엇이 아닌가</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>이다</th><th>아니다</th></tr></thead>
+      <tbody>
+        <tr><td>Ghidra·IDA·Hopper 같은 기존 디컴파일러와 브라우저·앱 검사 도구를 AI 에이전트가 호출하도록 연결하는 <b>오픈소스 MCP 레이어</b>(morluto/rea, MIT)</td><td>새로운 디컴파일 엔진 — 네이티브 바이너리 분석에는 외부 디컴파일러 설치가 필요</td></tr>
+        <tr><td>의사코드·어셈블리·메모리 상수·호출 관계·IPC 채널·네트워크 요청을 <b>근거(Evidence)</b>로 모아 주는 도구</td><td>원본 소스 복원 도구 — 변수명·주석·파일 구조는 복원하지 못함</td></tr>
+        <tr><td><b>로컬에서만</b> 실행 — 대상 파일을 외부 서버에 올리지 않음</td><td>자동 복제기 — 스킬 문서도 “원본 소스 복원이나 앱 자동 복제를 주장하지 않는다”고 명시</td></tr>
+        <tr><td>조사 → 해석 → 재구현 → 검증의 순환을 돕는 에이전트 워크플로</td><td>만능 — UI 디자인 복제는 별도 작업, 원격 백엔드·암호화 실시간 피드는 대상 아님</td></tr>
+      </tbody>
+    </table></div>
+    <p class="cap">지원 에이전트는 Claude Code·Codex·Cursor·Gemini CLI·GitHub Copilot CLI·Antigravity 등 로컬에서 도구를 실행하는 CLI형입니다. 바닐라 Claude Code도 개별 역공학 툴을 직접 쓰면 비슷한 분석이 가능하므로, 단순한 대상에서는 REA 유무의 차이가 크지 않을 수 있습니다.</p>
+  </section>
+
+  <!-- 2 -->
+  <section id="s2">
+    <h2><span class="no">02</span>가장 먼저 — 적법한 범위인가</h2>
+    <p>역공학은 그 자체로 불법이 아닙니다. 호환성 확보, 보안 연구, 내 데이터 이전, 교육, 소프트웨어 보존은 정당한 목적입니다. 다만 <b>대상·목적·방법·권한</b>이 범위를 벗어나면 저작권법·이용약관 위반이 됩니다. 분석을 시작하기 전에 이 점검을 먼저 합니다.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>구분</th><th>해도 되는 쪽 (GREEN)</th><th>하면 안 되는 쪽 (RED)</th></tr></thead>
+      <tbody>
+        <tr><th>대상</th><td>내가 만든 것 · 역공학 허용 라이선스의 오픈소스 · 소유자 허락·계약 권한 · 정당 보유 프로그램</td><td>권한 없는 상용 프로그램, 내 소유가 아닌 서버·계정</td></tr>
+        <tr><th>목적</th><td>호환성 확보 · 보안 연구 · 내 데이터 이전 · 교육·학습 · 상호운용</td><td>상용 복제·재판매, 무단 기능 탈취</td></tr>
+        <tr><th>방법</th><td>로컬 정적 분석, 목적에 필요한 부분으로 한정</td><td>DRM·복사방지·라이선스 인증 등 기술적 보호조치 우회</td></tr>
+        <tr><th>결과물</th><td>아이디어·원리·포맷을 내 코드로 새로 구현</td><td>원본과 표현이 실질적으로 유사한 프로그램 배포·판매, 추출 코드·리소스 제3자 제공</td></tr>
+      </tbody>
+    </table></div>
+    <div class="note"><b>저작권법 두 조문 (대한민국)</b><br>
+    · <b>제101조의3 제1항 제6호</b> — 정당한 권한으로 이용 중인 프로그램의 기초 <b>아이디어·원리</b>를 확인하려고 기능을 조사·연구·시험하는 복제는 허용될 수 있습니다.<br>
+    · <b>제101조의4(프로그램코드역분석)</b> — <b>호환성 확보</b> 목적의 역분석은 ① 호환에 필요한 정보를 다른 방법으로 쉽게 얻을 수 없고(보충성) ② 호환에 필요한 부분에 한할 때(상당성) 저작권자 허락 없이 가능합니다. 그러나 얻은 정보로 <b>표현이 실질적으로 유사한 프로그램을 개발·배포·판매</b>하거나 제3자에게 제공하면 안 됩니다(제2항).<br>
+    보호되는 것은 <b>표현</b>(소스·리소스·그래픽)이고, <b>아이디어·원리·사실</b>(계산 규칙, 파일 바이트 배치, 프로토콜)은 배우고 다시 구현할 수 있습니다. 미국은 DMCA가 보호조치 무력화를 금지하되 상호운용 목적의 좁은 예외를 둡니다. 이용약관(EULA)이 역공학을 금지하기도 하니 별도로 확인합니다.</div>
+    <p>템플릿의 <code>scope_check.py</code>가 이 점검을 질문으로 만들어 GREEN/AMBER/RED로 답합니다(2장 끝 예시는 7장 참조). 이 편과 스킬은 <b>GREEN일 때만</b> 진행하도록 설계되어 있습니다.</p>
+  </section>
+
+  <!-- 3 -->
+  <section id="s3">
+    <h2><span class="no">03</span>처음 접근과 바뀐 점</h2>
+
+    <div class="note"><b>① “무엇이든 역공학” → 적법 범위를 먼저 점검</b> — 도구 이름(Reverse Engineer Anything)은 “무엇이든”이지만, 실제로 해도 되는 것은 대상·목적·권한이 맞을 때뿐입니다. 그래서 설치보다 앞에 적법 범위 점검(2장)을 두고, 스킬이 새 대상을 만나면 <code>scope_check.py</code>를 돌려 GREEN이 아니면 멈추게 했습니다. 원고의 상용 앱 복제 사례(Notion·TradingView·음성앱 클론 등)는 ‘사용 사례’가 아니라 ‘넘지 말아야 할 선’(제101조의4 제2항)으로 다룹니다.</div>
+
+    <div class="note"><b>② “소스 코드를 복원” → 동작 원리와 근거</b> — 디컴파일 결과를 원본 소스처럼 여기기 쉽지만, REA도 원본 변수명·주석·구조는 복원하지 못합니다. 돌아오는 것은 의사코드·어셈블리·근거입니다. 그래서 목표를 ‘소스 복원’이 아니라 ‘동작 규칙을 근거와 함께 이해하고 내 코드로 새로 구현’으로 잡았습니다.</div>
+
+    <div class="note"><b>③ “한 번에 앱 전체 분석” → 한 기능 단위</b> — 앱 전체를 한 번에 복제해 달라고 하면 성공률이 낮고 환각이 늘어납니다. “검색 로직”, “% 연산”, “파일 헤더 파싱”처럼 하나의 기능으로 좁히면 디컴파일러 추적이 정확해집니다. 프롬프트와 스킬을 모두 단일 기능 단위로 구성했습니다.</div>
+
+    <div class="note"><b>④ “근거 없이 설명” → 근거와 미확인의 구분</b> — AI 에이전트는 수집한 근거를 잘못 해석하기도 합니다(예: 런타임에 동적으로 만들어지는 IPC 채널명을 정적 분석으로 잘못 읽어 통신 구조를 다르게 재설계). REA는 근거를 ‘통과/실패/미확인(Evidence v2)’으로 구분해 돌려줍니다. 이 규율을 <code>evidence_log.py</code>로 옮겨, 모든 주장에 위치(주소·라인)를 붙이고 확인 못 한 것은 ‘미확인’으로 남기게 했습니다.</div>
+
+    <div class="note"><b>⑤ “설치 한 줄이면 끝” → 디컴파일러·Node·승인</b> — <code>npx rea-agents setup</code> 한 줄로 MCP는 붙지만, 네이티브 바이너리 분석에는 Ghidra/Hopper/IDA가 따로 필요하고 Node.js 22.19+/24.11+가 전제입니다. 또 REA는 설정을 바꾸기 전에 매번 승인을 묻고, 동적 분석·브라우저 관찰은 기본 꺼짐입니다. 설치 장에 이 전제와 승인 절차를 함께 넣었습니다.</div>
+
+    <div class="note"><b>⑥ “REA가 있어야 가능” → 바닐라 에이전트와의 차이 인정</b> — 최신 Claude Code는 REA 없이도 개별 역공학 툴이나 스크린샷 분석으로 비슷한 수준을 낼 수 있어, 단순한 대상에서는 차이가 크지 않을 수 있습니다. REA의 값어치는 여러 도구를 한 워크플로로 묶고 근거를 정리해 주는 데 있다고 적었습니다.</div>
+
+    <div class="note"><b>⑦ “결과물은 자유롭게 사용” → 분석과 사용을 나눠 점검</b> — 분석이 적법해도 그 결과로 유사 프로그램을 만들어 배포하면 위법일 수 있습니다(제101조의4 제2항). 그래서 <code>scope_check.py</code>가 분석 단계뿐 아니라 ‘결과물의 사용·배포 계획’까지 묻고, GREEN이어도 사용 단계를 다시 점검하라고 안내합니다.</div>
+  </section>
+
+  <!-- 4 -->
+  <section id="s4">
+    <h2><span class="no">04</span>설치와 연결</h2>
+    <ol class="steps">
+      <li><b>Node 확인</b>Node.js 22.19+ 또는 24.11+ (<code>node --version</code>). 지원: macOS 12+, Ubuntu 24.04+, Fedora 41+, Arch(64-bit). Windows는 WSL 등 Linux 환경을 권합니다.</li>
+      <li><b>REA 설치</b>터미널에서 <code>npx rea-agents setup</code> → 에이전트 목록에서 <b>Claude Code</b> 선택(여럿 선택 가능).</li>
+      <li><b>승인</b>REA가 MCP 서버와 역공학 스킬 지침을 등록하겠다고 하면 바뀌는 내용을 확인하고 승인합니다. 설정은 덧붙이기 방식이고 먼저 백업됩니다.</li>
+      <li><b>디컴파일러</b>네이티브 바이너리(.exe/.dll/ELF/Mach-O)는 <b>Ghidra</b>(무료·오픈소스) 또는 <b>Hopper</b>(설정 중 승인하면 자동 설치 안내), 보유 시 <b>IDA Pro</b>. JS·Electron·웹·HAR은 디컴파일러 없이도 됩니다.</li>
+      <li><b>점검·재시작</b><code>npx rea-agents doctor</code>로 연결을 확인하고 Claude Code를 재시작합니다. <code>/mcp</code> 또는 도구 목록에 REA가 보이면 완료.</li>
+    </ol>
+<div class="code">
+  <div class="head"><span>터미널</span><button class="copy">복사</button></div>
+<pre><code>node --version              # 22.19+ 또는 24.11+
+npx rea-agents setup        # Claude Code 선택 → 승인
+npx rea-agents doctor       # 연결 점검
+# 바이너리 분석용 디컴파일러(Ghidra 등)는 setup 안내에 따라 연결</code></pre>
+</div>
+    <div class="note"><b>안전 기본값</b> — 모든 분석은 로컬에서 실행되고 대상 파일은 외부로 올라가지 않습니다. 파일 접근은 승인한 경로에서만, 브라우저 관찰은 기본 꺼짐이며 루프백·승인 오리진에서 수동 관찰만 합니다(페이지 스크립트 실행·클릭·이동 없음). REA는 보안 샌드박스가 아니므로, 신뢰할 수 있는 대상만 분석합니다.</div>
+  </section>
+
+  <!-- 5 -->
+  <section id="s5">
+    <h2><span class="no">05</span>작동 원리 — 근거 순환</h2>
+    <div class="graph">
+      <div class="node end"><span class="id">0 점검</span><b>scope_check — 적법 범위</b><p>GREEN일 때만 진행</p></div>
+      <div class="edge"><span>REA MCP 도구 호출(로컬)</span></div>
+      <div class="node"><span class="id">1 조사</span><b>Inspect — 구조·함수·상수·IPC·요청</b><p>디컴파일러·정적 분석으로 근거 수집</p></div>
+      <div class="edge"><span>근거에 위치를 붙여 기록</span></div>
+      <div class="node"><span class="id">2 해석</span><b>Explain — 입력에 따른 분기·계산</b><p>추측은 ‘미확인’으로 분리</p></div>
+      <div class="edge"><span>아이디어·원리만, 표현 복사 금지</span></div>
+      <div class="node"><span class="id">3 재구현</span><b>Rebuild — 내 스택의 독립 코드</b><p>목적에 필요한 부분만</p></div>
+      <div class="edge"><span>원본과 대조</span></div>
+      <div class="node dark"><span class="id">4 검증</span><b>Verify — 통과/실패/미확인</b><p>실패면 1로 돌아가 근거 재수집</p></div>
+    </div>
+    <p>REA 스킬은 이 순환과 함께 <b>근거(Evidence) 규율</b>을 둡니다. 모든 “이렇게 동작한다”에는 위치(함수 주소, 소스 <code>file:line:col</code>, .rodata 오프셋, HAR 엔트리)가 있어야 하고, 확인 못 한 것은 미확인으로 남깁니다. 상수는 바이트 그대로 적고 해석을 따로 답니다(예: <code>9a99…693f</code> → double <code>0.003125</code>). 템플릿의 <code>evidence_log.py</code>가 이 기록을 돕습니다.</p>
+  </section>
+
+  <!-- 6 -->
+  <section id="s6">
+    <h2><span class="no">06</span>대상별 분석 (적법 범위 전제)</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>대상</th><th>REA 접근</th><th>근거로 받는 것</th><th>적법 사용 예</th></tr></thead>
+      <tbody>
+        <tr><th>네이티브 바이너리</th><td>Ghidra·IDA·Hopper 연결, 의사코드·어셈블리·xref</td><td>어셈블리, 의사코드, 메모리 상수, 호출 관계</td><td>내가 만든 바이너리의 계산 규칙 복원, 소유한 레트로 게임의 수식 학습</td></tr>
+        <tr><th>Electron/JS 앱 (.asar)</th><td><code>analyze-javascript-application &lt;경로&gt; --json</code></td><td>preload/main 소스 위치, IPC 채널명, 모듈 의존성</td><td>내가 만든 Electron 앱 구조 파악, 오픈소스 앱(라이선스 확인) 학습</td></tr>
+        <tr><th>Android APK</th><td>JADX 계열 연동</td><td>디컴파일 Java/Kotlin, 매니페스트, 권한</td><td>내 앱의 난독화 전 동작 확인, 허가된 보안 연구</td></tr>
+        <tr><th>파일 포맷</th><td>바이너리·문자열 분석</td><td>헤더·필드 배치, 인코딩</td><td><b>내 데이터</b>가 든 독자 포맷에서 데이터 꺼내 이전</td></tr>
+        <tr><th>웹앱 / HAR</th><td><code>inspect_web_page</code>(수동), <code>.har</code></td><td>엔드포인트·헤더·페이로드 스키마, JS 소스 범위</td><td>내 웹앱 디버깅, 공개 API 호환 클라이언트</td></tr>
+      </tbody>
+    </table></div>
+    <p class="cap">가장 깔끔하게 적법한 사용은 ‘내 데이터 이전’입니다. 문서가 사라진 독자 파일 포맷에서 내 데이터를 꺼내는 파서를 만드는 일은 호환성·상호운용의 전형입니다(<a href="templates/starter/prompts/04-data-portability.md">04 프롬프트</a>). 암호화가 걸려 있으면 우회하지 않고 거기서 멈춥니다.</p>
+  </section>
+
+  <!-- 7 -->
+  <section id="s7">
+    <h2><span class="no">07</span>시범 — 내 바이너리의 계산 규칙 복원</h2>
+    <p>제가 직접 작성한 작은 C 프로그램(<a href="templates/sample/panning.c">panning.c</a>)을 컴파일한 뒤, ‘소스가 없다고 가정’하고 표준 도구(nm·objdump)로 분석해 규칙을 복원하고 검증했습니다. REA가 자동화하는 과정을 손으로 보인 것이며, 전적으로 자작 바이너리라 적법 범위 안입니다.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>단계</th><th>근거</th></tr></thead>
+      <tbody>
+        <tr><th>1. 함수 찾기 (nm)</th><td><code>compute_pan @ 0x1169</code> 심볼 확인</td></tr>
+        <tr><th>2. 어셈블리 (objdump)</th><td><code>subsd</code>(빼기) → <code>mulsd</code>(곱하기) → <code>comisd</code>(비교/클램프) 흐름</td></tr>
+        <tr><th>3. 상수 (.rodata)</th><td>바이트 <code>…7440</code>→<code>320.0</code>, <code>…693f</code>→<code>0.003125</code>, <code>…f03f</code>→<code>1.0</code>, <code>…f0bf</code>→<code>-1.0</code></td></tr>
+        <tr><th>4. 규칙 복원</th><td><code>compute_pan(x) = clamp((x − 320.0) × 0.003125, −1.0, 1.0)</code> (0.003125 = 1/320)</td></tr>
+        <tr><th>5. 검증</th><td>복원한 파이썬 함수를 원본 실행 결과와 대조 — 5개 입력 <b>모두 일치(통과)</b></td></tr>
+      </tbody>
+    </table></div>
+<div class="code">
+  <div class="head"><span>objdump로 본 compute_pan (일부) + 복원 결과</span><button class="copy">복사</button></div>
+<pre><code>1175: subsd  0xeab(%rip),%xmm0   # 320.0 를 뺌
+117d: mulsd  0xeab(%rip),%xmm0   # 0.003125 를 곱함
+118d: comisd %xmm0,%xmm1         # -1.0 / 1.0 로 클램프
+
+# .rodata 상수를 double로 해석
+000000000000f03f = 1.0      000000000000f0bf = -1.0
+0000000000007440 = 320.0    9a9999999999693f = 0.003125
+
+# 복원한 파이썬 (reconstructed.py)
+def compute_pan(x):
+    pan = (x - 320.0) * 0.003125
+    return max(-1.0, min(1.0, pan))
+
+# 검증 (verify.py) — 원본과 대조
+x=  0  복원 -1.0000  원본 -1.0000  일치
+x=639  복원 +0.9969  원본 +0.9969  일치
+전체: 통과</code></pre>
+</div>
+    <p class="cap">전체 출력은 <a href="templates/sample/demo-output.txt">demo-output.txt</a>, 복원·검증 코드는 <a href="templates/sample/reconstructed.py">reconstructed.py</a>·<a href="templates/sample/verify.py">verify.py</a>, 근거 로그는 <a href="templates/sample/report-evidence.md">report-evidence.md</a>에 있습니다. 근거 로그에는 ‘호출자가 좌표를 어떻게 넘기는지’를 <b>미확인</b>으로 남겼습니다 — 추적하지 않은 것을 아는 척하지 않기 위해서입니다.</p>
+    <h3>적법 범위 점검 시범</h3>
+    <div class="tbl"><table>
+      <thead><tr><th>상황</th><th>판정</th></tr></thead>
+      <tbody>
+        <tr><td>내가 만든 프로그램, 교육 목적 (<a href="templates/sample/report-scope-own.txt">scope-own</a>)</td><td><b>GREEN</b> — 기록 남기고 진행</td></tr>
+        <tr><td>호환 목적이나 정보를 쉽게 얻을 수 있고 범위도 넓음 (<a href="templates/sample/report-scope-interop.txt">scope-interop</a>)</td><td><b>AMBER</b> — 보충성·상당성 요건 확인 전 보류</td></tr>
+        <tr><td>권한 없이, 유사 프로그램을 만들어 판매 (<a href="templates/sample/report-scope-clone.txt">scope-clone</a>)</td><td><b>RED</b> — 제101조의4 제2항 위반 소지, 하지 말 것</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <!-- 8 -->
+  <section id="s8">
+    <h2><span class="no">08</span>Antigravity에서 구축 (16편 연계)</h2>
+    <p>REA는 Antigravity도 지원 에이전트로 올려 두었습니다. 작업 폴더에 적법 범위 규칙과 근거 규율을 심어 두면, Antigravity 에이전트가 분석 전 점검부터 하도록 할 수 있습니다.</p>
+<div class="code">
+  <div class="head"><span>starter 폴더 구조</span><button class="copy">복사</button></div>
+<pre><code>starter/
+├── AGENTS.md                      항상 적용: 적법 범위 먼저 · 로컬만 · 근거/미확인 구분 · 소스 복원 아님
+├── .agents/
+│   ├── rules/legal-scope.md       역공학·디컴파일·재구현 시(model_decision)
+│   └── skills/reverse-engineer/   /reverse-engineer  조사→해석→재구현→검증
+│       └── references/            targets.md · evidence-discipline.md
+├── prompts/   01 설치 · 02 조사 · 03 재구현·검증 · 04 내 데이터 꺼내기
+├── tools/     scope_check.py · evidence_log.py · build_upload.py · test_rea_tools.py
+└── inbox/  work/</code></pre>
+</div>
+    <ol class="steps">
+      <li><b>키트 받기</b><a href="downloads/rea-reverse-engineering-kit.zip" download>템플릿 ZIP</a>을 풀고 <code>starter</code>를 엽니다. 도구 확인: <code>python tools/test_rea_tools.py</code>(10개 통과).</li>
+      <li><b>REA 연결</b><code>npx rea-agents setup</code>에서 Antigravity를 선택하거나, Antigravity에서 작업 폴더를 열고 MCP를 추가합니다(16편 7장 MCP 설정).</li>
+      <li><b>점검 먼저</b>새 대상을 분석하기 전에 <code>python tools/scope_check.py</code>. GREEN이 아니면 멈춥니다.</li>
+      <li><b>분석</b><code>/reverse-engineer</code> 다음에 대상과 한 기능을 적습니다. 에이전트가 조사 → 근거 기록 → 재구현 → 검증 순으로 진행합니다.</li>
+    </ol>
+<div class="code">
+  <div class="head"><span>Antigravity 대화창</span><button class="copy">복사</button></div>
+<pre><code>python tools/scope_check.py        # 먼저 적법 범위 확인(GREEN?)
+
+/reverse-engineer inbox/my-tool  (내가 만든 프로그램)
+"검색 기능이 어느 모듈에서 처리되는지 근거(소스 위치·IPC 채널)와 함께 조사하고,
+ 같은 규칙으로 동작하는 모듈을 내 코드로 새로 작성한 뒤 원본과 대조 검증해 줘.
+ 확인 못 한 부분은 미확인으로 표시하고, 보호조치나 서버 로직은 건드리지 마."</code></pre>
+</div>
+    <div class="note"><b>AI에게 스킬을 만들게 할 때도</b> 적법 범위 규칙을 먼저 못 박으세요: “분석 전 scope_check로 GREEN 확인, 근거에 위치 필수, 미확인 분리, 보호조치 우회·상용 복제 거절”을 지시문에 넣고 계획 승인 후 진행하게 합니다.</div>
+  </section>
+
+  <!-- 9 -->
+  <section id="s9">
+    <h2><span class="no">09</span>다른 AI 도구에서 (선택)</h2>
+    <p>REA는 로컬 디컴파일러와 Node가 필요한 <b>CLI형 도구</b>입니다. 그래서 내 컴퓨터에서 명령을 실행하는 에이전트와 맞습니다.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>환경</th><th>REA 사용</th></tr></thead>
+      <tbody>
+        <tr><th>Claude Code</th><td>기본 대상. <code>npx rea-agents setup</code> → Claude Code 선택. 이 편의 작업 폴더를 그대로 사용</td></tr>
+        <tr><th>Codex · Gemini CLI · GitHub Copilot CLI</th><td>setup에서 함께 선택 가능. 같은 MCP·스킬을 공유. 런타임에 따라 일부 기능 차이</td></tr>
+        <tr><th>Antigravity</th><td>지원 에이전트. 작업 폴더 + MCP로 구축(8장)</td></tr>
+        <tr><th>Claude.ai · ChatGPT · Gemini 앱 · Copilot Cowork (웹)</th><td>로컬 디컴파일러를 직접 구동하지 못하므로 REA를 그대로 쓰기 어렵습니다. CLI 에이전트로 분석해 얻은 <b>근거·의사코드</b>를 붙여 넣어 설명·재구현을 돕는 용도로는 쓸 수 있습니다. 대상 파일을 업로드할 때는 기밀·권한을 먼저 확인하세요.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <!-- 10 -->
+  <section id="s10">
+    <h2><span class="no">10</span>주의할 점</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>상황</th><th>주의할 점</th></tr></thead>
+      <tbody>
+        <tr><th>보호조치 우회</th><td>DRM·복사방지·라이선스 인증 무력화는 이 편의 범위 밖이며 법 위반 소지가 큽니다. 요청받아도 하지 않습니다.</td></tr>
+        <tr><th>상용 앱 복제</th><td>원본과 표현이 실질적으로 유사한 프로그램을 만들어 배포·판매하면 제101조의4 제2항 위반입니다. 아이디어·원리는 배우되 표현은 새로 만듭니다.</td></tr>
+        <tr><th>서버·원격 계정</th><td>내 소유가 아닌 서버 로직·보호 우회는 대상이 아니며 정보통신망법 위반이 될 수 있습니다.</td></tr>
+        <tr><th>EULA</th><td>이용약관이 역공학을 금지하기도 합니다. 법상 허용 범위와 별개로 확인합니다.</td></tr>
+        <tr><th>소스 복원 기대</th><td>변수명·주석·파일 구조는 복원되지 않습니다. 의사코드·근거만 나옵니다.</td></tr>
+        <tr><th>에이전트 해석 오류</th><td>런타임 동적 값(IPC 채널명·키)을 정적 분석으로 잘못 읽을 수 있습니다. 미확인으로 두거나 동적으로 확인합니다.</td></tr>
+        <tr><th>UI·백엔드</th><td>UI 디자인 복제는 별도 작업, 원격 백엔드·암호화 실시간 피드는 역공학 대상이 아닙니다.</td></tr>
+        <tr><th>신뢰할 수 없는 파일</th><td>REA는 보안 샌드박스가 아닙니다. 대상과 디컴파일러는 현재 사용자 권한으로 실행됩니다. 출처가 불분명한 악성 가능 파일은 격리 환경에서만.</td></tr>
+        <tr><th>근거 없는 재구현</th><td>미확인·실패가 남은 채 재구현을 신뢰하지 않습니다. evidence_log로 통과/실패/미확인을 분명히.</td></tr>
+        <tr><th>법적 판단</th><td>이 편과 도구는 일반 정보이며 법률 자문이 아닙니다. 중요한 사안은 변호사·변리사에게 확인하세요.</td></tr>
+      </tbody>
+    </table></div>
+    <div class="btns">
+      <a class="btn primary" href="downloads/rea-reverse-engineering-kit.zip" download>전체 템플릿 내려받기 (ZIP)</a>
+      <a class="btn" href="templates/">파일 하나씩 보기</a>
+    </div>
+  </section>
+
+  <!-- 11 -->
+  <section id="s11">
+    <h2><span class="no">부록</span>출처</h2>
+    <p>모두 2026. 11. 8. 확인.</p>
+    <ul>
+      <li>GitHub, <a href="https://github.com/morluto/rea">morluto/rea — Reverse Engineer Anything</a> (MIT) · <a href="https://www.mdskills.ai/skills/rea?tab=source">REA 스킬 문서</a> (워크플로·CLI·안전 기본값·Node 요구사항)</li>
+      <li>국가법령정보센터, <a href="https://www.law.go.kr/LSW/main.html">저작권법 제101조의3·제101조의4</a> (프로그램 저작재산권 제한·프로그램코드역분석)</li>
+      <li>한국저작권위원회, <a href="https://www.copyright.or.kr/">역분석·호환성 관련 해설</a></li>
+      <li>NSA, <a href="https://ghidra-sre.org/">Ghidra</a> (오픈소스 디컴파일러) · <a href="https://www.kunalganglani.com/blog/rea-reverse-engineer-anything-agents">REA 소개·사례 정리</a> (2026)</li>
+      <li>작성자 원고 「REA(Reverse Engineer Anything)를 이용한 프로그램 역공학」</li>
+    </ul>
+    <p>함께 읽기: <a href="../antigravity/">16편 Google Antigravity</a> · <a href="../slow-think/">19편 Slow Think와 AI 회의</a> · <a href="../exec-brief/">20편 경영진용 요약</a></p>
+  </section>
+
+  <footer>
+    작성: 이진수 (변리사) · 2026. 11. 8. · CC BY-NC 4.0<br>
+    작성자의 원고를 바탕으로 생성형 AI의 도움을 받아 도구 사실과 법 조문을 확인하고, 자작 바이너리로 시범을 실제 실행·검증했으며, 사람이 검토했습니다. 이 문서는 법률 자문이 아닙니다. 역공학은 저작권법·이용약관이 허용하는 범위에서만 하시기 바랍니다. 오류 제보는 <a href="https://github.com/sonovman/ai-practice-handbooks/issues">Issues</a>로 남겨 주세요.
+  </footer>
+</main>
+</div>
+
+<script>
+  document.querySelectorAll('.copy').forEach(function (b) {
+    b.addEventListener('click', function () {
+      navigator.clipboard.writeText(b.closest('.code').querySelector('pre').innerText).then(function () {
+        b.textContent = '복사됨'; setTimeout(function () { b.textContent = '복사'; }, 1500);
+      });
+    });
+  });
+  var links = [].slice.call(document.querySelectorAll('.side a'));
+  var io = new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+      if (e.isIntersecting) links.forEach(function (a) { a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id); });
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  document.querySelectorAll('main section[id]').forEach(function (s) { io.observe(s); });
+</script>
+</body>
+</html>

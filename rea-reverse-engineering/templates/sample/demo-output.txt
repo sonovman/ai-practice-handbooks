@@ -1,0 +1,45 @@
+# 자작 바이너리 역공학 시범 결과 (내가 만든 panning 프로그램을 '소스 없이' 분석한다고 가정)
+
+== 1. 실행 결과(정답지로 삼음)
+x=  0 -> pan=-1.0000
+x=160 -> pan=-0.5000
+x=320 -> pan=+0.0000
+x=480 -> pan=+0.5000
+x=639 -> pan=+0.9969
+
+== 2. 함수 심볼 (nm)
+0000000000001169 T compute_pan
+
+== 3. compute_pan 디스어셈블 (objdump -d) — subsd(빼기)·mulsd(곱하기)·comisd(비교/클램프)
+0000000000001169 <compute_pan>:
+    1169:	endbr64
+    116d:	pxor   %xmm0,%xmm0
+    1171:	cvtsi2sd %edi,%xmm0
+    1175:	subsd  0xeab(%rip),%xmm0        # 2028 <_IO_stdin_used+0x28>
+    117d:	mulsd  0xeab(%rip),%xmm0        # 2030 <_IO_stdin_used+0x30>
+    1185:	movsd  0xe93(%rip),%xmm1        # 2020 <_IO_stdin_used+0x20>
+    118d:	comisd %xmm0,%xmm1
+    1191:	ja     11a7 <compute_pan+0x3e>
+    1193:	comisd 0xe7d(%rip),%xmm0        # 2018 <_IO_stdin_used+0x18>
+    119b:	jbe    11a6 <compute_pan+0x3d>
+    119d:	movsd  0xe73(%rip),%xmm0        # 2018 <_IO_stdin_used+0x18>
+    11a5:	ret
+
+== 4. .rodata 바이트 (objdump -s) — 참조된 double 상수들
+
+panning:     file format elf64-x86-64
+
+Contents of section .rodata:
+ 2000 01000200 783d2533 64202d3e 2070616e  ....x=%3d -> pan
+ 2010 3d252b2e 34660a00 00000000 0000f03f  =%+.4f.........?
+ 2020 00000000 0000f0bf 00000000 00007440  ..............t@
+ 2030 9a999999 9999693f                    ......i?        
+
+== 5. .rodata의 double 상수 8바이트씩 해석 (파이썬 struct)
+    000000000000f03f = 1.0
+    000000000000f0bf = -1.0
+    0000000000007440 = 320.0
+    9a9999999999693f = 0.003125
+
+== 결론: compute_pan(x) = clamp((x - 320.0) * 0.003125, -1.0, 1.0)
+   (0.003125 = 1/320. x=639일 때 (639-320)/320 = +0.9969 로 실행 결과와 일치)

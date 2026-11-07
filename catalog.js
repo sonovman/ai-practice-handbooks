@@ -362,17 +362,20 @@ window.CATALOG = [
     ]
   },
   {
-    id: "excel-analysis",
+    id: "rea-reverse-engineering",
     no: "21",
-    category: "데이터",
-    title: "엑셀 데이터를 AI로 분석하고 그래프까지 받기",
-    subtitle: "준비 중",
-    summary: "다음에 공개할 예정입니다.",
-    reader: "",
-    version: "",
-    date: "",
-    length: "",
-    status: "draft",
-    links: []
+    category: "개발 도구",
+    title: "REA로 역공학 하기 — 근거로 이해하고, 적법 범위에서 재구현",
+    subtitle: "오픈소스 MCP 도구 REA를 Claude Code에 연결해, 권한 있는 대상만 근거 기반으로 분석",
+    summary: "소스 코드가 없는 프로그램의 동작 원리를 디컴파일러(Ghidra·IDA·Hopper)를 연결하는 오픈소스 MCP 도구 REA로 파악하는 방법. 내가 만든·오픈소스·분석 권한이 있는 대상에 한정하고, 저작권법 역분석 요건과 적법 범위 점검 도구, 근거 규율, 자작 바이너리 시범을 담았습니다. Antigravity 연계.",
+    reader: "레거시·독자 포맷에서 내 데이터를 꺼내거나 호환성·보안 연구·교육 목적으로 바이너리를 분석하려는 개발자, IP 실무자",
+    version: "1.0",
+    date: "2026-11-08",
+    length: "읽기 약 30분",
+    status: "published",
+    links: [
+      { label: "화면으로 읽기", href: "rea-reverse-engineering/", primary: true },
+      { label: "템플릿 내려받기", href: "rea-reverse-engineering/templates/" }
+    ]
   }
 ];
