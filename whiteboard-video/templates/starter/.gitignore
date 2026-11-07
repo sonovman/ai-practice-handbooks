@@ -1,0 +1,15 @@
+# 비밀값
+.env
+.env.*
+!.env.example
+
+# 가상 환경·패키지
+.venv/
+node_modules/
+__pycache__/
+
+# 큰 산출물 (필요하면 지우세요)
+*.mp4
+assets/audio/*.wav
+hf-video/media/
+renders/
