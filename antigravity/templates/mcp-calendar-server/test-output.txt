@@ -1,0 +1,24 @@
+
+> mcp-calendar-server@1.0.0 test
+> node test-client.js
+
+calendar-server 준비 완료 (stdio)
+tools/list → get_calendar_events, list_event_dates
+tools/call get_calendar_events(2026-11-09) →
+{
+  "date": "2026-11-09",
+  "count": 2,
+  "events": [
+    {
+      "time": "09:30",
+      "title": "주간 스탠드업",
+      "location": "회의실 A"
+    },
+    {
+      "time": "14:00",
+      "title": "Antigravity MCP 시연",
+      "location": "온라인"
+    }
+  ]
+}
+잘못된 날짜 형식 → 오류로 거절됨(정상)

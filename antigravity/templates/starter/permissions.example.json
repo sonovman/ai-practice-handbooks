@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "command(git status)",
+      "command(git diff)",
+      "command(regex:npm (test|run lint|run build))",
+      "command(regex:python -m pytest.*)",
+      "read_url(developer.mozilla.org)",
+      "mcp(calendar/*)"
+    ],
+    "ask": [
+      "command(*)",
+      "execute_url(*)"
+    ],
+    "deny": [
+      "command(sudo)",
+      "command(rm -rf)",
+      "write_file(.git/)",
+      "write_file(~/.ssh)",
+      "read_file(~/.ssh)"
+    ]
+  }
+}

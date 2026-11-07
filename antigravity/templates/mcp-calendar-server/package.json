@@ -1,0 +1,16 @@
+{
+  "name": "mcp-calendar-server",
+  "version": "1.0.0",
+  "description": "Antigravity 실습용 MCP 서버 — 날짜별 일정 조회(예시 데이터)",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "node test-client.js",
+    "inspect": "npx @modelcontextprotocol/inspector node index.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.2",
+    "zod": "^4.6.7"
+  }
+}

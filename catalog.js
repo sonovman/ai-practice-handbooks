@@ -277,8 +277,25 @@ window.CATALOG = [
     ]
   },
   {
-    id: "excel-analysis",
+    id: "antigravity",
     no: "16",
+    category: "개발 도구",
+    title: "Google Antigravity 입문 — 에이전트에게 일을 맡기는 개발 환경",
+    subtitle: "규칙은 파일로, 반복 작업은 스킬로, 외부 도구는 MCP로, 실행 범위는 권한으로",
+    summary: "Google Antigravity를 처음 쓰는 사람을 위한 따라 하기 안내. 2.0 앱·IDE·CLI·SDK 구조, 규칙·스킬·워크플로·MCP·아티팩트·권한 설정, 스네이크 게임과 MCP 일정 서버 실습, 2026년 11월 기준 요금제와 모델을 담았습니다.",
+    reader: "Antigravity를 처음 쓰는 사람, 에이전트로 업무를 자동화하려는 실무자",
+    version: "1.0",
+    date: "2026-11-07",
+    length: "읽기 약 25분",
+    status: "published",
+    links: [
+      { label: "화면으로 읽기", href: "antigravity/", primary: true },
+      { label: "템플릿 내려받기", href: "antigravity/templates/" }
+    ]
+  },
+  {
+    id: "excel-analysis",
+    no: "17",
     category: "데이터",
     title: "엑셀 데이터를 AI로 분석하고 그래프까지 받기",
     subtitle: "준비 중",

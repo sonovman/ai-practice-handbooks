@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "calendar": {
+      "command": "node",
+      "args": ["/절대경로/mcp-calendar-server/index.js"]
+    }
+  }
+}

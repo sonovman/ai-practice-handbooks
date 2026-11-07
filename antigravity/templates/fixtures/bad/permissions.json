@@ -1,0 +1,1 @@
+{ "permissions": { "allow": ["command(*)", "command(rm -rf build)"], "ask": [], "deny": [] }, "toolPermission": "always-proceed" }
