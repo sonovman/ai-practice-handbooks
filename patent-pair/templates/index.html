@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>텍스트 쌍 특허 분석 템플릿</title>
+<link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+<div class="bar"><div class="bar-in">
+  <a class="brand" href="../../">AI 실무 핸드북</a>
+  <div class="links"><a href="../">← 본문으로</a></div>
+</div></div>
+<div class="wrap">
+  <div class="eyebrow">핸드북 15 · 자료</div>
+  <h1>템플릿 내려받기</h1>
+  <p class="lead">한 번에 받으려면 <a href="../downloads/patent-pair-kit.zip" download>전체(ZIP)</a>, 스킬만 올리려면 <a href="../downloads/claim-chart-fto.zip" download>스킬(ZIP)</a>. 제품 설명서와 짧은 특허 4건은 연습용으로 지어낸 문서입니다.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>파일</th><th>내용</th></tr></thead>
+    <tbody>
+      <tr><th><a href="skill/claim-chart-fto/SKILL.md" download>skill/claim-chart-fto/SKILL.md</a></th><td>스킬 — 목적별 짝 · 분설 · 용어 해석(같은 문헌 쌍) · 구성요소별 개시 판단과 인용 · 모든 구성요소 원칙 · 대조군</td></tr>
+      <tr><th><a href="pairkit.py" download>pairkit.py</a></th><td><code>extract</code> · <code>elements</code> · <code>bundle</code> · <code>pairs</code> — Python 3.8+, 추가 설치 없음</td></tr>
+      <tr><th><a href="chart_check.py" download>chart_check.py</a></th><td><code>verify</code> 인용·결론 점검 · <code>score</code> 판정 성적</td></tr>
+      <tr><th><a href="test_pairkit.py" download>test_pairkit.py</a></th><td>도구 시험 14개</td></tr>
+      <tr><th><a href="finetune/train_cross_encoder.py" download>finetune/train_cross_encoder.py</a></th><td>교차 인코더 미세 조정 — 두 그룹 교대 학습·손실 평균·특허 단위 검증 (참고 코드)</td></tr>
+      <tr><th><a href="finetune/train_embedding.py" download>finetune/train_embedding.py</a></th><td>임베딩 모델 미세 조정 — 삼중쌍·배치 내 음성 (참고 코드)</td></tr>
+      <tr><th><a href="platforms.md" download>platforms.md</a></th><td>Claude · ChatGPT · Gemini · Microsoft 365 Copilot 설정</td></tr>
+      <tr><th><a href="sample/KR1020250013094.txt" download>sample/KR1020250013094.txt</a></th><td>관심 특허 — 공개특허 10-2025-0013094 텍스트(PDF에서 추출)</td></tr>
+      <tr><th><a href="sample/product-A.txt" download>sample/product-A.txt</a> · <a href="sample/product-B.txt" download>product-B.txt</a></th><td>대상 문서 — 가상 제품 「ClaimMatch Pro」 · 「KeywordScout」</td></tr>
+      <tr><th><a href="sample/request-A.md">sample/request-A.md</a> · <a href="sample/request-B.md">request-B.md</a></th><td><code>bundle</code>이 만든 LLM 요청문</td></tr>
+      <tr><th><a href="sample/chart-A.md">sample/chart-A.md</a> · <a href="sample/chart-B.md">chart-B.md</a></th><td>스킬의 클레임 차트 (표 + JSON)</td></tr>
+      <tr><th><a href="sample/chart-A-draft.md">sample/chart-A-draft.md</a> · <a href="sample/verify-A-draft.txt">verify-A-draft.txt</a></th><td>흠을 넣은 초안과 점검 결과</td></tr>
+      <tr><th><a href="sample/corpus/P-search.txt">sample/corpus/</a></th><td>자기 지도 쌍 시범용 짧은 특허 4건(가상) + 관심 특허</td></tr>
+      <tr><th><a href="sample/pairs.jsonl" download>sample/pairs.jsonl</a> · <a href="sample/triplets.csv" download>triplets.csv</a></th><td><code>pairs</code> 결과 — 같은 문헌·무작위·어려운 쌍 15개, 삼중쌍 5개</td></tr>
+      <tr><th><a href="sample/predictions.csv" download>sample/predictions.csv</a> · <a href="sample/score-output.md">score-output.md</a></th><td>Claude의 쌍별 판정과 <code>score</code> 결과</td></tr>
+    </tbody>
+  </table></div>
+  <h2>빠른 시작</h2>
+  <div class="code"><div class="head"><span>터미널</span></div>
+<pre><code>python test_pairkit.py
+python pairkit.py elements sample/KR1020250013094.txt --claim 1
+python pairkit.py bundle --claims sample/KR1020250013094.txt --claim 1 --target sample/product-A.txt --out request.md
+python chart_check.py verify sample/chart-A.md --target sample/product-A.txt --elements 6
+python pairkit.py pairs sample/corpus/*.txt --out pairs.jsonl --triplets triplets.csv</code></pre></div>
+  <footer>CC BY-NC 4.0 · 출력은 법률 의견이 아닙니다. 텍스트 쌍 방법은 작성자의 특허출원(공개 10-2025-0013094)에 기초합니다.</footer>
+</div>
+</body>
+</html>

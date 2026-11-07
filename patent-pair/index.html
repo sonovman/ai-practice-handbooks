@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>텍스트 쌍 특허 분석</title>
+<meta name="description" content="청구항과 발명의 설명을 짝지은 '텍스트 쌍'으로 특허를 판단하는 출원발명의 아이디어를 Claude·ChatGPT·Gemini·Microsoft 365 Copilot에서 유사 특허 판별과 FTO 분석에 쓰는 방법. 전처리·클레임 차트·인용 점검 도구와 분야별 미세 조정 경로를 담았습니다.">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<div class="bar"><div class="bar-in">
+  <a class="brand" href="../">AI 실무 핸드북</a>
+  <div class="links">
+    <a href="templates/">템플릿</a>
+    <a href="https://github.com/sonovman/ai-practice-handbooks">GitHub ↗</a>
+  </div>
+</div></div>
+
+<div class="doc">
+  <aside class="side">
+    <div class="label">차례</div>
+    <ol>
+      <li><a href="#s0">한 줄 결론</a></li>
+      <li><a href="#s1">1. 출원발명의 핵심</a></li>
+      <li><a href="#s2">2. 범용 LLM으로 옮기기</a></li>
+      <li><a href="#s3">3. 옮기면서 다듬은 여섯 곳</a></li>
+      <li><a href="#s4">4. 추천 구성 — 네 층</a></li>
+      <li><a href="#s5">5. 도구</a></li>
+      <li><a href="#s6">6. 시범 — 내 출원 청구항으로 FTO</a></li>
+      <li><a href="#s7">7. 플랫폼별 설정</a></li>
+      <li><a href="#s8">8. 분야별 특화와 미세 조정</a></li>
+      <li><a href="#s9">9. 주의할 점</a></li>
+      <li><a href="#s10">부록 · 출처</a></li>
+    </ol>
+  </aside>
+
+<main>
+  <div class="eyebrow">핸드북 15 · 특허</div>
+  <h1>텍스트 쌍 특허 분석을 범용 LLM에서 — 유사 특허 판별과 FTO</h1>
+  <p class="lead">청구항은 그 특허의 발명의 설명으로 해석해야 한다는 원칙을 기계 학습의 구조로 바꾼 것이 특허출원 10-2024-0075102(공개 10-2025-0013094)의 아이디어입니다. <strong>청구항과 발명의 설명을 짝지은 ‘텍스트 쌍’</strong>을 판단 단위로 삼고, 같은 문헌에서 나온 쌍과 다른 문헌에서 나온 쌍을 자동으로 구별해 학습합니다. 이 편은 그 아이디어를 Claude·ChatGPT·Gemini·Microsoft 365 Copilot 같은 범용 LLM에서 <strong>유사 특허 판별과 FTO(Freedom to Operate) 분석</strong>에 쓰는 방법을 설계하고, 전처리·클레임 차트·점검 도구와 함께 시범을 보입니다.</p>
+  <div class="meta">
+    <b>독자</b><span>변리사·특허 담당자, 연구소의 IP 담당, 특허 분석 도구를 만드는 개발자</span>
+    <b>분량</b><span>읽기 약 30분 · 템플릿(스킬 · 전처리·점검 도구 · 미세 조정 참고 코드 · 시범 자료 · 플랫폼 설정)</span>
+    <b>판</b><span>1.0 · 2026. 11. 7.</span>
+  </div>
+
+  <section id="s0">
+    <div class="key">
+      <div class="eyebrow">한 줄 결론</div>
+      <p style="font-size:19px;font-weight:600;line-height:1.6;margin:8px 0 10px">자르고 찾는 일은 도구가, 구성요소별 판단과 근거 인용은 LLM이, 대량 선별 점수는 내가 소유한 작은 모델이, 결론은 변리사가.</p>
+      <p style="opacity:.75;font-size:15px">출원발명의 세 부분 — 입력 자동 전처리, 자동 레이블과 교대 학습, 유사·침해 판단 — 은 범용 LLM 시대에도 그대로 살아납니다. 다만 역할이 바뀝니다. LLM은 512토큰 한계에서 벗어나 <b>구성요소 단위로 근거를 인용하는 판단자</b>가 되고, 자동 레이블 규칙은 <b>대조군·평가 세트·소형 모델 학습 데이터</b>를 공짜로 만들어 주는 장치가 됩니다.</p>
+    </div>
+  </section>
+
+  <!-- 1 -->
+  <section id="s1">
+    <h2><span class="no">01</span>출원발명의 핵심</h2>
+    <div class="grid3">
+      <div class="box"><div class="tag">전처리</div><h4>청구항과 설명을 짝짓기</h4><p>식별 태그로 청구범위(제1 텍스트)와 발명의 설명(제2 텍스트)을 자동 추출. 독립항 중심, 설명은 조각으로 나눠 청구항 벡터와 유사도가 높은 조각을 고름 (청구항 1~4).</p></div>
+      <div class="box"><div class="tag">학습</div><h4>자동 레이블 + 교대 학습</h4><p>같은 문헌 쌍 = 제1 레이블, 다른 문헌 쌍 = 제2 레이블. 사전 학습 언어모델 + 분류 층을 두 그룹을 번갈아 넣어 손실 평균으로 학습 (청구항 5~8).</p></div>
+      <div class="box"><div class="tag">판단</div><h4>유사·특허성·침해</h4><p>관심 특허 청구항 × 대상 특허 설명 → 특허성, 관심 특허 청구항 × 제품 기술 설명서 → 침해 여부 (청구항 9~11).</p></div>
+    </div>
+
+    <div class="tbl"><table>
+      <thead><tr><th>실험 항목</th><th>내용 (명세서 실험예)</th></tr></thead>
+      <tbody>
+        <tr><th>데이터</th><td>관심 특허(미국 등록 A, 설명 약 4,700단어·청구항 약 340단어), 비교 특허(B, 범위 밖), 시험 특허(C, 범위 안·다른 용어)</td></tr>
+        <tr><th>전처리</th><td>청구항 핵심 특징을 약 190토큰 한 문장으로 요약, 설명은 310토큰 조각, 벡터 유사도로 잡음 제거 → 각 17쌍</td></tr>
+        <tr><th>학습</th><td>Hugging Face <code>BertForSequenceClassification</code>, label 1·0 데이터로더를 <code>zip</code>으로 번갈아, 두 손실 평균</td></tr>
+        <tr><th>결과</th><td>15 에포크에 정확도 약 80%. 다른 용어로 쓴 시험 특허 C의 17쌍이 모두 label 1로 예측</td></tr>
+      </tbody>
+    </table></div>
+    <div class="note"><b>실험 규모를 읽는 법</b> — 이 실험은 관심 특허 1건을 중심으로 한 <b>개념 증명</b>입니다. 같은 사상을 다른 말로 쓴 문서를 잡아냈다는 점에서 방향을 보여 주지만, 다른 분야·다른 청구항에도 같은 성능이 나온다는 뜻은 아닙니다. 그래서 범용 모델로 넓힐 때는 같은 자동 레이블 규칙으로 <b>평가 세트를 먼저 만들고</b>(8장), 학습과 검증을 <b>특허 단위로 나눠</b> 같은 특허의 문장이 양쪽에 섞이지 않게 해서 성능을 다시 잽니다.</div>
+  </section>
+
+  <!-- 2 -->
+  <section id="s2">
+    <h2><span class="no">02</span>범용 LLM으로 옮기기</h2>
+    <p>출원발명의 각 단계가 LLM 환경에서 무엇이 되는지 정리했습니다. 구조는 그대로 두고 부품을 바꿉니다.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>출원발명의 단계</th><th>범용 LLM 환경에서</th><th>도구</th></tr></thead>
+      <tbody>
+        <tr><th>식별 태그로 청구범위·설명 추출 (S12)</th><td>공보 텍스트·XML에서 청구항(독립항 표시)과 식별번호 문단을 자동 분리</td><td><code>pairkit extract</code></td></tr>
+        <tr><th>청구항 약 190토큰 요약</th><td><b>구성요소 분설</b> — 전제부 + E1…En. 요약 대신 구성요소를 모두 보존</td><td><code>pairkit elements</code> + LLM</td></tr>
+        <tr><th>설명 310토큰 분할 + 내적 필터</th><td>짧은 문서는 전문, 긴 문서는 <b>구성요소별 근거 후보</b>를 상위 k개 선별 (근거 위치를 특정하는 목적은 유지)</td><td><code>pairkit bundle</code></td></tr>
+        <tr><th>같은 문헌 쌍 = 1 (S16)</th><td>① 용어 해석: 관심 특허 <b>자신의</b> 설명에서 정의 찾기 ② 양성 대조군 ③ 평가·학습 데이터</td><td>스킬 2단계, <code>pairs</code></td></tr>
+        <tr><th>다른 문헌 쌍 = 0 (S16)</th><td>① 음성 대조군 ② 무작위·<b>어려운</b> 음성 평가 세트 ③ 학습 데이터</td><td><code>pairs</code></td></tr>
+        <tr><th>[CLS] → 이진 분류 (S22~S26)</th><td>구성요소별 <b>개시 / 부분 개시 / 불명 / 미개시 + 원문 인용</b> → 모든 구성요소 원칙으로 결론</td><td>스킬 + <code>chart_check verify</code></td></tr>
+        <tr><th>교대 배치 학습</th><td>대량 선별용 <b>소형 모델</b>(교차 인코더·임베딩)을 직접 미세 조정할 때 그대로 사용</td><td><code>finetune/</code></td></tr>
+        <tr><th>특허성·침해 판단 (S32~S38)</th><td>목적별로 짝을 정함 — FTO · 신규성 · 무효 · 유사 판별 (아래 표)</td><td>스킬 1단계</td></tr>
+      </tbody>
+    </table></div>
+
+    <h3>같은 구조, 다른 짝</h3>
+    <div class="tbl"><table>
+      <thead><tr><th>목적</th><th>청구항 (제1 텍스트)</th><th>설명 (제2 텍스트)</th><th>모든 구성요소가 개시되면</th></tr></thead>
+      <tbody>
+        <tr><th>FTO · 침해 위험</th><td>상대 특허 청구항</td><td>내 제품 기술 설명서</td><td>침해 위험 높음</td></tr>
+        <tr><th>신규성 · 선행기술 조사</th><td>내 발명(출원 예정) 청구항</td><td>선행 문헌 설명</td><td>신규성 부정 가능성</td></tr>
+        <tr><th>무효 자료 검토</th><td>상대 특허 청구항</td><td>출원 전 선행 문헌</td><td>무효 근거 후보</td></tr>
+        <tr><th>유사 특허 판별</th><td>관심 특허 청구항</td><td>비교 특허 설명</td><td>실질적으로 같은 발명</td></tr>
+      </tbody>
+    </table></div>
+    <p class="cap">어느 경우든 “청구항 × 설명”의 방향을 지킵니다. 설명끼리, 초록끼리 비교하면 비슷해 보여도 권리범위와 무관한 유사도가 나옵니다.</p>
+  </section>
+
+  <!-- 3 -->
+  <section id="s3">
+    <h2><span class="no">03</span>옮기면서 다듬은 여섯 곳</h2>
+
+    <div class="note"><b>① 레이블의 이름 — “유사/침해”에서 “개시(지지) 관계”로</b> — 처음 설계에서는 같은 문헌 쌍을 “유사·침해(1)”, 다른 문헌 쌍을 “비유사·비침해(0)”로 불렀습니다. 학습 목표를 직관적으로 보여 주는 이름입니다. 그런데 같은 문헌 쌍이 실제로 가르쳐 주는 것은 “이 설명이 이 청구항을 뒷받침한다”는 <b>개시·지지 관계</b>이고, 침해는 여기에 청구항 해석, 균등, 실제 실시 사실이 더해지는 법률 판단입니다. 범용 LLM으로 옮기면서 판단의 이름을 <b>“구성요소가 대상 문서에 개시되었는가”</b>로 좁히고, 침해·무효 결론은 차트를 본 변리사가 내리도록 나눴습니다.</div>
+
+    <div class="note"><b>② 청구항 요약 → 구성요소 분설</b> — BERT의 512토큰 안에 설명이 들어갈 자리를 만들려고 청구항을 약 190토큰 한 문장으로 줄였습니다. 당시 구조에서는 합리적인 선택입니다. 하지만 요약은 어떤 한정 요소를 빼먹을 수 있고, 특허 판단은 <b>모든 구성요소</b>를 하나씩 확인해야 합니다. LLM은 긴 입력을 받을 수 있으므로 요약 대신 <b>전제부 + E1…En으로 분설</b>하고 청구항 문언을 그대로 둡니다.</div>
+
+    <div class="note"><b>③ 문서 단위 이진 판정 → 구성요소 단위 판단과 결론 규칙</b> — 실험에서는 설명 조각 17개가 각각 1인지 0인지를 보았습니다. 범용 LLM에서는 판단 단위를 한 단계 더 쪼개, <b>구성요소마다 개시 여부를 원문 인용과 함께</b> 정하고, 결론은 “구성요소별로는 어느 조각에서든 개시되면 개시(최대), 청구항 전체는 모든 구성요소가 개시되어야 개시(최소)”라는 규칙으로 냅니다. 조각 다수결로는 한 구성요소가 빠진 경우를 놓칠 수 있기 때문입니다. <code>chart_check verify</code>가 이 규칙과 결론이 맞는지 기계적으로 확인합니다.</div>
+
+    <div class="note"><b>④ 512토큰 필터 → 근거 위치를 찾는 필터</b> — LLM의 입력 한계가 넉넉해지면 설명을 거를 필요가 없어 보입니다. 짧은 문서는 실제로 전문을 넣습니다. 그러나 수백 쪽 명세서나 여러 문서를 비교할 때는 여전히 걸러야 하고, 무엇보다 <b>“어느 문단이 근거인가”</b>를 특정해야 차트가 됩니다. 그래서 필터의 목적을 “길이 맞추기”에서 “구성요소별 근거 후보 찾기”로 바꿔 유지했습니다. 글자 유사도는 후보를 좁히는 데만 쓰고, 다른 용어로 쓴 문서는 점수가 낮게 나오므로 판단 근거로 쓰지 않습니다(6장 시범에서 실제로 0.05~0.17).</div>
+
+    <div class="note"><b>⑤ 무작위 음성 → 어려운 음성, 그리고 거짓 음성 경계</b> — 다른 문헌 쌍을 무작위로 고르면 대부분 분야부터 달라 너무 쉬운 문제가 됩니다. 평가와 학습에는 <b>가장 비슷한 다른 문헌</b>(같은 분류코드·같은 기술)을 함께 넣어야 실력이 드러납니다. 다만 비슷한 다른 문헌 중에는 같은 패밀리, 분할·계속 출원, 서로 인용한 문헌처럼 <b>실제로는 개시 관계가 있는 것</b>이 섞입니다. <code>pairs</code>는 어려운 음성에 유사도를 표시하고, 학습 전에 눈으로 확인하라고 알려 줍니다.</div>
+
+    <div class="note"><b>⑥ “프로젝트로 파인튜닝” → 맥락 특화와 가중치 학습을 나누기</b> — Claude·ChatGPT 프로젝트, Gemini 스킬, Copilot 에이전트에 분야 자료를 넣으면 그 분야에 맞춰진 것처럼 동작합니다. 이것은 모델의 가중치를 바꾸는 미세 조정이 아니라 <b>매번 참고 자료와 지침을 함께 넣는 맥락 특화</b>입니다. 분야별 용어집·지난 차트 예시·판단 기준을 프로젝트에 쌓는 것은 효과가 크고 바로 할 수 있지만, “학습시켰다”고 이해하면 자료를 빼는 순간 성능이 돌아간다는 점을 놓칩니다. 가중치 학습이 필요한 부분(대량 선별 점수)은 8장의 소형 모델로 따로 합니다.</div>
+  </section>
+
+  <!-- 4 -->
+  <section id="s4">
+    <h2><span class="no">04</span>추천 구성 — 네 층</h2>
+    <div class="graph">
+      <div class="node end"><span class="id">1 전처리</span><b>추출 · 분설 · 조각 · 근거 후보</b><p><code>pairkit.py</code> — 공보에서 청구항·문단 분리, 구성요소 초안, 대상 문서에서 구성요소별 후보. 내 PC에서 돌려 기밀 문서는 필요한 문단만 LLM에 보냄</p></div>
+      <div class="edge"></div>
+      <div class="node"><span class="id">2 판단</span><b>LLM + 스킬 <code>claim-chart-fto</code></b><p>용어 해석(같은 문헌 쌍) → 구성요소별 개시 판단(다른 문헌 쌍) → 원문 인용 → 모든 구성요소 원칙의 결론 · 균등은 표시만</p></div>
+      <div class="edge"></div>
+      <div class="node"><span class="id">3 점검</span><b><code>chart_check.py verify</code></b><p>인용문이 원문에 실제로 있는지 · 식별번호 · 빠진 구성요소 · 결론과 규칙의 일치. 실패는 LLM에 돌려 고침</p></div>
+      <div class="edge"></div>
+      <div class="node dark"><span class="id">4 보정·학습</span><b>자동 레이블 → 대조군 · 평가 세트 · 소형 모델</b><p>같은 문헌 = 1, 다른 문헌 = 0으로 평가 세트를 만들어 LLM·프롬프트를 비교(<code>score</code>), 대량 선별은 직접 미세 조정한 교차 인코더·임베딩 모델로</p></div>
+      <div class="edge"><span>결과</span></div>
+      <div class="node end"><span class="id">사람</span><b>변리사 검토</b><p>차트를 근거로 침해·무효·특허성 의견. 균등·청구항 해석 쟁점 판단</p></div>
+    </div>
+
+    <h3>대량 FTO는 깔때기로</h3>
+    <div class="tbl"><table>
+      <thead><tr><th>단계</th><th>대상 수</th><th>방법</th><th>비용·속도</th></tr></thead>
+      <tbody>
+        <tr><th>① 수집</th><td>수천 건</td><td>분류코드·키워드로 후보 특허 확보 (KIPRIS·USPTO)</td><td>빠름</td></tr>
+        <tr><th>② 선별</th><td>수백 건</td><td>미세 조정한 임베딩·교차 인코더로 “청구항 × 내 제품 설명” 점수</td><td>내 PC·서버, 저렴</td></tr>
+        <tr><th>③ 정밀</th><td>수십 건</td><td>LLM 스킬로 구성요소별 클레임 차트 + 인용 점검</td><td>건당 수 분</td></tr>
+        <tr><th>④ 의견</th><td>몇 건</td><td>변리사 검토, 설계 변경·실시권·무효 검토</td><td>사람</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <!-- 5 -->
+  <section id="s5">
+    <h2><span class="no">05</span>도구</h2>
+    <p>Python 3.8 이상, 추가 설치 없이 동작합니다. 같은 파일이 스킬의 <code>scripts/</code>에도 들어 있습니다.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>명령</th><th>하는 일</th></tr></thead>
+      <tbody>
+        <tr><th><code>pairkit extract</code></th><td>한국 공보(청구항 n, [0001])·미국식(1. A method…, [0001]) 텍스트에서 청구항·독립항·문단 분리. 식별번호가 없는 제품 설명서는 빈 줄 기준 문단</td></tr>
+        <tr><th><code>pairkit elements</code></th><td>청구항 분설 초안(전제부 + E1…En)</td></tr>
+        <tr><th><code>pairkit bundle</code></th><td>구성요소 × 대상 문서 → 근거 후보, 관심 특허 자신의 설명에서 용어 해석 근거, LLM 요청문(차트 형식·JSON 규칙 포함)</td></tr>
+        <tr><th><code>pairkit pairs</code></th><td>여러 문헌 → 같은 문헌(1)·무작위 다른 문헌(0)·어려운 다른 문헌(0) 쌍 JSONL과 (청구항, 양성, 어려운 음성) 삼중쌍 CSV</td></tr>
+        <tr><th><code>chart_check verify</code></th><td>LLM 차트의 인용문을 원문과 대조(띄어쓰기·따옴표 무시, 그 밖 95% 이상 일치), 식별번호·빠진 구성요소·결론 규칙 점검</td></tr>
+        <tr><th><code>chart_check score</code></th><td>판정 결과를 자동 레이블과 비교 — 정확도·정밀도·재현율·F1·AUC, 쌍 종류별 성적, 평가 세트가 너무 쉬울 때 경고</td></tr>
+      </tbody>
+    </table></div>
+    <div class="note"><b>PDF에서 뽑은 텍스트</b> — PDF는 줄 끝에서 한국어 낱말이 잘려, 붙여야 할 곳과 띄워야 할 곳을 완벽히 구별할 수 없습니다. <code>extract</code>는 꽉 찬 줄이 한글로 끝나면 붙이는 어림 규칙을 쓰지만 가끔 틀립니다. 가능하면 KIPRIS·USPTO의 전문 텍스트나 XML을 쓰세요. 인용 점검은 띄어쓰기를 무시하므로 이 차이로 실패하지는 않습니다.</div>
+  </section>
+
+  <!-- 6 -->
+  <section id="s6">
+    <h2><span class="no">06</span>시범 — 내 출원 청구항으로 FTO</h2>
+    <p>관심 특허는 작성자의 공개 출원 <b>KR 10-2025-0013094 청구항 1</b>입니다. 대상 문서는 연습용으로 지어낸 두 제품 설명서입니다 — 출원발명과 같은 방식으로 학습 데이터를 만드는 「ClaimMatch Pro」, 키워드 검색 도구 「KeywordScout」. 모든 파일은 <a href="templates/">템플릿</a>의 <code>sample/</code>에 있습니다.</p>
+
+    <h3>① 분설 (<code>pairkit elements</code>)</h3>
+    <div class="code">
+      <div class="head"><span>청구항 1 — 분설 초안</span><button class="copy">복사</button></div>
+<pre><code>전제부: 독립변수인 텍스트 쌍 및 이에 지정된 종속변수인 레이블을 포함하는 학습 데이터를 생성하는 컴퓨팅 장치에 의해 수행되는 방법으로서
+E1 복수의 특허문서의 제1 항목으로부터 각 특허문서에 대한 제1 텍스트 시퀀스를 추출하고, 상기 복수의 특허문서의 제2 항목으로부터 각 특허문서에 대한 제2 텍스트 시퀀스를 추출하는
+E2 상기 제1 텍스트 시퀀스와 상기 제2 텍스트 시퀀스를 결합하여 텍스트 쌍(text pair)을 생성하는
+E3 상기 텍스트 쌍에 대해 발명의 유사 여부에 관한 레이블을 지정
+E4 상기 학습 데이터는, 동일한 특허문서에서 추출된 … 텍스트 쌍으로 이루어진 제1 그룹
+E5 서로 다른 특허문서에서 추출된 … 텍스트 쌍으로 이루어진 제2 그룹
+E6 상기 제1 그룹에 속하는 텍스트 쌍에는 제1 레이블이 지정되고, 상기 제2 그룹에 … 제2 레이블이 지정되는</code></pre>
+    </div>
+
+    <h3>② 요청문 (<code>pairkit bundle</code>) → ③ 스킬의 차트</h3>
+    <p>요청문에는 구성요소, 관심 특허 자신의 설명에서 찾은 용어 해석 근거(예: E3 ← [0083] “각 텍스트 쌍에 대해 발명의 유사 여부에 관한 레이블을 지정한다”), 대상 문서 전문이 들어갑니다. 글자 유사도는 「ClaimMatch Pro」도 0.05~0.17로 낮았습니다 — 같은 내용을 “정답값”, “공보”, “입력 샘플” 같은 다른 말로 썼기 때문이고, 이 차이를 메우는 것이 LLM의 몫입니다.</p>
+
+    <div class="tbl"><table>
+      <thead><tr><th>구성요소</th><th>「ClaimMatch Pro」</th><th>「KeywordScout」</th></tr></thead>
+      <tbody>
+        <tr><th>E1 청구범위·설명 추출</th><td>개시 [0002] “청구항 본문과 … 상세한 설명 본문을 각각 분리하여 저장”</td><td>부분 개시 [0002] 청구항만 색인</td></tr>
+        <tr><th>E2 텍스트 쌍 생성</th><td>개시 [0003] “이어 붙여 하나의 입력 샘플로”</td><td>미개시</td></tr>
+        <tr><th>E3 유사 여부 레이블</th><td>개시 [0004] “정답값 1(관련 있음)” — 관심 특허 [0083]의 뜻으로 해석</td><td>부분 개시 [0003] 사람이 문헌에 다는 ‘관련/무관’ 표시</td></tr>
+        <tr><th>E4~E6 동일/다른 문헌 그룹과 레이블</th><td>개시 [0004] “같은 공보… 1”, “서로 다른 공보… 0”</td><td>미개시</td></tr>
+        <tr><th>결론</th><td><b>모든 구성요소 개시</b> → 문서 기준 침해 위험 높음</td><td><b>일부 미개시</b> → 청구항 1 범위 밖</td></tr>
+      </tbody>
+    </table></div>
+
+    <h3>④ 인용 점검 — 지어낸 근거를 잡아내기</h3>
+    <p>정상 차트 두 개는 실패 0건으로 통과했습니다. 비교를 위해 일부러 흠을 넣은 첫 초안(<code>chart-A-draft.md</code>)을 점검하면 다음과 같이 걸러집니다.</p>
+    <div class="code">
+      <div class="head"><span>chart_check verify sample/chart-A-draft.md</span><button class="copy">복사</button></div>
+<pre><code>[실패] 구성요소   빠짐: E6
+[실패] E1     인용문을 원문에서 찾지 못했습니다(최고 일치 75%) — 지어냈거나 중간을 생략·바꿔 쓴 인용
+[실패] E2     인용문을 원문에서 찾지 못했습니다(최고 일치 38%) — 지어냈거나 중간을 생략·바꿔 쓴 인용
+[주의] E3     균등 검토 필요 — 사람이 판단
+[주의] E4     인용문은 [0004]에 있습니다(표시는 [0005]).
+[통과] E5     개시 · 인용 확인 [0004]
+[실패] 결론     '모든 구성요소 개시' → 모든 구성요소 원칙상 '추가 검토 필요'</code></pre>
+    </div>
+    <p class="cap">E1은 원문 중간(“&lt;claims&gt; 태그 안의”)을 생략한 인용이라, E2는 원문에 없는 문장이라 실패합니다. 결론은 E3이 ‘불명’인데 ‘모두 개시’라고 앞서 썼기 때문에 실패합니다.</p>
+
+    <h3>⑤ 자동 레이블로 판단력 재기 (<code>pairs</code> → <code>score</code>)</h3>
+    <p>관심 특허와 지어낸 짧은 특허 4건(커피 추출·배터리 열관리·문서 요약·특허 검색)으로 15쌍을 만들고, Claude가 쌍마다 “설명이 청구항을 개시하는가”를 판정한 결과입니다.</p>
+    <div class="code">
+      <div class="head"><span>chart_check score sample/pairs.jsonl sample/predictions.csv</span><button class="copy">복사</button></div>
+<pre><code>- 쌍 15개 · 정확도 100% · 정밀도 100% · 재현율 100% · F1 1.00
+- AUC 1.00
+| 같은 문헌 | 5 | 100% |  | 무작위 다른 문헌 | 5 | 100% |  | 어려운 다른 문헌 | 5 | 100% |
+⚠ 모두 맞혔다면 평가 세트가 너무 쉬울 수 있습니다. 같은 분류코드(CPC)·같은 출원인의 문헌으로 어려운 쌍을 늘리세요.
+⚠ 쌍이 15개입니다. 모델·프롬프트를 비교하려면 수백 쌍 이상이 필요합니다.</code></pre>
+    </div>
+    <div class="note"><b>만점을 믿지 않는 이유</b> — 분야가 다른 문헌끼리는 누구나 맞힙니다. 실제로 가장 헷갈린 쌍은 “문서 요약 청구항 × 출원발명의 설명”(문장 분할·유사도 선택이라는 겉모습이 닮음)으로, 점수 0.30을 주고 0으로 판정했습니다. 실무 평가 세트는 내 사건과 같은 분류코드의 문헌으로 어려운 쌍을 수백 개 만들어야 LLM·프롬프트·모델 사이의 차이가 드러납니다.</div>
+  </section>
+
+  <!-- 7 -->
+  <section id="s7">
+    <h2><span class="no">07</span>플랫폼별 설정</h2>
+    <p>스킬 본문은 약 2,400자라 네 플랫폼 모두 지침 칸에 들어갑니다. 자세한 단계는 <a href="templates/platforms.md">platforms.md</a>.</p>
+    <ol class="steps">
+      <li><b>Claude</b><b>프로젝트</b>: 지침에 SKILL.md 본문, 지식에 관심 특허 전문·분야 용어집·지난 차트 예시 → 분야별 작업 공간. <b>스킬</b>: 설정의 스킬 메뉴(Customize → Skills)에 <code>claim-chart-fto.zip</code>. 코드 실행을 켜면 스킬이 <code>pairkit</code>·<code>chart_check</code>를 직접 돌립니다. 대량 작업은 Claude Code(<code>~/.claude/skills/</code>).</li>
+      <li><b>ChatGPT</b>프로젝트(또는 GPT) 지침에 본문, 파일에 두 스크립트와 관심 특허. 데이터 분석(코드 실행)이 켜져 있으면 “bundle → 차트 → verify”를 한 번에 요청합니다.</li>
+      <li><b>Gemini</b>스킬 메뉴에 ZIP을 올리고 <code>/claim-chart-fto</code>(전환 전이면 Gem). 비교 특허가 많으면 NotebookLM에 모아 두고 구성요소별 근거 문장을 찾는 데 씁니다.</li>
+      <li><b>Microsoft 365 Copilot</b>Copilot → <b>New agent</b> → <b>Skip to configure</b>. 이름(30자), 설명(1,000자), 지침(8,000자)에 본문, <b>Knowledge</b>에 특허·제품 사양서 SharePoint 폴더(사용자가 원래 볼 수 있는 문서만 참조), “Create documents, charts, and code”(코드 해석기) 켜기 → <b>Try it</b>에서 양성·음성 대조로 시험 → 팀 공유. 업무 흐름이 필요하면 Copilot Studio로 복사.</li>
+    </ol>
+    <div class="code">
+      <div class="head"><span>어디서나 — 요청 예</span><button class="copy">복사</button></div>
+<pre><code>/claim-chart-fto
+목적: FTO(침해 위험)
+청구항: KR 10-2025-0013094 청구항 1 (관심특허.txt 첨부)
+대상 문서: 우리 제품 기술 설명서 (제품설명.txt 첨부)
+먼저 양성 대조(관심 특허 자신의 설명)로 확인한 뒤 차트를 만들고, 끝나면 chart_check로 인용을 점검해 줘.</code></pre>
+    </div>
+  </section>
+
+  <!-- 8 -->
+  <section id="s8">
+    <h2><span class="no">08</span>분야별 특화와 미세 조정</h2>
+
+    <h3>세 가지 수준</h3>
+    <div class="grid3">
+      <div class="box"><div class="tag">바로</div><h4>맥락 특화</h4><p>분야별 프로젝트·에이전트에 용어집, 지난 차트 예시 2~3개, 분야의 판단 기준(예: 수치 한정 해석)을 넣습니다. 가중치는 그대로, 효과는 즉시.</p></div>
+      <div class="box"><div class="tag">측정</div><h4>평가 세트</h4><p>같은 분류코드 문헌 수십~수백 건으로 <code>pairs</code> → 모델·프롬프트별 <code>score</code>. 바꾼 것이 실제로 나아졌는지 숫자로 확인.</p></div>
+      <div class="box"><div class="tag">학습</div><h4>소형 모델 미세 조정</h4><p>대량 선별 점수용 교차 인코더(출원발명 방식)와 임베딩 모델을 내 PC·서버에서 학습. 가중치를 내가 소유.</p></div>
+    </div>
+
+    <h3>2026년 11월, 대형 LLM 미세 조정의 사정</h3>
+    <div class="tbl"><table>
+      <thead><tr><th>경로</th><th>현재 상황</th><th>이 작업에서</th></tr></thead>
+      <tbody>
+        <tr><th>OpenAI 셀프서비스 미세 조정</th><td>2026-05-07부터 처음 쓰는 조직은 작업 생성 불가, 07-02부터 최근 60일 사용이 없는 조직도 불가, <b>2027-01-06부터 기존 고객도 새 작업 불가</b>. 학습된 모델은 기반 모델이 내려갈 때까지만 사용</td><td>새로 시작하지 않음</td></tr>
+        <tr><th>Vertex AI · Gemini 지도 미세 조정</th><td>Gemini 2.5 계열 중심. 3.x 모델의 지도 미세 조정은 2026년 5월 기준 제공되지 않았고, 2.5 계열 튜닝 모델의 10월 종료 안내가 개발자 포럼에 공유됨</td><td>도입 전 지원 모델·종료일 확인</td></tr>
+        <tr><th>Amazon Bedrock · Claude</th><td>공개 자료 기준 미세 조정은 Claude 3 Haiku에 제공(2024)되었고, 최신 Claude 모델은 미세 조정 대신 프롬프트·스킬로 특화</td><td>프로젝트·스킬로 특화</td></tr>
+        <tr><th>Microsoft Foundry (Azure OpenAI)</th><td>GPT 계열 미세 조정 제공. 기반 모델 수명 주기에 따라 학습 모델도 종료</td><td>조직이 Azure를 쓰면 검토</td></tr>
+        <tr><th><b>공개 소형 모델 직접 학습</b></th><td>교차 인코더(BERT 계열)·임베딩 모델을 Hugging Face 라이브러리로 학습, 가중치 보관, 사내망 실행</td><td><b>권장</b> — 출원발명 방식 그대로, 기밀 유지</td></tr>
+      </tbody>
+    </table></div>
+    <div class="note"><b>미세 조정을 어디에 둘 것인가</b> — 처음에는 “분야별로 대형 LLM을 파인튜닝한다”는 그림이 자연스럽습니다. 그러나 대형 모델의 미세 조정 창구는 열렸다 닫히기를 반복하고, 학습한 모델은 기반 모델이 내려가면 함께 사라집니다. 그래서 <b>가중치 학습은 내가 소유할 수 있는 소형 모델</b>(대량 선별 점수)에 두고, <b>대형 LLM은 맥락 특화</b>(프로젝트·스킬·에이전트)로 정밀 판단과 설명을 맡기는 구성이 오래갑니다. 출원발명의 BERT 교차 인코더가 바로 그 소형 모델 자리에 들어갑니다.</div>
+
+    <h3>참고 코드 (<code>finetune/</code>)</h3>
+    <div class="code">
+      <div class="head"><span>train_cross_encoder.py — 교대 배치 학습의 핵심</span><button class="copy">복사</button></div>
+<pre><code>dl1 = DataLoader(label1_pairs, batch_size=8, shuffle=True, collate_fn=collate)   # 같은 문헌 쌍
+dl2 = DataLoader(label0_pairs, batch_size=8, shuffle=True, collate_fn=collate)   # 다른 문헌 쌍
+for epoch in range(15):
+    for b1, b2 in zip(dl1, dl2):                          # 두 그룹을 번갈아
+        loss = (model(**b1).loss + model(**b2).loss) / 2  # 두 손실의 평균
+        loss.backward(); opt.step(); sched.step(); opt.zero_grad()
+# 검증은 특허 단위로 분리 — 같은 특허의 문장이 학습·검증에 함께 들어가지 않게</code></pre>
+    </div>
+    <p><code>train_embedding.py</code>는 <code>pairs --triplets</code>의 (청구항, 같은 문헌 설명, 어려운 다른 문헌 설명)으로 임베딩 모델을 학습합니다. 한 배치 안의 다른 문헌이 모두 음성이 되는 손실(MultipleNegativesRankingLoss)이라 자동 레이블 규칙을 대량으로 쓰는 셈입니다. 두 파일은 참고 구현으로, 이 핸드북을 만든 환경에서는 모델 내려받기가 막혀 문법 검사까지만 했습니다. 내 PC나 Colab에서 <code>pip install torch transformers sentence-transformers</code> 후 실행하세요.</p>
+  </section>
+
+  <!-- 9 -->
+  <section id="s9">
+    <h2><span class="no">09</span>주의할 점</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>상황</th><th>주의할 점과 바로잡는 방법</th></tr></thead>
+      <tbody>
+        <tr><th>LLM 차트를 그대로 의견서에 쓸 때</th><td>차트는 1차 자료입니다. 인용 점검을 통과해도 해석의 옳고 그름은 변리사가 확인합니다.</td></tr>
+        <tr><th>미공개 제품 사양을 올릴 때</th><td>영업비밀입니다. 학습에 쓰지 않는 업무용 요금제·사내 에이전트를 쓰거나, <code>bundle</code>로 필요한 문단만 보냅니다.</td></tr>
+        <tr><th>출원 중인 청구항으로 FTO를 볼 때</th><td>등록 청구항은 달라질 수 있습니다. 공개 출원은 위험 감시용으로, 판단은 등록 청구항으로 다시 합니다.</td></tr>
+        <tr><th>제품 설명서만 보고 결론 낼 때</th><td>문서와 실제 동작이 다를 수 있습니다. 차트에 “문서 기준”임을 적고 실물·소스 확인을 따로 합니다.</td></tr>
+        <tr><th>균등을 LLM에 맡길 때</th><td>균등은 다섯 요건을 따지는 법률 판단입니다. 스킬은 후보만 표시하고 판단은 사람이 합니다.</td></tr>
+        <tr><th>글자 유사도로 결론 낼 때</th><td>같은 뜻을 다른 말로 쓰면 점수가 낮습니다. 유사도는 후보 좁히기에만 씁니다.</td></tr>
+        <tr><th>어려운 음성을 그대로 학습할 때</th><td>같은 패밀리·인용 문헌은 실제로 개시 관계일 수 있습니다. 유사도가 높은 음성은 눈으로 확인합니다.</td></tr>
+        <tr><th>학습·검증을 쌍 단위로 섞을 때</th><td>같은 특허 문장이 양쪽에 들어가 점수가 부풀려집니다. 특허 단위로 나눕니다.</td></tr>
+        <tr><th>작은 평가 세트의 만점</th><td>15쌍 만점은 우연·쉬운 문제일 수 있습니다. 같은 분야 수백 쌍으로 다시 잽니다.</td></tr>
+        <tr><th>그럴듯한 성능 그래프</th><td>AI가 만든 “하이퍼파라미터별 시뮬레이션”은 실험값이 아닙니다. 성능은 실제로 학습·평가한 값만 씁니다.</td></tr>
+        <tr><th>PDF 공보 텍스트</th><td>줄바꿈 때문에 낱말이 붙거나 떨어질 수 있습니다. KIPRIS·USPTO 전문 텍스트·XML을 권장합니다.</td></tr>
+        <tr><th>이 방법을 상업적으로 쓸 때</th><td>이 편의 텍스트 쌍 방법은 작성자의 특허출원(공개 10-2025-0013094)에 기초합니다. 핸드북은 CC BY-NC로 공개되며, 상업적 실시는 별도로 협의하세요.</td></tr>
+      </tbody>
+    </table></div>
+
+    <div class="btns">
+      <a class="btn primary" href="downloads/patent-pair-kit.zip" download>전체 템플릿 내려받기 (ZIP)</a>
+      <a class="btn" href="downloads/claim-chart-fto.zip" download>스킬만 (ZIP)</a>
+      <a class="btn" href="templates/">파일 하나씩 보기</a>
+    </div>
+  </section>
+
+  <!-- 10 -->
+  <section id="s10">
+    <h2><span class="no">부록</span>출처</h2>
+    <ul>
+      <li>이진수, 「인공신경망 및 텍스트 쌍 임베딩을 이용한 특허 분석 모델의 생성 방법, 특허 분석 방법 및 컴퓨팅 장치」, 특허출원 10-2024-0075102 (2024. 6. 10., 우선권 10-2023-0093439), 공개특허 10-2025-0013094 (2025. 1. 31.) — 청구항 1~14, 실험예 [0127]~[0161]</li>
+      <li>OpenAI, <a href="https://developers.openai.com/api/docs/deprecations">Deprecations — Update to OpenAI's self-serve fine-tuning</a> (2026. 11. 7. 확인)</li>
+      <li>Developers Digest, <a href="https://www.developersdigest.tech/blog/openai-fine-tuning-shutdown-alternatives">OpenAI Is Winding Down Fine-Tuning</a> (2026. 10.)</li>
+      <li>Google Cloud, <a href="https://docs.cloud.google.com/vertex-ai/generative-ai/docs/models/gemini-use-supervised-tuning">Tune Gemini models by using supervised fine-tuning</a> · Google Developer Forums, <a href="https://discuss.google.dev/t/when-will-supervised-fine-tuning-be-available-for-gemini-3-x-models-on-vertex-ai/346487">SFT for Gemini 3.x on Vertex AI</a></li>
+      <li>AWS, <a href="https://aws.amazon.com/blogs/aws/fine-tuning-for-anthropics-claude-3-haiku-model-in-amazon-bedrock-is-now-generally-available">Fine-tuning for Anthropic's Claude 3 Haiku in Amazon Bedrock</a></li>
+      <li>Microsoft, <a href="https://learn.microsoft.com/en-us/microsoft-365-copilot/extensibility/agent-builder-build-agents">Build agents with Agent Builder in Microsoft 365 Copilot</a> · <a href="https://learn.microsoft.com/en-gb/azure/foundry/openai/how-to/fine-tuning">Microsoft Foundry fine-tuning</a></li>
+      <li>T. Wolf 외, <a href="https://arxiv.org/abs/1910.03771">HuggingFace's Transformers</a> (arXiv:1910.03771) — 명세서 실험 라이브러리</li>
+      <li>N. Reimers, I. Gurevych, <a href="https://arxiv.org/abs/1908.10084">Sentence-BERT</a> (arXiv:1908.10084) · H. Bekamiri 외, <a href="https://arxiv.org/abs/2103.11933">PatentSBERTa</a> (arXiv:2103.11933)</li>
+    </ul>
+    <p>함께 읽기: <a href="../kipris-plus/">10편 KIPRIS Plus API</a>(공보 수집) · <a href="../case-study/">09편 판례 리서치</a> · <a href="../cite-check/">07편 인용 검증</a> · <a href="../council/">11편 AI 합의 협의체</a></p>
+  </section>
+
+  <footer>
+    작성: 이진수 (변리사) · 2026. 11. 7. · CC BY-NC 4.0<br>
+    작성자의 특허출원과 관련 설명 자료를 바탕으로 생성형 AI의 도움을 받아 설계·보강했으며, 사람이 검토했습니다. 이 문서와 도구의 출력은 법률 의견이 아닙니다. 오류 제보는 <a href="https://github.com/sonovman/ai-practice-handbooks/issues">Issues</a>로 남겨 주세요.
+  </footer>
+</main>
+</div>
+
+<script>
+  document.querySelectorAll('.copy').forEach(function (b) {
+    b.addEventListener('click', function () {
+      navigator.clipboard.writeText(b.closest('.code').querySelector('pre').innerText).then(function () {
+        b.textContent = '복사됨'; setTimeout(function () { b.textContent = '복사'; }, 1500);
+      });
+    });
+  });
+  var links = [].slice.call(document.querySelectorAll('.side a'));
+  var io = new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+      if (e.isIntersecting) links.forEach(function (a) { a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id); });
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  document.querySelectorAll('main section[id]').forEach(function (s) { io.observe(s); });
+</script>
+</body>
+</html>

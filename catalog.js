@@ -260,8 +260,25 @@ window.CATALOG = [
     ]
   },
   {
-    id: "excel-analysis",
+    id: "patent-pair",
     no: "15",
+    category: "특허",
+    title: "텍스트 쌍 특허 분석을 범용 LLM에서 — 유사 특허 판별과 FTO",
+    subtitle: "청구항 × 발명의 설명, 구성요소별 근거 인용, 모든 구성요소 원칙",
+    summary: "청구항과 발명의 설명을 짝지은 텍스트 쌍으로 특허를 판단하는 출원발명(공개 10-2025-0013094)의 아이디어를 Claude·ChatGPT·Gemini·Microsoft 365 Copilot에서 유사 특허 판별과 FTO에 쓰는 방법. 전처리·클레임 차트·인용 점검 도구, 자동 레이블 평가 세트, 소형 모델 미세 조정 경로를 담았습니다.",
+    reader: "변리사·특허 담당자, 특허 분석 도구 개발자",
+    version: "1.0",
+    date: "2026-11-07",
+    length: "읽기 약 30분",
+    status: "published",
+    links: [
+      { label: "화면으로 읽기", href: "patent-pair/", primary: true },
+      { label: "템플릿 내려받기", href: "patent-pair/templates/" }
+    ]
+  },
+  {
+    id: "excel-analysis",
+    no: "16",
     category: "데이터",
     title: "엑셀 데이터를 AI로 분석하고 그래프까지 받기",
     subtitle: "준비 중",
