@@ -1,0 +1,7 @@
+{
+  "mcpServers": {
+    "old-remote": { "httpUrl": "https://example.com/mcp" },
+    "relative": { "command": "node", "args": ["index.js"] },
+    "leaky": { "serverUrl": "https://api.example.com/mcp", "headers": { "Authorization": "Bearer abcdefghijklmnopqrstuvwxyz123456" } }
+  }
+}
