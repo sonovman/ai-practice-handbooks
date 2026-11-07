@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500;700&display=swap">
+<style>
+  html, body { margin: 0; background: #F5EBD7; }
+  #stage { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: #F5EBD7;
+           font-family: "Noto Sans KR", sans-serif; }
+  .scene { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+  .cap { position: absolute; left: 8%; right: 8%; bottom: 6%; text-align: center; font-size: 46px; line-height: 1.35;
+         color: #2b2b2b; background: rgba(245,235,215,.88); border-radius: 14px; padding: 14px 24px; }
+</style>
+</head>
+<body>
+<div id="stage" data-composition-id="whiteboard" data-no-timeline data-start="0" data-duration="12.500" data-width="1920" data-height="1080" data-fps="30">
+  <video id="scene-01-video" class="scene clip" data-start="0.000" data-duration="12.500" data-track-index="0" src="media/scene-01-whiteboard.mp4" muted playsinline></video>
+  <audio id="scene-01-voice" data-start="0.000" data-duration="12.000" data-track-index="1" data-volume="1" src="media/scene-01.wav"></audio>
+  <div id="cap1" class="cap clip" data-start="0.000" data-duration="4.909" data-track-index="3">작은 원숭이가 바위산 꼭대기에서 바나나를 들고 앉아 있습니다.</div>
+  <div id="cap2" class="cap clip" data-start="4.909" data-duration="3.636" data-track-index="3">그때 큰 원숭이가 달려와 바나나를 낚아챕니다.</div>
+  <div id="cap3" class="cap clip" data-start="8.545" data-duration="3.455" data-track-index="3">구경하던 아이들은 깜짝 놀라 손뼉을 칩니다.</div>
+</div>
+</body>
+</html>

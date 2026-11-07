@@ -294,8 +294,25 @@ window.CATALOG = [
     ]
   },
   {
-    id: "excel-analysis",
+    id: "whiteboard-video",
     no: "17",
+    category: "콘텐츠",
+    title: "AI 화이트보드 애니메이션 영상 자동 제작 — 대본에서 완성 영상까지",
+    subtitle: "목소리를 먼저 만들고, 그 실제 길이에 손그림을 맞춘다",
+    summary: "오픈소스 srt-whiteboard-animation과 HyperFrames, Gemini TTS를 Google Antigravity에서 엮어 대본 한 장으로 손그림 화이트보드 설명 영상을 만드는 방법. API 키를 키체인에 보관하는 법, 자막·그리기 시간 자동 맞춤 도구(wbkit.py), 실제 렌더 시범을 담았습니다.",
+    reader: "설명·강의 영상을 직접 만드는 사람, 16편으로 Antigravity를 설치한 초보자",
+    version: "1.0",
+    date: "2026-11-07",
+    length: "읽기 약 30분",
+    status: "published",
+    links: [
+      { label: "화면으로 읽기", href: "whiteboard-video/", primary: true },
+      { label: "템플릿 내려받기", href: "whiteboard-video/templates/" }
+    ]
+  },
+  {
+    id: "excel-analysis",
+    no: "18",
     category: "데이터",
     title: "엑셀 데이터를 AI로 분석하고 그래프까지 받기",
     subtitle: "준비 중",

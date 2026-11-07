@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>화이트보드 영상 템플릿</title>
+<link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+<div class="bar"><div class="bar-in">
+  <a class="brand" href="../../">AI 실무 핸드북</a>
+  <div class="links"><a href="../">← 본문으로</a></div>
+</div></div>
+<div class="wrap">
+  <div class="eyebrow">핸드북 17 · 자료</div>
+  <h1>템플릿 내려받기</h1>
+  <p class="lead"><code>starter</code> 폴더에는 점(.)으로 시작하는 <code>.agents</code> 폴더와 <code>.gitignore</code>가 있어 파일 하나씩 받기보다 <a href="../downloads/whiteboard-video-kit.zip" download>전체(ZIP)</a>를 받는 편이 확실합니다. 압축을 풀고 <code>starter</code> 폴더를 Antigravity에서 연 뒤 <code>python tools/setup_skills.py</code>부터 실행하세요.</p>
+
+  <h2>작업 폴더 (starter)</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>파일</th><th>내용</th></tr></thead>
+    <tbody>
+      <tr><th><a href="starter/AGENTS.md" download>AGENTS.md</a></th><td>항상 적용되는 규칙 — 한국어, 단계마다 확인, API 키를 읽거나 출력하지 않기</td></tr>
+      <tr><th><a href="starter/.agents/rules/secret-handling.md" download>.agents/rules/secret-handling.md</a></th><td>규칙(model_decision) — 키·비밀 정보를 다룰 때</td></tr>
+      <tr><th><a href="starter/.agents/skills/whiteboard-video/SKILL.md" download>.agents/skills/whiteboard-video/SKILL.md</a></th><td>스킬 <code>/whiteboard-video</code> — 대본부터 조립까지 0~8단계 진행</td></tr>
+      <tr><th><a href="starter/tools/wbkit.py" download>tools/wbkit.py</a></th><td>keycheck · tts · srt · sync · assemble · hyperframes (표준 라이브러리 + ffmpeg)</td></tr>
+      <tr><th><a href="starter/tools/test_wbkit.py" download>tools/test_wbkit.py</a></th><td>시험 13개 — API를 부르지 않고 도구를 확인</td></tr>
+      <tr><th><a href="starter/tools/setup_skills.py" download>tools/setup_skills.py</a></th><td>srt-whiteboard-animation을 <code>.agents/skills/</code>에 설치하고 한국어로 쓰도록 수정</td></tr>
+      <tr><th><a href="starter/tools/set_key.py" download>tools/set_key.py</a></th><td>Gemini API 키를 운영체제 키체인에 저장 · 확인 · 삭제</td></tr>
+      <tr><th><a href="starter/script.md" download>script.md</a></th><td>대본 예시(2장면)</td></tr>
+      <tr><th><a href="starter/.env.example" download>.env.example</a> · <a href="starter/.gitignore" download>.gitignore</a></th><td>.env를 쓸 때의 견본, 키·영상·가상 환경을 저장소에서 빼는 목록</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>시범 자료 (sample)</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>파일</th><th>내용</th></tr></thead>
+    <tbody>
+      <tr><th><a href="sample/script.md" download>script.md</a> · <a href="sample/narration.srt" download>narration.srt</a> · <a href="sample/scenes.json" download>scenes.json</a></th><td>1장면 대본과 wbkit.py가 만든 자막·장면 정보</td></tr>
+      <tr><th><a href="sample/scene-01-monkey.annotation.json" download>scene-01-monkey.annotation.json</a></th><td>sync로 시간을 맞춘 한국어 그리기 주석</td></tr>
+      <tr><th><a href="sample/hyperframes-index.html" download>hyperframes-index.html</a></th><td>wbkit.py hyperframes가 만든 구성 파일(lint 0건)</td></tr>
+      <tr><th><a href="sample/demo-hyperframes.mp4">demo-hyperframes.mp4</a></th><td>HyperFrames 렌더 결과 12.5초(음성은 무음 자리표시)</td></tr>
+      <tr><th><a href="sample/render-frames.jpg">render-frames.jpg</a> · <a href="sample/frame-assemble-6s.jpg">frame-assemble-6s.jpg</a> · <a href="sample/frame-hyperframes-6s.jpg">frame-hyperframes-6s.jpg</a></th><td>렌더·조립 화면 캡처</td></tr>
+    </tbody>
+  </table></div>
+  <p class="cap">시범 그림은 <a href="https://github.com/geeklee/srt-whiteboard-animation">srt-whiteboard-animation</a>의 예제(MIT)입니다.</p>
+</div>
+</body>
+</html>

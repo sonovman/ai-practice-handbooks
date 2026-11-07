@@ -1,0 +1,16 @@
+[
+ {
+  "id": "scene-01",
+  "title": "원숭이 산의 바나나",
+  "audio": "scene-01.wav",
+  "audioSec": 12.0,
+  "start": 0.0,
+  "sceneDurationMs": 12500,
+  "subtitles": [
+   "작은 원숭이가 바위산 꼭대기에서 바나나를 들고 앉아 있습니다.",
+   "그때 큰 원숭이가 달려와 바나나를 낚아챕니다.",
+   "구경하던 아이들은 깜짝 놀라 손뼉을 칩니다."
+  ],
+  "video": "scene-01-whiteboard.mp4"
+ }
+]

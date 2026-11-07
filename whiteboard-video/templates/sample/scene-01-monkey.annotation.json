@@ -1,0 +1,107 @@
+{
+  "sceneId": "scene-01",
+  "canvas": {
+    "width": 1672,
+    "height": 941
+  },
+  "storyBasis": "작은 원숭이가 바나나를 들고 있고, 큰 원숭이가 빼앗고, 아이들이 놀라 구경한다.",
+  "sceneDurationMs": 12500,
+  "elements": [
+    {
+      "id": "left",
+      "label": "바위산과 작은 원숭이",
+      "sequence": 1,
+      "narrativeRole": "장면 깔기",
+      "subtitle": "작은 원숭이가 바위산 꼭대기에서 바나나를 들고 앉아 있습니다.",
+      "type": "structure",
+      "region": {
+        "x": 20,
+        "y": 120,
+        "width": 540,
+        "height": 780
+      },
+      "reveal": {
+        "direction": "top_to_bottom",
+        "startMs": 200,
+        "durationMs": 4609,
+        "maskPaddingPx": 22,
+        "protectedRegions": []
+      },
+      "handPath": {
+        "start": [
+          290,
+          130
+        ],
+        "end": [
+          290,
+          890
+        ],
+        "easing": "easeInOut"
+      }
+    },
+    {
+      "id": "center",
+      "label": "바나나를 빼앗는 큰 원숭이",
+      "sequence": 2,
+      "narrativeRole": "사건",
+      "subtitle": "그때 큰 원숭이가 달려와 바나나를 낚아챕니다.",
+      "type": "character",
+      "region": {
+        "x": 560,
+        "y": 100,
+        "width": 560,
+        "height": 800
+      },
+      "reveal": {
+        "direction": "top_to_bottom",
+        "startMs": 5109,
+        "durationMs": 3336,
+        "maskPaddingPx": 22,
+        "protectedRegions": []
+      },
+      "handPath": {
+        "start": [
+          840,
+          110
+        ],
+        "end": [
+          840,
+          890
+        ],
+        "easing": "easeInOut"
+      }
+    },
+    {
+      "id": "right",
+      "label": "구경하는 아이들",
+      "sequence": 3,
+      "narrativeRole": "반응",
+      "subtitle": "구경하던 아이들은 깜짝 놀라 손뼉을 칩니다.",
+      "type": "character",
+      "region": {
+        "x": 1120,
+        "y": 140,
+        "width": 532,
+        "height": 760
+      },
+      "reveal": {
+        "direction": "top_to_bottom",
+        "startMs": 8745,
+        "durationMs": 3155,
+        "maskPaddingPx": 22,
+        "protectedRegions": []
+      },
+      "handPath": {
+        "start": [
+          1380,
+          150
+        ],
+        "end": [
+          1380,
+          880
+        ],
+        "easing": "easeInOut"
+      }
+    }
+  ]
+}
