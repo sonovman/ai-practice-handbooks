@@ -311,8 +311,25 @@ window.CATALOG = [
     ]
   },
   {
-    id: "excel-analysis",
+    id: "ai-polish",
     no: "18",
+    category: "글쓰기",
+    title: "AI 티 지우는 윤문 스킬 — 만들고, 설치하고, 점검까지",
+    subtitle: "적게 고치고, 무엇이 바뀌었는지 확인할 수 있는 윤문 절차",
+    summary: "한국어 im-not-ai, 영어 humanizer, 한국어 AI 문체 연구 KatFishNet을 바탕으로 의미를 지키며 AI 티를 덜어 내는 윤문 스킬을 Google Antigravity에서 구축하는 방법. Claude·ChatGPT·Gemini·Microsoft 365 Copilot 설정, 비밀 문서용 로컬 Ollama 구성, 인용·수치·한정 표현을 대조하는 점검 도구를 담았습니다.",
+    reader: "AI 초안을 보고서·의견서·칼럼으로 다듬는 실무자, 특허·법률 문서를 다루는 사람",
+    version: "1.0",
+    date: "2026-11-07",
+    length: "읽기 약 30분",
+    status: "published",
+    links: [
+      { label: "화면으로 읽기", href: "ai-polish/", primary: true },
+      { label: "템플릿 내려받기", href: "ai-polish/templates/" }
+    ]
+  },
+  {
+    id: "excel-analysis",
+    no: "19",
     category: "데이터",
     title: "엑셀 데이터를 AI로 분석하고 그래프까지 받기",
     subtitle: "준비 중",

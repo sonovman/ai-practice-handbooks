@@ -23,6 +23,7 @@
 | 15 | 텍스트 쌍 특허 분석을 범용 LLM에서 — 유사 특허 판별과 FTO | [화면](https://sonovman.github.io/ai-practice-handbooks/patent-pair/) | [템플릿](patent-pair/templates/) |
 | 16 | Google Antigravity 입문 — 에이전트에게 일을 맡기는 개발 환경 | [화면](https://sonovman.github.io/ai-practice-handbooks/antigravity/) | [템플릿](antigravity/templates/) |
 | 17 | AI 화이트보드 애니메이션 영상 자동 제작 — 대본에서 완성 영상까지 | [화면](https://sonovman.github.io/ai-practice-handbooks/whiteboard-video/) | [템플릿](whiteboard-video/templates/) |
+| 18 | AI 티 지우는 윤문 스킬 — 만들고, 설치하고, 점검까지 | [화면](https://sonovman.github.io/ai-practice-handbooks/ai-polish/) | [템플릿](ai-polish/templates/) |
 
 ## 폴더 구성
 
@@ -51,6 +52,7 @@ ai-practice-handbooks/
 ├── patent-pair/        15편 (templates/ 스킬·pairkit.py·chart_check.py·미세 조정 참고 코드·시범 자료·플랫폼 설정, downloads/ ZIP 2종)
 ├── antigravity/        16편 (templates/ starter 작업 폴더·MCP 일정 서버·check_workspace.py·요청문, downloads/ ZIP)
 ├── whiteboard-video/   17편 (templates/ starter 작업 폴더·wbkit.py·키 저장 도구·시범 자료, downloads/ ZIP)
+├── ai-polish/          18편 (templates/ starter 작업 폴더·upload 웹 앱용 스킬·polish_check.py·ollama_polish.py·시범 자료, downloads/ ZIP)
 └── data/               공용 자료
 ```
 

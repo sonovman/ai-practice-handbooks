@@ -1,0 +1,9 @@
+# 작업 중인 문서는 저장소에 올리지 않습니다
+inbox/*
+!inbox/.gitkeep
+work/*
+!work/.gitkeep
+_workspace/
+dist/
+__pycache__/
+*.pyc
