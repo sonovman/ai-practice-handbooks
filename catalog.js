@@ -345,8 +345,25 @@ window.CATALOG = [
     ]
   },
   {
-    id: "excel-analysis",
+    id: "exec-brief",
     no: "20",
+    category: "리서치",
+    title: "경영진용 논문·보고서·판례 요약 — 추출, 점검, 결론, 검증",
+    subtitle: "원문 사실을 먼저 뽑고, 증거의 한계를 따지고, 결론부터 1쪽에, 인용·판례번호·용어는 기계로 대조",
+    summary: "학술 논문·연구 보고서·전 세계 판례를 경영진과 전문가가 바로 의사결정에 쓰는 1쪽 브리핑으로 만드는 방법. 분야별 틀과 관할별 판례 구조, Slow Think 기반 증거 한계 점검, 인용·판례번호·전문 용어 대조 도구를 스킬로 구현해 Antigravity·Claude·ChatGPT·Gemini·Microsoft 365 Copilot에서 씁니다.",
+    reader: "논문·보고서·판례를 경영진에게 보고하는 연구·기획·법무·IP 담당자",
+    version: "1.0",
+    date: "2026-11-08",
+    length: "읽기 약 35분",
+    status: "published",
+    links: [
+      { label: "화면으로 읽기", href: "exec-brief/", primary: true },
+      { label: "템플릿 내려받기", href: "exec-brief/templates/" }
+    ]
+  },
+  {
+    id: "excel-analysis",
+    no: "21",
     category: "데이터",
     title: "엑셀 데이터를 AI로 분석하고 그래프까지 받기",
     subtitle: "준비 중",

@@ -1,0 +1,21 @@
+source,target,avoid,note
+prosecution history estoppel,출원경과 금반언|포대금반언,기소 이력 금반언|기소 경과 금반언|소추 이력,특허 출원 절차의 'prosecution'은 형사 '기소'가 아님
+prior art,선행기술,이전 예술|종래 예술|선행 예술,'art'는 기술 분야
+inventive step,진보성,독창성|창의적 단계|발명 단계,EPO·한국 용어
+non-obviousness,비자명성|진보성,명백하지 않음,미국 §103 용어(한국의 진보성에 대응)
+obviousness,자명성|진보성 결여,명백성,
+person having ordinary skill in the art,통상의 기술자|당업자,보통 기술을 가진 사람|평범한 예술가,PHOSITA
+claim construction,청구항 해석|청구범위 해석,청구 구성|주장 구성,
+doctrine of equivalents,균등론,등가 원칙|동등성 교리,
+holding,판시|판단|판결 요지,,판례에서 'holding'은 법원의 판단
+dictum,방론,격언|명언,obiter dictum
+en banc,전원합의체|전원재판부,벤치|앙방,
+remand,환송,송환|재송부,reversed and remanded = 파기환송
+affirm,원심 유지|상고기각|항소기각,,상급심 결론 표현
+dissenting opinion,반대의견,이견서|불만 의견,
+concurring opinion,별개의견|보충의견,동의 의견서,판결 결론에 동의하되 이유가 다른 의견(국내 용어와 1:1 아님)
+injunction,금지명령|침해금지,강제 명령,
+willful infringement,고의 침해,의도적 위반,
+exhaustion,권리소진|소진,고갈|탈진,특허권 소진
+enablement,실시가능 요건|실시가능성,활성화|권한 부여,§112
+written description,명세서 기재요건|서면 기재요건,서면 설명서,§112

@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>경영진 브리핑 템플릿</title>
+<link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+<div class="bar"><div class="bar-in">
+  <a class="brand" href="../../">AI 실무 핸드북</a>
+  <div class="links"><a href="../">← 본문으로</a></div>
+</div></div>
+<div class="wrap">
+  <div class="eyebrow">핸드북 20 · 자료</div>
+  <h1>템플릿 내려받기</h1>
+  <p class="lead"><code>starter</code>에는 점(.)으로 시작하는 <code>.agents</code> 폴더가 있어 <a href="../downloads/exec-brief-kit.zip" download>전체(ZIP)</a>로 받는 편이 확실합니다.</p>
+
+  <h2>바로 붙여 넣는 프롬프트</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>파일</th><th>용도</th></tr></thead>
+    <tbody>
+      <tr><th><a href="starter/prompts/01-exec-brief-master.md">01-exec-brief-master.md</a></th><td>논문·보고서 → 1쪽 경영진 브리핑 (분야 판별·사실표·점검·검증 포함)</td></tr>
+      <tr><th><a href="starter/prompts/02-case-brief-master.md">02-case-brief-master.md</a></th><td>판결문 → 경영진·법무 브리핑 (관할 구분형)</td></tr>
+      <tr><th><a href="starter/prompts/03-extract-first.md">03-extract-first.md</a></th><td>추출 먼저, 작성은 나중에 — 긴 문서용 두 단계</td></tr>
+      <tr><th><a href="starter/prompts/04-density.md">04-density.md</a></th><td>밀도 조정(2회까지)</td></tr>
+      <tr><th><a href="starter/prompts/05-verify.md">05-verify.md</a></th><td>검증 질문 단계 + 도구 명령</td></tr>
+      <tr><th><a href="starter/prompts/06-brief-review-meeting.md">06-brief-review-meeting.md</a></th><td>CEO·CFO·CLO/CTO 관점 브리핑 검토</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>웹 앱 업로드용 스킬 (upload)</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>스킬</th><th>Claude.ai · ChatGPT</th><th>Copilot Cowork</th><th>Gemini · 내용 보기</th></tr></thead>
+    <tbody>
+      <tr><th>exec-brief</th><td><a href="upload/exec-brief.zip" download>exec-brief.zip</a></td><td><a href="upload/exec-brief-flat.zip" download>flat.zip</a></td><td><a href="upload/exec-brief/SKILL.md">SKILL.md</a></td></tr>
+      <tr><th>case-brief</th><td><a href="upload/case-brief.zip" download>case-brief.zip</a></td><td><a href="upload/case-brief-flat.zip" download>flat.zip</a></td><td><a href="upload/case-brief/SKILL.md">SKILL.md</a></td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>Antigravity 작업 폴더 (starter)</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>파일</th><th>내용</th></tr></thead>
+    <tbody>
+      <tr><th><a href="starter/AGENTS.md">AGENTS.md</a> · <a href="starter/.agents/rules/legal-citation.md">.agents/rules/legal-citation.md</a></th><td>항상 적용 규칙, 판례 인용 규칙</td></tr>
+      <tr><th><a href="starter/.agents/skills/exec-brief/references/brief-template.md">brief-template</a> · <a href="starter/.agents/skills/exec-brief/references/fact-sheet.md">fact-sheet</a> · <a href="starter/.agents/skills/exec-brief/references/impact-rubric.md">impact-rubric</a></th><td>브리핑 서식, 사실표, 신뢰도·영향 기준</td></tr>
+      <tr><th><a href="starter/.agents/skills/exec-brief/references/frame-medical.md">frame-medical</a> · <a href="starter/.agents/skills/exec-brief/references/frame-ai.md">frame-ai</a> · <a href="starter/.agents/skills/exec-brief/references/frame-social.md">frame-social</a> · <a href="starter/.agents/skills/exec-brief/references/frame-report.md">frame-report</a></th><td>분야별로 뽑을 것과 먼저 의심할 것</td></tr>
+      <tr><th><a href="starter/.agents/skills/case-brief/references/jurisdictions.md">jurisdictions</a> · <a href="starter/.agents/skills/case-brief/references/case-template.md">case-template</a> · <a href="starter/.agents/skills/case-brief/references/risk-rubric.md">risk-rubric</a></th><td>관할별 판례 구조, 판례 브리핑 서식, 위험 등급</td></tr>
+      <tr><th><a href="starter/tools/evidence_check.py" download>evidence_check.py</a> · <a href="starter/tools/cite_check.py" download>cite_check.py</a> · <a href="starter/tools/term_check.py" download>term_check.py</a></th><td>인용·수치 / 판례 번호 / 전문 용어 대조</td></tr>
+      <tr><th><a href="starter/tools/build_upload.py" download>build_upload.py</a> · <a href="starter/tools/test_brief_tools.py" download>test_brief_tools.py</a></th><td>업로드 묶음 만들기 · 시험 11개</td></tr>
+      <tr><th><a href="starter/glossary/patent-legal.csv" download>patent-legal.csv</a> · <a href="starter/glossary/medical.csv" download>medical.csv</a> · <a href="starter/glossary/ai-cs.csv" download>ai-cs.csv</a></th><td>용어집(source·target·avoid·note)</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>시범 자료 (모두 가상)</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>파일</th><th>내용</th></tr></thead>
+    <tbody>
+      <tr><th><a href="sample/paper.txt">paper.txt</a> → <a href="sample/brief-paper.md">brief-paper.md</a></th><td>가상 논문과 COO용 브리핑 · <a href="sample/report-brief-paper.md">대조 보고서(통과)</a></td></tr>
+      <tr><th><a href="sample/judgment-ko.txt">judgment-ko.txt</a></th><td>가상 특허 침해 항소심 판결</td></tr>
+      <tr><th><a href="sample/case-brief-good.md">case-brief-good.md</a> · <a href="sample/case-brief-bad.md">case-brief-bad.md</a></th><td>좋은·나쁜 판례 브리핑 · <a href="sample/report-cite-good.md">인용 대조(확인 필요)</a> · <a href="sample/report-cite-bad.md">인용 대조(실패)</a> · <a href="sample/report-evidence-case-bad.md">수치 대조(실패)</a></td></tr>
+      <tr><th><a href="sample/opinion-en-excerpt.txt">opinion-en-excerpt.txt</a></th><td>가상 영문 판결 발췌 · <a href="sample/term-summary-bad.md">오역 요약</a>(<a href="sample/report-term-bad.md">실패</a>) · <a href="sample/term-summary-good.md">바른 요약</a>(<a href="sample/report-term-good.md">통과</a>)</td></tr>
+    </tbody>
+  </table></div>
+</div>
+</body>
+</html>

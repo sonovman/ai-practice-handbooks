@@ -1,0 +1,2 @@
+[Fictional opinion excerpt for the handbook demo — not a real case]
+The district court's claim construction is affirmed. Because the patentee narrowed claim 1 during prosecution to overcome the prior art, prosecution history estoppel bars recapture of the surrendered subject matter under the doctrine of equivalents. The holding is limited to the single-sensor configuration; we express no view on non-obviousness.

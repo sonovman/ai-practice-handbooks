@@ -1,0 +1,14 @@
+source,target,avoid,note
+hazard ratio,위험비,위험률|위해율,'hazard rate(위험률)'와 다른 개념
+odds ratio,오즈비|교차비,확률비|승산율,
+relative risk,상대위험도|상대위험,상대적 위험성,
+absolute risk reduction,절대위험감소,절대 위험 감소율,
+confidence interval,신뢰구간,확신 구간|신뢰 범위,
+primary endpoint,1차 평가변수|1차 유효성 평가변수,주요 끝점|1차 종점,
+surrogate endpoint,대리 평가변수|대리 표지자,대리 끝점,임상 결과 자체가 아님
+adverse event,이상사례,부작용,인과관계 무관(인과 있으면 이상반응)
+randomized controlled trial,무작위배정 비교임상시험|무작위대조시험,무작위 통제 실험,
+intention-to-treat,치료의향분석|ITT 분석,치료 의도 분석,
+number needed to treat,치료필요수|NNT,치료 필요 숫자,
+standard of care,표준치료,관리 기준|돌봄 기준,
+statistically significant,통계적으로 유의,의미 있게 큰,유의성은 효과 크기가 아님

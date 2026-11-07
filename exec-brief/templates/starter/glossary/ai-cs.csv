@@ -1,0 +1,11 @@
+source,target,avoid,note
+state-of-the-art,최고 성능|SOTA,예술의 상태|최첨단 예술,
+benchmark contamination,벤치마크 오염|평가 데이터 오염,기준점 감염,평가 문제가 학습 데이터에 섞임
+ablation study,구성요소 제거 실험|어블레이션 실험,절제 연구|제거 연구,
+fine-tuning,미세조정|파인튜닝,정밀 조율|세밀 조정,
+inference,추론,,모델 실행 단계(통계의 '추정'과 구분)
+latency,지연 시간|응답 지연,잠복기|잠재기,
+throughput,처리량,통과량|산출량,
+parameters,매개변수|파라미터,인자 수,모델 크기 단위
+baseline,기준 모델|베이스라인,기초선|기본선,
+reproducibility,재현성,복제 가능성,

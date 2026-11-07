@@ -1,0 +1,7 @@
+inbox/*
+!inbox/.gitkeep
+work/*
+!work/.gitkeep
+dist/
+__pycache__/
+*.pyc
