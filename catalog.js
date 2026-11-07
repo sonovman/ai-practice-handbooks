@@ -328,8 +328,25 @@ window.CATALOG = [
     ]
   },
   {
-    id: "excel-analysis",
+    id: "slow-think",
     no: "19",
+    category: "프롬프트",
+    title: "Slow Think와 AI 회의 — 정확도를 올리는 생각 설계",
+    subtitle: "마법의 문구 대신 생각 설정과 점검 항목, 연기 대신 독립 의견과 보류 사유",
+    summary: "Slow Think 기법과 AI 회의 모듈화 전략을 2026년 추론 모델 기준으로 다시 설계했습니다. 전제 점검·질문 다듬기·독립 의견→반론→의장 종합·원문 근거 대조형 논문 요약을 스킬과 도구로 만들어 Antigravity·Claude·ChatGPT·Gemini·Microsoft 365 Copilot에서 쓰는 방법을 담았습니다.",
+    reader: "기획안·전략·논문 검토에 AI를 쓰는 실무자와 관리자",
+    version: "1.0",
+    date: "2026-11-08",
+    length: "읽기 약 30분",
+    status: "published",
+    links: [
+      { label: "화면으로 읽기", href: "slow-think/", primary: true },
+      { label: "템플릿 내려받기", href: "slow-think/templates/" }
+    ]
+  },
+  {
+    id: "excel-analysis",
+    no: "20",
     category: "데이터",
     title: "엑셀 데이터를 AI로 분석하고 그래프까지 받기",
     subtitle: "준비 중",

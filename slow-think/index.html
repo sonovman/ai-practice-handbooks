@@ -1,0 +1,439 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Slow Think와 AI 회의</title>
+<meta name="description" content="AI의 정확도를 올리는 Slow Think 기법과 AI 회의 모듈화 전략을 2026년 추론 모델 기준으로 다시 설계했습니다. 전제 점검, 질문 다듬기, 독립 의견·반론·의장 종합, 원문 근거 대조형 논문 요약을 스킬로 만들어 Antigravity·Claude·ChatGPT·Gemini·Copilot에서 쓰는 방법.">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<div class="bar"><div class="bar-in">
+  <a class="brand" href="../">AI 실무 핸드북</a>
+  <div class="links">
+    <a href="templates/">템플릿</a>
+    <a href="https://github.com/sonovman/ai-practice-handbooks">GitHub ↗</a>
+  </div>
+</div></div>
+
+<div class="doc">
+  <aside class="side">
+    <div class="label">차례</div>
+    <ol>
+      <li><a href="#s0">한 줄 결론</a></li>
+      <li><a href="#s1">1. 전체 흐름</a></li>
+      <li><a href="#s2">2. 처음 접근과 바뀐 점</a></li>
+      <li><a href="#s3">3. Slow Think 실전</a></li>
+      <li><a href="#s4">4. 질문 다듬기와 프리모텀</a></li>
+      <li><a href="#s5">5. AI 회의 모듈</a></li>
+      <li><a href="#s6">6. 논문 요약과 근거 대조</a></li>
+      <li><a href="#s7">7. Antigravity에서 구축하기</a></li>
+      <li><a href="#s8">8. Claude · ChatGPT · Gemini · Copilot</a></li>
+      <li><a href="#s9">9. 내 업무에서 검증하기</a></li>
+      <li><a href="#s10">10. 주의할 점</a></li>
+      <li><a href="#s11">부록 · 출처</a></li>
+    </ol>
+  </aside>
+
+<main>
+  <div class="eyebrow">핸드북 19 · 프롬프트</div>
+  <h1>Slow Think와 AI 회의 — 정확도를 올리는 생각 설계</h1>
+  <p class="lead">AI에게 “신중하게 생각하라”고 말하는 <strong>Slow Think</strong>와, AI 안에 기획자·마케터·CFO·CEO를 앉혀 토론시키는 <strong>AI 회의 모듈화</strong>는 실무에서 널리 쓰이는 두 기법입니다. 이 편은 두 기법의 근거를 하나씩 확인해, 2026년 추론 모델 시대에 실제로 효과가 남는 부분만 골라 다시 설계합니다. 결과물은 바로 붙여 넣는 프롬프트, Antigravity·웹 앱용 스킬 네 개, 회의 준비 도구, 원문 근거 대조 도구입니다.</p>
+  <div class="meta">
+    <b>독자</b><span>기획안·전략·논문 검토에 AI를 쓰는 실무자와 관리자, 프롬프트를 “모아서 복사”하는 단계에서 벗어나고 싶은 사람</span>
+    <b>분량</b><span>읽기 약 30분 · 첫 사용까지 약 10분 · 템플릿(프롬프트 10종 · 스킬 4개 · 회의 준비 도구 · 근거 대조 도구 · 시범 자료)</span>
+    <b>판</b><span>1.0 · 2026. 11. 8.</span>
+  </div>
+
+  <section id="s0">
+    <div class="key">
+      <div class="eyebrow">한 줄 결론</div>
+      <p style="font-size:19px;font-weight:600;line-height:1.6;margin:8px 0 10px">마법의 문구보다 앱의 ‘생각’ 설정을 먼저 올리고, “어떻게 생각하라”가 아니라 “무엇을 점검하라”를 지시하세요. 회의는 같은 대화에서 연기시키지 말고 독립 의견 → 반론 → 근거 종합 순서로.</p>
+      <p style="opacity:.75;font-size:15px">Slow Think의 효과는 대부분 ‘전제를 의심하고 제약을 따지게 하는 점검 항목’에서 나옵니다. AI 회의의 효과는 ‘서로 다른 관점이 서로를 보지 않고 먼저 쓰는 것’과 ‘보류 사유를 남기는 것’에서 나옵니다. 둘 다 끝에는 사람이 확인할 사실 목록이 남아야 합니다.</p>
+    </div>
+    <div class="note"><b>무엇을 확인했나</b> — 근거는 공개 연구(2023년 OPRO, 2025년 Wharton Prompting Science Report 2·4, 2025년 다중 에이전트 토론 재평가)와 각 회사의 2026년 11월 공식 도움말로 확인했습니다. 도구(회의 준비·근거 대조·업로드 묶음)는 시험 12개로 동작을 확인했습니다. 3·5장의 Slow Think·회의 결과 예시는 이 핸드북을 작성한 AI(Claude)가 스킬 절차대로 한 번 실행한 것이라 모델 간 정확도 비교 실험은 아닙니다. 내 업무에서의 효과는 9장의 방법으로 직접 비교하세요.</div>
+  </section>
+
+  <!-- 1 -->
+  <section id="s1">
+    <h2><span class="no">01</span>전체 흐름</h2>
+    <div class="graph">
+      <div class="node end"><span class="id">0 설정</span><b>앱의 생각 설정 올리기</b><p>Claude 노력 · ChatGPT Thinking · Gemini 확장 사고 · Copilot Think deeper</p></div>
+      <div class="edge"><span>/ask-better</span></div>
+      <div class="node"><span class="id">1 질문</span><b>빠진 정보 3개 되묻고 질문 다시 쓰기</b><p>목표 · 배경 · 결과물 · 조건 · 하지 말 것</p></div>
+      <div class="edge"><span>/slow-think</span></div>
+      <div class="node"><span class="id">2 점검</span><b>전제 점검표 · 제약 · 프리모텀 · 조건부 결론</b><p>함정 전제를 먼저 바로잡고 분석</p></div>
+      <div class="edge"><span>/ai-meeting (결정이 크면)</span></div>
+      <div class="node"><span class="id">3 회의</span><b>독립 의견 → 반론 전담 → 의장 종합</b><p>가능하면 역할마다 다른 대화·다른 모델 · 다수결 금지 · 보류 사유와 해제 조건</p></div>
+      <div class="edge"><span>/paper-brief · evidence_check.py</span></div>
+      <div class="node"><span class="id">4 근거</span><b>인용·수치를 원문과 기계 대조</b><p>[원문] 사실과 [해석] 제언을 나눔</p></div>
+      <div class="edge"><span>사람</span></div>
+      <div class="node dark"><span class="id">5 결정</span><b>확인할 사실을 확인하고 결정</b><p>AI의 결론은 조건부 제안</p></div>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section id="s2">
+    <h2><span class="no">02</span>처음 접근과 바뀐 점</h2>
+
+    <div class="note"><b>① “Take a deep breath” 문구 → 앱의 생각 설정 + 점검 항목</b> — 처음에는 “Take a deep breath and work through this carefully…” 같은 영문 트리거를 프롬프트 맨 앞에 두는 것이 핵심이라고 보았습니다. 이 문구의 출처는 2023년 DeepMind의 OPRO 연구로, PaLM 2 모델이 초등 수학 문제(GSM8K)에서 “Let's think step by step”(71.8%)보다 이 문구(80.2%)로 더 잘 풀었다는 결과입니다. 연구진도 이것을 <b>특정 모델·특정 과제에서 찾아낸 최적 문구</b>로 보았습니다. 함께 쓰이는 “Let's work this out step by step to be sure we have the right answer”도 2022년 자동 프롬프트 탐색 연구(APE)가 InstructGPT로 찾은 문구로, 개선 폭은 초등 산수 문제에서 2~3점 정도였습니다(MultiArith 78.7→82.0%, GSM8K 40.7→43.0%). 두 문구를 이어 붙인 조합은 따로 검증된 적이 없습니다. 2026년의 Claude·GPT·Gemini는 답하기 전에 스스로 생각하는 추론 모델이고, 생각의 양은 문구가 아니라 <b>노력(effort)·Thinking 설정</b>으로 조절합니다. 그래서 이 편의 Slow Think는 문구를 버리고 ‘무엇을 점검할지’(전제·제약·실패 시나리오·결론을 바꿀 정보)를 지시합니다.</div>
+
+    <div class="note"><b>② “정확도 4~10% 향상” → 내 업무에서 직접 비교</b> — 모델별로 “GPT +6%, Claude +4점, Gemini +8점” 같은 수치가 함께 퍼져 있지만, 이런 값은 특정 시나리오·특정 시점의 실험 결과라 다른 모델·다른 업무로 옮겨 기대하면 안 됩니다. 2025년 Wharton 연구(GPQA Diamond 198문항, 문항당 25회 반복)에서는 단계별 생각 지시가 <b>비추론 모델</b>에서 평균 +4~+13.5%를 보였지만 답의 변동이 커졌고, <b>추론 모델</b>에서는 +3.1%~−3.3%로 작거나 오히려 떨어졌으며 응답 시간만 20~80% 늘었습니다. 9장에 내 업무 문제 5~10개로 A/B 비교하는 표를 넣었습니다.</div>
+
+    <div class="note"><b>③ 생각 과정을 길게 쓰게 하기 → 점검 결과만 보이게</b> — “단계별로 하나씩 신중하게 보여 줘”라고 하면 답이 길어지고, 추론 모델에서는 같은 일을 두 번 시키는 셈이 됩니다. Anthropic·OpenAI 모두 추론 모델에는 구체적인 사고 순서를 강제하기보다 목표와 점검 기준을 주는 편을 권합니다. 이 편의 스킬은 생각은 모델에 맡기고, 출력은 <b>전제 점검표·조건부 결론·확인할 사실</b>만 보이게 합니다.</div>
+
+    <div class="note"><b>④ “세계 최고 권위 수석 리뷰어” 같은 페르소나 → 관점과 체크포인트</b> — 역할을 거창하게 부여하면 정확도가 오를 것 같지만, 2025년 Wharton 연구에서는 전문가 페르소나가 사실 정확도를 꾸준히 올리지 못했고, 분야가 맞지 않는 전문가 역할을 주면 Gemini 2.5 Flash가 25회 중 평균 10.56회 답을 거부하기도 했습니다. 역할은 정확도 장치가 아니라 <b>어떤 관점에서 무엇을 확인할지</b>를 정하는 장치로 씁니다. 그래서 회의 역할마다 체크포인트를 붙였습니다(<code>roles/</code>).</div>
+
+    <div class="note"><b>⑤ 한 대화에서 네 역할을 연기 → 독립 의견 먼저, 가능하면 다른 모델</b> — 처음 회의 프롬프트는 한 대화 안에서 AI가 기획자·마케터·CFO·CEO를 차례로 연기하게 했습니다. 이렇게 하면 앞 역할의 말이 뒤 역할에 그대로 스며들어 의견이 빨리 한쪽으로 모입니다. 2025년 재평가 연구(토론 방식 5종 · 벤치마크 9개 · 모델 4개)는 같은 모델끼리의 다중 에이전트 토론이 연산을 더 쓰고도 단계별 생각이나 ‘여러 번 답하게 한 뒤 다수 고르기’ 같은 단순한 방법을 자주 이기지 못했고, <b>서로 다른 모델을 섞을 때</b> 꾸준히 나아졌다고 보고했습니다. 개선판은 ① 역할별 의견을 서로 보지 않고 먼저 쓰고 ② 반론 전담(레드팀)을 따로 두고 ③ 중요한 결정은 역할마다 다른 대화·다른 모델로 돌립니다. <code>meeting_pack.py</code>가 역할별 프롬프트를 만들어 줍니다. 여러 모델을 서로 익명 평가하게 하는 방식은 <a href="../council/">11편 AI 합의 협의체</a>에서 다룹니다.</div>
+
+    <div class="note"><b>⑥ 10점 만점 점수 → 점수 정의(루브릭)와 근거 한 줄</b> — “실행 난이도·수익화·확장성을 10점 만점으로”만 지시하면 같은 안건도 실행할 때마다 점수가 흔들리고, 정보가 없는데도 그럴듯한 숫자가 나옵니다. 점수 구간별 정의(예: 수익화 7점 이상 = 계약·선주문 같은 직접 신호)를 주고, 점수마다 근거 한 줄, 정보가 없으면 <b>‘판단 보류’</b>를 쓰게 했습니다(<code>prompts/rubric.md</code>). 의장은 평균 대신 역할별 <b>범위와 이견</b>을 보여 줍니다.</div>
+
+    <div class="note"><b>⑦ 미리 채운 자체 검증 “(Checked: Yes)” → 검증 질문을 따로 만들어 다시 확인</b> — 프롬프트 끝에 “원문에 없는 주장이 창작되지 않았는가? (Checked: No)”처럼 답을 미리 적어 두면, 모델은 그 줄을 그대로 옮겨 적기 쉽고 실제로 확인했다는 보장이 없습니다. 개선판은 Chain-of-Verification 방식처럼 ① 사실 주장을 모두 뽑고 ② 주장마다 확인 질문을 만들어 ③ 원래 답을 보지 않은 것처럼 다시 답한 뒤 ④ 불일치를 고치게 합니다(<code>prompts/07-verify.md</code>).</div>
+
+    <div class="note"><b>⑧ “원문 구절 병기”만으로 충분? → 인용도 기계로 대조</b> — 원문 구절을 괄호로 붙이게 하는 방향은 맞지만, 모델은 그럴듯한 인용을 지어내거나 숫자 하나만 바꿔 옮기기도 합니다. <code>evidence_check.py</code>는 요약 속 “인용”이 원문에 실제로 있는지(줄바꿈·공백 차이는 무시), 요약 속 수치가 원문에 있는지 대조합니다. 시범(6장)에서 “95.2%”로 바뀐 인용과 원문에 없는 “35% 절감”을 실패로 잡았습니다.</div>
+
+    <div class="note"><b>⑨ 사실과 C레벨 제언을 한데 섞기 → [원문]과 [해석] 구획 분리</b> — 경영진용 “전략적 시사점·실행 지침”은 대부분 논문이 주장하지 않은 해석입니다. 이것이 사실 요약과 같은 문단에 섞이면 읽는 사람이 어디까지가 논문이고 어디부터가 AI의 추론인지 구분할 수 없고, 환각과 해석의 경계도 사라집니다. 개선판은 사실은 [원문]에 인용과 함께, 제언은 [해석]에 기대는 가정과 함께 쓰게 했습니다.</div>
+
+    <div class="note"><b>⑩ 분야 자동 판별 → 판별 근거를 보이고 확인받기</b> — 의학(IMRaD·PICO), AI(성능 중심), 사회과학(맥락·이론)으로 틀을 바꾸는 것은 좋은 설계입니다. 다만 판별이 틀리면 엉뚱한 항목을 억지로 채웁니다. 판별 결과와 근거 한 줄을 먼저 보여 주고, 애매하면 사용자에게 묻게 했습니다. 의학 논문에서는 “p&lt;0.05 = 효과가 크다”로 읽지 않도록 효과 크기와 신뢰구간을 함께 적게 했습니다.</div>
+
+    <div class="note"><b>⑪ 질문 자동 개선 “대화 시간 70% 절감” → 되묻기를 넣은 질문 다듬기</b> — AI에게 질문을 다듬게 하는 방법은 유용하지만, 절감 비율은 측정된 값이 아닙니다. 또 AI가 빠진 정보를 짐작으로 채운 ‘그럴듯한 새 질문’을 그대로 실행하면 처음 의도에서 벗어날 수 있습니다. 개선판은 <b>빠진 정보를 최대 3개 되묻고</b>, 다시 쓴 질문을 사용자가 승인한 뒤 실행합니다.</div>
+
+    <div class="note"><b>⑫ “Slow Think 정답”에도 숨은 전제가 있다</b> — 원고의 배송 로봇 실험에서 Slow Think는 ‘동남아(실증) → 미국 → 유럽’을 도출했습니다. 같은 안건을 개선판 스킬로 다시 점검하면 “동남아는 인건비가 저렴하다”는 조건 자체가 <b>로봇의 비용 절감 가치를 약하게 만든다</b>는 점이 드러납니다 — 실증지로는 맞아도 첫 매출지로는 약합니다. 결론이 ‘정반대로 바뀌었다’는 것보다, 결론마다 조건과 보류 사유를 붙여 두는 것이 중요합니다(3장). 또 이 비교에서 Slow Think 쪽 지시에만 “한정된 자원 속에서 단계적으로 위험을 줄이는 현실적 로드맵”이 들어 있었다는 점도 눈여겨볼 만합니다. 결론이 달라진 데에는 영문 문구보다 이 <b>조건과 결론 틀의 차이</b>가 크게 작용했을 수 있습니다. 공정하게 비교하려면 두 쪽에 같은 정보·같은 요구를 주고 생각을 유도하는 부분만 바꿔야 합니다(9장).</div>
+  </section>
+
+  <!-- 3 -->
+  <section id="s3">
+    <h2><span class="no">03</span>Slow Think 실전</h2>
+    <h3>먼저 앱의 생각 설정</h3>
+    <div class="tbl"><table>
+      <thead><tr><th>앱</th><th>어디서</th><th>권장</th></tr></thead>
+      <tbody>
+        <tr><th>Claude</th><td>입력창 옆 모델 이름 → <b>Effort</b>(Low·Medium·High·Extra high·Max), 일부 모델은 <b>Thinking/Extended</b> 토글</td><td>결정 검토는 High 이상. Opus 5.5는 항상 생각하며 노력 단계로 조절</td></tr>
+        <tr><th>ChatGPT</th><td>입력창의 모델 선택 → Instant · <b>Medium</b> · <b>High</b> (Pro는 Extra High·Pro)</td><td>Medium 또는 High. Instant는 복잡하면 자동 전환될 수 있음</td></tr>
+        <tr><th>Gemini</th><td>모델(Fast·Pro) 선택과 <b>Thinking level</b>(표준·확장), 상위 요금제는 Deep Think</td><td>Pro + 확장</td></tr>
+        <tr><th>Microsoft 365 Copilot</th><td>채팅의 모델 선택 → Auto · Quick response · <b>Think deeper</b> (테넌트에 따라 GPT·Claude 모델 직접 선택)</td><td>Think deeper. 긴 조사는 Researcher 에이전트</td></tr>
+      </tbody>
+    </table></div>
+    <p class="cap">메뉴 이름은 2026년 11월 기준이며 요금제·조직 설정에 따라 다르게 보일 수 있습니다.</p>
+
+    <h3>프롬프트 (스킬 없이 붙여 넣기)</h3>
+<div class="code">
+  <div class="head"><span>prompts/01-slow-think.md</span><button class="copy">복사</button></div>
+<pre><code>아래 안건에 답하기 전에 다음 순서로 점검한 뒤 결론을 내려 줘. 생각 과정을 길게 보여 줄 필요는 없고, 점검 결과만 표로 보여 줘.
+
+1. 질문 다시 쓰기: 내가 실제로 결정해야 하는 것이 무엇인지 한 문장으로.
+2. 전제 점검: 질문에 들어 있는 주장·숫자·인과를 모두 뽑아 표로 정리해.
+   | 전제 | 사실 / 가정 / 의심 | 근거 또는 의심하는 이유 |
+   서로 모순되거나 상식과 반대인 전제가 있으면 먼저 바로잡고, 바로잡은 전제로 분석해.
+3. 제약 조건: 자금, 인력, 시간, 규제·법, 데이터 중 이 결정에 실제로 걸리는 것을 적어.
+4. 선택지 비교: 선택지마다 "이것이 1년 뒤 실패했다면 가장 그럴듯한 이유"를 한 줄씩.
+5. 결론: 추천안과 그 조건. 이상적인 정답이 아니라 위 제약 안에서 실행 가능한 순서로.
+6. 결론을 바꿀 정보: 무엇이 확인되면 추천이 달라지는가.
+
+모르는 사실은 지어내지 말고 '확인 필요'로 표시해.
+
+[안건]
+&lt;여기에 안건&gt;</code></pre>
+</div>
+
+    <h3>영문 트리거를 쓰고 싶다면 — 5요소를 점검 항목으로 바꾸기</h3>
+    <p>“Take a deep breath · Work through carefully · Complex decision · Examining assumptions · Multiple layers” 다섯 키워드는 각각 좋은 의도를 담고 있습니다. 다만 모델은 키워드 자체보다 <b>그 의도를 구체적인 행동으로 적은 지시</b>에 더 잘 반응하므로, 키워드마다 실제로 시킬 일을 짝지었습니다.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>키워드</th><th>원래 의도</th><th>실제로 시킬 일</th></tr></thead>
+      <tbody>
+        <tr><th>Take a deep breath</th><td>속도보다 정확성</td><td>앱의 생각 설정을 올림(문구보다 효과가 큼)</td></tr>
+        <tr><th>Work through carefully</th><td>체계적 단계 접근</td><td>선택지마다 “1년 뒤 실패했다면 가장 그럴듯한 이유” 한 줄</td></tr>
+        <tr><th>Complex decision</th><td>복잡성 인식</td><td>결정해야 할 것을 한 문장으로 다시 쓰기</td></tr>
+        <tr><th>Examining assumptions</th><td>숨은 전제 의심</td><td>| 전제 | 사실/가정/의심 | 근거 | 표, 모순 전제는 바로잡고 분석</td></tr>
+        <tr><th>Multiple layers</th><td>다층 제약 고려</td><td>자금·인력·시간·규제·데이터 중 실제로 걸리는 제약 목록, 단계별 넘어갈 조건</td></tr>
+      </tbody>
+    </table></div>
+<div class="code">
+  <div class="head"><span>융합 버전 — 영문 머리말 + 구체 점검 (prompts/01-slow-think.md 아래쪽)</span><button class="copy">복사</button></div>
+<pre><code>[Slow Think Execution Protocol]
+Take a deep breath and work through this carefully.
+This is a complex strategic decision that requires examining our assumptions and analyzing multiple layers of constraints.
+
+[실행 지시 — 점검 결과만 표로 보여 줘]
+1. (Complex decision) 내가 결정해야 하는 것을 한 문장으로 다시 써.
+2. (Examining assumptions) 안건 속 주장·숫자·인과를 | 전제 | 사실/가정/의심 | 근거 | 표로 점검하고, 모순 전제는 바로잡은 뒤 분석해.
+3. (Multiple layers) 자금·인력·시간·규제·데이터 중 이 결정에 실제로 걸리는 제약을 적어.
+4. (Work through carefully) 선택지마다 "1년 뒤 실패했다면 가장 그럴듯한 이유"를 한 줄씩.
+5. 현실 제약 안에서 위험을 단계적으로 줄이는 로드맵을 제시하고, 단계마다 다음 단계로 넘어갈 조건을 붙여.
+6. 결론을 바꿀 정보와, 아직 확인되지 않은 사실을 목록으로.
+모르는 사실은 지어내지 말고 '확인 필요'로 표시해.
+
+[안건]
+&lt;여기에 안건&gt;</code></pre>
+</div>
+    <p class="cap">처음 서식은 영문 머리말 뒤에 “숨겨진 전제와 리스크를 먼저 검증하라”, “현실적 로드맵을 제시하라” 두 줄만 두었습니다. 방향은 같지만 ‘무엇을 어떤 형식으로’ 보여 줄지가 없어 답이 길고 비교하기 어려웠으므로, 점검표·제약 목록·단계별 조건으로 구체화했습니다. 영문 머리말은 빠른 모드(ChatGPT Instant·Copilot Quick response·Gemini Fast)에서 조금 도움이 될 수 있고, 추론 모드에서는 있어도 해롭지 않지만 효과는 주로 점검 항목에서 나옵니다. 회의·논문 요약에 Slow Think를 붙인 결합 서식은 <a href="templates/starter/prompts/09-combined.md">09-combined.md</a>에 있습니다.</p>
+
+    <h3>업무별 변형 — 기술 도입 · 신규 사업/투자</h3>
+    <div class="tbl"><table>
+      <thead><tr><th>서식</th><th>처음 지시</th><th>구체화한 점검 항목</th></tr></thead>
+      <tbody>
+        <tr><th>신기술·인프라 도입</th><td>숨은 기술 가정을 의심하고, 엣지 케이스와 리스크를 다층 분석해 단계별 도입 지침 제시</td><td>기술 가정 점검표(확인 방법 포함) · 호환성 충돌 목록 · 그럴듯한 장애 5개와 감지 방법 · <b>되돌리기 방법과 시간</b> · 파일럿→확대 단계별 통과 지표</td></tr>
+        <tr><th>신규 사업·투자</th><td>이상적 시장 대신 실패·자금 소진 위험 최소화, ‘실증-검증-확장’ 로드맵 제시</td><td>가용 자원 확인(모르면 되묻기) · 전제 점검표 · <b>매출이 계획의 50%일 때 버티는 기간</b> · 선택지별 프리모텀 · 단계별 투입 상한과 통과 조건</td></tr>
+      </tbody>
+    </table></div>
+    <div class="note"><b>결론 틀을 미리 정하지 않기</b> — 투자 서식처럼 “‘실증-검증-확장’으로 이어지는 로드맵을 제시하라”고 하면 모델은 분석 결과와 관계없이 그 세 단계에 선택지를 끼워 맞춥니다. 단계형 계획이 필요하면 ‘단계와 단계별 통과 조건’만 요구하고, 무엇을 어느 단계에 둘지는 분석에 맡깁니다. 두 서식 전문은 <a href="templates/starter/prompts/10-domain-slow-think.md">10-domain-slow-think.md</a>에 있습니다. 논문 요약에 붙일 때 분야별로 먼저 의심할 것(의학: 대리 지표·상대위험만 제시 / AI: 비교 대상·벤치마크 오염 / 사회과학: 상관과 인과·표본 대표성)은 <a href="templates/starter/prompts/09-combined.md">09-combined.md</a>에 넣었습니다.</div>
+
+    <h3>실행 예 — 배송 로봇 해외 진출 순서</h3>
+    <p>안건: 직원 40명 중소기업, 연간 해외 예산 30억 원, 미국·유럽·동남아 중 진출 순서. 안건 속에 “코로나 이후 인건비 상승으로 로봇 도입 동기는 줄었다”는 모순 전제가 들어 있습니다.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>전제</th><th>판정</th><th>근거 또는 의심하는 이유</th></tr></thead>
+      <tbody>
+        <tr><td>인건비 상승으로 로봇 도입 동기는 줄었다</td><td>의심</td><td>인건비가 오르면 사람 배송을 대체할 동기는 보통 커진다. 반대로 바로잡고 분석</td></tr>
+        <tr><td>동남아는 인건비가 저렴하다</td><td>사실로 보임</td><td>그렇다면 로봇의 비용 절감 가치가 작아 <b>수익화가 약하다</b> — 실증지로는 맞아도 매출지로는 약함</td></tr>
+        <tr><td>첫 진출국 하나를 골라야 한다</td><td>가정</td><td>실증지와 매출지를 나누면 선택지가 바뀜</td></tr>
+      </tbody>
+    </table></div>
+    <p><b>조건부 결론</b>: 미국의 좁은 지역 1곳을 첫 매출 시장으로 정하고, 실증은 그 지역 인증에 쓸 수 있는 데이터를 얻는 곳(국내 또는 동남아)에서 기간·예산 상한을 두고 진행. 유럽은 미국에서 수익 모델이 확인된 뒤. <b>결론을 바꿀 정보</b>: 동남아 후보 도시의 배송 1건당 인건비, 미국 목표 지역의 보도 로봇 허용 여부. 전문은 <a href="templates/sample/slow-think-output.md">slow-think-output.md</a>, 비교용 답은 <a href="templates/sample/plain-output.md">plain-output.md</a>.</p>
+  </section>
+
+  <!-- 4 -->
+  <section id="s4">
+    <h2><span class="no">04</span>질문 다듬기와 프리모텀</h2>
+<div class="code">
+  <div class="head"><span>prompts/02-ask-better.md — 되묻기 포함</span><button class="copy">복사</button></div>
+<pre><code>아래는 내가 생각나는 대로 쓴 질문이야. 바로 답하지 말고 다음 순서로 해 줘.
+
+1. 질문의 목적, 내가 원하는 결과물, 암묵적인 제약을 한 줄씩 정리해.
+2. 답의 질을 크게 바꾸는데 빠진 정보를 최대 3개까지 나에게 물어봐. (예: 누가 읽는지, 언제까지, 이미 해 본 것)
+3. 내가 답하면 그 내용을 넣어 질문을 다시 써 줘. 형식:
+   - 목표 / 배경 / 결과물 형식 / 지켜야 할 조건 / 하지 말 것
+4. 다시 쓴 질문을 내가 승인하면 그때 답해.
+
+[나의 초기 질문]
+&lt;여기에 질문&gt;</code></pre>
+</div>
+<div class="code">
+  <div class="head"><span>prompts/05-premortem.md — 실패부터 지우기</span><button class="copy">복사</button></div>
+<pre><code>목표: &lt;여기에 목표&gt;
+
+바로 방법을 제안하지 말고 다음 순서로 해 줘.
+1. 이 목표를 1년 뒤 실패했다고 가정하고, 가장 그럴듯한 실패 원인 5개를 적어. (흔한 비효율과 착각 포함)
+2. 각 원인을 미리 알아챌 수 있는 신호와, 처음부터 피하는 방법을 한 줄씩.
+3. 위 원인을 피하는 실행 계획을 3단계로. 단계마다 '다음 단계로 넘어가도 되는 조건'을 붙여.
+내 상황(예산·시간·인력)을 모르면 먼저 물어봐.</code></pre>
+</div>
+    <p class="cap">원고의 ‘망하는 길부터 지우기’(비효율 3 → 착각 3 → 최적안)를 의사결정 연구에서 쓰는 프리모텀(사전 부검) 형식으로 정리하고, 단계별 ‘넘어가도 되는 조건’을 더했습니다.</p>
+  </section>
+
+  <!-- 5 -->
+  <section id="s5">
+    <h2><span class="no">05</span>AI 회의 모듈</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>방식</th><th>언제</th><th>어떻게</th></tr></thead>
+      <tbody>
+        <tr><th>빠르게 (한 대화)</th><td>아이디어 초기 검토, 되돌리기 쉬운 결정</td><td><a href="templates/starter/prompts/03-ai-meeting-one-chat.md">03 프롬프트</a> 또는 <code>/ai-meeting</code>에서 “빠르게”. 역할별 의견을 앞 역할을 보지 않고 먼저 모두 쓰게 함</td></tr>
+        <tr><th>제대로 (여러 대화·여러 모델)</th><td>예산·인력이 걸린 결정, 출원 전략, 논문 결론 채택</td><td><code>meeting_pack.py</code>로 역할별 프롬프트 생성 → 역할마다 새 대화, 가능하면 다른 모델 → 레드팀 → 의장</td></tr>
+      </tbody>
+    </table></div>
+
+<div class="code">
+  <div class="head"><span>터미널 — 여러 모델로 회의 준비</span><button class="copy">복사</button></div>
+<pre><code>python tools/meeting_pack.py new inbox/안건.md                       # 기본 역할: 기획자·마케터·CFO·CEO
+python tools/meeting_pack.py new inbox/안건.md --roles roles/patent.md  # 변리사·사업부·재무·경쟁사 법무팀(가상)
+# 만듦: work/meeting-2026-11-08-안건  (역할 4개)
+#   01-콘텐츠-기획자.md  02-마케터.md  03-CFO.md  04-CEO.md
+
+# 각 파일을 새 대화에 붙여 넣고(예: Claude · ChatGPT · Gemini · Copilot), 답을 opinions/&lt;역할&gt;.md 로 저장
+python tools/meeting_pack.py collect work/meeting-2026-11-08-안건
+# 의견서 4개 모음 · 반론 아직 없음(90-red-team.md 먼저 실행 권장)
+# → 90-red-team.md 를 새 대화에, 답을 opinions/_red-team.md 로 저장 → collect 한 번 더 → 99-chair.md 를 새 대화에</code></pre>
+</div>
+    <p>역할별 프롬프트에는 ① 다른 의견을 보지 않고 독립적으로 쓰라는 지시 ② 역할의 관점·체크포인트 ③ 점수 정의 ④ 전제 점검 → 찬성 근거 → 가장 강한 반대 → 점수와 근거 → 결론을 바꿀 정보 → 한 줄 결론 순서가 들어갑니다. 의장 프롬프트는 다수결을 금지하고 <b>보류 항목 | 보류 사유 | 보류를 풀 조건</b> 표를 요구합니다.</p>
+
+    <h3>시범 — 같은 배송 로봇 안건의 의장 종합(발췌)</h3>
+    <div class="tbl"><table>
+      <thead><tr><th>보류 항목</th><th>보류 사유</th><th>보류를 풀 조건</th></tr></thead>
+      <tbody>
+        <tr><td>동남아 실증</td><td>실증 데이터가 미국 인증·고객 설득에 쓰이지 않으면 예산만 소진(레드팀) · 인건비가 낮아 현지 수익화 약함(기획자·CFO)</td><td>미국 목표 지역 인증 요건이 요구하는 데이터를 동남아에서 얻을 수 있다고 확인되고, 기간·예산 상한이 정해질 때</td></tr>
+        <tr><td>유럽 진출</td><td>초기 규제 대응 고정비가 큼(CFO)</td><td>미국에서 고객당 수익 모델이 확인될 때</td></tr>
+      </tbody>
+    </table></div>
+    <p class="cap">점수표에서는 ‘수익화’ 항목이 역할별 3~7점(일부 판단 보류)으로 이견이 가장 컸고, 네 역할 모두 “인건비 상승으로 도입 동기 감소” 전제를 의심으로 표시했습니다. 시범의 의견서는 한 모델(Claude)로 역할별 프롬프트를 따로 실행한 것이며, 실제 사용에서는 역할마다 다른 모델을 쓰는 편이 낫습니다. 전체 자료: <a href="templates/sample/meeting-robot/00-README.md">meeting-robot/</a> · <a href="templates/sample/meeting-robot/chair-result.md">chair-result.md</a></p>
+  </section>
+
+  <!-- 6 -->
+  <section id="s6">
+    <h2><span class="no">06</span>논문 요약과 근거 대조</h2>
+    <p>원고의 마스터 프롬프트(6단계 공통 구조 + 분야별 틀 + 의사결정 요소)를 살리되, 사실과 해석을 나누고 검증을 도구로 하게 바꿨습니다. 프롬프트 전문은 <a href="templates/starter/prompts/06-paper-brief.md">06-paper-brief.md</a>, 스킬은 <code>/paper-brief</code>입니다.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>분야</th><th>[원문]에 반드시 뽑을 것</th><th>주의</th></tr></thead>
+      <tbody>
+        <tr><th>의학·생명</th><td>대상(P)·개입(I)·비교(C)·결과(O), 연구 설계, 효과 크기와 신뢰구간, 임상시험 등록번호</td><td>p값만으로 ‘효과가 크다’고 쓰지 않음</td></tr>
+        <tr><th>AI·컴퓨터</th><td>문제 정의, 제안 방법의 핵심, 벤치마크·비교 대상과 개선 폭, 코드·데이터 공개, 연산 자원</td><td>비교 대상이 최신인지, 같은 조건인지</td></tr>
+        <tr><th>사회과학·정책</th><td>이론 틀, 표본·수집 기간·방법, 측정 도구, 저자가 주장하는 시사점</td><td>상관을 인과로 옮기지 않음</td></tr>
+      </tbody>
+    </table></div>
+<div class="code">
+  <div class="head"><span>터미널 — 요약의 인용·수치를 원문과 대조</span><button class="copy">복사</button></div>
+<pre><code>python tools/evidence_check.py 논문.txt 요약.md --report evidence.md
+python tools/evidence_check.py 논문.pdf 요약.md        # PDF는 pdftotext 필요(없으면 텍스트로 저장해 넣기)
+# 종료 코드 0 통과 · 1 경고 · 2 실패</code></pre>
+</div>
+    <h3>시범 — 가상 논문(배송 로봇 실증)으로</h3>
+    <div class="tbl"><table>
+      <thead><tr><th>요약</th><th>판정</th><th>내용</th></tr></thead>
+      <tbody>
+        <tr><td><a href="templates/sample/summary-good.md">좋은 요약</a></td><td>경고</td><td>인용 10개 모두 원문과 일치. ‘계산: 375 ÷ 4,812 ≈ 7.8%’ 한 건만 계산식 확인 요청</td></tr>
+        <tr><td rowspan="4"><a href="templates/sample/summary-bad.md">나쁜 요약</a></td><td>실패</td><td>인용 속 수치가 원문과 다름: “… 자율 완료율은 <b>95.2%</b>였다” (원문 92.2%, ‘원격’도 빠짐)</td></tr>
+        <tr><td>실패</td><td>원문에 없는 인용: “보행자의 81.6%가 로봇에 만족했다” (원문은 18.4%가 ‘불편했다’)</td></tr>
+        <tr><td>실패</td><td>원문에 없는 수치: “운영 비용은 이륜차 대비 35% 절감” (원문은 비용을 분석하지 않음)</td></tr>
+        <tr><td>경고</td><td>[원문] 문장에 인용 없음: “로봇은 이륜차보다 빨랐다: 평균 18.9분” — 18.9분은 원문에 있지만 이륜차의 시간. 숫자 대조로는 못 잡는 뒤바뀐 의미를 ‘인용 없음’ 경고가 사람에게 넘깁니다</td></tr>
+      </tbody>
+    </table></div>
+    <p class="cap">시범 논문은 이 핸드북을 위해 만든 가상 자료입니다(<a href="templates/sample/paper.txt">paper.txt</a>).</p>
+  </section>
+
+  <!-- 7 -->
+  <section id="s7">
+    <h2><span class="no">07</span>Antigravity에서 구축하기 (16편 연계)</h2>
+<div class="code">
+  <div class="head"><span>starter 폴더 구조</span><button class="copy">복사</button></div>
+<pre><code>starter/
+├── AGENTS.md                    항상 적용: 근거 표시 · [원문]/[해석] 분리 · 다수결 금지 · 점검 결과만
+├── .agents/
+│   ├── rules/evidence.md        요약·수치 근거를 다룰 때(model_decision)
+│   └── skills/
+│       ├── ask-better/          /ask-better   질문 다듬기
+│       ├── slow-think/          /slow-think   전제 점검 결정 검토
+│       ├── ai-meeting/          /ai-meeting   독립 의견 → 반론 → 의장
+│       └── paper-brief/         /paper-brief  근거 대조형 논문 요약
+├── prompts/  01~08 붙여 넣기용 프롬프트 · rubric.md 점수 정의
+├── roles/    default.md · patent.md · paper-review.md   회의 역할과 체크포인트
+├── tools/    meeting_pack.py · evidence_check.py · build_upload.py · test_think_tools.py
+└── inbox/  work/</code></pre>
+</div>
+    <ol class="steps">
+      <li><b>키트 받기</b><a href="downloads/slow-think-kit.zip" download>템플릿 ZIP</a>을 풀고 <code>starter</code> 폴더를 원하는 곳에 둡니다. 설치할 것은 Python 3.9 이상뿐입니다(추가 패키지 없음).</li>
+      <li><b>도구 확인</b>그 폴더에서 터미널을 열고 <code>python tools/test_think_tools.py</code>(macOS·Linux는 <code>python3</code>) — 12개 통과.</li>
+      <li><b>폴더 열기</b>Antigravity에서 <b>Open Folder</b>로 <code>starter</code>를 열고, 에이전트 창에 <code>/skills reload</code> → <code>/</code>를 쳐서 네 스킬이 보이는지 확인합니다.</li>
+      <li><b>모델과 계획 모드</b>결정 검토는 계획(Planning) 모드와 상위 모델(16편 9장: Gemini 4 Argon·Claude 5.5 등)을 씁니다.</li>
+      <li><b>첫 사용</b><code>/slow-think</code> 다음 줄에 안건을 붙여 넣습니다. 결과는 <code>work/decisions/</code>에 저장됩니다.</li>
+      <li><b>여러 모델 회의</b><code>/ai-meeting inbox/안건.md 제대로</code> → 에이전트가 <code>meeting_pack.py</code>로 역할별 프롬프트를 만듭니다. <b>Agent Manager</b>에서 새 대화를 역할 수만큼 열고 대화마다 모델을 바꿔(예: Gemini · Claude) 각 프롬프트를 실행해 <code>opinions/</code>에 저장하게 한 뒤, 원래 대화에서 <code>collect</code>와 의장 종합을 진행합니다.</li>
+    </ol>
+
+    <h3>AI에게 직접 만들게 하기</h3>
+<div class="code">
+  <div class="head"><span>Antigravity 대화창 — 구축 요청 (계획 모드)</span><button class="copy">복사</button></div>
+<pre><code>이 작업 폴더에 의사결정 검토용 스킬 두 개를 만들어 줘.
+1) .agents/skills/slow-think/SKILL.md
+   - 질문을 결정 한 문장으로 다시 쓰고, 전제를 | 전제 | 사실/가정/의심 | 근거 | 표로 점검
+   - 모순 전제는 먼저 바로잡기, 제약(자금·인력·시간·규제·데이터), 선택지별 실패 시나리오,
+     조건부 결론, 결론을 바꿀 정보, 확인할 사실 순서로 출력. 생각 과정은 길게 쓰지 않기.
+2) .agents/skills/ai-meeting/SKILL.md
+   - roles/default.md 의 역할(기획자·마케터·CFO·CEO)별로 서로 보지 않고 독립 의견서를 work/meeting-*/opinions/ 에 저장
+   - 반론 전담이 공통 결론을 반박, 의장은 다수결 없이 합의안 / 보류 항목(사유·해제 조건) / 소수 의견 / 점수 범위 출력
+   - prompts/rubric.md 를 만들어 점수 구간별 정의를 넣고, 정보가 없으면 '판단 보류'
+3) AGENTS.md 에 '근거 없는 사실은 확인 필요로 표시', '다수결 금지'를 추가.
+먼저 계획을 보여 주고 내 승인을 받은 뒤 진행해.</code></pre>
+</div>
+    <div class="note"><b>전역으로 쓰려면</b> — 스킬 폴더를 <code>~/.gemini/config/skills/</code>(16편 6장)에 복사합니다. <code>ask-better</code>·<code>slow-think</code>는 그대로 동작하고, <code>ai-meeting</code>·<code>paper-brief</code>는 작업 폴더의 <code>tools/</code>가 없으면 도구 없이 진행합니다(점검표는 수동).</div>
+  </section>
+
+  <!-- 8 -->
+  <section id="s8">
+    <h2><span class="no">08</span>Claude · ChatGPT · Gemini · Microsoft 365 Copilot</h2>
+    <p>업로드 파일은 템플릿의 <code>upload/</code>에 스킬별로 미리 만들어 두었습니다(직접 만들려면 <code>python tools/build_upload.py</code>). 앱마다 ZIP 구조가 달라 세 가지 형태로 둡니다. 스킬 기능의 자세한 화면 안내는 <a href="../ai-polish/#s5">18편 5~8장</a>과 같습니다.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>앱</th><th>생각 설정</th><th>스킬 설치</th><th>여러 모델 회의</th></tr></thead>
+      <tbody>
+        <tr><th>Claude</th><td>모델 이름 → Effort High 이상</td><td><b>Customize → Skills</b>에 <code>&lt;이름&gt;.zip</code>(폴더가 ZIP 최상위) 업로드, 코드 실행 켜기. Claude Code는 <code>starter</code>의 스킬 폴더를 <code>.claude/skills/</code>에 복사</td><td>역할 하나를 Claude에 배정</td></tr>
+        <tr><th>ChatGPT</th><td>모델 선택 → Medium·High</td><td>업무용(Business·Enterprise·Edu): <b>Plugins → Skills</b>에서 업로드 또는 SKILL.md 내용으로 만들기 → <code>@이름</code>. Plus·Pro: 프로젝트 지시문에 SKILL.md 본문, 파일에 <code>references/</code></td><td>역할 하나를 ChatGPT에 배정</td></tr>
+        <tr><th>Gemini</th><td>Pro + Thinking level 확장</td><td><b>Customize → Skills → Create manually</b>에 본문 붙여 넣기, 또는 <code>&lt;이름&gt;/</code> 폴더째 업로드(웹·Mac). Gem은 11월 17일부터 읽기 전용</td><td>역할 하나를 Gemini에 배정</td></tr>
+        <tr><th>Microsoft 365 Copilot</th><td>Think deeper</td><td>Cowork <b>Customize → Skills → Upload skill</b>에 <code>&lt;이름&gt;-flat.zip</code>(SKILL.md가 최상위). Word·채팅에서는 에이전트 만들기로 지시문에 SKILL.md 본문</td><td>Researcher 에이전트는 조직 설정에 따라 GPT·Claude 모델 선택 가능</td></tr>
+      </tbody>
+    </table></div>
+    <ul>
+      <li><b>스킬 없이</b> — 어느 앱이든 <code>prompts/</code>의 01~07을 붙여 넣으면 됩니다. 자주 쓰면 프로젝트(Claude·ChatGPT) 지시문이나 스킬로 옮깁니다.</li>
+      <li><b>회사 계정</b> — 관리자가 스킬 업로드·모델 선택을 막아 둘 수 있습니다. 기밀 안건은 조직이 승인한 앱에서만 다룹니다.</li>
+      <li><b>근거 대조는 PC에서</b> — 웹 앱이 쓴 요약은 <code>요약.md</code>로 저장해 <code>evidence_check.py</code>로 대조합니다.</li>
+    </ul>
+  </section>
+
+  <!-- 9 -->
+  <section id="s9">
+    <h2><span class="no">09</span>내 업무에서 검증하기</h2>
+    <ol class="steps">
+      <li><b>정답을 아는 문제</b>지난 검토 건, 결과가 나온 기획안처럼 답을 아는 문제 5~10개를 고릅니다.</li>
+      <li><b>공정하게</b>A와 B에 같은 정보·같은 요구(예산·제약·결과물 형식)를 주고 생각을 유도하는 부분만 다르게 합니다. 한쪽에만 “자원이 부족하니 단계적으로” 같은 조건을 넣으면 문구가 아니라 조건 차이를 재게 됩니다.</li>
+      <li><b>같은 조건에서 두 방식</b>같은 모델·같은 생각 설정에서 A(평소 프롬프트)와 B(Slow Think 또는 회의)를 각각 <b>새 대화</b>에서, 문제마다 2~3회 실행합니다. AI의 답은 실행할 때마다 달라지기 때문입니다.</li>
+      <li><b>기록</b><a href="templates/starter/prompts/08-ab-test.md">08-ab-test.md</a>의 표(정답 일치 ○△×, 함정 전제를 짚었나, 걸린 시간)를 채웁니다.</li>
+      <li><b>결정</b>차이가 없으면 짧은 쪽을 씁니다. 추론 모델에서는 차이가 작고 시간만 늘 수 있습니다. 함정 전제 발견률이 오르는지 같은 ‘내 업무에 중요한 지표’로 판단합니다.</li>
+    </ol>
+  </section>
+
+  <!-- 10 -->
+  <section id="s10">
+    <h2><span class="no">10</span>주의할 점</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>상황</th><th>주의할 점과 바로잡는 방법</th></tr></thead>
+      <tbody>
+        <tr><th>마법의 문구</th><td>특정 문구의 효과는 모델·과제·시점마다 다릅니다. 생각 설정을 먼저 올리고 점검 항목을 지시합니다.</td></tr>
+        <tr><th>퍼센트 효과 수치</th><td>다른 사람의 실험값을 내 업무에 기대하지 않습니다. 9장 방식으로 직접 비교합니다.</td></tr>
+        <tr><th>긴 생각 과정 출력</th><td>읽을 양만 늘고 정확도와는 별개입니다. 점검표·조건부 결론·확인할 사실만 받습니다.</td></tr>
+        <tr><th>거창한 페르소나</th><td>정확도를 올리지 않고, 분야가 안 맞으면 답을 거부하기도 합니다. 관점과 체크포인트로 대신합니다.</td></tr>
+        <tr><th>한 대화 속 회의</th><td>앞 역할에 끌려 의견이 수렴합니다. 독립 의견 먼저, 반론 전담, 중요하면 다른 모델로.</td></tr>
+        <tr><th>점수의 착시</th><td>정의 없는 점수는 그럴듯한 숫자일 뿐입니다. 루브릭과 근거 한 줄, 정보가 없으면 ‘판단 보류’.</td></tr>
+        <tr><th>미리 채운 체크리스트</th><td>“Checked: Yes”는 그대로 복사됩니다. 검증 질문을 만들어 다시 답하게 하고, 인용·수치는 도구로 대조합니다.</td></tr>
+        <tr><th>인용의 함정</th><td>인용이 원문에 있어도 의미를 뒤바꿔 붙일 수 있습니다(18.9분 사례). 도구는 글자만 봅니다. [원문] 문장의 맥락은 사람이 확인합니다.</td></tr>
+        <tr><th>해석이 사실처럼</th><td>전략 제언은 [해석]에만, 기대는 가정과 함께. 경영진 보고에서 이 구분이 가장 자주 무너집니다.</td></tr>
+        <tr><th>기밀 안건</th><td>회의 프롬프트에는 안건 전문이 들어갑니다. 여러 앱에 나눠 붙일수록 노출 범위가 넓어지므로 조직이 승인한 앱만 씁니다.</td></tr>
+        <tr><th>최종 결정</th><td>AI 회의의 결론은 조건부 제안입니다. 법률·의료·투자 판단은 전문가 확인을 거칩니다.</td></tr>
+      </tbody>
+    </table></div>
+    <div class="btns">
+      <a class="btn primary" href="downloads/slow-think-kit.zip" download>전체 템플릿 내려받기 (ZIP)</a>
+      <a class="btn" href="templates/">파일 하나씩 보기</a>
+    </div>
+  </section>
+
+  <!-- 11 -->
+  <section id="s11">
+    <h2><span class="no">부록</span>출처</h2>
+    <p>모두 2026. 11. 8. 확인.</p>
+    <ul>
+      <li>Yang et al., <a href="https://arxiv.org/abs/2309.03409">Large Language Models as Optimizers</a> (OPRO, 2023) · Ars Technica, <a href="https://arstechnica.com/information-technology/2023/09/telling-ai-model-to-take-a-deep-breath-causes-math-scores-to-soar-in-study/">Telling AI model to “take a deep breath” causes math scores to soar in study</a></li>
+      <li>Zhou et al., <a href="https://arxiv.org/abs/2211.01910">Large Language Models Are Human-Level Prompt Engineers</a> (APE, 2022·ICLR 2023)</li>
+      <li>Meincke, Mollick et al., <a href="https://gail.wharton.upenn.edu/research-and-insights/tech-report-chain-of-thought/">Prompting Science Report 2: The Decreasing Value of Chain of Thought in Prompting</a> (2025. 6.) · <a href="https://arxiv.org/abs/2506.07142">arXiv</a></li>
+      <li>Wharton Generative AI Labs, <a href="https://gail.wharton.upenn.edu/research-and-insights/playing-pretend-expert-personas/">Prompting Science Report 4: Playing Pretend — Expert Personas Don't Improve Factual Accuracy</a> (2025. 12.) · <a href="https://arxiv.org/abs/2512.05858">arXiv</a></li>
+      <li><a href="https://arxiv.org/abs/2502.08788">Stop Overvaluing Multi-Agent Debate — We Must Rethink Evaluation and Embrace Model Heterogeneity</a> (arXiv, 2025) · Smit et al., <a href="https://proceedings.mlr.press/v235/smit24a.html">Should we be going MAD?</a> (ICML 2024)</li>
+      <li>Dhuliawala et al., <a href="https://arxiv.org/abs/2309.11495">Chain-of-Verification Reduces Hallucination in Large Language Models</a> (2023)</li>
+      <li>Claude Help, <a href="https://support.claude.com/en/articles/8664678-change-the-model-effort-and-thinking-settings">Change the model, effort, and thinking settings</a> · Claude Docs, <a href="https://platform.claude.com/docs/en/build-with-claude/adaptive-thinking">Steering thinking</a></li>
+      <li>OpenAI Help, <a href="https://help.openai.com/en/articles/11909943">GPT-5.5 in ChatGPT</a></li>
+      <li>Pulse, <a href="https://www.pulse.bot/ai/news/you-can-choose-new-thinking-levels-for-gemini-00c893bd-2b40-4d0f-8320-f0e17ee8dd6f/">You Can Choose New 'Thinking Levels' for Gemini</a> (2026. 5.) · Google, <a href="https://support.google.com/gemini/answer/18560919">Gems to skills transition</a></li>
+      <li>Chris Menard, <a href="https://chrismenardtraining.com/post/microsoft-365-copilot-model-picker-changed-where-did-gpt-5-5-and-the-other-models-go/">Microsoft 365 Copilot Model Picker Changed</a> (2026. 7.) · Microsoft Support, <a href="https://support.microsoft.com/en-us/office/use-model-choice-in-the-researcher-agent">Use model choice in the Researcher agent</a> · Microsoft Learn, <a href="https://learn.microsoft.com/en-us/microsoft-365/copilot/cowork/cowork-customize">Customize Copilot Cowork</a></li>
+      <li>작성자 원고 「통합 논문 요약 프롬프트 설계 마스터 가이드」, 「Slow Think &amp; 질문 개선 마스터 가이드」, 「AI 회의 모듈화 전략 마스터 가이드」</li>
+    </ul>
+    <p>함께 읽기: <a href="../council/">11편 AI 합의 협의체</a> · <a href="../prompt-basics/">2편 프롬프트 기초</a> · <a href="../cite-check/">7편 인용 확인</a> · <a href="../antigravity/">16편 Antigravity</a> · <a href="../ai-polish/">18편 윤문 스킬</a></p>
+  </section>
+
+  <footer>
+    작성: 이진수 (변리사) · 2026. 11. 8. · CC BY-NC 4.0<br>
+    작성자의 원고를 바탕으로 생성형 AI의 도움을 받아 공개 연구와 공식 문서로 근거를 확인하고 도구를 만들어 시험했으며, 사람이 검토했습니다. 시범 실행은 한 모델로 한 것이라 모델 간 성능 비교가 아닙니다. 오류 제보는 <a href="https://github.com/sonovman/ai-practice-handbooks/issues">Issues</a>로 남겨 주세요.
+  </footer>
+</main>
+</div>
+
+<script>
+  document.querySelectorAll('.copy').forEach(function (b) {
+    b.addEventListener('click', function () {
+      navigator.clipboard.writeText(b.closest('.code').querySelector('pre').innerText).then(function () {
+        b.textContent = '복사됨'; setTimeout(function () { b.textContent = '복사'; }, 1500);
+      });
+    });
+  });
+  var links = [].slice.call(document.querySelectorAll('.side a'));
+  var io = new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+      if (e.isIntersecting) links.forEach(function (a) { a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id); });
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  document.querySelectorAll('main section[id]').forEach(function (s) { io.observe(s); });
+</script>
+</body>
+</html>

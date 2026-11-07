@@ -1,0 +1,8 @@
+# 작업 결과와 원본 자료는 저장소에 올리지 않습니다
+inbox/*
+!inbox/.gitkeep
+work/*
+!work/.gitkeep
+dist/
+__pycache__/
+*.pyc
