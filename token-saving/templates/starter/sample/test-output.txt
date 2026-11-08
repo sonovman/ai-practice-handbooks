@@ -1,0 +1,21 @@
+test_cache_read_cheaper (__main__.Test.test_cache_read_cheaper) ... ok
+test_defaults_applied (__main__.Test.test_defaults_applied) ... ok
+test_output_more_expensive (__main__.Test.test_output_more_expensive) ... ok
+test_per_tok (__main__.Test.test_per_tok) ... ok
+test_total_sums (__main__.Test.test_total_sums) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.003s
+
+OK
+
+test_cache_cheaper_than_no_cache (__main__.Test.test_cache_cheaper_than_no_cache) ... ok
+test_clear_reduces_cost (__main__.Test.test_clear_reduces_cost) ... ok
+test_growth_quadratic_ish (__main__.Test.test_growth_quadratic_ish) ... ok
+test_main_runs (__main__.Test.test_main_runs) ... ok
+test_two_turn_no_cache_math (__main__.Test.test_two_turn_no_cache_math) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.002s
+
+OK

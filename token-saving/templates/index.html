@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>토큰 절약 템플릿</title>
+<link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+<div class="bar"><div class="bar-in">
+  <a class="brand" href="../../">AI 실무 핸드북</a>
+  <div class="links"><a href="../">← 본문으로</a></div>
+</div></div>
+<div class="wrap">
+  <div class="eyebrow">핸드북 27 · 자료</div>
+  <h1>템플릿 내려받기</h1>
+  <p class="lead"><code>starter</code>에는 점(.)으로 시작하는 <code>.agents</code> 폴더가 있어 <a href="../downloads/token-saving-kit.zip" download>전체(ZIP)</a>로 받는 편이 확실합니다. 현재 모델의 공식 단가를 넣어 <code>python tools/token_cost.py</code>·<code>python tools/session_sim.py</code>로 ‘내 경우’ 비용부터 확인하세요.</p>
+
+  <h2>바로 붙여 넣는 프롬프트</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>파일</th><th>용도</th></tr></thead>
+    <tbody>
+      <tr><th><a href="starter/prompts/01-diagnose-cost.md">01-diagnose-cost.md</a></th><td>비용 진단(무엇이 창을 먹나)</td></tr>
+      <tr><th><a href="starter/prompts/02-session-hygiene.md">02-session-hygiene.md</a></th><td>세션 위생 설정</td></tr>
+      <tr><th><a href="starter/prompts/03-cost-estimate.md">03-cost-estimate.md</a></th><td>비용 추정(캐시 전후)</td></tr>
+      <tr><th><a href="starter/prompts/04-slim-harness.md">04-slim-harness.md</a></th><td>슬림 하네스 구축</td></tr>
+      <tr><th><a href="starter/prompts/05-external-skill-safety.md">05-external-skill-safety.md</a></th><td>외부 절감 스킬 안전 점검</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>웹 앱 업로드용 스킬 (upload)</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>스킬</th><th>Claude.ai · ChatGPT</th><th>Copilot Cowork</th><th>Gemini · 내용 보기</th></tr></thead>
+    <tbody>
+      <tr><th>token-saver</th><td><a href="upload/token-saver.zip" download>token-saver.zip</a></td><td><a href="upload/token-saver-flat.zip" download>flat.zip</a></td><td><a href="upload/token-saver/SKILL.md">SKILL.md</a></td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>작업 폴더 (starter)</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>파일</th><th>내용</th></tr></thead>
+    <tbody>
+      <tr><th><a href="starter/AGENTS.md">AGENTS.md</a> · <a href="starter/.agents/rules/token.md">.agents/rules/token.md</a></th><td>항상 적용 규칙, 작업 흐름</td></tr>
+      <tr><th><a href="starter/.agents/skills/token-saver/SKILL.md">token-saver/SKILL.md</a></th><td>토큰 급증 원인·통제법·외부 스킬 보안</td></tr>
+      <tr><th><a href="starter/.agents/skills/token-saver/references/checklist.md">checklist.md</a> · <a href="starter/.agents/skills/token-saver/references/platforms.md">platforms.md</a></th><td>토큰 절약 체크리스트·슬래시 요약 · 도구별 비용 관리</td></tr>
+      <tr><th><a href="starter/tools/token_cost.py" download>token_cost.py</a></th><td>한 요청의 토큰 비용(입력·출력·캐시)</td></tr>
+      <tr><th><a href="starter/tools/session_sim.py" download>session_sim.py</a></th><td>N턴 세션 누적 비용(캐시·/clear 효과)</td></tr>
+      <tr><th><a href="starter/tools/test_token_cost.py" download>test_token_cost.py</a> · <a href="starter/tools/test_session_sim.py" download>test_session_sim.py</a> · <a href="starter/build_upload.py" download>build_upload.py</a></th><td>시험(5+5) · 업로드 묶음 만들기</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>시범 자료 (직접 실행 결과)</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>파일</th><th>내용</th></tr></thead>
+    <tbody>
+      <tr><th><a href="starter/sample/cost-demo.md">cost-demo.md</a></th><td>캐시 전후 단건 비용 비교</td></tr>
+      <tr><th><a href="starter/sample/session-demo.md">session-demo.md</a></th><td>40턴 세션 누적 비용 3시나리오</td></tr>
+      <tr><th><a href="starter/sample/test-output.txt">test-output.txt</a></th><td>시험 10개 통과 로그</td></tr>
+    </tbody>
+  </table></div>
+</div>
+</body>
+</html>

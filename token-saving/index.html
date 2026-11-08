@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>클로드 코드 토큰·비용 절약</title>
+<meta name="description" content="클로드 코드의 토큰(비용)이 급격히 소모되는 원인과 통제법. 매 턴 전체 재전송·출력/사고 토큰·프롬프트 캐시·세션 관리(/clear·/context·/rewind·/usage)·슬림 CLAUDE.md·하네스까지. 토큰 비용 계산기와 세션 누적비용 시뮬레이터로 숫자를 보며 초보자용 단계별.">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<div class="bar"><div class="bar-in">
+  <a class="brand" href="../">AI 실무 핸드북</a>
+  <div class="links">
+    <a href="templates/">템플릿</a>
+    <a href="https://github.com/sonovman/ai-practice-handbooks">GitHub ↗</a>
+  </div>
+</div></div>
+
+<div class="doc">
+  <aside class="side">
+    <div class="label">차례</div>
+    <ol>
+      <li><a href="#s0">한 줄 결론</a></li>
+      <li><a href="#s1">1. 왜 비용이 급증하나</a></li>
+      <li><a href="#s2">2. 프롬프트 캐시</a></li>
+      <li><a href="#s3">3. 처음 접근과 바뀐 점</a></li>
+      <li><a href="#s4">4. 비용 진단(시범)</a></li>
+      <li><a href="#s5">5. 세션 경제성(시범)</a></li>
+      <li><a href="#s6">6. 세션·입력 관리</a></li>
+      <li><a href="#s7">7. 외부 출력절감 스킬</a></li>
+      <li><a href="#s8">8. 도구별·주의할 점</a></li>
+      <li><a href="#s9">부록 · 출처</a></li>
+    </ol>
+  </aside>
+
+<main>
+  <div class="eyebrow">핸드북 27 · 개발 도구</div>
+  <h1>클로드 코드 토큰·비용 절약 — 어디서 돈이 나가는지부터 숫자로</h1>
+  <p class="lead">최신 모델은 강력한 만큼 토큰을 많이 씁니다. 잠깐 방심하면 비용이 훌쩍 커질 수 있습니다. 핵심은 ‘아껴 쓰라’는 당부가 아니라, <strong>어디서 돈이 나가는지</strong>를 먼저 숫자로 보고 구조적으로 통제하는 것입니다. 이 편은 토큰이 급증하는 원인과 프롬프트 캐시의 원리를 풀고, 세션·입력·출력을 통제하는 방법을, 직접 돌려 본 <strong>비용 계산기</strong>와 <strong>세션 시뮬레이터</strong>와 함께 초보자도 따라 하기 쉽게 설명합니다.</p>
+  <div class="meta">
+    <b>독자</b><span>클로드 코드를 쓰며 토큰 비용이 부담스러운 사람, 비용을 통제하고 싶은 초보자</span>
+    <b>분량</b><span>읽기 약 20분 · 템플릿(토큰 비용 계산기 · 세션 시뮬레이터 · 절약 스킬 · 프롬프트 5종 · 시범)</span>
+    <b>판</b><span>1.0 · 2026. 11. 8.</span>
+  </div>
+
+  <section id="s0">
+    <div class="key">
+      <div class="eyebrow">한 줄 결론</div>
+      <p style="font-size:19px;font-weight:600;line-height:1.6;margin:8px 0 10px">AI는 매 턴 ‘그동안의 전체’를 다시 보냅니다 — 그래서 세션을 짧게 비우고(/clear), 앞부분은 캐시로 고정하고, 출력은 간결하게 하는 것만으로 비용이 크게 줄어듭니다.</p>
+      <p style="opacity:.75;font-size:15px">40번째 턴에서는 앞선 39턴 전체가 다시 전송됩니다. 그래서 길수록 비용이 <b>급증</b>합니다. 해법은 세 가지입니다. ① 작업이 바뀌면 세션을 비우고, ② 시스템·프로젝트 정보 같은 앞부분을 바꾸지 않아 <b>캐시</b>가 유지되게 하고, ③ 흔히 더 비싼 <b>출력·사고 토큰</b>을 간결하게 통제합니다.</p>
+    </div>
+    <div class="note"><b>무엇을 확인했나</b> — 토큰 비용 계산기(시험 5개)·세션 시뮬레이터(시험 5개)를 직접 만들어 돌렸습니다(4·5장 시범). 슬래시 명령(/context·/rewind·/usage)과 프롬프트 캐시(앞부분 재사용·캐시 읽기 할인)는 공식 자료로 확인했습니다(부록). 단가·비율(출력이 더 비쌈, 캐시 읽기가 쌈)은 모델·시점마다 달라 ‘현재 공식 단가로 확인’을 전제로 예시만 씁니다. 원고가 소개한 외부 스킬(Caveman·Ponytail)의 구체 수치·설치법은 독립 검증이 어려워 개념·보안 중심으로 다룹니다. 이 편은 <b>유튜브 링크가 제공되지 않아</b> 영상 자료는 쓰지 않았습니다.</div>
+  </section>
+
+  <!-- 1 -->
+  <section id="s1">
+    <h2><span class="no">01</span>왜 비용이 급증하나 — 4가지 원인</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>원인</th><th>설명</th></tr></thead>
+      <tbody>
+        <tr><th>매 턴 전체 재전송</th><td>읽은 파일·로그·대화가 ‘남은 모든 턴마다’ 다시 전송됨. 40턴째엔 39턴 전체가 재전송 → 급증</td></tr>
+        <tr><th>노이즈 누적</th><td>안 보는 파일, 수백 줄 테스트 로그, 안 쓰는 MCP·플러그인이 매 턴 함께 실림</td></tr>
+        <tr><th>출력·사고 토큰</th><td>출력은 입력보다 비싸고(모델별, 흔히 수 배), 내부 ‘사고(thinking)’도 출력으로 계산됨</td></tr>
+        <tr><th>캐시 깨짐</th><td>세션 중간에 모델·에포트를 바꾸면 프롬프트 캐시가 무효화돼 처음부터 다시 계산</td></tr>
+      </tbody>
+    </table></div>
+    <div class="note"><b>한눈에</b> — 비용의 뿌리는 ‘AI는 기억하지 않고 매번 전체를 다시 읽는다’입니다. 그러니 <b>다시 읽을 양을 줄이는 것</b>(세션 비우기·노이즈 제거)과 <b>다시 읽을 때 싸게 하는 것</b>(캐시)이 두 축입니다. 원리는 <a href="../llm-context/">26편</a>에서 더 깊이 다룹니다.</div>
+  </section>
+
+  <!-- 2 -->
+  <section id="s2">
+    <h2><span class="no">02</span>프롬프트 캐시 — 앞부분을 싸게</h2>
+    <p>프롬프트 캐시는 요청의 <b>앞부분이 이전과 같으면</b> 서버가 계산해 둔 결과를 재활용하는 기술입니다.</p>
+    <div class="graph">
+      <div class="node end"><span class="id">A</span><b>시스템 프롬프트</b><p>잘 안 바뀜 → 캐시 유지</p></div>
+      <div class="edge"><span>그다음 칸</span></div>
+      <div class="node"><span class="id">B</span><b>프로젝트 정보·CLAUDE.md</b><p>고정하면 캐시 유지</p></div>
+      <div class="edge"><span>그다음 칸</span></div>
+      <div class="node dark"><span class="id">C</span><b>대화</b><p>여기만 새로 계산</p></div>
+    </div>
+    <div class="note"><b>기차 칸처럼</b> — 캐시는 앞칸부터 순서대로 대조합니다. 앞칸 하나라도 바뀌면 <b>뒤 칸이 전부 무효화</b>됩니다. 그래서 세션 중간에 모델·에포트를 바꾸면 캐시가 깨져 처음부터 다시 계산합니다. 반대로 앞부분(시스템·프로젝트 정보)을 고정하면 <b>캐시 읽기</b>로 훨씬 싸게 재사용합니다(4장에서 숫자로). 모델·에포트는 <b>세션 시작에 고정</b>하세요.</div>
+  </section>
+
+  <!-- 3 -->
+  <section id="s3">
+    <h2><span class="no">03</span>처음 접근과 바뀐 점</h2>
+
+    <div class="note"><b>① “한 세션에서 계속” → 작업 바뀌면 /clear</b> — 세션이 길수록 매 턴 재전송량이 눈덩이처럼 커지고 품질도 떨어집니다. 작업·주제가 바뀌면 비용이 0인 <code>/clear</code>로 비웁니다. 반복 배경은 하네스로 재사용해 자주 비워도 이어집니다.</div>
+
+    <div class="note"><b>② “싼 모델로 중간에 변경” → 설정은 시작에 고정</b> — 세션 도중 하이쿠 같은 저렴한 모델로 바꾸면 그 모델용 캐시를 새로 만들어야 해 <b>오히려 더 비쌀</b> 수 있습니다. 모델·에포트는 세션 시작에 정합니다.</div>
+
+    <div class="note"><b>③ “출력은 공짜 같다” → 출력·사고가 큰 몫</b> — 출력은 입력보다 비싸고, 눈에 안 보이는 ‘사고 토큰’도 출력으로 계산됩니다. 단순 작업은 사고 예산을 낮추고 출력을 간결하게 유도합니다.</div>
+
+    <div class="note"><b>④ “오류 수정해 줘” → 파일·위치를 정확히</b> — 모호하게 시키면 AI가 파일을 뒤지며 토큰을 씁니다. 파일은 <code>@멘션</code>으로 지목하고 문제 위치를 정확히 주면 탐색 토큰이 줄어듭니다.</div>
+
+    <div class="note"><b>⑤ “긴 로그를 그대로” → 필요한 것만 짧게</b> — 수백 줄 테스트 로그가 컨텍스트에 남아 매 턴 재전송됩니다. 요약 옵션·스크립트로 핵심만 출력하고, 안 쓰는 MCP·플러그인은 <code>/context</code>로 정리합니다.</div>
+
+    <div class="note"><b>⑥ “절약 스킬이면 무조건 이득” → 한계·보안 확인</b> — 출력을 줄이는 외부 스킬은 입력·사고 토큰은 못 줄이고 지침 자체가 매 턴 입력을 더해 <b>짧은 대화엔 역효과</b>입니다. 미검증 외부 스킬은 보안 위험도 있으니 출처·효과를 확인하고 씁니다(7장).</div>
+  </section>
+
+  <!-- 4 -->
+  <section id="s4">
+    <h2><span class="no">04</span>비용 진단 — 캐시 전후 비교(시범)</h2>
+    <p><code>token_cost.py</code>로 같은 요청을 캐시 전후로 계산했습니다(예시 단가: 입력 $3, 출력 $15 / 100만 토큰).</p>
+    <div class="code"><button class="copy">복사</button><pre>$ python tools/token_cost.py --in 50000 --out 3000 --in-price 3 --out-price 15
+입력(비캐시) 50,000 → $0.1500 (77%) · 출력 3,000 → $0.0450 (23%) · 합계 $0.1950
+
+$ python tools/token_cost.py --cache-read 48000 --in 2000 --out 3000 --in-price 3 --out-price 15
+캐시읽기 48,000 → $0.0144 · 새 입력 2,000 → $0.0060 · 출력 3,000 → $0.0450 · 합계 $0.0654</pre></div>
+    <div class="note"><b>무엇을 배우나</b> — 앞부분 4.8만 토큰을 <b>캐시 읽기</b>로 재사용하자 같은 요청이 <b>$0.195 → $0.065</b>로 3분의 1이 됐습니다. 캐시가 들어오니 이번엔 <b>출력</b>이 비용의 가장 큰 몫(69%)이 됩니다 — 그래서 출력·사고 토큰 통제가 다음 레버입니다. 단가는 모델·시점마다 다르니 현재 공식 단가로 확인하세요.</div>
+  </section>
+
+  <!-- 5 -->
+  <section id="s5">
+    <h2><span class="no">05</span>세션 경제성 — 40턴이면 얼마?(시범)</h2>
+    <p><code>session_sim.py</code>로 40턴 세션의 누적 비용을 세 시나리오로 비교했습니다(턴당 입력·출력 1,500, 시작 고정분 1.2만, 예시 단가).</p>
+    <div class="code"><button class="copy">복사</button><pre>$ python tools/session_sim.py --turns 40 --turn-input 1500 --turn-output 1500 \
+     --start-context 12000 --in-price 3 --out-price 15 --clear-every 10
+
+| 캐시 없음, /clear 없음      | $9.540 | 100% |
+| 캐시 사용, /clear 없음      | $1.926 |  20% |
+| 캐시 + 10턴마다 /clear      | $1.386 |  15% |</pre></div>
+    <div class="note"><b>무엇을 배우나</b> — 같은 40턴이라도 <b>캐시만으로 1/5</b>, 거기에 <b>/clear까지 하면 약 1/7</b>로 줄었습니다. ‘매 턴 전체 재전송’ 때문에 비용은 턴 수에 비례하는 게 아니라 더 가파르게 늘어납니다. 그래서 길게 끌지 말고 비우는 습관이 돈을 아낍니다. (수치는 구조적 경향을 보는 근사입니다.)</div>
+    <div class="btns">
+      <a class="btn primary" href="downloads/token-saving-kit.zip" download>전체 템플릿 내려받기 (ZIP)</a>
+      <a class="btn" href="templates/">파일 하나씩 보기</a>
+    </div>
+  </section>
+
+  <!-- 6 -->
+  <section id="s6">
+    <h2><span class="no">06</span>세션·입력 관리 — 슬래시 명령과 습관</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>명령/습관</th><th>용도</th></tr></thead>
+      <tbody>
+        <tr><th><code>/clear</code></th><td>대화·컨텍스트 비우기 — 작업/주제 전환 시</td></tr>
+        <tr><th><code>/context</code></th><td>무엇이 창을 차지하나 확인 · 안 쓰는 MCP·플러그인 정리</td></tr>
+        <tr><th><code>/rewind</code></th><td>방향이 틀어졌을 때 이전 턴으로 되돌리기(재시작 없이)</td></tr>
+        <tr><th><code>/usage</code></th><td>최근 토큰 소모(스킬·MCP·플러그인별) 분석</td></tr>
+        <tr><th><code>@멘션</code></th><td>파일을 직접 지목 → 불필요한 탐색 토큰 절감</td></tr>
+        <tr><th>설정 고정</th><td>모델·에포트는 세션 시작에 — 중간 변경은 캐시 깨짐</td></tr>
+      </tbody>
+    </table></div>
+    <div class="note"><b>습관으로</b> — 오류는 “테스트 실패” 대신 파일·위치를 정확히, 터미널 출력은 요약 옵션·스크립트로 짧게, 반복 배경은 슬림 <code>CLAUDE.md</code>·스킬로 재사용 구조화(하네스)합니다. 슬래시 명령·동작은 버전에 따라 바뀌니 <code>/help</code>로 현재 명령을 확인하세요.</div>
+  </section>
+
+  <!-- 7 -->
+  <section id="s7">
+    <h2><span class="no">07</span>외부 ‘출력절감’ 스킬 — 개념·한계·보안</h2>
+    <p>설명·코드 출력을 줄여 출력 토큰을 아끼려는 커뮤니티 스킬이 있습니다(원고가 소개한 Caveman·Ponytail 등). 개념은 유용하지만 그대로 믿기보다 한계와 보안을 먼저 봅니다.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>구분</th><th>내용</th></tr></thead>
+      <tbody>
+        <tr><th>개념</th><td>불필요한 사설·과잉 설계를 줄여 출력/생성 코드를 간결하게</td></tr>
+        <tr><th>한계</th><td>입력·사고 토큰은 못 줄임 · 스킬 지침이 매 턴 입력 오버헤드를 더함 → 짧은 대화엔 역효과</td></tr>
+        <tr><th>학습</th><td>설명을 잘라내므로 초보자·학습자에겐 교육 효과↓</td></tr>
+        <tr><th>보안</th><td>검증 안 된 외부 스킬·<code>curl|bash</code>는 프롬프트 주입·<code>.env</code> 등 정보 유출 위험</td></tr>
+      </tbody>
+    </table></div>
+    <div class="note"><b>안전하게 쓰려면</b> — 출처(저장소·제작자)를 확인하고, <code>.claude/settings.json</code>의 <code>deny</code> 규칙·샌드박스 설정으로 파일·환경변수 접근을 제한합니다. 구체 절감 수치는 환경마다 다르니, 먼저 <code>token_cost.py</code>로 ‘내 경우’에 이득인지 확인한 뒤 적용하세요. 설치 명령·옵션은 각 저장소의 현재 안내를 따릅니다.</div>
+  </section>
+
+  <!-- 8 -->
+  <section id="s8">
+    <h2><span class="no">08</span>도구별 적용과 주의할 점</h2>
+    <p>‘매 턴 전체를 다시 본다’는 구조는 대부분의 LLM 도구에 공통입니다. <a href="../antigravity/">Antigravity</a>에는 슬림 CLAUDE.md·출력 요약·세션 체크리스트를 갖춘 하네스 초안 작성을 맡기고 적용·검증은 사람이 합니다.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>상황</th><th>이렇게</th></tr></thead>
+      <tbody>
+        <tr><th>긴 세션</th><td>작업 전환 시 /clear. 반복 배경은 하네스로 재사용.</td></tr>
+        <tr><th>중간 설정 변경</th><td>모델·에포트는 시작에 고정(캐시 깨짐 방지).</td></tr>
+        <tr><th>출력·사고 비용</th><td>간결 출력·낮은 사고 예산. token_cost.py로 먼저 확인.</td></tr>
+        <tr><th>모호한 지시</th><td>@멘션으로 파일 지목, 오류는 위치까지.</td></tr>
+        <tr><th>긴 로그·안 쓰는 MCP</th><td>출력 요약, /context로 정리.</td></tr>
+        <tr><th>외부 절감 스킬</th><td>한계·보안 확인 후. 짧은 대화엔 역효과.</td></tr>
+        <tr><th>단가·명령</th><td>자주 바뀜. 공식 단가·/help로 확인.</td></tr>
+        <tr><th>미검증 스크립트</th><td>프롬프트 주입·유출 위험. deny·샌드박스 설정.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <!-- 9 -->
+  <section id="s9">
+    <h2><span class="no">부록</span>출처</h2>
+    <p>모두 2026. 11. 8. 확인. 이 편은 유튜브 링크가 제공되지 않아 영상 자료는 쓰지 않았습니다.</p>
+    <ul>
+      <li>Anthropic, <a href="https://docs.claude.com/en/docs/build-with-claude/prompt-caching">프롬프트 캐싱 문서</a>(앞부분 재사용·캐시 읽기 할인) · <a href="https://docs.claude.com/en/docs/claude-code/overview">Claude Code 문서</a>(슬래시 명령·CLAUDE.md)</li>
+      <li>작성자 원고 「클로드 코드 토큰 절약 가이드」. 동봉한 두 도구(<code>token_cost.py</code>·<code>session_sim.py</code>)를 직접 만들어 시험(5+5)·시범으로 검증.</li>
+      <li>원고가 소개한 외부 커뮤니티 스킬(Caveman·Ponytail)의 구체 절감 수치·설치법은 독립 확인하지 못해 개념·보안 중심으로만 반영.</li>
+    </ul>
+    <p>함께 읽기: <a href="../llm-context/">26편 LLM 원리·컨텍스트 하네스</a> · <a href="../claude-master/">23편 Claude 마스터</a> · <a href="../git-github/">22편 Git·GitHub</a></p>
+  </section>
+
+  <footer>
+    작성: 이진수 (변리사) · 2026. 11. 8. · CC BY-NC 4.0<br>
+    작성자의 원고를 바탕으로 공식 문서(프롬프트 캐싱·Claude Code)로 사실을 확인하고, 동봉한 두 도구를 직접 만들어 시범으로 검증했으며, 사람이 검토했습니다. 유튜브 링크는 제공되지 않아 영상 자료는 쓰지 않았습니다. 단가·슬래시 명령·캐시 정책은 모델·버전에 따라 바뀌니 공식 자료로 확인하세요. 시범의 단가·수치는 예시이며 구조적 경향을 보기 위한 근사입니다. 오류 제보는 <a href="https://github.com/sonovman/ai-practice-handbooks/issues">Issues</a>로 남겨 주세요.
+  </footer>
+</main>
+</div>
+
+<script>
+  document.querySelectorAll('.copy').forEach(function (b) {
+    b.addEventListener('click', function () {
+      navigator.clipboard.writeText(b.closest('.code').querySelector('pre').innerText).then(function () {
+        b.textContent = '복사됨'; setTimeout(function () { b.textContent = '복사'; }, 1500);
+      });
+    });
+  });
+  var links = [].slice.call(document.querySelectorAll('.side a'));
+  var io = new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+      if (e.isIntersecting) links.forEach(function (a) { a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id); });
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  document.querySelectorAll('main section[id]').forEach(function (s) { io.observe(s); });
+</script>
+</body>
+</html>

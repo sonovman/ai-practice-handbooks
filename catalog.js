@@ -462,5 +462,22 @@ window.CATALOG = [
       { label: "화면으로 읽기", href: "llm-context/", primary: true },
       { label: "템플릿 내려받기", href: "llm-context/templates/" }
     ]
+  },
+  {
+    id: "token-saving",
+    no: "27",
+    category: "개발 도구",
+    title: "클로드 코드 토큰·비용 절약 — 어디서 돈이 나가는지부터 숫자로",
+    subtitle: "세션은 짧게·캐시는 고정·출력은 간결하게",
+    summary: "클로드 코드의 토큰(비용)이 급격히 소모되는 원인과 통제법. 매 턴 전체 재전송·출력/사고 토큰·프롬프트 캐시·세션 관리(/clear·/context·/rewind·/usage)·슬림 CLAUDE.md·하네스까지. 토큰 비용 계산기와 세션 누적비용 시뮬레이터로 숫자를 보며 초보자용 단계별로 담았습니다.",
+    reader: "클로드 코드를 쓰며 토큰 비용이 부담스러운 사람, 비용을 통제하고 싶은 초보자",
+    version: "1.0",
+    date: "2026-11-08",
+    length: "읽기 약 20분",
+    status: "published",
+    links: [
+      { label: "화면으로 읽기", href: "token-saving/", primary: true },
+      { label: "템플릿 내려받기", href: "token-saving/templates/" }
+    ]
   }
 ];
