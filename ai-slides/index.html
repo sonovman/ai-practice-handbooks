@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 디자인 에이전트로 PPT 슬라이드 만들기</title>
+<meta name="description" content="단발성 프롬프트 대신 취향 명세서(디자인.md)와 워크플로우로 수준 높은 슬라이드를 꾸준히 만드는 법. 품질(객관)과 취향(스타일) 분리, 취향 명세서 추출→개요 생성→품질 게이트+비주얼 QA 루프, Antigravity·Claude Code 비교까지 실사례로 단계별.">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<div class="bar"><div class="bar-in">
+  <a class="brand" href="../">AI 실무 핸드북</a>
+  <div class="links">
+    <a href="templates/">템플릿</a>
+    <a href="https://github.com/sonovman/ai-practice-handbooks">GitHub ↗</a>
+  </div>
+</div></div>
+
+<div class="doc">
+  <aside class="side">
+    <div class="label">차례</div>
+    <ol>
+      <li><a href="#s0">한 줄 결론</a></li>
+      <li><a href="#s1">1. 전체 구조</a></li>
+      <li><a href="#s2">2. 품질과 취향 나누기</a></li>
+      <li><a href="#s3">3. 처음 접근과 바뀐 점</a></li>
+      <li><a href="#s4">4. 실전 3단계</a></li>
+      <li><a href="#s5">5. 에이전트 워크플로우</a></li>
+      <li><a href="#s6">6. 도구로 검수(시범)</a></li>
+      <li><a href="#s7">7. Antigravity·여러 도구</a></li>
+      <li><a href="#s8">8. 주의할 점</a></li>
+      <li><a href="#s9">부록 · 출처</a></li>
+    </ol>
+  </aside>
+
+<main>
+  <div class="eyebrow">핸드북 24 · 콘텐츠</div>
+  <h1>AI 디자인 에이전트로 PPT 슬라이드 만들기 — 취향 명세서와 워크플로우</h1>
+  <p class="lead">“이 내용으로 예쁜 슬라이드 만들어줘”라고만 하면, AI는 제어하기 쉬운 두세 가지 패턴만 반복하고 ‘A가 아니라 B입니다’ 같은 진부한 문체를 남발합니다. 수준 높은 슬라이드를 <strong>꾸준히</strong> 뽑으려면, 단발성 프롬프트 대신 <strong>취향 명세서(디자인.md)</strong>와 역할을 나눈 <strong>워크플로우</strong>가 필요합니다. 이 편은 그 방법을, 가상의 실전 시나리오와 직접 돌려 본 점검 도구로 초보자도 따라 하기 쉽게 단계별로 보여 줍니다.</p>
+  <div class="meta">
+    <b>독자</b><span>AI로 보고용·발표용 슬라이드를 자주 만들고 싶은 사람, ‘AI 티’ 나는 결과가 고민인 사람</span>
+    <b>분량</b><span>읽기 약 20분 · 템플릿(품질 게이트 린터 · 미리보기 렌더 도구 · 워크플로우 스킬 · 프롬프트 5종 · 디자인.md·시범)</span>
+    <b>판</b><span>1.0 · 2026. 11. 8.</span>
+  </div>
+
+  <section id="s0">
+    <div class="key">
+      <div class="eyebrow">한 줄 결론</div>
+      <p style="font-size:19px;font-weight:600;line-height:1.6;margin:8px 0 10px">스타일은 ‘명세서’로 고정하고, 검수는 ‘품질(객관)’과 ‘취향(스타일)’으로 나눠서 — 그래야 AI 슬라이드가 매번 비슷한 품질로 나옵니다.</p>
+      <p style="opacity:.75;font-size:15px">핵심은 세 가지입니다. ① 우수 레퍼런스에서 <b>취향 명세서(디자인.md)</b>를 뽑아 스타일을 재현 가능하게 만들고, ② 본문을 그 명세서대로 <b>슬라이드 개요</b>로 만들고, ③ <b>품질 게이트(Pass/Fail) + 비주얼 QA</b> 루프로 거른 뒤 사람이 리터치합니다.</p>
+    </div>
+    <div class="note"><b>무엇을 확인했나</b> — 품질 게이트 린터는 시험 9개, 미리보기 렌더 도구는 시험 5개로 동작을 확인했고, 4·6장 시범은 원고의 가상 시나리오(2026 AI 공공서비스 혁신)를 <b>작성 환경에서 직접 돌린 결과</b>입니다. Antigravity 2.0(2026 I/O) 등 최신 사실은 공식·최신 자료로 확인했습니다(부록). 특정 모델 제품·버전명은 자주 바뀌므로 ‘역할’(비주얼 인식·정교한 재현 등)로 설명합니다. 이 편은 <b>유튜브 링크가 제공되지 않아</b> 영상 자료는 쓰지 않았습니다.</div>
+  </section>
+
+  <!-- 1 -->
+  <section id="s1">
+    <h2><span class="no">01</span>전체 구조 — 순차 · 병렬 · 루프</h2>
+    <p>슬라이드 제작을 한 번의 요청이 아니라, 역할을 나눈 세 묶음의 흐름으로 봅니다.</p>
+    <div class="graph">
+      <div class="node end"><span class="id">1</span><b>취향 추출 (순차)</b><p>우수 레퍼런스 → 디자인.md 명세서</p></div>
+      <div class="edge"><span>스타일을 넘김</span></div>
+      <div class="node"><span class="id">2</span><b>개요 생성 (병렬)</b><p>본문을 챕터로 나눠 Type 섞어 생성 → 통합</p></div>
+      <div class="edge"><span>초안을 넘김</span></div>
+      <div class="node"><span class="id">3</span><b>검수 (루프)</b><p>품질 게이트(Pass/Fail) + 비주얼 QA → 재작업</p></div>
+      <div class="edge"><span>사람 리터치 → 명세서 고도화</span></div>
+      <div class="node dark"><span class="id">▣</span><b>최종 슬라이드 (PPTX)</b><p>게이트 통과 개요만 발표 자료로</p></div>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section id="s2">
+    <h2><span class="no">02</span>품질과 취향 나누기 — 검수의 기본</h2>
+    <p>검수를 잘하려면 <b>객관적인 것</b>과 <b>정답 없는 스타일</b>을 섞지 않아야 합니다. 섞으면 기준이 흐려집니다.</p>
+    <div class="tbl"><table>
+      <thead><tr><th></th><th>품질 게이트(Quality)</th><th>취향 루브릭(Taste)</th></tr></thead>
+      <tbody>
+        <tr><th>정의</th><td>최소 기준 통과 여부를 객관 검수</td><td>정답 없는 스타일·맥락 가이드</td></tr>
+        <tr><th>판정</th><td>Pass / Fail</td><td>재현도 평가(디자인.md 기준)</td></tr>
+        <tr><th>대상</th><td>맞춤법·어문, 사실관계(수치), 요구사항, 청중, 출처</td><td>레이아웃 다양성, 강약 전개, 색 절제, 폰트 비율, 정보 밀도</td></tr>
+        <tr><th>누가</th><td>도구로 일부 자동(<code>slide_lint.py</code>)</td><td>사람 + 비주얼 QA(<code>deck_html.py</code> 미리보기)</td></tr>
+      </tbody>
+    </table></div>
+    <div class="note"><b>왜 나누나</b> — ‘맞춤법 틀림’은 통과/실패가 분명하지만, ‘레이아웃이 다양한가’는 정답이 없습니다. 전자는 게이트로 자동으로 거르고, 후자는 우수 레퍼런스에서 뽑은 <b>명세서(루브릭)</b>를 기준으로 사람이 봅니다.</div>
+  </section>
+
+  <!-- 3 -->
+  <section id="s3">
+    <h2><span class="no">03</span>처음 접근과 바뀐 점</h2>
+
+    <div class="note"><b>① “예쁘게 만들어줘” 한 줄 → 취향 명세서로 스타일 고정</b> — 지시가 막연하면 AI는 제어하기 쉬운 두세 패턴만 반복합니다. 우수 레퍼런스에서 컬러·폰트 비율·레이아웃 Type·강약 전개를 <code>디자인.md</code>로 뽑아 주면, 다른 주제에도 같은 스타일이 재현됩니다(재현성, Robustness).</div>
+
+    <div class="note"><b>② “결과를 한 번에 평가” → 품질과 취향을 분리</b> — 맞춤법·사실관계(객관)와 레이아웃·흐름(스타일)을 한 번에 보면 기준이 흐려집니다. 품질은 Pass/Fail 게이트로, 취향은 루브릭 가이드로 나눠 봅니다.</div>
+
+    <div class="note"><b>③ “1차 결과를 그대로 사용” → 검수 루프 + 사람 리터치</b> — AI는 확인 안 된 것도 ‘완료’라고 말합니다. 품질 게이트와 비주얼 QA로 거른 뒤, 사람이 2차 리터치하고 그 차이를 다시 명세서에 반영해 고도화합니다.</div>
+
+    <div class="note"><b>④ “단조로운 표만 반복” → 레이아웃 Type을 섞기</b> — AI는 표 형태를 좋아합니다. 명세서에 <b>여러 레이아웃 유형(Type A~F)</b>을 정의해 두고, 내용 맥락에 맞게 섞어 쓰라고 지시합니다. 린터가 ‘한 Type 쏠림’을 경고합니다.</div>
+
+    <div class="note"><b>⑤ “AI 문체를 못 알아챔” → 클리셰를 규칙으로 금지</b> — ‘A가 아니라 B입니다’ 같은 진부한 프레이징은 AI 티의 대표입니다. 명세서에 금지로 못 박고, 품질 게이트가 자동으로 잡아냅니다(6장 시범).</div>
+
+    <div class="note"><b>⑥ “본문에 없는 수치를 지어냄” → 사실관계 게이트</b> — 그럴듯한 숫자를 만들어 넣기 쉽습니다. 린터가 <b>슬라이드에는 있는데 본문엔 없는 수치</b>를 짚어 줍니다. 실제로 6장 시범에서 로드맵 종료연도 ‘2027’이 본문에 없어 한 번 걸렸습니다.</div>
+  </section>
+
+  <!-- 4 -->
+  <section id="s4">
+    <h2><span class="no">04</span>실전 3단계 — 가상 시나리오로</h2>
+    <p>가상 시나리오로 흐름을 따라가 봅니다. <b>레퍼런스</b>: 사람이 만든 우수 공공 PPT. <b>주제</b>: 「2026 AI 기반 공공서비스 혁신 방안」(<code>본문.md</code>).</p>
+
+    <div class="steps">
+      <ol>
+        <li><b>1단계 · 취향 명세서 추출</b> — 레퍼런스를 분석해 <code>디자인.md</code>(컬러·폰트 비율·레이아웃 Type·강약·밀도)를 뽑습니다. 프롬프트는 <a href="templates/starter/prompts/01-extract-taste.md">01-extract-taste.md</a>.</li>
+        <li><b>2단계 · 개요 생성</b> — <code>본문.md</code> + <code>디자인.md</code>를 함께 주고, Type을 섞은 5장 개요를 만듭니다. 프롬프트는 <a href="templates/starter/prompts/02-generate-slides.md">02-generate-slides.md</a>.</li>
+        <li><b>3단계 · 검수 루프</b> — 품질 게이트(<a href="templates/starter/prompts/03-quality-gate.md">03</a>)와 비주얼 QA(<a href="templates/starter/prompts/04-visual-qa.md">04</a>)로 거르고, 사람 리터치를 명세서에 반영(<a href="templates/starter/prompts/05-retouch-diff.md">05</a>)합니다.</li>
+      </ol>
+    </div>
+
+    <div class="code"><button class="copy">복사</button><pre># 디자인.md 를 적용해 만든 슬라이드 개요(일부) — sample/발표자료_초안.md
+
+# [Slide 1] 표지
+- Layout: Type D            ← 중앙 대형 메시지
+- Highlight: 민원 처리 시간 70% 단축 | 24시간 끊김없는 행정
+
+# [Slide 3] 3대 핵심 추진 전략
+- Layout: Type C            ← 상단 수치 + 하단 설명 박스
+- Card 1: 지능형 민원 — 챗봇 24/7 원스톱(처리율 85%)
+- Card 2: 행정 자동화 — 문서 요약·보고서 자동 작성
+- Card 3: 안전한 데이터 — 공공 전용 LLM·개인정보 암호화</pre></div>
+    <div class="note"><b>포인트</b> — 각 슬라이드에 <code>Layout: Type X</code>를 명시하면, 생성·검수·렌더가 모두 그 구조를 따라갑니다. 수치는 반드시 <code>본문.md</code>에 있는 값만 씁니다.</div>
+  </section>
+
+  <!-- 5 -->
+  <section id="s5">
+    <h2><span class="no">05</span>디자인 에이전트 워크플로우 — 역할 나누기</h2>
+    <p>한 에이전트에 다 맡기지 않고, 조직처럼 역할을 나눕니다.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>에이전트</th><th>구조</th><th>역할</th></tr></thead>
+      <tbody>
+        <tr><th>취향 추출</th><td>순차</td><td>레퍼런스 → <code>디자인.md</code> 명세서 자동 추출</td></tr>
+        <tr><th>슬라이드 생성</th><td>병렬</td><td>본문을 챕터로 나눠 여러 에이전트가 동시에 제작 → 통합</td></tr>
+        <tr><th>품질 검수</th><td>루프</td><td>오탈자·사실관계·요구사항을 Pass/Fail 판정</td></tr>
+        <tr><th>비주얼 QA</th><td>루프</td><td>렌더된 화면의 글자 겹침·줄바꿈·여백 쏠림을 눈으로 감지→수정</td></tr>
+        <tr><th>사람(Human-in-the-loop)</th><td>—</td><td>최종 리터치, 그 차이를 명세서에 반영해 고도화</td></tr>
+      </tbody>
+    </table></div>
+    <div class="note"><b>병렬이 주는 것</b> — 긴 보고서를 챕터별로 나눠 동시에 만들면 빠르고, 모두 같은 <code>디자인.md</code>를 참조하므로 스타일이 흐트러지지 않습니다. 검수는 루프라 미통과 시 자동으로 재작업을 돕습니다.</div>
+  </section>
+
+  <!-- 6 -->
+  <section id="s6">
+    <h2><span class="no">06</span>도구로 검수 — 직접 돌린 결과</h2>
+    <p>동봉한 두 도구(표준 라이브러리)로 검수 루프를 실제로 돌려 봤습니다.</p>
+
+    <h3 style="font-size:16px;margin:18px 0 8px">① 품질 게이트 — 본문에 없는 수치를 잡음(전 → 후)</h3>
+    <div class="code"><button class="copy">복사</button><pre>$ python tools/slide_lint.py sample/발표자료_초안.md --slides 5 \
+     --require "3대,로드맵,기대 효과" --body sample/본문.md --design sample/디자인.md
+
+[전] 판정: 미통과
+| FAIL | 사실관계(본문에 없는 수치) | 본문에 없음: 2027 |   ← 로드맵 '2026~2027'의 2027이 본문에 없었음
+[후] 본문에 종료연도를 명시 → 판정: 통과 (4개 게이트 PASS)</pre></div>
+    <div class="note"><b>무슨 일이 있었나</b> — 슬라이드 제목의 ‘2026~2027’ 중 <b>2027</b>이 본문엔 없어 게이트가 걸렸습니다. 사람이라면 놓치기 쉬운 불일치입니다. 본문에 로드맵 종료연도를 명시하자 통과했습니다. (전/후 결과: <a href="templates/starter/sample/qa-report-before.md">before</a> · <a href="templates/starter/sample/qa-report-after.md">after</a>) ‘A가 아니라 B’ 같은 클리셰도 같은 방식으로 Fail 처리됩니다.</div>
+
+    <h3 style="font-size:16px;margin:18px 0 8px">② 비주얼 QA — 미리보기를 렌더해 눈으로 확인</h3>
+    <p><code>deck_html.py</code>로 개요를 검토용 미리보기로 렌더했습니다. 처음엔 제목이 본문 행으로 한 번 더 중복 표시되는 결함이 비주얼 QA에서 보여, 도구를 고쳐 바로잡았습니다(아래는 수정 후).</p>
+    <p style="text-align:center;margin:14px 0"><img src="templates/starter/sample/deck-preview-screenshot.png" alt="5장 슬라이드 미리보기 렌더 — Type D/F/C/B/A 레이아웃 배지, 2열·카드 배치, 수치 강조" style="max-width:100%;border:1px solid #e3e6ec;border-radius:8px"></p>
+    <div class="note"><b>포인트</b> — 실제 PPTX가 아니라 ‘검토용 미리보기’입니다. 레이아웃대로 배치됐는지, 글이 넘치거나 겹치지 않는지 사람이 한눈에 확인하는 용도입니다. 발표용 최종본은 Claude의 Slides 기능으로 만들어 <code>.pptx</code>로 내려받으면 됩니다(게이트 통과 개요만).</div>
+
+    <div class="btns">
+      <a class="btn primary" href="downloads/ai-slides-kit.zip" download>전체 템플릿 내려받기 (ZIP)</a>
+      <a class="btn" href="templates/">파일 하나씩 보기</a>
+    </div>
+  </section>
+
+  <!-- 7 -->
+  <section id="s7">
+    <h2><span class="no">07</span>Antigravity와 Claude Code, 그리고 여러 도구</h2>
+    <p>두 도구 모두 에이전트로 슬라이드 작업을 돕지만 강점이 다릅니다. 역할을 나눠 쓰면 좋습니다.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>구분</th><th>Antigravity</th><th>Claude Code</th></tr></thead>
+      <tbody>
+        <tr><th>속도·가성비</th><td>빠르고 가볍게(CLI/데스크톱). 초안·구조 잡기에 강함</td><td>상위 모델 기반으로 신중·정교. 상대적으로 느림</td></tr>
+        <tr><th>비주얼 QA</th><td>Gemini 계열 멀티모달로 시각 인식에 강함</td><td>렌더 후 겹침·줄바꿈을 확인하고 수정 지시</td></tr>
+        <tr><th>디자인 재현</th><td>빠른 초안엔 유용, 다양성은 단순할 수 있음</td><td>레퍼런스 레이아웃을 정교하게 재현</td></tr>
+        <tr><th>추천</th><td>구조 분석·빠른 초안(입문·실습)</td><td>발표용 고급 슬라이드 완성</td></tr>
+      </tbody>
+    </table></div>
+    <div class="note"><b>다른 도구에서</b> — 취향 추출·개요 생성·비주얼 QA라는 흐름은 ChatGPT·Gemini·Microsoft 365 Copilot에서도 같습니다(이름만 다름). Claude는 Slides로 바로 <code>.pptx</code>를 만들고, Copilot은 PowerPoint 안에서, Gemini는 Workspace에서 돕습니다. Antigravity 구축법과 도구별 대응표는 <a href="templates/starter/.agents/skills/slide-workshop/references/platforms.md">platforms.md</a>와 <a href="../antigravity/">16편</a>을 참고하세요. 모델 제품·버전명은 자주 바뀌니 ‘비주얼 인식이 강한 최신 모델’처럼 역할로 기억합니다.</div>
+  </section>
+
+  <!-- 8 -->
+  <section id="s8">
+    <h2><span class="no">08</span>주의할 점</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>상황</th><th>이렇게</th></tr></thead>
+      <tbody>
+        <tr><th>막연한 “예쁘게”</th><td>우수 레퍼런스에서 디자인.md를 뽑아 스타일을 명세한다.</td></tr>
+        <tr><th>품질·취향 뒤섞기</th><td>객관은 Pass/Fail 게이트, 스타일은 루브릭으로 분리.</td></tr>
+        <tr><th>1차 결과 그대로 사용</th><td>품질 게이트 + 비주얼 QA 루프 후 사람이 리터치.</td></tr>
+        <tr><th>단조로운 표 반복</th><td>레이아웃 Type을 섞고, 린터의 ‘쏠림’ 경고를 확인.</td></tr>
+        <tr><th>AI 클리셰</th><td>‘A가 아니라 B’ 등은 명세서에서 금지, 게이트로 자동 검출.</td></tr>
+        <tr><th>수치 지어내기</th><td>본문에 있는 값만. 린터가 본문에 없는 수치를 짚는다.</td></tr>
+        <tr><th>레퍼런스 저작권·개인정보</th><td>출처 확인, 민감·내부 문서는 올리기 전 제거·가명화.</td></tr>
+        <tr><th>개인 서버 경유</th><td>불명의 중계 서버 금지. 공식·직접·로컬 우선.</td></tr>
+        <tr><th>모델 버전명 외우기</th><td>자주 바뀜. ‘역할’로 기억(비주얼 인식·정교한 재현 등).</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <!-- 9 -->
+  <section id="s9">
+    <h2><span class="no">부록</span>출처</h2>
+    <p>모두 2026. 11. 8. 확인. 이 편은 유튜브 링크가 제공되지 않아 영상 자료는 쓰지 않았습니다.</p>
+    <ul>
+      <li>TechCrunch, <a href="https://techcrunch.com/2026/05/19/google-launches-antigravity-2-0-with-an-updated-desktop-app-and-cli-tool/">Google Antigravity 2.0 출시(데스크톱 앱·CLI)</a> · Google I/O 2026 발표</li>
+      <li>Anthropic, <a href="https://support.claude.com/">Claude 지원 센터</a> (Slides로 .pptx 내보내기·파일 작업)</li>
+      <li>작성자 원고 「AI 디자인 에이전트와 워크플로우를 활용한 PPT 슬라이드 제작법」의 방법론(품질/취향 분리, 취향 명세서, 순차·병렬·루프 워크플로우)과, 동봉한 두 도구(<code>slide_lint.py</code>·<code>deck_html.py</code>)를 직접 만들어 시험(9+5)·가상 시나리오로 검증.</li>
+    </ul>
+    <p>함께 읽기: <a href="../antigravity/">16편 Antigravity</a> · <a href="../ai-polish/">18편 윤문 스킬</a> · <a href="../claude-master/">23편 Claude 마스터</a></p>
+  </section>
+
+  <footer>
+    작성: 이진수 (변리사) · 2026. 11. 8. · CC BY-NC 4.0<br>
+    작성자의 원고를 바탕으로 생성형 AI의 도움을 받아 2026년 11월 기준 사실을 확인하고, 동봉한 점검·렌더 도구를 직접 만들어 가상 시나리오로 돌려 검증했으며, 사람이 검토했습니다. 유튜브 링크는 제공되지 않아 영상 자료는 쓰지 않았습니다. 시범의 자료·수치는 모두 가상입니다. 모델 이름·메뉴 위치는 바뀔 수 있습니다. 오류 제보는 <a href="https://github.com/sonovman/ai-practice-handbooks/issues">Issues</a>로 남겨 주세요.
+  </footer>
+</main>
+</div>
+
+<script>
+  document.querySelectorAll('.copy').forEach(function (b) {
+    b.addEventListener('click', function () {
+      navigator.clipboard.writeText(b.closest('.code').querySelector('pre').innerText).then(function () {
+        b.textContent = '복사됨'; setTimeout(function () { b.textContent = '복사'; }, 1500);
+      });
+    });
+  });
+  var links = [].slice.call(document.querySelectorAll('.side a'));
+  var io = new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+      if (e.isIntersecting) links.forEach(function (a) { a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id); });
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  document.querySelectorAll('main section[id]').forEach(function (s) { io.observe(s); });
+</script>
+</body>
+</html>

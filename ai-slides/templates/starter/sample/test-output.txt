@@ -1,0 +1,25 @@
+test_cliche_fail (__main__.T.test_cliche_fail) ... ok
+test_diversity_warning (__main__.T.test_diversity_warning) ... ok
+test_exit_codes (__main__.T.test_exit_codes) ... ok
+test_layout_detect (__main__.T.test_layout_detect) ... ok
+test_number_consistency (__main__.T.test_number_consistency) ... ok
+test_pass_clean (__main__.T.test_pass_clean) ... ok
+test_require_keywords (__main__.T.test_require_keywords) ... ok
+test_slide_count_gate (__main__.T.test_slide_count_gate) ... ok
+test_split_counts (__main__.T.test_split_counts) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.007s
+
+OK
+
+test_build_has_sections_and_selfcontained (__main__.T.test_build_has_sections_and_selfcontained) ... ok
+test_cols_layout (__main__.T.test_cols_layout) ... ok
+test_escaping (__main__.T.test_escaping) ... ok
+test_out_file (__main__.T.test_out_file) ... ok
+test_parse (__main__.T.test_parse) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.004s
+
+OK

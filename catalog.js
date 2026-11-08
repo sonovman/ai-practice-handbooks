@@ -411,5 +411,22 @@ window.CATALOG = [
       { label: "화면으로 읽기", href: "claude-master/", primary: true },
       { label: "템플릿 내려받기", href: "claude-master/templates/" }
     ]
+  },
+  {
+    id: "ai-slides",
+    no: "24",
+    category: "콘텐츠",
+    title: "AI 디자인 에이전트로 PPT 슬라이드 만들기 — 취향 명세서와 워크플로우",
+    subtitle: "단발성 프롬프트 대신 디자인.md와 품질/취향 분리로",
+    summary: "AI로 수준 높은 슬라이드를 꾸준히 만드는 법. 우수 레퍼런스에서 취향 명세서(디자인.md)를 뽑고, 본문을 슬라이드 개요로 만들고, 품질 게이트(Pass/Fail)와 비주얼 QA 루프로 검수합니다. 품질과 취향의 분리, 순차·병렬·루프 워크플로우, Antigravity·Claude Code 비교까지 실사례로 담았습니다.",
+    reader: "AI로 보고용·발표용 슬라이드를 자주 만들고 싶은 사람, 'AI 티'가 고민인 사람",
+    version: "1.0",
+    date: "2026-11-08",
+    length: "읽기 약 20분",
+    status: "published",
+    links: [
+      { label: "화면으로 읽기", href: "ai-slides/", primary: true },
+      { label: "템플릿 내려받기", href: "ai-slides/templates/" }
+    ]
   }
 ];
