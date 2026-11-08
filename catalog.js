@@ -394,5 +394,22 @@ window.CATALOG = [
       { label: "화면으로 읽기", href: "git-github/", primary: true },
       { label: "템플릿 내려받기", href: "git-github/templates/" }
     ]
+  },
+  {
+    id: "claude-master",
+    no: "23",
+    category: "Claude 활용",
+    title: "초보자를 위한 Claude 마스터 가이드 — 개념 정리부터 AI 업무 시스템까지",
+    subtitle: "다 깔지 말고 작게 시작해 나만의 AI 업무 시스템으로",
+    summary: "Claude를 업무에 처음 붙이는 사람을 위한 완전 가이드. 쓰는 3가지 방법(모드 통합)·모델 고르기·꼭 아는 7가지 기능·SSR Plus로 AI 업무 시스템 만들기·책상(컨텍스트) 관리·예스맨 방지 검증까지. CLAUDE.md·스킬 자동 초안 도구를 포함해 초보자용 단계별로 담았습니다.",
+    reader: "Claude를 제대로 활용하고 싶은 초보자, 개념이 뒤섞여 어디서 시작할지 막막한 사람",
+    version: "1.0",
+    date: "2026-11-08",
+    length: "읽기 약 20분",
+    status: "published",
+    links: [
+      { label: "화면으로 읽기", href: "claude-master/", primary: true },
+      { label: "템플릿 내려받기", href: "claude-master/templates/" }
+    ]
   }
 ];

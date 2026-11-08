@@ -1,0 +1,24 @@
+test_claude_md_has_sections_and_folders (__main__.T.test_claude_md_has_sections_and_folders) ... ok
+test_detect_kind_python (__main__.T.test_detect_kind_python) ... ok
+test_index_lists_top_dirs (__main__.T.test_index_lists_top_dirs) ... ok
+test_preview_does_not_write (__main__.T.test_preview_does_not_write) ... ok
+test_walk_skips_dirs (__main__.T.test_walk_skips_dirs) ... ok
+test_write_creates_files_and_no_overwrite (__main__.T.test_write_creates_files_and_no_overwrite) ... 건너뜀(이미 있음): /tmp/tmpa2pjnkm_/CLAUDE.md  — 덮어쓰려면 --force
+건너뜀(이미 있음): /tmp/tmpa2pjnkm_/INDEX.md  — 덮어쓰려면 --force
+ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.011s
+
+OK
+
+test_bad_name_rejected (__main__.T.test_bad_name_rejected) ... ok
+test_creates_skill_files (__main__.T.test_creates_skill_files) ... ok
+test_long_desc_warns (__main__.T.test_long_desc_warns) ... ok
+test_no_overwrite_without_force (__main__.T.test_no_overwrite_without_force) ... ok
+test_with_tool (__main__.T.test_with_tool) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.007s
+
+OK

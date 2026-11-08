@@ -28,6 +28,7 @@
 | 20 | 경영진용 논문·보고서·판례 요약 — 추출, 점검, 결론, 검증 | [화면](https://sonovman.github.io/ai-practice-handbooks/exec-brief/) | [템플릿](exec-brief/templates/) |
 | 21 | REA로 역공학 하기 — 근거로 이해하고, 적법 범위에서 재구현 | [화면](https://sonovman.github.io/ai-practice-handbooks/rea-reverse-engineering/) | [템플릿](rea-reverse-engineering/templates/) |
 | 22 | 바이브 코딩을 위한 Git·GitHub — 안전하게 공유하고 함께 고치기 | [화면](https://sonovman.github.io/ai-practice-handbooks/git-github/) | [템플릿](git-github/templates/) |
+| 23 | 초보자를 위한 Claude 마스터 가이드 — 개념 정리부터 AI 업무 시스템까지 | [화면](https://sonovman.github.io/ai-practice-handbooks/claude-master/) | [템플릿](claude-master/templates/) |
 
 ## 폴더 구성
 
@@ -61,6 +62,7 @@ ai-practice-handbooks/
 ├── exec-brief/         20편 (templates/ starter 작업 폴더·스킬 2개·분야별 틀·관할별 판례 구조·용어집·evidence/cite/term_check·시범 자료, upload/ 웹 앱용, downloads/ ZIP)
 ├── rea-reverse-engineering/  21편 (templates/ starter 작업 폴더·reverse-engineer 스킬·scope_check·evidence_log·자작 바이너리 시범, upload/ 웹 앱용, downloads/ ZIP)
 ├── git-github/         22편 (templates/ starter 작업 폴더·git-share 스킬·secret_scan.py·.gitignore·pre-commit 훅·시범 자료, upload/ 웹 앱용, downloads/ ZIP)
+├── claude-master/       23편 (templates/ starter 작업 폴더·claude-starter 스킬·claude_md_init.py·skill_init.py·프롬프트 5종·시범, upload/ 웹 앱용, downloads/ ZIP)
 └── data/               공용 자료
 ```
 

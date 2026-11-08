@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>초보자를 위한 Claude 마스터 가이드</title>
+<meta name="description" content="Claude를 업무에 처음 붙이는 사람을 위한 완전 가이드. 쓰는 3가지 방법(모드 통합)·모델 고르기·꼭 아는 7가지 기능·SSR Plus로 AI 업무 시스템 만들기·책상(컨텍스트) 관리·예스맨 방지 검증까지. 프라이버시 설정과 CLAUDE.md·스킬 자동 초안 도구 포함, 초보자용 단계별.">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<div class="bar"><div class="bar-in">
+  <a class="brand" href="../">AI 실무 핸드북</a>
+  <div class="links">
+    <a href="templates/">템플릿</a>
+    <a href="https://github.com/sonovman/ai-practice-handbooks">GitHub ↗</a>
+  </div>
+</div></div>
+
+<div class="doc">
+  <aside class="side">
+    <div class="label">차례</div>
+    <ol>
+      <li><a href="#s0">한 줄 결론</a></li>
+      <li><a href="#s1">1. Claude를 쓰는 3가지 방법</a></li>
+      <li><a href="#s2">2. 모델 고르기</a></li>
+      <li><a href="#s3">3. 꼭 아는 7가지 기능</a></li>
+      <li><a href="#s4">4. 처음 접근과 바뀐 점</a></li>
+      <li><a href="#s5">5. AI 업무 시스템 — SSR Plus</a></li>
+      <li><a href="#s6">6. 책상(컨텍스트) 관리</a></li>
+      <li><a href="#s7">7. 예스맨 방지 — 비판적 검증</a></li>
+      <li><a href="#s8">8. 다른 도구에서</a></li>
+      <li><a href="#s9">9. 실제로 이런 것까지</a></li>
+      <li><a href="#s10">10. 주의할 점</a></li>
+      <li><a href="#s11">부록 · 출처</a></li>
+    </ol>
+  </aside>
+
+<main>
+  <div class="eyebrow">핸드북 23 · Claude 활용</div>
+  <h1>초보자를 위한 Claude 마스터 가이드 — 개념 정리부터 AI 업무 시스템까지</h1>
+  <p class="lead">Claude를 처음 업무에 붙일 때 가장 흔한 실수는 <strong>남들이 추천하는 기능·스킬을 한꺼번에 다 설치하는 것</strong>입니다. 그러면 ‘책상’만 어질러지고 오히려 품질이 떨어집니다. 이 편은 반대로 갑니다 — 프라이버시 설정부터 시작해 <strong>작은 성공 하나</strong>를 빠르게 만들고, 반복 업무를 하나씩 ‘스킬’로 고정해 나만의 AI 업무 시스템으로 키우는 길을, 초보자도 따라 하기 쉽게 단계별로 안내합니다.</p>
+  <div class="meta">
+    <b>독자</b><span>Claude를 업무에 제대로 활용하고 싶은 초보자, 개념이 뒤섞여 어디서 시작할지 막막한 사람</span>
+    <b>분량</b><span>읽기 약 20분 · 첫 세팅까지 약 15분 · 템플릿(CLAUDE.md·스킬 자동 초안 도구 2종 · 시작 스킬 · 프롬프트 5종 · 시범)</span>
+    <b>판</b><span>1.0 · 2026. 11. 8.</span>
+  </div>
+
+  <section id="s0">
+    <div class="key">
+      <div class="eyebrow">한 줄 결론</div>
+      <p style="font-size:19px;font-weight:600;line-height:1.6;margin:8px 0 10px">다 깔지 말고, 작게 시작하세요 — 프라이버시를 먼저 켜고, 작업 폴더 하나에 안내 책자(CLAUDE.md)를 두고, 반복 업무 하나를 스킬로 고정하는 것으로 충분합니다.</p>
+      <p style="opacity:.75;font-size:15px">Claude는 ‘대화’를 넘어 내 컴퓨터의 파일·폴더로 <b>실제 작업</b>을 해 주는 도구로 커졌습니다. 그래서 중요한 건 기능을 많이 아는 게 아니라, <b>맥락을 잘 넘겨주고(Second Brain), 반복을 고정하고(Skills), 결과를 검증하는(예스맨 방지)</b> 습관입니다. 이 셋이 AI 업무 시스템의 뼈대입니다.</p>
+    </div>
+    <div class="note"><b>무엇을 확인했나</b> — 2026년 11월 기준으로 모드 통합(코워크가 일반 대화에 합쳐짐)·모델 구성·주요 기능을 공식 안내와 최신 자료로 확인했습니다(부록). 동봉한 CLAUDE.md·스킬 초안 도구는 시험 11개로 동작을 확인하고, 데모 폴더에서 직접 돌린 결과를 5·부록에 실었습니다. <b>확인하지 못한 것</b>: 원고에 링크가 포함돼 있지 않아 참고 영상의 세부 사례는 독립 검증하지 못했고, 9장의 활용 사례는 ‘이런 결까지 가능하다’는 범위 예시로만 축약했습니다.</div>
+  </section>
+
+  <!-- 1 -->
+  <section id="s1">
+    <h2><span class="no">01</span>Claude를 쓰는 3가지 방법</h2>
+    <p>예전에는 화면에서 <b>채팅 / 코워크(Cowork) / 코드(Code)</b> 모드를 골라 썼습니다. 지금은 일반 Claude 앱에서 <b>모드 선택이 사라지고</b>, 코워크의 ‘파일·폴더로 실제 작업’ 능력이 모든 대화에 통합됐습니다. 그래서 오늘의 그림은 이렇게 단순합니다.</p>
+    <div class="tbl"><table>
+      <thead><tr><th></th><th>① 일반 Claude (웹·앱)</th><th>② 데스크톱 앱으로 작업</th><th>③ Claude Code</th></tr></thead>
+      <tbody>
+        <tr><th>한 줄</th><td>한 입력창. 짧게 답하거나 여러 단계 작업을 알아서 수행</td><td>내 컴퓨터의 폴더·파일을 직접 읽고 결과물을 파일로 만듦</td><td>개발·고급 자동화. 자율 에이전트 공정</td></tr>
+        <tr><th>누가</th><td>모두</td><td>비개발자 실무자</td><td>개발자·고급 사용자</td></tr>
+        <tr><th>전제</th><td>로그인</td><td>데스크톱 앱이 열려 있어야 로컬 파일·브라우저·컴퓨터 제어가 됨</td><td>터미널/코드 환경</td></tr>
+      </tbody>
+    </table></div>
+    <div class="note"><b>무엇이 바뀌었나</b> — 모드 선택기와 웹 검색 토글이 사라졌습니다. Claude가 필요하다고 판단하면 알아서 검색하고, 여러 단계 작업도 한 입력창에서 이어집니다. 깊이 조사가 필요하면 <b>+ 메뉴의 Deep Research</b>(또는 <code>/deep-research</code>)를 씁니다. 단, <b>유령 모드(Incognito)</b>는 예전 방식이라 파일 생성·코드 실행이 되지 않습니다(민감 대화 전용).</div>
+  </section>
+
+  <!-- 2 -->
+  <section id="s2">
+    <h2><span class="no">02</span>모델 고르기 — 이름보다 ‘역할’로</h2>
+    <p>모델은 ‘누가 더 똑똑한가’보다 <b>일의 성격에 맞게</b> 고르면 됩니다. 이름과 버전은 자주 바뀌므로 역할로 기억하세요.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>성격</th><th>언제</th></tr></thead>
+      <tbody>
+        <tr><th>빠르고 가벼움 (예: Haiku)</th><td>간단하고 양 많은 일 — 분류·요약·정리</td></tr>
+        <tr><th>일상 주력 (예: Sonnet)</th><td>대부분의 실무 — 글·표·코드·분석의 기본값</td></tr>
+        <tr><th>복잡한 과제 (예: Opus)</th><td>어려운 추론·긴 코딩·여러 단계 작업</td></tr>
+        <tr><th>최상위 등급 (예: Fable)</th><td>가장 까다로운 문제. 비용이 가장 높음</td></tr>
+      </tbody>
+    </table></div>
+    <div class="note"><b>주의 — ‘학력 비유’에 속지 않기</b> — 모델을 ‘초등학생~교수님’처럼 한 줄로 줄 세우면 오해하기 쉽습니다. 실제로는 속도·비용·난이도의 <b>맞교환</b>입니다. 대부분의 일은 일상 주력 모델로 충분하고, 막힐 때만 상위 모델로 올리면 됩니다. 비싼 모델을 늘 쓰는 게 ‘잘 쓰는 것’이 아닙니다. 또 특정 모델이 어느 회사에 ‘합류했다’는 식의 인물·조직 소문은 근거가 분명치 않으니 그대로 옮기지 마세요.</div>
+  </section>
+
+  <!-- 3 -->
+  <section id="s3">
+    <h2><span class="no">03</span>꼭 아는 7가지 기능</h2>
+    <p>전부 당장 쓸 필요는 없습니다. ‘이런 게 있다’만 알아 두고, 필요할 때 하나씩 켜세요.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>기능</th><th>무엇에</th></tr></thead>
+      <tbody>
+        <tr><th>프로젝트(Projects)</th><td>주제별로 대화·파일·지침을 한 묶음으로. 맥락이 섞이지 않음</td></tr>
+        <tr><th>코드 실행·파일 편집</th><td>표·문서·이미지를 실제로 만들고 고쳐 파일로 돌려줌</td></tr>
+        <tr><th>아티팩트(Artifacts)</th><td>문서·웹페이지·작은 앱을 바로 보고 고치고 공유</td></tr>
+        <tr><th>웹 검색·Deep Research</th><td>최신 사실 확인. 깊은 조사는 Deep Research로 여러 출처 종합</td></tr>
+        <tr><th>스킬(Skills)</th><td>반복 지시를 고정해 재사용(5장에서 직접 만듦)</td></tr>
+        <tr><th>커넥터(Connectors·MCP)</th><td>내가 쓰는 외부 앱·데이터와 안전하게 연결</td></tr>
+        <tr><th>보안·프라이버시</th><td>‘AI 모델 개선 돕기’ 끄기, 유령 모드, 개인정보 사전 제거</td></tr>
+      </tbody>
+    </table></div>
+    <div class="note"><b>제일 먼저 할 설정</b> — 설정 → 개인정보 보호에서 <b>‘AI 모델 개선 돕기’를 끕니다</b>(내 대화가 학습에 쓰이지 않게). 회사 문서를 붙일 때는 이름·연락처 같은 개인정보 칼럼을 미리 지우거나 가명으로 바꾸고, 민감한 대화는 유령 모드를 씁니다.</div>
+  </section>
+
+  <!-- 4 -->
+  <section id="s4">
+    <h2><span class="no">04</span>처음 접근과 바뀐 점</h2>
+
+    <div class="note"><b>① “모드를 골라야” → 모드가 통합됐다</b> — 예전엔 채팅·코워크·코드를 골랐지만, 지금은 일반 앱에서 한 입력창으로 짧은 답과 여러 단계 작업이 모두 됩니다. 파일로 ‘실제 작업’을 시키려면 <b>데스크톱 앱이 열려 있어야</b> 한다는 점만 기억하면 됩니다.</div>
+
+    <div class="note"><b>② “비싼 모델이 최고” → 일에 맞게 고른다</b> — 모델은 학력 순위가 아니라 속도·비용·난이도의 맞교환입니다. 기본은 일상 주력 모델, 막힐 때만 상위로. 이름·버전은 자주 바뀌니 ‘역할’로 기억하세요(2장).</div>
+
+    <div class="note"><b>③ “CLAUDE.md에 다 적기” → 안내 책자로 짧게</b> — 지침 파일에 규칙과 자료를 전부 넣으면 수백 줄로 비대해지고, CLAUDE.md는 ‘강제 명령’이 아니라 ‘참고 맥락’이라 핵심이 묻혀 무시됩니다. <b>150~200줄 안쪽의 안내 책자(색인)</b>로 두고 자세한 건 세부 문서로 넘깁니다(5장 도구로 초안 자동 생성).</div>
+
+    <div class="note"><b>④ “추천 기능 다 설치” → 바닐라로 시작</b> — 남들이 좋다는 스킬·설정을 한꺼번에 깔면 책상만 복잡해집니다. 기본(바닐라)으로 시작해 <b>불편이 구체적으로 반복될 때</b> 하나씩 추가하는 것이 가장 빠릅니다.</div>
+
+    <div class="note"><b>⑤ “결과를 그대로 믿기” → 검증 게이트</b> — AI는 사람이 만족할 답을 주도록 훈련돼, 어떤 안이든 칭찬하고 확인 안 된 코드도 ‘완료’라고 말합니다(예스맨). 비판을 먼저 시키고, <b>실행·테스트 증거</b>가 있어야 완료로 인정하세요(7장).</div>
+
+    <div class="note"><b>⑥ “한 대화창에서 계속” → 책상을 정리</b> — 대화·파일이 쌓일수록 컨텍스트(책상)가 오염돼 지능과 지시 준수율이 떨어집니다. 새 주제는 새 대화, 길면 /compact, 바뀌면 /clear, 잘못되면 ESC 두 번(Rewind)(6장).</div>
+
+    <div class="note"><b>⑦ “화려한 사례를 그대로 따라 하기” → 합법·안전 범위부터</b> — 기기 탈옥·역공학처럼 눈길을 끄는 사례가 돌지만, 초보자에겐 법적 회색지대이고 위험합니다. <b>자기 자료 정리·개인 웹/앱·업무 자동화</b>처럼 합법적이고 되돌릴 수 있는 일부터 시작하세요(9장).</div>
+  </section>
+
+  <!-- 5 -->
+  <section id="s5">
+    <h2><span class="no">05</span>AI 업무 시스템 만들기 — SSR Plus</h2>
+    <p>기능을 쌓는 것보다, <b>맥락을 넘기고·반복을 고정하고·검증하는 틀</b>을 갖추는 게 핵심입니다. 이 틀을 네 조각으로 나눈 것이 SSR Plus입니다(개념은 <a href="../ssr-plus/">5편</a>에서 더 깊이 다룹니다).</p>
+    <div class="graph">
+      <div class="node end"><span class="id">S</span><b>Skills — 반복을 고정</b><p>매번 치던 지시를 스킬로</p></div>
+      <div class="edge"><span>무엇을 아는가 ↓ 어디서 찾나</span></div>
+      <div class="node"><span class="id">S</span><b>Second Brain — 안내 책자</b><p>CLAUDE.md·INDEX로 맥락을 넘김</p></div>
+      <div class="edge"><span>언제 자동으로 ↓</span></div>
+      <div class="node"><span class="id">R</span><b>Routines — 자동 실행</b><p>정해진 때에 알아서 돌게</p></div>
+      <div class="edge"><span>무엇과 연결 ↓</span></div>
+      <div class="node dark"><span class="id">+</span><b>Extensions — 외부 연결(MCP)</b><p>내 앱·데이터와 안전하게</p></div>
+    </div>
+    <p>이 중 <b>Second Brain</b>과 <b>Skills</b>를 손으로 짜지 않고 초안부터 자동으로 시작하도록, 표준 라이브러리만 쓰는 작은 도구 두 개를 넣었습니다.</p>
+
+    <div class="steps">
+      <ol>
+        <li><b>안내 책자 초안 만들기</b> — 작업 폴더에서<br>
+          <code style="font-size:13px">python tools/claude_md_init.py 내폴더 --write</code><br>
+          폴더 구조를 읽어 CLAUDE.md·INDEX.md 초안을 만들고 ✏️ 자리를 남깁니다(파일 ‘내용’은 읽지 않아 비밀이 새지 않음).</li>
+        <li><b>반복 업무 1개 스킬화</b> —<br>
+          <code style="font-size:13px">python tools/skill_init.py invoice-clean --desc "엑셀에서 개인정보 칼럼 제거"</code><br>
+          SKILL.md 뼈대를 만들어 줍니다. ‘언제 쓰는지(description)’를 200자 이내로 또렷하게 다듬는 게 핵심입니다.</li>
+        <li><b>자동 실행·외부 연결</b>은 나중에 — 익숙해지면 루틴(정해진 때 자동 실행)과 커넥터(MCP)를 하나씩 붙입니다.</li>
+      </ol>
+    </div>
+
+    <div class="code"><button class="copy">복사</button><pre># claude_md_init.py 가 만든 CLAUDE.md 초안 (데모 폴더, 실제 실행 결과)
+# 데모 리서치 폴더
+
+&gt; 이 파일은 Claude에게 주는 '안내 책자'입니다. 강제 명령이 아니라 참고 맥락으로 작동하니,
+&gt; 150~200줄 안쪽으로 짧게 유지하고 자세한 내용은 INDEX.md나 세부 문서로 넘기세요.
+
+## 1. 이 폴더는 무엇인가
+- 성격(추정): 파이썬
+- 목적: ✏️ 한두 문장으로.
+...
+## 3. 폴더 안내(자세한 지도는 INDEX.md)
+- `data/` — ✏️ 한 줄
+- `docs/` — ✏️ 한 줄
+- `src/`  — ✏️ 한 줄
+- 전체 색인: `INDEX.md`</pre></div>
+    <div class="note"><b>왜 초안인가</b> — 빈 화면에서 완벽히 쓰려다 비대해지기 쉽습니다. 검증된 틀에서 초안을 받아 ✏️만 채우면, 짧고 쓸모 있는 안내 책자가 금방 완성됩니다. 동봉한 <code>claude-starter</code> 스킬에 이 흐름과 체크리스트를 담아 두었습니다.</div>
+  </section>
+
+  <!-- 6 -->
+  <section id="s6">
+    <h2><span class="no">06</span>책상(컨텍스트) 관리 — 신선함이 비대함을 이긴다</h2>
+    <p>대화가 길어질수록 답이 흐려지는 건 성능 탓이 아니라 <b>책상(컨텍스트)</b>이 어질러졌기 때문입니다. 주기적으로 정리하는 습관이 품질을 지킵니다.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>상황</th><th>이렇게</th></tr></thead>
+      <tbody>
+        <tr><th>책상이 얼마나 찼나</th><td><code>/context</code> 로 잔여 용량 확인</td></tr>
+        <tr><th>대화가 길어졌다</th><td><code>/compact</code> 로 요약·압축</td></tr>
+        <tr><th>주제가 바뀐다</th><td><code>/clear</code> 로 책상 비우기(새 작업은 새 대화)</td></tr>
+        <tr><th>방향이 잘못됐다</th><td>입력창에서 <b>ESC 두 번(Rewind)</b> — 깨끗했던 시점으로 되돌아가 재시도</td></tr>
+        <tr><th>세션을 비우기 전</th><td>“지금까지 정한 것과 다음 할 일을 인수인계 문서로 정리해 줘”</td></tr>
+      </tbody>
+    </table></div>
+    <div class="note"><b>흔한 실수</b> — 실패한 시도를 대화에 남긴 채 “A 말고 B로 해줘”를 계속 덧붙이면, 그 실패 기록이 계속 방해합니다. 이럴 때는 덧붙이기보다 <b>Rewind로 되돌아가 깨끗하게 다시 시작</b>하는 편이 결과가 깔끔합니다.</div>
+  </section>
+
+  <!-- 7 -->
+  <section id="s7">
+    <h2><span class="no">07</span>예스맨 방지 — 비판적 검증</h2>
+    <p>AI는 칭찬에 기울고, 확인 안 된 것도 ‘됐다’고 말하는 경향이 있습니다. 두 가지 장치로 막습니다.</p>
+    <div class="steps">
+      <ol>
+        <li><b>비판 요청(악마의 대변인)</b> — “이 안의 약점을 투자자 관점에서 먼저 공격해 줘. 리스크 3가지와 반례를 짚어.” 의견을 묻지 말고 <b>공격</b>을 시킵니다(프롬프트 01).</li>
+        <li><b>자가 검증 게이트</b> — “코드를 작성했으면 직접 실행하거나 테스트를 돌려 통과 결과를 증거로 보여줘. 확인 못 한 건 ‘미확인’으로 표시.” 증거가 있어야 완료로 인정합니다(프롬프트 02).</li>
+        <li><b>독립 검증 서브 에이전트</b>(고급) — 작업을 만든 쪽과 <b>다른</b> 에이전트에게 검사를 맡겨, 스스로 채점하지 않게 합니다.</li>
+      </ol>
+    </div>
+    <div class="note"><b>핵심</b> — 목적과 <b>완료 기준</b>은 사람이 정해 줍니다. “알아서 다 해줘”는 가장 흔한 실패 원인입니다. 무엇이 되면 끝인지(테스트 통과·오류 0·기대 출력)를 함께 주면 결과가 달라집니다.</div>
+  </section>
+
+  <!-- 8 -->
+  <section id="s8">
+    <h2><span class="no">08</span>다른 도구에서의 같은 개념 (선택)</h2>
+    <p>같은 아이디어를 다른 도구는 다른 이름으로 부릅니다. ‘개념’으로 찾으면 메뉴 이름이 바뀌어도 헤매지 않습니다.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>개념</th><th>Claude</th><th>ChatGPT</th><th>Gemini</th><th>Copilot(M365)</th></tr></thead>
+      <tbody>
+        <tr><th>맥락 묶기</th><td>프로젝트</td><td>프로젝트</td><td>Gem</td><td>에이전트 범위</td></tr>
+        <tr><th>반복 고정</th><td>스킬·CLAUDE.md</td><td>맞춤 지침·GPT</td><td>Gem</td><td>Copilot Studio</td></tr>
+        <tr><th>기록 안 남김</th><td>유령 모드</td><td>임시 채팅</td><td>임시 채팅</td><td>보존 정책</td></tr>
+        <tr><th>학습 끄기</th><td>‘개선 돕기’ 끄기</td><td>데이터 제어</td><td>활동 설정</td><td>기본 미학습</td></tr>
+        <tr><th>파일로 작업</th><td>데스크톱 앱</td><td>데이터 분석·커넥터</td><td>Workspace</td><td>Word·Excel 내장</td></tr>
+      </tbody>
+    </table></div>
+    <div class="note"><b>Google Antigravity로도 쉽게</b> — 에이전트가 폴더·코드를 직접 만들어 주는 개발 플랫폼입니다(<a href="../antigravity/">16편</a>). 같은 ‘Second Brain’ 개념으로, 프로젝트 폴더에 안내 문서(AGENTS.md/README)를 두고 “이 구조를 읽고 할 일 색인을 만들어 줘”라고 시키면 손으로 짜지 않아도 초안이 나옵니다. 플랫폼마다 ‘학습에 쓰이는지’와 데이터 경계가 다르니 설정에서 직접 확인하고, 민감정보는 어느 도구든 올리기 전에 지우거나 가명화하며 개인이 운영하는 외부 서버로 우회 전송하지 않습니다.</div>
+  </section>
+
+  <!-- 9 -->
+  <section id="s9">
+    <h2><span class="no">09</span>실제로 이런 것까지 — 범위 예시(합법·안전 먼저)</h2>
+    <p>Claude 코드·에이전트로 사람들이 만든 결과물은 단순 요약을 훨씬 넘어섭니다. 다만 ‘가능하다’와 ‘해도 된다’는 다릅니다. 눈길을 끄는 기기 탈옥·역공학 사례는 법적 회색지대이고 위험하므로 이 편에선 권하지 않습니다. 대신 <b>되돌릴 수 있고 합법적인</b> 범주부터 소개합니다.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>범주</th><th>이런 결까지(예시)</th></tr></thead>
+      <tbody>
+        <tr><th>개인 자동화</th><td>아침 메일 요약·일정 정리, 블로그/업무 반복 작업을 대시보드로</td></tr>
+        <tr><th>나만의 웹·앱</th><td>코딩 없이 대화로 개인 웹사이트, 가벼운 메모·퀴즈 앱 제작</td></tr>
+        <tr><th>업무 시스템</th><td>음성 받아쓰기·초안 작성(추측한 부분은 표시해 사람이 확인·서명)</td></tr>
+        <tr><th>연구 보조</th><td>대량 데이터 분석 스크립트로 가설 탐색(결과는 전문가·기관이 검증)</td></tr>
+        <tr><th>콘텐츠 제작</th><td>자막·편집·더빙 공정 자동화(저작권·출처는 반드시 확인)</td></tr>
+      </tbody>
+    </table></div>
+    <div class="note"><b>주의</b> — ① 남의 기기·소프트웨어를 풀거나 고치는 일은 약관·법에 걸릴 수 있습니다(허락된 대상·자기 소유·오픈소스로 한정). ② 의료·법률·금융처럼 결과가 중요한 일은 <b>사람의 최종 확인</b>을 거칩니다. ③ 화제가 된 수치·성과(제작 시간, 조회수, 비용 절감액 등)는 과장되기 쉬우니 그대로 옮기지 말고 ‘이런 방향이 가능하다’ 정도로 받아들이세요.</div>
+  </section>
+
+  <!-- 10 -->
+  <section id="s10">
+    <h2><span class="no">10</span>주의할 점</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>상황</th><th>이렇게</th></tr></thead>
+      <tbody>
+        <tr><th>추천 기능 다 설치</th><td>바닐라로 시작, 불편이 반복될 때 하나씩 추가.</td></tr>
+        <tr><th>CLAUDE.md 비대</th><td>150~200줄 안내 책자. 자세한 건 INDEX·세부 문서로.</td></tr>
+        <tr><th>한 대화창 계속</th><td>새 주제는 새 대화. /compact·/clear·ESC 두 번.</td></tr>
+        <tr><th>결과를 그대로 신뢰</th><td>비판 요청 + 실행·테스트 증거 요구(완료 기준은 사람이).</td></tr>
+        <tr><th>개인정보·비밀</th><td>‘개선 돕기’ 끄기, 첨부 전 개인정보 칼럼 제거·가명화, 민감 업무는 유령 모드.</td></tr>
+        <tr><th>개인 서버 경유</th><td>불명의 중계 서버로 데이터를 주고받지 않습니다. 공식·직접·로컬 우선.</td></tr>
+        <tr><th>기기 탈옥·역공학 따라 하기</th><td>법적 회색지대. 허락된 대상으로 한정하고 합법 범위부터.</td></tr>
+        <tr><th>모델 이름·메뉴 외우기</th><td>자주 바뀝니다. ‘역할’과 ‘개념’으로 기억.</td></tr>
+      </tbody>
+    </table></div>
+    <div class="btns">
+      <a class="btn primary" href="downloads/claude-master-kit.zip" download>전체 템플릿 내려받기 (ZIP)</a>
+      <a class="btn" href="templates/">파일 하나씩 보기</a>
+    </div>
+  </section>
+
+  <!-- 11 -->
+  <section id="s11">
+    <h2><span class="no">부록</span>출처</h2>
+    <p>모두 2026. 11. 8. 확인.</p>
+    <ul>
+      <li>Anthropic, <a href="https://support.claude.com/">Claude 지원 센터</a> · <a href="https://www.anthropic.com/news">제품 소식</a> (모드 통합·기능·프라이버시 설정)</li>
+      <li>Anthropic, <a href="https://docs.claude.com/">개발자 문서</a> (모델 구성·커넥터/MCP·스킬)</li>
+      <li>프롬프트옵티마이저, <a href="https://promptoptimizer.tools/blog/claude-cowork-merged-into-chat-how-to-use">코워크가 일반 대화에 통합(2026)</a> · ClickForest, <a href="https://www.clickforest.com/en/blog/claude-desktop-explained">Claude Desktop: 채팅·코워크·코드와 2026년 변화</a></li>
+      <li>freeacademy.ai, <a href="https://freeacademy.ai/blog/which-claude-model-to-use-opus-sonnet-haiku-fable-2026">2026년 Claude 모델 선택 가이드</a> (모델별 역할·비용)</li>
+      <li>작성자 원고 「초보자를 위한 Claude 마스터 완전 가이드」(원고에 외부 링크 미포함 — 참고 영상은 독립 검증하지 못함)</li>
+    </ul>
+    <p>함께 읽기: <a href="../ssr-plus/">5편 SSR Plus</a> · <a href="../personal-agent/">4편 개인 에이전트</a> · <a href="../antigravity/">16편 Antigravity</a> · <a href="../git-github/">22편 Git·GitHub</a></p>
+  </section>
+
+  <footer>
+    작성: 이진수 (변리사) · 2026. 11. 8. · CC BY-NC 4.0<br>
+    작성자의 원고를 바탕으로 생성형 AI의 도움을 받아 2026년 11월 기준 사실을 확인하고, 동봉한 초안 도구를 데모 폴더에서 직접 돌려 검증했으며, 사람이 검토했습니다. 모델 이름·메뉴 위치는 바뀔 수 있습니다. 오류 제보는 <a href="https://github.com/sonovman/ai-practice-handbooks/issues">Issues</a>로 남겨 주세요.
+  </footer>
+</main>
+</div>
+
+<script>
+  document.querySelectorAll('.copy').forEach(function (b) {
+    b.addEventListener('click', function () {
+      navigator.clipboard.writeText(b.closest('.code').querySelector('pre').innerText).then(function () {
+        b.textContent = '복사됨'; setTimeout(function () { b.textContent = '복사'; }, 1500);
+      });
+    });
+  });
+  var links = [].slice.call(document.querySelectorAll('.side a'));
+  var io = new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+      if (e.isIntersecting) links.forEach(function (a) { a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id); });
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  document.querySelectorAll('main section[id]').forEach(function (s) { io.observe(s); });
+</script>
+</body>
+</html>
