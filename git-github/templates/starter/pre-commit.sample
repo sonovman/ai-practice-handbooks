@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# Git pre-commit 훅: 커밋 직전에 비밀정보를 자동 점검한다.
+# 설치: 이 파일을 저장소의 .git/hooks/pre-commit 으로 복사하고 실행 권한을 준다.
+#   cp templates/starter/pre-commit.sample .git/hooks/pre-commit
+#   chmod +x .git/hooks/pre-commit
+# 비밀이 발견되면(실패) 커밋이 중단된다. 통과/경고면 진행.
+set -e
+ROOT="$(git rev-parse --show-toplevel)"
+python3 "$ROOT/tools/secret_scan.py" "$ROOT" || {
+  code=$?
+  if [ "$code" -ge 2 ]; then
+    echo "✋ 비밀정보로 보이는 값이 있어 커밋을 멈췄습니다. 위 '실패' 항목을 조치한 뒤 다시 커밋하세요."
+    echo "   (정말 올려도 되는 값이면 git commit --no-verify 로 건너뛸 수 있지만 권장하지 않습니다.)"
+    exit 1
+  fi
+fi

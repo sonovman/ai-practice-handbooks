@@ -1,0 +1,33 @@
+# ── 비밀·환경 (절대 올리지 않기) ──────────────────────────────
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.pfx
+*.p12
+id_rsa
+id_ed25519
+credentials.json
+secrets.json
+service-account.json
+.npmrc
+.pypirc
+.netrc
+
+# ── 의존성·빌드·캐시 ─────────────────────────────────────────
+node_modules/
+.venv/
+venv/
+__pycache__/
+*.pyc
+dist/
+build/
+.next/
+.cache/
+
+# ── OS·에디터 ───────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

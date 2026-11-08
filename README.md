@@ -27,6 +27,7 @@
 | 19 | Slow Think와 AI 회의 — 정확도를 올리는 생각 설계 | [화면](https://sonovman.github.io/ai-practice-handbooks/slow-think/) | [템플릿](slow-think/templates/) |
 | 20 | 경영진용 논문·보고서·판례 요약 — 추출, 점검, 결론, 검증 | [화면](https://sonovman.github.io/ai-practice-handbooks/exec-brief/) | [템플릿](exec-brief/templates/) |
 | 21 | REA로 역공학 하기 — 근거로 이해하고, 적법 범위에서 재구현 | [화면](https://sonovman.github.io/ai-practice-handbooks/rea-reverse-engineering/) | [템플릿](rea-reverse-engineering/templates/) |
+| 22 | 바이브 코딩을 위한 Git·GitHub — 안전하게 공유하고 함께 고치기 | [화면](https://sonovman.github.io/ai-practice-handbooks/git-github/) | [템플릿](git-github/templates/) |
 
 ## 폴더 구성
 
@@ -59,6 +60,7 @@ ai-practice-handbooks/
 ├── slow-think/         19편 (templates/ starter 작업 폴더·스킬 4개·prompts·meeting_pack.py·evidence_check.py·시범 자료, upload/ 웹 앱용, downloads/ ZIP)
 ├── exec-brief/         20편 (templates/ starter 작업 폴더·스킬 2개·분야별 틀·관할별 판례 구조·용어집·evidence/cite/term_check·시범 자료, upload/ 웹 앱용, downloads/ ZIP)
 ├── rea-reverse-engineering/  21편 (templates/ starter 작업 폴더·reverse-engineer 스킬·scope_check·evidence_log·자작 바이너리 시범, upload/ 웹 앱용, downloads/ ZIP)
+├── git-github/         22편 (templates/ starter 작업 폴더·git-share 스킬·secret_scan.py·.gitignore·pre-commit 훅·시범 자료, upload/ 웹 앱용, downloads/ ZIP)
 └── data/               공용 자료
 ```
 

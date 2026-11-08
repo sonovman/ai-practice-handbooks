@@ -377,5 +377,22 @@ window.CATALOG = [
       { label: "화면으로 읽기", href: "rea-reverse-engineering/", primary: true },
       { label: "템플릿 내려받기", href: "rea-reverse-engineering/templates/" }
     ]
+  },
+  {
+    id: "git-github",
+    no: "22",
+    category: "개발 도구",
+    title: "바이브 코딩을 위한 Git·GitHub — 안전하게 공유하고 함께 고치기",
+    subtitle: "올리기 전에 비밀을 막고, 커밋·브랜치·PR로 함께 고도화",
+    summary: "비개발자가 바이브 코딩으로 만든 스킬·에이전트를 Git·GitHub로 안전하게 공유·협업하는 법. 커밋·브랜치의 내부 동작, 올리기 전 비밀정보 사전 차단(점검 도구·.gitignore·pre-commit), 충돌·PR·브랜치 보호, 유출 시 응급 조치까지 초보자용 단계별로 담았습니다.",
+    reader: "바이브 코딩·에이전트·스킬을 만들어 공유하려는 비개발자, Git을 처음 쓰는 사람",
+    version: "1.0",
+    date: "2026-11-08",
+    length: "읽기 약 30분",
+    status: "published",
+    links: [
+      { label: "화면으로 읽기", href: "git-github/", primary: true },
+      { label: "템플릿 내려받기", href: "git-github/templates/" }
+    ]
   }
 ];
