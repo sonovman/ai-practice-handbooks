@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>로컬 LLM 추론 장비 구축·운영</title>
+<meta name="description" content="클라우드 대신 내 하드웨어에서 LLM을 직접 서빙하는 법. VRAM 최우선 부품 선정, 전력·회로 안전 계산, PCIe Gen4 스위치 P2P, BIOS·커널 튜닝, Docker/vLLM 서빙, 검증·문제해결까지. 전력 예산·VRAM 적합성 계산 도구 포함, 초보자용 단계별.">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<div class="bar"><div class="bar-in">
+  <a class="brand" href="../">AI 실무 핸드북</a>
+  <div class="links">
+    <a href="templates/">템플릿</a>
+    <a href="https://github.com/sonovman/ai-practice-handbooks">GitHub ↗</a>
+  </div>
+</div></div>
+
+<div class="doc">
+  <aside class="side">
+    <div class="label">차례</div>
+    <ol>
+      <li><a href="#s0">한 줄 결론</a></li>
+      <li><a href="#s1">1. 전체 구조</a></li>
+      <li><a href="#s2">2. VRAM 최우선과 예산 3단계</a></li>
+      <li><a href="#s3">3. 처음 접근과 바뀐 점</a></li>
+      <li><a href="#s4">4. 전력·회로 안전(시범)</a></li>
+      <li><a href="#s5">5. VRAM 적합성(시범)</a></li>
+      <li><a href="#s6">6. 실작업 예시 — 특허분석</a></li>
+      <li><a href="#s7">7. 서빙과 검증</a></li>
+      <li><a href="#s8">8. 로컬 vs 클라우드·여러 도구</a></li>
+      <li><a href="#s9">9. 주의할 점</a></li>
+      <li><a href="#s10">부록 · 출처</a></li>
+    </ol>
+  </aside>
+
+<main>
+  <div class="eyebrow">핸드북 25 · 개발 도구</div>
+  <h1>로컬 LLM 추론 장비 구축·운영 — VRAM부터 전력 안전까지</h1>
+  <p class="lead">클라우드 API는 편하지만 데이터 유출 우려, 지속 비용, 인프라 제어권 부재라는 한계가 있습니다. 모델을 <strong>내 하드웨어에서 직접 서빙</strong>하면 이를 넘어설 수 있습니다. 다만 이 길은 <strong>전기와 고가 하드웨어</strong>를 다루므로 안전이 먼저입니다. 이 편은 VRAM 최우선 부품 선정부터 전력·회로 안전, PCIe P2P, BIOS·커널 튜닝, Docker/vLLM 서빙까지, 사기 전에 숫자로 확인하는 두 계산 도구와 함께 초보자도 따라 하기 쉽게 단계별로 안내합니다.</p>
+  <div class="meta">
+    <b>독자</b><span>클라우드 비용·프라이버시 때문에 로컬 LLM 추론 장비를 처음 구축하려는 사람</span>
+    <b>분량</b><span>읽기 약 25분 · 템플릿(전력 예산 계산기 · VRAM 적합성 계산기 · 구축 스킬 · 프롬프트 5종 · 시범)</span>
+    <b>판</b><span>1.0 · 2026. 11. 8.</span>
+  </div>
+
+  <section id="s0">
+    <div class="key">
+      <div class="eyebrow">한 줄 결론</div>
+      <p style="font-size:19px;font-weight:600;line-height:1.6;margin:8px 0 10px">돈은 VRAM에, 안전은 전기에 — 사기 전에 ‘모델이 VRAM에 들어가는지’와 ‘전력이 회로를 넘지 않는지’를 숫자로 확인하세요.</p>
+      <p style="opacity:.75;font-size:15px">로컬 추론의 절대 병목은 <b>VRAM 용량·대역폭</b>입니다. 모델이 VRAM을 넘어 시스템 RAM으로 넘치면(Spillover) 속도가 급락합니다. 그래서 최신 메인보드가 아니라 VRAM에 예산을 집중하고, 여러 GPU는 PCIe 스위치로 직접 통신하게 합니다. 그리고 고출력 GPU는 일반 전기 회로를 쉽게 넘기므로 전력 계산과 제한이 필수입니다.</p>
+    </div>
+    <div class="note"><b>⚠️ 안전 먼저</b> — 이 편에는 수천 W급 전력과 iommu·ACS 비활성화 같은 설정이 나옵니다. <b>실제 배선·전용 회로·접지는 반드시 자격 있는 전기 기술자와 확인</b>하고, iommu=off·ACS off는 외부와 분리된 전용 추론 머신에서만 쓰세요. 고출력 기기를 콘센트 1구에 몰아 쓰지 마세요.</div>
+    <div class="note"><b>무엇을 확인했나</b> — 전력 계산기는 시험 7개, VRAM 계산기는 시험 9개로 동작을 확인했고, 4·5장 시범은 작성 환경에서 직접 돌린 결과입니다. 원고의 기술 내용(부품·BIOS/커널·P2P·전력 제한·모델 구성)은 참조 저장소 <a href="https://github.com/jamesob/local-llm">jamesob/local-llm</a>과 대조해 일치함을 확인했습니다(부록). 등장하는 모델 이름·버전(594B·27B·STT 등)은 저장소의 특정 시점 예시이므로, 현재 최적 모델은 그때 다시 확인하도록 ‘역할’로 설명합니다. 이 편은 <b>유튜브 링크가 제공되지 않아</b> 영상 자료는 쓰지 않았습니다.</div>
+  </section>
+
+  <!-- 1 -->
+  <section id="s1">
+    <h2><span class="no">01</span>전체 구조 — 계획에서 검증까지</h2>
+    <div class="graph">
+      <div class="node end"><span class="id">1</span><b>계획 (VRAM·전력)</b><p>모델이 VRAM에 드는지 · 전력이 회로를 넘는지 계산</p></div>
+      <div class="edge"><span>부품 확정</span></div>
+      <div class="node"><span class="id">2</span><b>하드웨어 (P2P)</b><p>VRAM GPU + PCIe Gen4 스위치로 직접 통신</p></div>
+      <div class="edge"><span>설정</span></div>
+      <div class="node"><span class="id">3</span><b>BIOS·커널 튜닝</b><p>x16·Gen4·ReBAR / iommu=off·ACS off</p></div>
+      <div class="edge"><span>서빙</span></div>
+      <div class="node"><span class="id">4</span><b>Docker·vLLM</b><p>ZFS 미러 가중치(:ro) · 텐서 병렬</p></div>
+      <div class="edge"><span>검증</span></div>
+      <div class="node dark"><span class="id">5</span><b>검증·문제해결</b><p>topo -m(PIX) · 대역폭·지연 벤치</p></div>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section id="s2">
+    <h2><span class="no">02</span>VRAM 최우선과 예산 3단계</h2>
+    <p>가장 흔한 실수는 최신 CPU·DDR5·PCIe 5.0 메인보드에 예산을 쓰는 것입니다. 추론 성능을 결정하는 것은 <b>VRAM</b>입니다. 중고 구세대 EPYC+DDR4 ECC로 호스트를 아끼고, 그 돈을 VRAM GPU에 집중합니다.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>단계</th><th>구성(예)</th><th>VRAM</th><th>쓰임</th></tr></thead>
+      <tbody>
+        <tr><th>입문 (~$2,000)</th><td>RTX 3090 2장(중고)</td><td>48GB</td><td>중형 오픈소스 모델(양자화)·로컬 음성 인식</td></tr>
+        <tr><th>중간 (~$20,000)</th><td>워크스테이션 GPU 2장 / 클러스터</td><td>128~192GB</td><td>중대형 모델·파이프라인 실험</td></tr>
+        <tr><th>최고 (~$40,000+)</th><td>워크스테이션 GPU 4장(각 96GB)</td><td>384GB</td><td>초거대 모델을 긴 컨텍스트로 서빙</td></tr>
+      </tbody>
+    </table></div>
+    <div class="note"><b>핵심</b> — $2,000 수준의 입문 구성으로도 좋은 오픈소스 모델과 로컬 음성 인식을 충분히 돌릴 수 있습니다. 최상위 구성은 지능은 높지만 <b>전력·비용·소음</b>이 크므로 소수에게만 맞습니다. 대부분은 입문부터 시작하세요. 모델 이름·버전은 자주 바뀌니 ‘파라미터 수·역할’로 기억합니다.</div>
+  </section>
+
+  <!-- 3 -->
+  <section id="s3">
+    <h2><span class="no">03</span>처음 접근과 바뀐 점</h2>
+
+    <div class="note"><b>① “최신 플랫폼부터” → VRAM에 집중</b> — 최신 메인보드·DDR5·PCIe 5.0에 돈을 쓰면 정작 VRAM이 부족해집니다. 호스트는 중고 EPYC+DDR4로 아끼고(약 1만 달러 절감 사례), 그 예산을 고용량 VRAM GPU에 몰아줍니다. 사기 전에 <code>vram_fit.py</code>로 확인합니다.</div>
+
+    <div class="note"><b>② “NVLink·PCIe5라야” → Gen4 스위치 P2P</b> — 여러 GPU로 한 모델을 나눠 추론하면 GPU끼리 쉴 새 없이 통신합니다. 비싼 NVLink나 PCIe5 메인보드 대신 독립 <b>PCIe Gen4 스위치</b>를 쓰면, CPU를 거치지 않고 스위치 내부에서 <b>P2P</b>로 직접 통신해 병목을 없앱니다.</div>
+
+    <div class="note"><b>③ “꽂으면 끝” → BIOS·커널 튜닝</b> — 기본 설정으로는 P2P가 막히거나 속도가 떨어집니다. BIOS에서 PCIe를 x16·Gen4로 고정하고 ASPM을 끄고 Re-Size BAR를 켭니다. 커널은 <code>iommu=off</code>가 없으면 다중 GPU 통신(NCCL)이 멈춥니다.</div>
+
+    <div class="note"><b>④ “그냥 다중 GPU면 빠름” → ACS를 꺼야 P2P</b> — PCIe ACS가 켜져 있으면 GPU 간 트래픽이 스위치를 못 쓰고 CPU로 우회합니다. 런타임에 ACS를 비활성화해야 스위치의 이점이 살아납니다. <b>단, iommu·ACS off는 격리를 약화</b>하므로 외부와 분리된 전용 추론 머신에서만 적용합니다.</div>
+
+    <div class="note"><b>⑤ “기본 전력 그대로” → 전력 제한이 안전</b> — GPU 4장을 기본 전력으로 돌리면 일반 110V 회로를 훌쩍 넘겨 차단기 다운·과열 위험이 생깁니다. <code>nvidia-smi -pl</code>로 카드당 전력을 제한하고, 부팅 시 자동 적용합니다. 4장 시범에서 기본값이면 회로 정격을 넘지만, 제한하면 안전 범위로 들어옵니다.</div>
+
+    <div class="note"><b>⑥ “이 모델이 정답” → 이름보다 역할·현재 확인</b> — 최적 모델·양자화 방식은 빠르게 바뀝니다. 특정 시점의 모델 이름에 묶이지 말고, ‘파라미터 수·용도(추론/음성 인식 등)’로 계획하고 구축 시점의 최신 모델을 그때 확인합니다.</div>
+  </section>
+
+  <!-- 4 -->
+  <section id="s4">
+    <h2><span class="no">04</span>전력·회로 안전 — 사기 전에 계산(시범)</h2>
+    <p>전기는 되돌릴 수 없는 사고로 이어집니다. 동봉한 <code>power_budget.py</code>로 벽에서 끌어가는 전력이 회로의 <b>연속 허용치(차단기 정격의 80%)</b>를 넘는지 계산했습니다.</p>
+    <div class="code"><button class="copy">복사</button><pre>$ python tools/power_budget.py --gpus 4 --gpu-watts 600 --volts 120 --amps 15
+판정: 정격 초과(위험) — 벽 2978W / 연속 허용 1440W (회로 대비 165%)
+→ GPU당 약 254W로 제한하거나 220V 전용 회로 필요
+
+$ python tools/power_budget.py --gpus 4 --gpu-watts 350 --volts 120 --amps 15
+판정: 정격 초과(위험) — 벽 1867W / 정격 1800W (104%)   ← 제한해도 단일 15A론 빠듯
+
+$ python tools/power_budget.py --gpus 4 --gpu-watts 350 --volts 220 --amps 16
+판정: 안전 범위 — 벽 1867W / 연속 허용 2816W (53%)       ← 전용 회로면 여유</pre></div>
+    <div class="note"><b>무엇을 배우나</b> — 기본 전력(600W×4)이면 일반 120V·15A 회로의 1.6배를 넘습니다. 350W로 제한해도 단일 15A 회로엔 빠듯하고, <b>220V 전용 회로</b>라야 여유가 생깁니다. 계산은 계획 보조일 뿐, <b>실제 배선·차단기·접지는 전기 기술자와 확인</b>하세요.</div>
+  </section>
+
+  <!-- 5 -->
+  <section id="s5">
+    <h2><span class="no">05</span>VRAM 적합성 — 스필오버 막기(시범)</h2>
+    <p><code>vram_fit.py</code>로 모델이 VRAM에 들어가는지(넘쳐 RAM으로 가지 않는지) 계산했습니다. 판정은 가장 믿을 만한 <b>가중치 기준</b>(params × bits/8)입니다.</p>
+    <div class="code"><button class="copy">복사</button><pre>$ python tools/vram_fit.py --params 27 --bits 8  --vram 48    → 여유 있음 (29GB/48GB, 61%)
+$ python tools/vram_fit.py --params 27 --bits 16 --vram 48    → VRAM 초과(RAM으로 넘침) (58GB/48GB)
+$ python tools/vram_fit.py --params 594 --bits 4 --vram 384   → 여유 있음 (321GB/384GB, 84%)</pre></div>
+    <div class="note"><b>무엇을 배우나</b> — 27B 모델도 fp16(16비트)이면 48GB에 안 들어갑니다. 8비트로 양자화하면 들어갑니다. 즉 <b>양자화로 비트를 낮추는 것</b>이 VRAM을 맞추는 가장 쉬운 방법입니다. KV 캐시는 모델 구조(GQA 등)·KV 양자화에 따라 크게 달라지므로, 정확한 값은 추론 엔진 로그로 확인해 <code>--kv-gb</code>로 넣습니다(도구는 참고용 ‘최악 상한’만 따로 보여 줍니다).</div>
+    <div class="btns">
+      <a class="btn primary" href="downloads/local-llm-kit.zip" download>전체 템플릿 내려받기 (ZIP)</a>
+      <a class="btn" href="templates/">파일 하나씩 보기</a>
+    </div>
+  </section>
+
+  <!-- 6 : 실작업 예시 -->
+  <section id="s6">
+    <h2><span class="no">06</span>실작업 예시 — 특허분석 업무를 로컬 LLM으로</h2>
+    <p>왜 특허분석이 로컬에 잘 맞을까요? ① <b>미공개 발명·명세서 초안</b>은 외부로 내보내기 민감합니다. ② 선행문헌 조사·청구항 대조·요지 추출은 <b>문서가 많고 길어</b> 사용량이 커 클라우드 비용이 누적됩니다. ③ 명세서는 길어서 <b>긴 컨텍스트</b>가 유리합니다. 아래는 가상의 특허사무소 환경을 예로, 앞의 두 도구로 구성을 정하는 과정입니다.</p>
+
+    <div class="tbl"><table>
+      <thead><tr><th>업무</th><th>로컬 LLM 활용(예)</th></tr></thead>
+      <tbody>
+        <tr><th>선행문헌 1차 스크리닝</th><td>검색된 공보 수십 건을 요지·기술분야로 요약·분류</td></tr>
+        <tr><th>청구항 대조</th><td>본 발명 청구항 vs 인용문헌 구성요소 매핑(표로)</td></tr>
+        <tr><th>명세서 초안 보조</th><td>발명 설명 초안·용어 통일(사람이 최종 검토·서명)</td></tr>
+        <tr><th>음성 메모 전사</th><td>발명자 인터뷰를 로컬 STT로 전사(외부 유출 없이)</td></tr>
+      </tbody>
+    </table></div>
+
+    <p><b>1) 구성 정하기</b> — 민감하지만 대규모 학습이 아닌 ‘추론·보조’이므로 입문 단계로 충분합니다. 중형 모델(예: 27B급)을 8비트로, 긴 명세서를 위해 컨텍스트에 여유를 둡니다. 두 도구로 확인합니다.</p>
+    <div class="code"><button class="copy">복사</button><pre># VRAM: 27B 8bit + KV 6GB / RTX 3090 2장(48GB)
+$ python tools/vram_fit.py --params 27 --bits 8 --vram 48 --kv-gb 6
+→ 여유 있음 (35GB/48GB, 73%)   ← 긴 명세서·동시 요청 여지 확보
+
+# 전력: GPU 2장×350W + 호스트 200W / 120V·15A
+$ python tools/power_budget.py --gpus 2 --gpu-watts 350 --host-watts 200 --volts 120 --amps 15
+→ 안전 범위 (벽 1000W / 연속 허용 1440W, 56%)   ← 일반 사무실 회로로도 운용 가능</pre></div>
+
+    <p><b>2) 모델·서빙 설정</b> — 모델은 ‘역할’로 고릅니다(추론용 중형 + 전사용 STT). 긴 명세서를 위해 <code>--max-model-len</code>을 넉넉히, GPU 2장이면 <code>--tensor-parallel-size 2</code>로.</p>
+    <div class="code"><button class="copy">복사</button><pre># vLLM 서빙(요지) — 특허분석용 중형 모델
+command: >
+  --model /model
+  --tensor-parallel-size 2        # GPU 2장에 분산
+  --quantization awq              # 8bit급 양자화로 VRAM 절약(엔진·모델에 맞춰)
+  --max-model-len 32768           # 긴 명세서 대응(길면 KV가 커지니 vram_fit로 재확인)
+  --port 5000
+# 전사용 STT는 별도 컨테이너(runners/stt)로 11GB 안팎 VRAM에 분리 배치</pre></div>
+
+    <p><b>3) 활용 프롬프트(예)</b> — 로컬 서버(<code>http://추론머신:5000/v1</code>)에 붙여 청구항을 대조합니다.</p>
+    <div class="code"><button class="copy">복사</button><pre>[역할] 너는 특허 분석 보조자다. 아래 '본 발명 청구항 1'과 '인용문헌 D1'을
+구성요소 단위로 매핑하고, D1에 없는(신규로 보이는) 구성요소를 표로 정리하라.
+- 각 구성요소: 청구항 문구 → D1 대응 위치(문단/도면) → 일치/불일치/불명 판정
+- 판단 근거가 문헌에 없으면 '불명'으로 표시(추측 금지)
+[입력] 청구항: <...>  / D1 발췌: <...></pre></div>
+    <div class="note"><b>현실 점검</b> — ① 결과는 <b>사람(변리사)이 최종 검토·판단</b>합니다. AI 매핑은 초안일 뿐 법적 판단이 아닙니다. ② 명세서를 길게 넣으면 KV 캐시가 커져 VRAM이 빠듯해질 수 있으니, 실제 컨텍스트 길이로 <code>vram_fit.py</code>를 다시 돌려 확인합니다. ③ 미공개 발명 정보는 로컬에 머무르게 하고, 외부 노출 시 인증·방화벽을 둡니다. 모델 이름은 바뀌니 구축 시점의 추론용·STT 최적 모델을 그때 확인하세요.</div>
+  </section>
+
+  <!-- 7 -->
+  <section id="s7">
+    <h2><span class="no">07</span>서빙과 검증</h2>
+    <p>가중치를 ZFS 미러로 보관하고, 컨테이너에 <b>읽기 전용(<code>:ro</code>)</b>으로 마운트해 손상을 막습니다. vLLM OpenAI 호환 서버를 띄우고 텐서 병렬 크기를 GPU 수에 맞춥니다.</p>
+    <div class="code"><button class="copy">복사</button><pre># docker-compose.yml (요지)
+services:
+  vllm-server:
+    image: vllm/vllm-openai:latest
+    runtime: nvidia
+    volumes:
+      - ~/storage/MODEL:/model:ro        # 가중치는 읽기 전용
+    command: >
+      --model /model --tensor-parallel-size 4 --port 5000</pre></div>
+    <div class="tbl"><table>
+      <thead><tr><th>증상</th><th>원인 → 조치</th></tr></thead>
+      <tbody>
+        <tr><th>topo -m 가 PHB/NODE</th><td>ACS가 켜짐 → ACS 비활성화 스크립트·서비스 점검(정상은 PIX)</td></tr>
+        <tr><th>NCCL이 멈춤(Hang)</th><td>커널 IOMMU 간섭 → GRUB iommu=off amd_iommu=off 후 재부팅</td></tr>
+        <tr><th>링크 속도 2.5GT/s</th><td>유휴 시 ASPM 절전 → BIOS에서 ASPM Disabled로 고정</td></tr>
+        <tr><th>통신 저하·덤프</th><td>케이블 규격 불일치·신호 감쇠 → 전용 케이블·Redriver 게인 조정</td></tr>
+        <tr><th>부하 급증 시 차단기 다운</th><td>전력 초과 → nvidia-smi -pl 로 제한, systemd 자동 적용(안전 재점검)</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <!-- 8 -->
+  <section id="s8">
+    <h2><span class="no">08</span>로컬 vs 클라우드, 그리고 여러 도구</h2>
+    <p>로컬 서버는 OpenAI 호환 API(<code>http://&lt;추론머신-IP&gt;:5000/v1</code>)를 제공합니다. 이 주소를 코드·에이전트에 꽂아 씁니다.</p>
+    <div class="tbl"><table>
+      <thead><tr><th></th><th>로컬이 유리</th><th>클라우드가 유리</th></tr></thead>
+      <tbody>
+        <tr><th>언제</th><td>데이터가 밖으로 나가면 안 될 때, 사용량이 많아 장기 비용이 클 때</td><td>초기 투자·전기·소음·유지보수를 피하고 싶을 때</td></tr>
+        <tr><th>지능</th><td>VRAM만큼. 최상위는 고가 구성 필요</td><td>최상위 모델을 바로</td></tr>
+        <tr><th>현실</th><td colspan="2">많은 경우 ‘둘 다’ — 민감·대량은 로컬, 가끔의 최상위는 클라우드</td></tr>
+      </tbody>
+    </table></div>
+    <div class="note"><b>도구에서 쓰기</b> — 공식 ChatGPT·Claude·Gemini 앱은 자사 모델에 묶여 로컬 치환이 제한적입니다. 코드·SDK에서 <code>base_url</code>을 로컬 서버로 지정하거나, opencode 같은 코딩 에이전트에 연결해 씁니다. <a href="../antigravity/">Antigravity</a>에는 docker-compose·systemd·전력 제한 스크립트 초안 작성을 맡기고 적용·검증은 사람이 합니다. 도구별 설정은 <a href="templates/starter/.agents/skills/local-llm-build/references/platforms.md">platforms.md</a> 참고. 로컬 서버를 외부에 노출할 땐 인증·방화벽을 두고, 개인이 운영하는 불명의 중계 서버로 데이터를 보내지 않습니다.</div>
+  </section>
+
+  <!-- 9 -->
+  <section id="s9">
+    <h2><span class="no">09</span>주의할 점</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>상황</th><th>이렇게</th></tr></thead>
+      <tbody>
+        <tr><th>전력·배선</th><td>사기 전 power_budget.py로 계산, 전력 제한 적용. 배선·전용 회로·접지는 전기 기술자와.</td></tr>
+        <tr><th>콘센트 몰아쓰기</th><td>고출력 기기를 1구에 몰지 않기. 발열·환기 확보.</td></tr>
+        <tr><th>iommu·ACS off</th><td>격리 약화. 외부와 분리된 전용 추론 머신에서만.</td></tr>
+        <tr><th>최신 플랫폼 과소비</th><td>호스트는 중고로 아끼고 VRAM에 집중.</td></tr>
+        <tr><th>VRAM 스필오버</th><td>vram_fit.py로 확인. 넘치면 비트↓·VRAM↑·컨텍스트↓.</td></tr>
+        <tr><th>모델 이름·버전</th><td>자주 바뀜. ‘파라미터·역할’로 계획하고 현재 최적을 확인.</td></tr>
+        <tr><th>외부 노출</th><td>인증·방화벽. 불명의 중계 서버로 데이터 전송 금지.</td></tr>
+        <tr><th>최상위 구성 과욕</th><td>전력·비용·소음 큼. 대부분 입문($2k)부터.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <!-- 10 -->
+  <section id="s10">
+    <h2><span class="no">부록</span>출처</h2>
+    <p>모두 2026. 11. 8. 확인. 이 편은 유튜브 링크가 제공되지 않아 영상 자료는 쓰지 않았습니다.</p>
+    <ul>
+      <li>jamesob, <a href="https://github.com/jamesob/local-llm">local-llm</a> (부품 구성·BIOS/커널 튜닝·P2P·전력 제한·서빙 설정의 참조 저장소. 모델 이름·수치는 저장소의 특정 시점 예시)</li>
+      <li>vLLM, <a href="https://docs.vllm.ai/">문서</a> (OpenAI 호환 서빙·텐서 병렬) · NVIDIA, <a href="https://docs.nvidia.com/deploy/nvidia-smi/">nvidia-smi</a> (전력 제한·topo)</li>
+      <li>작성자 원고 「로컬 LLM 고성능 추론 장비 구축 및 운영 실무 지침서」. 동봉한 두 계산 도구(<code>power_budget.py</code>·<code>vram_fit.py</code>)를 직접 만들어 시험(7+9)·시범으로 검증.</li>
+    </ul>
+    <p>함께 읽기: <a href="../antigravity/">16편 Antigravity</a> · <a href="../git-github/">22편 Git·GitHub</a> · <a href="../claude-master/">23편 Claude 마스터</a></p>
+  </section>
+
+  <footer>
+    작성: 이진수 (변리사) · 2026. 11. 8. · CC BY-NC 4.0<br>
+    작성자의 원고를 바탕으로 참조 저장소(jamesob/local-llm)와 공식 문서로 사실을 확인하고, 동봉한 계산 도구를 직접 만들어 시범으로 검증했으며, 사람이 검토했습니다. 유튜브 링크는 제공되지 않아 영상 자료는 쓰지 않았습니다. 전력·배선 등 안전은 반드시 자격 있는 전기 기술자와 확인하세요. 모델 이름·버전은 바뀔 수 있습니다. 오류 제보는 <a href="https://github.com/sonovman/ai-practice-handbooks/issues">Issues</a>로 남겨 주세요.
+  </footer>
+</main>
+</div>
+
+<script>
+  document.querySelectorAll('.copy').forEach(function (b) {
+    b.addEventListener('click', function () {
+      navigator.clipboard.writeText(b.closest('.code').querySelector('pre').innerText).then(function () {
+        b.textContent = '복사됨'; setTimeout(function () { b.textContent = '복사'; }, 1500);
+      });
+    });
+  });
+  var links = [].slice.call(document.querySelectorAll('.side a'));
+  var io = new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+      if (e.isIntersecting) links.forEach(function (a) { a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id); });
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  document.querySelectorAll('main section[id]').forEach(function (s) { io.observe(s); });
+</script>
+</body>
+</html>

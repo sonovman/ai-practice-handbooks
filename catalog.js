@@ -428,5 +428,22 @@ window.CATALOG = [
       { label: "화면으로 읽기", href: "ai-slides/", primary: true },
       { label: "템플릿 내려받기", href: "ai-slides/templates/" }
     ]
+  },
+  {
+    id: "local-llm",
+    no: "25",
+    category: "개발 도구",
+    title: "로컬 LLM 추론 장비 구축·운영 — VRAM부터 전력 안전까지",
+    subtitle: "돈은 VRAM에, 안전은 전기에 — 사기 전에 숫자로 확인",
+    summary: "클라우드 대신 내 하드웨어에서 LLM을 직접 서빙하는 법. VRAM 최우선 부품 선정, 전력·회로 안전 계산, PCIe Gen4 스위치 P2P, BIOS·커널 튜닝, Docker/vLLM 서빙, 검증·문제해결까지. 특허분석 실작업 예시와 전력 예산·VRAM 적합성 계산 도구를 담아 초보자용 단계별로 안내합니다.",
+    reader: "클라우드 비용·프라이버시 때문에 로컬 LLM 추론 장비를 처음 구축하려는 사람",
+    version: "1.0",
+    date: "2026-11-08",
+    length: "읽기 약 25분",
+    status: "published",
+    links: [
+      { label: "화면으로 읽기", href: "local-llm/", primary: true },
+      { label: "템플릿 내려받기", href: "local-llm/templates/" }
+    ]
   }
 ];

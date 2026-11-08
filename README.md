@@ -30,6 +30,7 @@
 | 22 | 바이브 코딩을 위한 Git·GitHub — 안전하게 공유하고 함께 고치기 | [화면](https://sonovman.github.io/ai-practice-handbooks/git-github/) | [템플릿](git-github/templates/) |
 | 23 | 초보자를 위한 Claude 마스터 가이드 — 개념 정리부터 AI 업무 시스템까지 | [화면](https://sonovman.github.io/ai-practice-handbooks/claude-master/) | [템플릿](claude-master/templates/) |
 | 24 | AI 디자인 에이전트로 PPT 슬라이드 만들기 — 취향 명세서와 워크플로우 | [화면](https://sonovman.github.io/ai-practice-handbooks/ai-slides/) | [템플릿](ai-slides/templates/) |
+| 25 | 로컬 LLM 추론 장비 구축·운영 — VRAM부터 전력 안전까지 | [화면](https://sonovman.github.io/ai-practice-handbooks/local-llm/) | [템플릿](local-llm/templates/) |
 
 ## 폴더 구성
 
@@ -65,6 +66,7 @@ ai-practice-handbooks/
 ├── git-github/         22편 (templates/ starter 작업 폴더·git-share 스킬·secret_scan.py·.gitignore·pre-commit 훅·시범 자료, upload/ 웹 앱용, downloads/ ZIP)
 ├── claude-master/       23편 (templates/ starter 작업 폴더·claude-starter 스킬·claude_md_init.py·skill_init.py·프롬프트 5종·시범, upload/ 웹 앱용, downloads/ ZIP)
 ├── ai-slides/          24편 (templates/ starter 작업 폴더·slide-workshop 스킬·slide_lint.py·deck_html.py·프롬프트 5종·디자인.md·시범, upload/ 웹 앱용, downloads/ ZIP)
+├── local-llm/          25편 (templates/ starter 작업 폴더·local-llm-build 스킬·power_budget.py·vram_fit.py·프롬프트 5종·특허분석 시범, upload/ 웹 앱용, downloads/ ZIP)
 └── data/               공용 자료
 ```
 

@@ -1,0 +1,27 @@
+test_advice_suggests_limit (__main__.T.test_advice_suggests_limit) ... ok
+test_continuous_80pct (__main__.T.test_continuous_80pct) ... ok
+test_danger_over_breaker (__main__.T.test_danger_over_breaker) ... ok
+test_exit_codes (__main__.T.test_exit_codes) ... ok
+test_ok_on_bigger_circuit (__main__.T.test_ok_on_bigger_circuit) ... ok
+test_wall_includes_psu_loss (__main__.T.test_wall_includes_psu_loss) ... ok
+test_warn_between (__main__.T.test_warn_between) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.003s
+
+OK
+
+test_big_model_fits_at_low_bits (__main__.T.test_big_model_fits_at_low_bits) ... ok
+test_exit_codes (__main__.T.test_exit_codes) ... ok
+test_fits_ok (__main__.T.test_fits_ok) ... ok
+test_kv_gb_counts_in_verdict (__main__.T.test_kv_gb_counts_in_verdict) ... ok
+test_kv_upper_positive (__main__.T.test_kv_upper_positive) ... ok
+test_kv_upper_zero_without_dims (__main__.T.test_kv_upper_zero_without_dims) ... ok
+test_spillover_weights (__main__.T.test_spillover_weights) ... ok
+test_warn_tight (__main__.T.test_warn_tight) ... ok
+test_weight_math (__main__.T.test_weight_math) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.003s
+
+OK
