@@ -1,0 +1,23 @@
+test_exit_codes (__main__.T.test_exit_codes) ... ok
+test_obvious_detected (__main__.T.test_obvious_detected) ... ok
+test_over_lines_fails (__main__.T.test_over_lines_fails) ... ok
+test_over_rules_fails (__main__.T.test_over_rules_fails) ... ok
+test_rule_count_bullets_and_numbers (__main__.T.test_rule_count_bullets_and_numbers) ... ok
+test_slim_passes (__main__.T.test_slim_passes) ... ok
+test_vague_warns (__main__.T.test_vague_warns) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.005s
+
+OK
+
+test_analyze_pct_and_status (__main__.T.test_analyze_pct_and_status) ... ok
+test_est_tokens_cjk_heavier (__main__.T.test_est_tokens_cjk_heavier) ... ok
+test_file_counted (__main__.T.test_file_counted) ... ok
+test_high_exit_code (__main__.T.test_high_exit_code) ... ok
+test_text_tokens_item (__main__.T.test_text_tokens_item) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.006s
+
+OK

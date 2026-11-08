@@ -445,5 +445,22 @@ window.CATALOG = [
       { label: "화면으로 읽기", href: "local-llm/", primary: true },
       { label: "템플릿 내려받기", href: "local-llm/templates/" }
     ]
+  },
+  {
+    id: "llm-context",
+    no: "26",
+    category: "개발 도구",
+    title: "LLM은 어떻게 작동하고, 왜 길어지면 맥락을 잃는가 — 원리와 하네스",
+    subtitle: "지침은 짧고 기계적으로, 중요한 규칙은 부탁이 아니라 훅으로",
+    summary: "LLM의 동작 원리(토큰화·임베딩·셀프어텐션·다음 토큰 예측·추론 모델)를 초보자용으로 풀고, 지침·데이터가 커질 때 맥락을 잃는 이유와 이를 통제하는 하네스(훅·CLAUDE.md 슬림화·스킬/서브에이전트·/clear) 전략을 담았습니다. 훅 형식은 공식 이벤트로 교정하고, CLAUDE.md 린터·컨텍스트 예산 도구를 포함합니다.",
+    reader: "AI가 왜 그렇게 동작하는지 이해하고, 긴 작업에서도 규칙을 지키게 만들고 싶은 사람",
+    version: "1.0",
+    date: "2026-11-08",
+    length: "읽기 약 25분",
+    status: "published",
+    links: [
+      { label: "화면으로 읽기", href: "llm-context/", primary: true },
+      { label: "템플릿 내려받기", href: "llm-context/templates/" }
+    ]
   }
 ];
