@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>선행기술조사 — 검색식부터 최근접 선행문헌까지</title>
+<meta name="description" content="청구항에서 개념 조사식을 설계하고 DB별 검색식·바로열기 URL을 만들고, 검색 결과를 구성대비해 최근접 선행문헌(신규성 부정·주인용·보조·기준일 이후)을 산정하는 법. 공식 API는 자동·웹 DB는 약관상 사람 실행, 판단과 집계의 분리, 날짜 기준과 법 조문까지 초보자용 단계별.">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<div class="bar"><div class="bar-in">
+  <a class="brand" href="../">AI 실무 핸드북</a>
+  <div class="links">
+    <a href="templates/">템플릿</a>
+    <a href="https://github.com/sonovman/ai-practice-handbooks">GitHub ↗</a>
+  </div>
+</div></div>
+
+<div class="doc">
+  <aside class="side">
+    <div class="label">차례</div>
+    <ol>
+      <li><a href="#s0">한 줄 결론</a></li>
+      <li><a href="#s1">1. 전체 흐름과 승인 관문</a></li>
+      <li><a href="#s2">2. 자동 vs 사람 실행</a></li>
+      <li><a href="#s3">3. 개념 조사식 → DB별 변환</a></li>
+      <li><a href="#s4">4. 처음 접근과 바뀐 점</a></li>
+      <li><a href="#s5">5. 검색식 생성(시범)</a></li>
+      <li><a href="#s6">6. 최근접 산정(시범)</a></li>
+      <li><a href="#s7">7. 날짜 기준과 법</a></li>
+      <li><a href="#s8">8. 활용·주의할 점</a></li>
+      <li><a href="#s9">부록 · 출처</a></li>
+    </ol>
+  </aside>
+
+<main>
+  <div class="eyebrow">핸드북 28 · IP 실무</div>
+  <h1>선행기술조사 — 검색식 제안에서 최근접 선행문헌 추출까지</h1>
+  <p class="lead">선행기술조사는 ‘검색식을 잘 짜는 일’에서 끝나지 않습니다. 여러 DB를 같은 기준으로 뒤지고, 나온 문헌을 청구항 특징과 대비해 <strong>가장 유사하거나 가장 적은 수정으로 도달할 수 있는 문헌(최근접 선행기술)</strong>을 골라야 합니다. 이 편은 청구항에서 하나의 개념 조사식을 만들어 DB별 검색식으로 자동 변환하고, 구성대비 결과를 공개된 규칙으로 산정해 주인용·보조 문헌을 추리는 파이프라인을, 직접 돌려 본 두 도구와 함께 초보자도 따라 하기 쉽게 설명합니다.</p>
+  <div class="meta">
+    <b>독자</b><span>선행기술·무효자료 조사를 AI로 체계화하려는 변리사·특허 실무자, 조사 입문자</span>
+    <b>분량</b><span>읽기 약 25분 · 템플릿(검색식 변환 도구 · 최근접 산정 도구 · 조사 스킬 · 프롬프트 5종 · 시범 데이터)</span>
+    <b>판</b><span>1.0 · 2026. 11. 9.</span>
+  </div>
+
+  <section id="s0">
+    <div class="key">
+      <div class="eyebrow">한 줄 결론</div>
+      <p style="font-size:19px;font-weight:600;line-height:1.6;margin:8px 0 10px">개념 조사식 하나를 만들어 DB별로 자동 변환하고, ‘판단’은 근거와 함께 적고 ‘순위’는 공개된 규칙으로 계산하세요 — 그래야 재현·검토가 됩니다.</p>
+      <p style="opacity:.75;font-size:15px">AI가 “이게 제일 비슷하다”고 한 번에 결론 내리면 근거를 검증할 수 없습니다. 그래서 특징별 개시 여부(●/◐/○)를 <b>근거 위치와 함께</b> 기록하고, 순위는 점수 규칙으로 집계합니다. 검색은 공식 API만 자동이고, 웹 DB는 약관상 사람이 실행합니다.</p>
+    </div>
+    <div class="note"><b>무엇을 확인했나</b> — 검색식 변환 도구(시험 6개)·최근접 산정 도구(시험 7개)를 직접 만들어 돌렸고(5·6장 시범), 산정 결과는 참조 설계의 예상치(주인용 97.5·보조 56.0 등)와 일치했습니다. 각 DB의 접근 방식은 <b>이용약관</b>을 근거로 자동/사람으로 나눴습니다(2장). 실제 서버 호출·크롤링은 하지 않았습니다 — DB 문법·URL·한도는 바뀔 수 있으니 첫 사용 때 확인하세요. 법 조문·판단 기준은 개념 안내이며 <b>최종 판단은 변리사</b>가 합니다. 이 편은 <b>유튜브 링크가 제공되지 않아</b> 영상 자료는 쓰지 않았습니다.</div>
+  </section>
+
+  <!-- 1 -->
+  <section id="s1">
+    <h2><span class="no">01</span>전체 흐름과 승인 관문</h2>
+    <p>한 건의 조사를 ‘사건 폴더’ 하나로 관리하고, 중요한 지점마다 사람이 승인하는 관문(G)을 둡니다.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>단계</th><th>하는 일</th><th>관문</th></tr></thead>
+      <tbody>
+        <tr><th>1 접수</th><td>청구항·우선일·목적 확인(빠진 건 하나만 질문)</td><td>–</td></tr>
+        <tr><th>2 검색식 제안</th><td>특징 분해 → 개념 조사식 → DB별 식·URL</td><td><b>G1</b> 조사식 승인</td></tr>
+        <tr><th>3 검색</th><td>공식 API 자동, 웹 DB는 링크/식을 사람이 실행</td><td><b>G2</b> 호출량 승인</td></tr>
+        <tr><th>4 통합·선별</th><td>패밀리 병합, 읽을 순서 결정</td><td>–</td></tr>
+        <tr><th>5 구성대비</th><td>특징별 ●/◐/○ + 근거 위치 기록</td><td>–</td></tr>
+        <tr><th>6 산정</th><td>점수·분류(A/B/C/X)·결합 경로</td><td><b>G4</b> 판정 검토</td></tr>
+        <tr><th>7 보고·보충</th><td>후보·대비표·결합 경로·한계, 빈 특징만 재검색</td><td>–</td></tr>
+      </tbody>
+    </table></div>
+    <div class="note"><b>관문이 말뿐이 아니게</b> — 코드에 장치를 넣었습니다. ① API 명령은 dry-run이 없으면 예상 호출량만 보여 주고 실제 호출은 안 함, ② 사건별 예산을 넘으면 중단, ③ <b>근거 위치 없이 ●·◐를 적으면 산정이 실행되지 않음</b>(사후고찰 방지).</div>
+  </section>
+
+  <!-- 2 -->
+  <section id="s2">
+    <h2><span class="no">02</span>자동 vs 사람 실행 — 기술이 아니라 ‘약관’ 문제</h2>
+    <p>웹 DB를 브라우저로 반복 조회하지 않는 이유는 기술적 한계가 아니라 <b>이용 조건</b> 때문입니다.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>DB</th><th>접근</th><th>근거(요지)</th></tr></thead>
+      <tbody>
+        <tr><th>KIPRIS Plus</th><td>API 자동</td><td>공식 오픈 API로 자동 검색·수집</td></tr>
+        <tr><th>EPO OPS</th><td>API 자동</td><td>로봇 조회는 Espacenet 웹이 아닌 OPS 같은 REST로 — 주당·속도 한도 있음</td></tr>
+        <tr><th>Google(BigQuery)</th><td>대량은 API</td><td>웹엔 공식 검색 API 없음. BigQuery는 처리량 과금 — dry run으로 사전 확인</td></tr>
+        <tr><th>PATENTSCOPE</th><td>사람만</td><td>WIPO 약관이 자동 질의 금지</td></tr>
+        <tr><th>Espacenet·Google 웹·KIPRIS 웹</th><td>사람</td><td>스킬이 식·URL을 만들고 사람이 실행, 결과 CSV를 저장</td></tr>
+      </tbody>
+    </table></div>
+    <div class="note"><b>그래서</b> — <code>KIPRIS Plus + EPO OPS + BigQuery</code> 조합으로 1차 자동 조사를 하고, 웹 DB는 전문·다국어 확장·법적 상태 확인 같은 <b>보완·검증</b> 단계로 둡니다. 브라우저 자동화로 웹 DB를 반복 조회하는 것은 약관 위반이라 스킬 지침에 금지로 넣었습니다.</div>
+  </section>
+
+  <!-- 3 -->
+  <section id="s3">
+    <h2><span class="no">03</span>개념 조사식 → DB별 변환</h2>
+    <p>DB마다 검색식을 손으로 다시 쓰면 문법 오류가 나고 결과 비교가 어렵습니다. 그래서 <b>개념 조사식 하나</b>를 만들어 DB별 문법으로 자동 변환합니다.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>개념</th><th>KIPRIS</th><th>Google Patents</th><th>Espacenet/OPS</th><th>PATENTSCOPE</th></tr></thead>
+      <tbody>
+        <tr><th>AND / OR</th><td><code>*</code> / <code>+</code></td><td><code>AND</code> / <code>OR</code></td><td><code>and</code> / <code>or</code></td><td><code>AND</code> / <code>OR</code></td></tr>
+        <tr><th>근접</th><td><code>^n</code></td><td><code>NEAR/n</code></td><td><code>prox/distance&lt;n</code></td><td><code>NEARn</code></td></tr>
+        <tr><th>필드</th><td><code>TL=[] AB=[] CL=[]</code></td><td><code>TI= AB= CL= TAC=</code></td><td><code>ti= ab= ta=</code></td><td><code>EN_TI: EN_AB: EN_CL:</code></td></tr>
+        <tr><th>날짜</th><td>공개일 칸</td><td>URL <code>before=publication:</code></td><td><code>pd&lt;</code></td><td><code>DP:[ TO ]</code></td></tr>
+      </tbody>
+    </table></div>
+    <div class="note"><b>언어 전략</b> — KIPRIS(국내)는 한국어, 나머지는 영어로. Google·PATENTSCOPE는 기계번역 색인을 포함하므로 미국·영국식 철자와 단·복수를 모두 넣습니다. 자세한 문법 주의점(KIPRIS 근접의 단어 단위 한계, Google 괄호 안 NEAR, Espacenet 절단기호·내보내기 한도)은 <a href="templates/starter/.agents/skills/prior-art/references/db-syntax.md">db-syntax.md</a>에.</div>
+  </section>
+
+  <!-- 4 -->
+  <section id="s4">
+    <h2><span class="no">04</span>처음 접근과 바뀐 점</h2>
+
+    <div class="note"><b>① “DB마다 검색식을 새로” → 개념 조사식 하나로 변환</b> — DB별로 손으로 다시 쓰면 문법 오류와 누락이 생깁니다. 개념 조사식(plan.json) 하나를 만들어 DB별로 자동 변환하면 같은 특징 조합을 모든 DB에 적용해 결과를 비교할 수 있습니다.</div>
+
+    <div class="note"><b>② “AI가 제일 비슷한 걸 골라줘” → 판단과 집계를 분리</b> — 한 번에 결론 내리면 근거 검증이 안 됩니다. 특징별 개시 여부를 <b>근거 위치와 함께</b> 기록하고(판단), 순위는 공개된 점수 규칙으로 계산합니다(집계). 그래야 재현·검토됩니다.</div>
+
+    <div class="note"><b>③ “웹 DB도 자동으로 긁자” → 약관상 사람이 실행</b> — PATENTSCOPE·Espacenet 웹 등은 자동 질의가 약관 위반입니다. 공식 API만 자동으로, 웹 DB는 식·URL을 만들어 사람이 실행합니다. 브라우저 자동화 반복 조회는 금지입니다.</div>
+
+    <div class="note"><b>④ “주인용은 하나로 확정” → 상위 2~3건을 각각 출발점으로</b> — 최근접 선행기술은 출발점이 여럿일 수 있습니다(EPO 실무). 하나로 고정하지 않고 상위 후보를 각각 출발점으로 검토해 진보성 논리를 비교합니다.</div>
+
+    <div class="note"><b>⑤ “개시율이 높으면 선행문헌” → 날짜가 먼저</b> — 공개일이 기준일(우선일) 이후면 개시율이 90%여도 선행문헌이 아닙니다(X). 다만 <b>확대된 선출원·선출원</b>은 기준일보다 늦게 공개돼도 해당할 수 있어, cutoff 없는 KR 검색을 따로 돌립니다(7장).</div>
+
+    <div class="note"><b>⑥ “근거는 나중에” → 근거 없으면 산정 중단</b> — 근거 위치 없이 ●·◐를 적으면 사후고찰(알고 나서 꿰맞추기)에 빠지기 쉽습니다. 도구가 근거 없는 판정을 발견하면 산정을 멈춰, 근거 기록을 강제합니다.</div>
+  </section>
+
+  <!-- 5 -->
+  <section id="s5">
+    <h2><span class="no">05</span>검색식 생성 — 개념 하나로 네 DB(시범)</h2>
+    <p>가상의 ‘수직 스크루 착즙기 — 드럼 내면 경사 리브’ 발명으로, <code>build_queries.py</code>가 개념 조사식을 DB별로 변환했습니다.</p>
+    <div class="code"><button class="copy">복사</button><pre>$ python tools/build_queries.py sample/plan.json --sheet work/search_sheet.md
+
+## KIPRIS
+- Q2 (F1*F2*F3 핵심 조합)
+  식: TL=[(스크루+스크류)*(리브+돌기)*(착즙+주스+녹즙)]        ← 한국어·* = AND
+
+## GooglePatents
+- Q2
+  식: TAC=((screw OR auger) AND (rib OR protrusion) AND (juicer OR juice extractor))
+  열기: https://patents.google.com/?q=...&before=publication:20200315   ← 기준일 자동 한정</pre></div>
+    <div class="note"><b>무엇을 배우나</b> — 특징(F1·F2·F3)의 한/영 키워드를 각 DB 문법으로 바꾸고, 신규성용은 기준일 이전으로 자동 한정합니다. KR은 <b>확대선출원 검토용으로 cutoff 없는 식</b>도 함께 만들고, 웹 DB는 링크와 식 원문을 같이 적어 링크가 안 열려도 붙여넣을 수 있게 합니다. (전체: <a href="templates/starter/sample/search_sheet.md">search_sheet.md</a>)</div>
+  </section>
+
+  <!-- 6 -->
+  <section id="s6">
+    <h2><span class="no">06</span>최근접 산정 — 판단을 규칙으로(시범)</h2>
+    <p>구성대비 결과(<code>mapping.json</code>, 특징별 ●/◐/○ + 근거)를 <code>rank_closest.py</code>가 같은 규칙으로 집계했습니다.</p>
+    <div class="code"><button class="copy">복사</button><pre>$ python tools/rank_closest.py sample/plan.json sample/mapping.json
+
+| 순위 | 문헌        | 분류             | 점수 | F1 | F2 | F3 |
+| 1   | US9000002B2 | B 주인용발명 후보  | 97.5 | ◐  | ●  | ●  |
+| 2   | KR100000001B1| C 보조 문헌      | 56.0 | ●  | ○  | ●  |
+| 3   | CN100000003A | -               | 32.5 | ○  | ◐  | ○  |
+| 4   | EP3000004A1  | X 기준일 이후 공개 |  –  | ●  | ●  | ◐  |
+
+주인용 후보 US9000002B2 — 부족 특징 F1(◐) → KR100000001B1로 보완 가능</pre></div>
+    <div class="note"><b>무엇을 배우나</b> — 핵심 특징 F2(가중치 3)를 ●로 개시한 US…02가 1위 주인용 후보가 되고, 그 부족 특징 F1을 ●로 개시한 KR…01이 <b>보조 문헌(결합 경로)</b>으로 자동 연결됩니다. EP…04는 개시율이 높아도 공개일이 기준일 이후라 <b>X</b>로 빠집니다. 점수(100×관련성×(1−수정부담/총가중치))는 판단의 집계일 뿐 <b>법적 결론이 아니며</b>, 효과의 현저성·청구항 해석은 따로 검토합니다. (보고서: <a href="templates/starter/sample/closest_report.md">closest_report.md</a>)</div>
+    <div class="btns">
+      <a class="btn primary" href="downloads/prior-art-kit.zip" download>전체 템플릿 내려받기 (ZIP)</a>
+      <a class="btn" href="templates/">파일 하나씩 보기</a>
+    </div>
+  </section>
+
+  <!-- 7 -->
+  <section id="s7">
+    <h2><span class="no">07</span>날짜 기준과 법 — 왜 두 번 검색하나</h2>
+    <p>같은 조사식이라도 ‘날짜 조건’이 법적 성격을 가릅니다.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>목적</th><th>날짜 조건</th><th>이유</th></tr></thead>
+      <tbody>
+        <tr><th>신규성·진보성 선행기술</th><td>공개일 &lt; 기준일(우선일)</td><td>기준일 이전 공개만 선행기술</td></tr>
+        <tr><th>확대된 선출원(제29조 제3항)·선출원(제36조)</th><td>기준일 이후 공개도 포함(cutoff 없는 KR 검색)</td><td>먼저 출원됐으나 나중에 공개된 선출원이 해당할 수 있음</td></tr>
+      </tbody>
+    </table></div>
+    <div class="note"><b>핵심</b> — 그래서 KR은 ‘기준일 이전’ 식과 ‘기준일 제한 없는’ 식을 <b>따로</b> 돌립니다. 산정 도구도 기준일 이후 공개 문헌을 X로 분류하되 <b>확대된 선출원 검토 대상</b>으로 따로 표시합니다. 법 조문·판단은 개념 안내이며, 적용·최종 판단은 변리사가 사건별로 합니다. 판단 기준의 근거(EPO·한국 심사기준)는 <a href="templates/starter/.agents/skills/prior-art/references/selection-criteria.md">selection-criteria.md</a>에.</div>
+  </section>
+
+  <!-- 8 -->
+  <section id="s8">
+    <h2><span class="no">08</span>활용과 주의할 점</h2>
+    <p>조사식 설계·구성대비 같은 ‘판단 보조’는 어느 AI에서도 되지만, 실제 검색·전문 확보는 각 DB 약관을 따릅니다. <a href="../antigravity/">Antigravity</a>에는 사건 폴더 뼈대 작성을 맡기고 조사·판단은 변리사가 합니다.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>상황</th><th>이렇게</th></tr></thead>
+      <tbody>
+        <tr><th>DB별 식 새로 쓰기</th><td>개념 조사식 하나로 자동 변환해 결과 비교.</td></tr>
+        <tr><th>웹 DB 자동 수집</th><td>약관 위반. 공식 API만 자동, 웹은 사람이 실행.</td></tr>
+        <tr><th>AI가 한 번에 결론</th><td>판단(근거)과 집계(규칙) 분리. 근거 없으면 산정 중단.</td></tr>
+        <tr><th>주인용 하나로 확정</th><td>상위 2~3건을 각각 출발점으로 검토.</td></tr>
+        <tr><th>날짜 간과</th><td>신규성은 기준일 이전. 확대선출원은 cutoff 없는 KR도.</td></tr>
+        <tr><th>전문 대비 과다</th><td>문헌당 분량이 크니 상위 10~15건으로 제한.</td></tr>
+        <tr><th>API 호출·처리량</th><td>먼저 dry-run으로 확인 후 실행(예산 초과 시 중단).</td></tr>
+        <tr><th>최종 판단</th><td>신규성·진보성·FTO는 변리사가. AI는 1차 초안.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <!-- 9 -->
+  <section id="s9">
+    <h2><span class="no">부록</span>출처</h2>
+    <p>모두 2026. 11. 9. 확인. 이 편은 유튜브 링크가 제공되지 않아 영상 자료는 쓰지 않았습니다.</p>
+    <ul>
+      <li><a href="https://plus.kipris.or.kr/">KIPRIS Plus</a> · <a href="https://www.epo.org/en/searching-for-patents/data/web-services/ops">EPO OPS</a> · <a href="https://patents.google.com/">Google Patents</a> · <a href="https://patentscope.wipo.int/">PATENTSCOPE</a> (접근 방식·약관의 근거 — 상세 한도·문법은 각 사이트의 현재 안내 확인)</li>
+      <li>작성자 설계 「선행기술조사 스킬 설계」와 참조 파이프라인. 동봉한 두 도구(<code>build_queries.py</code>·<code>rank_closest.py</code>)를 직접 만들어 시험(6+7)·가상 데이터 시범으로 검증(산정 결과가 설계 예상치와 일치).</li>
+      <li>최근접 선행기술 판단 기준은 EPO 실무·한국 심사기준의 개념 안내이며, 법적 판단은 변리사가 사건별로 합니다.</li>
+    </ul>
+    <p>함께 읽기: <a href="../kipris-plus/">8편 KIPRIS Plus</a> · <a href="../claim-analyzer/">청구항 분석</a> · <a href="../patent-pair/">15편 특허 텍스트쌍</a></p>
+  </section>
+
+  <footer>
+    작성: 이진수 (변리사) · 2026. 11. 9. · CC BY-NC 4.0<br>
+    작성자의 설계를 바탕으로 동봉한 두 도구를 직접 만들어 가상 데이터로 검증(산정 결과가 설계 예상치와 일치)했으며, 사람이 검토했습니다. 실제 서버 호출·크롤링은 하지 않았습니다. DB 문법·URL·한도·약관은 바뀔 수 있으니 첫 사용 때 확인하세요. 유튜브 링크는 제공되지 않아 영상 자료는 쓰지 않았습니다. 신규성·진보성·FTO의 최종 판단은 변리사가 합니다. 오류 제보는 <a href="https://github.com/sonovman/ai-practice-handbooks/issues">Issues</a>로 남겨 주세요.
+  </footer>
+</main>
+</div>
+
+<script>
+  document.querySelectorAll('.copy').forEach(function (b) {
+    b.addEventListener('click', function () {
+      navigator.clipboard.writeText(b.closest('.code').querySelector('pre').innerText).then(function () {
+        b.textContent = '복사됨'; setTimeout(function () { b.textContent = '복사'; }, 1500);
+      });
+    });
+  });
+  var links = [].slice.call(document.querySelectorAll('.side a'));
+  var io = new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+      if (e.isIntersecting) links.forEach(function (a) { a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id); });
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  document.querySelectorAll('main section[id]').forEach(function (s) { io.observe(s); });
+</script>
+</body>
+</html>

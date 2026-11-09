@@ -1,0 +1,15 @@
+{
+  "title": "예시: 수직 스크루 착즙기 - 드럼 내면 경사 리브(가상)",
+  "cutoff_date": "20200315",
+  "features": [
+    {"id": "F1", "desc": "수직형 스크루로 압착", "ko": ["스크루", "스크류"], "en": ["screw", "auger"]},
+    {"id": "F2", "desc": "드럼 내면 경사 리브(차별 특징)", "core": true, "ko": ["리브", "돌기"], "en": ["rib", "protrusion"]},
+    {"id": "F3", "desc": "착즙·주스 추출", "ko": ["착즙", "주스", "녹즙"], "en": ["juicer", "juice extractor"]}
+  ],
+  "classes": {"ipc": ["A47J19/02"], "cpc": ["A47J19/025"]},
+  "queries": [
+    {"id": "Q1", "purpose": "F1*F3 넓은 검색", "features": ["F1", "F3"], "field": "ta"},
+    {"id": "Q2", "purpose": "F1*F2*F3 핵심 조합", "features": ["F1", "F2", "F3"], "field": "ta"},
+    {"id": "Q3", "purpose": "F2*F1 근접 + 분류 한정", "features": ["F2", "F1"], "field": "claims", "near": 10, "use_class": true}
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "target": {"claim": "청구항 1 (가상 예시)", "field": "가정용 착즙기", "problem": "착즙 효율 향상"},
+  "documents": [
+    {"pub": "US9000002B2", "title": "Juicer with ribbed drum", "publication_date": "20150505",
+     "same_field": true, "same_problem": true,
+     "features": {
+       "F1": {"grade": "◐", "evidence": "[0012]", "gap_type": "design", "gap_note": "수평형 오거, 수직 배치는 주지관용(근거 문헌 필요)"},
+       "F2": {"grade": "●", "evidence": "[0020], 도 3 부호 22"},
+       "F3": {"grade": "●", "evidence": "[0001]"}}},
+    {"pub": "KR100000001B1", "title": "스크루 착즙기", "publication_date": "20110101",
+     "same_field": true, "same_problem": false,
+     "features": {
+       "F1": {"grade": "●", "evidence": "[0015], 도 1"},
+       "F2": {"grade": "○", "gap_note": "드럼 내면 구조 기재 없음"},
+       "F3": {"grade": "●", "evidence": "[0002]"}}},
+    {"pub": "CN100000003A", "title": "Food processor", "publication_date": "20130303",
+     "same_field": false, "same_problem": false,
+     "features": {
+       "F1": {"grade": "○"}, "F2": {"grade": "◐", "evidence": "[0030]"}, "F3": {"grade": "○"}}},
+    {"pub": "EP3000004A1", "title": "Press with protrusions", "publication_date": "20210101",
+     "same_field": false, "same_problem": true,
+     "features": {
+       "F1": {"grade": "●", "evidence": "[0010]"}, "F2": {"grade": "●", "evidence": "[0018]"}, "F3": {"grade": "◐", "evidence": "[0003]"}}}
+  ]
+}

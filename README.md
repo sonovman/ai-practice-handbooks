@@ -33,6 +33,7 @@
 | 25 | 로컬 LLM 추론 장비 구축·운영 — VRAM부터 전력 안전까지 | [화면](https://sonovman.github.io/ai-practice-handbooks/local-llm/) | [템플릿](local-llm/templates/) |
 | 26 | LLM은 어떻게 작동하고, 왜 길어지면 맥락을 잃는가 — 원리와 하네스 | [화면](https://sonovman.github.io/ai-practice-handbooks/llm-context/) | [템플릿](llm-context/templates/) |
 | 27 | 클로드 코드 토큰·비용 절약 — 어디서 돈이 나가는지부터 숫자로 | [화면](https://sonovman.github.io/ai-practice-handbooks/token-saving/) | [템플릿](token-saving/templates/) |
+| 28 | 선행기술조사 — 검색식 제안에서 최근접 선행문헌 추출까지 | [화면](https://sonovman.github.io/ai-practice-handbooks/prior-art-search/) | [템플릿](prior-art-search/templates/) |
 
 ## 폴더 구성
 
@@ -71,6 +72,7 @@ ai-practice-handbooks/
 ├── local-llm/          25편 (templates/ starter 작업 폴더·local-llm-build 스킬·power_budget.py·vram_fit.py·프롬프트 5종·특허분석 시범, upload/ 웹 앱용, downloads/ ZIP)
 ├── llm-context/        26편 (templates/ starter 작업 폴더·context-harness 스킬·claude_md_lint.py·context_budget.py·프롬프트 5종·교정 훅 예시, upload/ 웹 앱용, downloads/ ZIP)
 ├── token-saving/       27편 (templates/ starter 작업 폴더·token-saver 스킬·token_cost.py·session_sim.py·프롬프트 5종·시범, upload/ 웹 앱용, downloads/ ZIP)
+├── prior-art-search/   28편 (templates/ starter 작업 폴더·prior-art 스킬·build_queries.py·rank_closest.py·프롬프트 5종·가상 시범, upload/ 웹 앱용, downloads/ ZIP)
 └── data/               공용 자료
 ```
 

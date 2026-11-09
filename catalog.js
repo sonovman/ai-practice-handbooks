@@ -479,5 +479,22 @@ window.CATALOG = [
       { label: "화면으로 읽기", href: "token-saving/", primary: true },
       { label: "템플릿 내려받기", href: "token-saving/templates/" }
     ]
+  },
+  {
+    id: "prior-art-search",
+    no: "28",
+    category: "IP 실무",
+    title: "선행기술조사 — 검색식 제안에서 최근접 선행문헌 추출까지",
+    subtitle: "개념 조사식 하나로 DB별 변환, 판단과 집계를 분리",
+    summary: "청구항에서 개념 조사식을 설계해 KIPRIS·Google·Espacenet·PATENTSCOPE 검색식으로 자동 변환하고, 구성대비 결과를 공개 규칙으로 산정해 최근접 선행문헌(신규성 부정·주인용·보조·기준일 이후)을 추립니다. 공식 API는 자동·웹 DB는 약관상 사람 실행, 날짜 기준과 법 조문까지 초보자용 단계별로 담았습니다.",
+    reader: "선행기술·무효자료 조사를 AI로 체계화하려는 변리사·특허 실무자, 조사 입문자",
+    version: "1.0",
+    date: "2026-11-09",
+    length: "읽기 약 25분",
+    status: "published",
+    links: [
+      { label: "화면으로 읽기", href: "prior-art-search/", primary: true },
+      { label: "템플릿 내려받기", href: "prior-art-search/templates/" }
+    ]
   }
 ];
