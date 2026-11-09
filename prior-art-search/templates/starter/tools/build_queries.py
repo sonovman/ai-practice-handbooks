@@ -27,16 +27,17 @@ from pathlib import Path
 
 # DB별 문법 (원고 문법표 기준)
 DB = {
-    "KIPRIS": {"and": "*", "or": "+", "near": "^{n}",
+    # quote=True: 여러 단어로 된 표현(예: juice extractor)을 큰따옴표로 감싸 구문 검색(개선 제안 반영)
+    "KIPRIS": {"and": "*", "or": "+", "near": "^{n}", "quote": False,
                "field": {"ta": ("TL=[", "]"), "title": ("TL=[", "]"), "abstract": ("AB=[", "]"), "claims": ("CL=[", "]")},
                "lang": "ko"},
-    "GooglePatents": {"and": " AND ", "or": " OR ", "near": " NEAR/{n} ",
+    "GooglePatents": {"and": " AND ", "or": " OR ", "near": " NEAR/{n} ", "quote": True,
                       "field": {"ta": ("TAC=(", ")"), "title": ("TI=(", ")"), "abstract": ("AB=(", ")"), "claims": ("CL=(", ")")},
                       "lang": "en"},
-    "Espacenet": {"and": " and ", "or": " or ", "near": " prox/distance<{n} ",
-                  "field": {"ta": ("ta=\"", "\""), "title": ("ti=\"", "\""), "abstract": ("ab=\"", "\""), "claims": ("ta=\"", "\"")},
+    "Espacenet": {"and": " and ", "or": " or ", "near": " prox/distance<{n} ", "quote": True,
+                  "field": {"ta": ("ta=(", ")"), "title": ("ti=(", ")"), "abstract": ("ab=(", ")"), "claims": ("ta=(", ")")},
                   "lang": "en"},
-    "PATENTSCOPE": {"and": " AND ", "or": " OR ", "near": " NEAR{n} ",
+    "PATENTSCOPE": {"and": " AND ", "or": " OR ", "near": " NEAR{n} ", "quote": True,
                     "field": {"ta": ("EN_AB:(", ")"), "title": ("EN_TI:(", ")"), "abstract": ("EN_AB:(", ")"), "claims": ("EN_CL:(", ")")},
                     "lang": "en"},
 }
@@ -47,8 +48,10 @@ def kw(feat, lang):
 
 
 def group(feat, db, lang):
-    """한 특징 = 키워드들의 OR 묶음."""
+    """한 특징 = 키워드들의 OR 묶음. quote=True면 여러 단어 표현을 큰따옴표로 감싼다."""
     words = kw(feat, lang)
+    if db.get("quote"):
+        words = ['"{}"'.format(w) if " " in w else w for w in words]
     return "(" + db["or"].join(words) + ")"
 
 
@@ -61,8 +64,13 @@ def build_one(q, feats, db, cpc, cutoff, with_date):
         body = groups[0] + near + db["and"].join(groups[1:]) if len(groups) > 2 else near.join(groups[:2])
     else:
         body = db["and"].join(groups)
-    pre, post = db["field"][q.get("field", "ta")]
-    expr = pre + body + post
+    field = q.get("field", "ta")
+    # KIPRIS에서 ta(명칭+요약)는 TL과 AB에 같은 식을 넣어 OR 결합(개선 제안 반영)
+    if db is DB["KIPRIS"] and field == "ta":
+        expr = "TL=[" + body + "]" + db["or"] + "AB=[" + body + "]"
+    else:
+        pre, post = db["field"][field]
+        expr = pre + body + post
     if q.get("use_class") and cpc:
         expr = expr + db["and"] + "CPC=" + cpc[0] if db is DB["GooglePatents"] else expr
     if with_date and cutoff:

@@ -30,7 +30,8 @@
       <li><a href="#s6">6. 최근접 산정(시범)</a></li>
       <li><a href="#s7">7. 날짜 기준과 법</a></li>
       <li><a href="#s8">8. 활용·주의할 점</a></li>
-      <li><a href="#s9">부록 · 출처</a></li>
+      <li><a href="#s9">9. 플랫폼 설치와 연동</a></li>
+      <li><a href="#s10">부록 · 출처</a></li>
     </ol>
   </aside>
 
@@ -40,8 +41,8 @@
   <p class="lead">선행기술조사는 ‘검색식을 잘 짜는 일’에서 끝나지 않습니다. 여러 DB를 같은 기준으로 뒤지고, 나온 문헌을 청구항 특징과 대비해 <strong>가장 유사하거나 가장 적은 수정으로 도달할 수 있는 문헌(최근접 선행기술)</strong>을 골라야 합니다. 이 편은 청구항에서 하나의 개념 조사식을 만들어 DB별 검색식으로 자동 변환하고, 구성대비 결과를 공개된 규칙으로 산정해 주인용·보조 문헌을 추리는 파이프라인을, 직접 돌려 본 두 도구와 함께 초보자도 따라 하기 쉽게 설명합니다.</p>
   <div class="meta">
     <b>독자</b><span>선행기술·무효자료 조사를 AI로 체계화하려는 변리사·특허 실무자, 조사 입문자</span>
-    <b>분량</b><span>읽기 약 25분 · 템플릿(검색식 변환 도구 · 최근접 산정 도구 · 조사 스킬 · 프롬프트 5종 · 시범 데이터)</span>
-    <b>판</b><span>1.0 · 2026. 11. 9.</span>
+    <b>분량</b><span>읽기 약 28분 · 템플릿(검색식 변환 도구 · 최근접 산정 도구 · 10편 연동 다리 · 조사 스킬 · 프롬프트 5종 · 플랫폼 설치 안내 · 시범 데이터)</span>
+    <b>판</b><span>1.1 · 2026. 11. 9.</span>
   </div>
 
   <section id="s0">
@@ -50,7 +51,8 @@
       <p style="font-size:19px;font-weight:600;line-height:1.6;margin:8px 0 10px">개념 조사식 하나를 만들어 DB별로 자동 변환하고, ‘판단’은 근거와 함께 적고 ‘순위’는 공개된 규칙으로 계산하세요 — 그래야 재현·검토가 됩니다.</p>
       <p style="opacity:.75;font-size:15px">AI가 “이게 제일 비슷하다”고 한 번에 결론 내리면 근거를 검증할 수 없습니다. 그래서 특징별 개시 여부(●/◐/○)를 <b>근거 위치와 함께</b> 기록하고, 순위는 점수 규칙으로 집계합니다. 검색은 공식 API만 자동이고, 웹 DB는 약관상 사람이 실행합니다.</p>
     </div>
-    <div class="note"><b>무엇을 확인했나</b> — 검색식 변환 도구(시험 6개)·최근접 산정 도구(시험 7개)를 직접 만들어 돌렸고(5·6장 시범), 산정 결과는 참조 설계의 예상치(주인용 97.5·보조 56.0 등)와 일치했습니다. 각 DB의 접근 방식은 <b>이용약관</b>을 근거로 자동/사람으로 나눴습니다(2장). 실제 서버 호출·크롤링은 하지 않았습니다 — DB 문법·URL·한도는 바뀔 수 있으니 첫 사용 때 확인하세요. 법 조문·판단 기준은 개념 안내이며 <b>최종 판단은 변리사</b>가 합니다. 이 편은 <b>유튜브 링크가 제공되지 않아</b> 영상 자료는 쓰지 않았습니다.</div>
+    <div class="note"><b>무엇을 확인했나</b> — 검색식 변환 도구(시험 7개)·최근접 산정 도구(시험 7개)를 직접 만들어 돌렸고(5·6장 시범), 산정 결과는 참조 설계의 예상치(주인용 97.5·보조 56.0 등)와 일치했습니다. 각 DB의 접근 방식은 <b>이용약관</b>을 근거로 자동/사람으로 나눴습니다(2장). 실제 서버 호출·크롤링은 하지 않았습니다 — DB 문법·URL·한도는 바뀔 수 있으니 첫 사용 때 확인하세요. 법 조문·판단 기준은 개념 안내이며 <b>최종 판단은 변리사</b>가 합니다. 이 편은 <b>유튜브 링크가 제공되지 않아</b> 영상 자료는 쓰지 않았습니다.</div>
+    <div class="note"><b>1.1판에서 더한 것</b> — ① 키트를 직접 점검해 받은 개선 제안 3가지를 반영했습니다: Google 식에서 여러 단어 표현을 큰따옴표로(<code>"juice extractor"</code>), KIPRIS <code>ta</code>는 명칭만이 아니라 <b>명칭+요약(<code>TL=[…]+AB=[…]</code>)</b>으로, 그리고 10편 연동 안내. ② <b>플랫폼별 설치·운용 가이드</b>(Claude·ChatGPT·Copilot·Gemini)와 ③ 10편 KIPRIS Plus 클라이언트로 실제 검색까지 잇는 <b>연동 다리(<code>kipris_bridge.py</code>)</b>를 더했습니다. 연동은 10편 fixtures로 시험 7개를 통과시켰고(실제 서버 호출은 안 함), <b>로컬 실행 환경에서만</b> 됩니다(9장).</div>
   </section>
 
   <!-- 1 -->
@@ -192,13 +194,40 @@
     </table></div>
   </section>
 
-  <!-- 9 -->
+  <!-- 9 : 플랫폼 설치와 연동 -->
   <section id="s9">
+    <h2><span class="no">09</span>플랫폼 설치와 10편 연동</h2>
+    <p>같은 키트를 네 플랫폼에 쓸 수 있지만 <b>할 수 있는 범위</b>가 다릅니다. 두 도구는 표준 라이브러리만 써서 웹 앱의 코드 실행 환경에서도 돌지만, <b>실제 KIPRIS Plus API 호출은 로컬에서만</b> 됩니다(웹 채팅 앱은 외부 접속 차단).</p>
+    <div class="tbl"><table>
+      <thead><tr><th>플랫폼</th><th>스킬 등록</th><th>도구 실행</th><th>KIPRIS API</th></tr></thead>
+      <tbody>
+        <tr><th>Claude 웹 / ChatGPT 웹</th><td>prior-art.zip 업로드</td><td>가능(코드 실행)</td><td>불가(외부 접속 제한)</td></tr>
+        <tr><th>Claude Code·Cowork</th><td>.claude/skills로 복사</td><td>가능</td><td><b>가능(로컬)</b></td></tr>
+        <tr><th>M365 Copilot Cowork</th><td>flat.zip 업로드</td><td>확인 필요</td><td>확인 필요</td></tr>
+        <tr><th>GitHub Copilot(VS Code)</th><td>starter 폴더 자동 인식</td><td>가능(터미널)</td><td><b>가능(로컬)</b></td></tr>
+        <tr><th>Gemini 앱(Gem)</th><td>SKILL.md 붙여넣기</td><td>제한적</td><td>불가</td></tr>
+        <tr><th>Gemini CLI·Antigravity</th><td>starter 폴더 그대로</td><td>가능</td><td><b>가능(로컬)</b></td></tr>
+      </tbody>
+    </table></div>
+    <div class="note"><b>업로드 묶음은 자동 생성</b> — <code>python build_upload.py</code>로 Claude·ChatGPT용 <code>prior-art.zip</code>, Copilot Cowork용 <code>flat.zip</code>, Gemini용 펼친 폴더가 만들어집니다. SKILL.md를 고치면 다시 실행해 갱신하고, 원본은 <code>starter</code> 하나로 유지합니다. 플랫폼별 세부 절차·사건 폴더 표준은 <a href="templates/starter/.agents/skills/prior-art/references/platform-setup.md">platform-setup.md</a>에.</div>
+
+    <h3 style="font-size:16px;margin:18px 0 8px">10편 KIPRIS Plus 연동 (선택 · 로컬 전용)</h3>
+    <p>이 키트에는 API 호출 도구가 없습니다. 검색까지 자동화하려면 10편 <code>kipris_client.py</code>를 받아 <code>tools/</code>에 넣고, 동봉한 다리 <code>kipris_bridge.py</code>로 잇습니다.</p>
+    <div class="code"><button class="copy">복사</button><pre># 10편 kipris_client.py·fixtures를 tools/ 에 복사하고 키 등록(setx KIPRIS_KEY ...) 후
+$ python tools/kipris_bridge.py 사건/plan.json              # 계획만(호출 0건)
+$ python tools/kipris_bridge.py 사건/plan.json --probe --run # 첫 1건만, XML 태그 확인
+$ python tools/kipris_bridge.py 사건/plan.json --run --out 사건/imports
+→ imports/kipris_Qn.csv(쿼리별) + imports/kipris_all.csv(통합, cutoff 전·후 표시)</pre></div>
+    <div class="note"><b>개선 반영과 연동</b> — <code>ta</code>(명칭+요약)를 <code>TL=[…]+AB=[…]</code>로 만들면서, 다리가 명칭·요약을 각각 호출해 합칩니다(그래서 착즙기 예시는 5건 호출). 연동 시험 7개는 10편 fixtures로 통과했고 실제 서버 호출은 하지 않았습니다. 입력값 이름·근접 해석·공개일 태그는 첫 사용 때 <code>--probe</code>로 확인하세요. 무료 이용은 상품 합산 월 1,000건·매월 1일 초기화입니다. 자세히는 <a href="templates/starter/.agents/skills/prior-art/references/kipris-bridge.md">kipris-bridge.md</a>. (10편 클라이언트는 CC BY-NC라 키트에 포함하지 않고 사용자가 복사해 씁니다.)</div>
+  </section>
+
+  <!-- 10 -->
+  <section id="s10">
     <h2><span class="no">부록</span>출처</h2>
     <p>모두 2026. 11. 9. 확인. 이 편은 유튜브 링크가 제공되지 않아 영상 자료는 쓰지 않았습니다.</p>
     <ul>
       <li><a href="https://plus.kipris.or.kr/">KIPRIS Plus</a> · <a href="https://www.epo.org/en/searching-for-patents/data/web-services/ops">EPO OPS</a> · <a href="https://patents.google.com/">Google Patents</a> · <a href="https://patentscope.wipo.int/">PATENTSCOPE</a> (접근 방식·약관의 근거 — 상세 한도·문법은 각 사이트의 현재 안내 확인)</li>
-      <li>작성자 설계 「선행기술조사 스킬 설계」와 참조 파이프라인. 동봉한 두 도구(<code>build_queries.py</code>·<code>rank_closest.py</code>)를 직접 만들어 시험(6+7)·가상 데이터 시범으로 검증(산정 결과가 설계 예상치와 일치).</li>
+      <li>작성자 설계 「선행기술조사 스킬 설계」·「모델별 스킬 설정」과 참조 파이프라인·연동 애드온. 동봉한 도구(<code>build_queries.py</code>·<code>rank_closest.py</code>·<code>kipris_bridge.py</code>)를 직접 만들어 시험(7+7, 연동 7)·가상 데이터로 검증(산정 결과가 설계 예상치와 일치). 10편 <a href="../kipris-plus/">KIPRIS Plus 클라이언트</a>와 연동.</li>
       <li>최근접 선행기술 판단 기준은 EPO 실무·한국 심사기준의 개념 안내이며, 법적 판단은 변리사가 사건별로 합니다.</li>
     </ul>
     <p>함께 읽기: <a href="../kipris-plus/">8편 KIPRIS Plus</a> · <a href="../claim-analyzer/">청구항 분석</a> · <a href="../patent-pair/">15편 특허 텍스트쌍</a></p>

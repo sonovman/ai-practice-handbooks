@@ -37,10 +37,14 @@ description: 선행기술조사를 돕는다. 청구항에서 개념 조사식�
 - `rank_closest.py` 가 mapping.json을 집계. 저해요인 문헌은 B에서 제외, 근거 없으면 중단.
 
 ## 도구
-- `tools/build_queries.py` — 개념 조사식 → DB별 검색식·URL.
+- `tools/build_queries.py` — 개념 조사식 → DB별 검색식·URL. (Google 여러 단어 표현은 따옴표, KIPRIS ta는 TL+AB로 요약까지 포함)
 - `tools/rank_closest.py` — 구성대비(mapping.json) → 최근접 선행문헌 산정.
+- `tools/kipris_bridge.py` — (선택·로컬 전용) 위 KIPRIS 식을 10편 `kipris_client.py`로 실제 호출해 CSV 저장.
+  10편 `kipris_client.py`·`fixtures/`를 `tools/`에 복사해야 쓸 수 있습니다(웹 채팅 앱은 외부 API 차단).
 
 ## 참조
 - `references/db-syntax.md` — DB별 문법 대응표
 - `references/selection-criteria.md` — 최근접 선행기술 판단 기준(EPO·한국 심사기준 연계)
-- `references/platforms.md` — Claude·ChatGPT·Gemini·Copilot·Antigravity 활용
+- `references/platform-setup.md` — Claude·ChatGPT·Copilot·Gemini별 스킬 등록·프로젝트 설정, 사건 폴더 표준
+- `references/kipris-bridge.md` — 10편 KIPRIS Plus 클라이언트 연동(로컬), 입력값 이름·첫 사용 확인
+- `references/platforms.md` — 도구별 활용 요약·약관 주의

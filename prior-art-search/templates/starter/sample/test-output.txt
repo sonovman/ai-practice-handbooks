@@ -1,12 +1,13 @@
 test_espacenet_and_patentscope_fields (__main__.T.test_espacenet_and_patentscope_fields) ... ok
 test_google_english_and_near (__main__.T.test_google_english_and_near) ... ok
+test_google_multiword_phrase_quoted (__main__.T.test_google_multiword_phrase_quoted) ... ok
 test_google_url_has_before_cutoff (__main__.T.test_google_url_has_before_cutoff) ... ok
-test_kipris_korean_and_operator (__main__.T.test_kipris_korean_and_operator) ... ok
+test_kipris_ta_includes_title_and_abstract (__main__.T.test_kipris_ta_includes_title_and_abstract) ... ok
 test_kr_no_cutoff_variant (__main__.T.test_kr_no_cutoff_variant) ... ok
 test_sheet_mentions_terms_and_safety (__main__.T.test_sheet_mentions_terms_and_safety) ... ok
 
 ----------------------------------------------------------------------
-Ran 6 tests in 0.002s
+Ran 7 tests in 0.001s
 
 OK
 
@@ -19,6 +20,12 @@ test_teaching_away_excluded_from_B (__main__.T.test_teaching_away_excluded_from_
 test_us_is_top_B (__main__.T.test_us_is_top_B) ... ok
 
 ----------------------------------------------------------------------
-Ran 7 tests in 0.004s
+Ran 7 tests in 0.005s
 
 OK
+
+sssssss
+----------------------------------------------------------------------
+Ran 7 tests in 0.000s
+
+OK (skipped=7)

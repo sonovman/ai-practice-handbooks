@@ -10,7 +10,7 @@ PLAN = {
     "features": [
         {"id": "F1", "ko": ["스크루"], "en": ["screw", "auger"]},
         {"id": "F2", "core": True, "ko": ["리브"], "en": ["rib"]},
-        {"id": "F3", "ko": ["착즙"], "en": ["juicer"]},
+        {"id": "F3", "ko": ["착즙"], "en": ["juicer", "juice extractor"]},
     ],
     "classes": {"cpc": ["A47J19/025"]},
     "queries": [
@@ -21,12 +21,14 @@ PLAN = {
 
 
 class T(unittest.TestCase):
-    def test_kipris_korean_and_operator(self):
+    def test_kipris_ta_includes_title_and_abstract(self):
         out, _ = B.build_all(PLAN)
         q1 = out["KIPRIS"][0]["expr"]
         self.assertIn("스크루", q1)          # 한국어 키워드
         self.assertIn("*", q1)                # AND = *
         self.assertIn("TL=[", q1)             # ta → TL
+        self.assertIn("AB=[", q1)             # 개선: ta는 요약(AB)까지 포함
+        self.assertIn("]+AB=[", q1)           # TL=[...]+AB=[...]
 
     def test_google_english_and_near(self):
         out, _ = B.build_all(PLAN)
@@ -35,6 +37,11 @@ class T(unittest.TestCase):
         self.assertIn(" AND ", g1)
         g3 = out["GooglePatents"][1]["expr"]
         self.assertIn("NEAR/10", g3)          # 근접
+
+    def test_google_multiword_phrase_quoted(self):
+        out, _ = B.build_all(PLAN)
+        g1 = out["GooglePatents"][0]["expr"]
+        self.assertIn('"juice extractor"', g1)  # 개선: 여러 단어 표현은 따옴표
 
     def test_google_url_has_before_cutoff(self):
         out, _ = B.build_all(PLAN)
