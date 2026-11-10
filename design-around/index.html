@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>회피설계 판단 절차와 규칙</title>
+<meta name="description" content="30편 한정 원장과 31편 해석 위에서 모든 독립항을 대상으로 회피안을 만들고, 문언→균등 제한 법리→균등 판단 순으로 미국·한국 위험을 평가하는 절차와 규칙. 한국 균등 5요건·의식적 제외·자유실시기술을 함께, 평가 도구와 4개 AI·Antigravity 설치까지 초보자용 단계별로.">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<div class="bar"><div class="bar-in">
+  <a class="brand" href="../">AI 실무 핸드북</a>
+  <div class="links">
+    <a href="templates/">템플릿</a>
+    <a href="https://github.com/sonovman/ai-practice-handbooks">GitHub ↗</a>
+  </div>
+</div></div>
+
+<div class="doc">
+  <aside class="side">
+    <div class="label">차례</div>
+    <ol>
+      <li><a href="#s0">한 줄 결론</a></li>
+      <li><a href="#s1">1. 전체 흐름</a></li>
+      <li><a href="#s2">2. 판단 순서 세 단계</a></li>
+      <li><a href="#s3">3. 네 가지 접근법</a></li>
+      <li><a href="#s4">4. 판례로 보는 회피설계</a></li>
+      <li><a href="#s5">5. 처음 접근과 바뀐 점</a></li>
+      <li><a href="#s6">6. 직접 돌려 본 시범</a></li>
+      <li><a href="#s7">7. 한국 법리와 비교</a></li>
+      <li><a href="#s8">8. 플랫폼 설치·Antigravity</a></li>
+      <li><a href="#s9">9. 주의할 점</a></li>
+      <li><a href="#s10">10. 통합 오케스트레이터</a></li>
+      <li><a href="#s11">부록 · 출처</a></li>
+    </ol>
+  </aside>
+
+<main>
+  <div class="eyebrow">핸드북 32 · IP 실무 · 청구항 분석 시리즈 ③</div>
+  <h1>회피설계 판단 — 절차와 규칙</h1>
+  <p class="lead">회피설계는 특허를 피해 가는 꼼수가 아니라 특허제도가 의도한 정당한 경쟁입니다. 다만 문언만 살짝 바꾸고 실질을 그대로 가져가면 균등론에 걸립니다. 이 편은 30편의 한정 원장과 31편의 해석 위에서 <strong>모든 독립항</strong>을 대상으로 회피안을 만들고, <strong>문언 → 균등을 막는 법리 → 균등 판단</strong> 순서로 미국과 한국 기준의 위험을 함께 평가하는 절차를 정리했습니다. 평가 도구를 직접 만들어 30·31편 시범 데이터로 시험했습니다.</p>
+  <div class="meta">
+    <b>독자</b><span>제품 개발 단계에서 특허 위험을 줄이려는 변리사·특허 실무자, 기업 IP·R&D 담당자, 입문자</span>
+    <b>분량</b><span>읽기 약 30분 · 템플릿(회피설계 스킬 · 위험 평가 도구 · 프롬프트 5종 · 미국·한국 시범 데이터) · 30~32편 통합 오케스트레이터 키트</span>
+    <b>판</b><span>1.1 · 2026. 11. 10.</span>
+  </div>
+
+  <section id="s0">
+    <div class="key">
+      <div class="eyebrow">한 줄 결론</div>
+      <p style="font-size:19px;font-weight:600;line-height:1.6;margin:8px 0 10px">모든 독립항에서 한정 하나씩을, 문언으로도 균등으로도 벗어나게 하세요 — 그리고 그 ‘다름’의 근거를 설계 동결 전에 남기세요.</p>
+      <p style="opacity:.75;font-size:15px">한 청구항만 피하거나, 없앤 기능을 다른 부품이 대신하거나, 명세서에 대안으로 적힌 구조를 ‘헌납’이라 믿고 쓰는 것이 흔한 실패입니다. 같은 해석을 침해·회피·무효에 똑같이 써야 합니다.</p>
+    </div>
+    <div class="note"><b>무엇을 확인했나</b> — 원고(회피설계·해석 지식 엔진)의 판례·법리를 판결 원문과 2026년 기준 자료로 하나씩 확인했습니다. 고친 부분은 5장에 모았습니다. 한국 균등론·의식적 제외·자유실시기술·손해배상 규정은 대법원 판결과 법령으로 따로 조사했습니다. 위험 평가 도구(시험 13개)를 표준 라이브러리로 만들어 31편 해석 반영 차트에 연결했습니다. 예시 특허·제품은 <b>모두 가상</b>입니다. 위험 등급은 법적 결론이 아니며 <b>최종 판단과 비침해 의견은 변리사·변호사</b>가 합니다. 이 편은 유튜브 링크가 제공되지 않아 영상 자료는 쓰지 않았습니다.</div>
+    <div class="note"><b>1.1판에서 더한 것</b> — 네 스킬(claim-decompose·claim-construe·claim-chart·design-around)을 한 프로젝트에서 켜고 순서대로 부르는 <b>통합 오케스트레이터</b>를 더했습니다: 지휘 스킬 <code>claim-suite</code>, 붙여 넣는 프로젝트 지침, 사건 폴더 상태를 보고 다음 단계를 알려 주는 <code>suite_status.py</code>, 예시 사건. 세 편의 도구와 시험을 한 폴더에 모아 57개 시험을 통과시켰습니다(10장).</div>
+    <div class="note"><b>시리즈 안내</b> — ① <a href="../claim-chart/">30편 분해와 Claim Chart</a> → ② <a href="../claim-construction/">31편 청구범위 해석</a> → ③ 이 편: 회피설계. 세 편이 같은 한정 원장 ID를 씁니다.</div>
+  </section>
+
+  <!-- 1 -->
+  <section id="s1">
+    <h2><span class="no">01</span>전체 흐름</h2>
+    <div class="graph">
+      <div class="node"><span class="id">IN</span><b>범위 정하기</b><p>특허 패밀리(계속·분할 포함) · <b>모든 독립항</b> · 우리 개발안 · 설계 동결 일정 · 관할</p></div>
+      <div class="edge"><span>30·31편 불러오기</span></div>
+      <div class="node"><span class="id">LD</span><b>원장과 해석</b><p>30편 한정 원장 + 31편 해석(재검토 행은 확정 뒤 사용) + 출원경과 정리</p></div>
+      <div class="edge"><span>독립항마다</span></div>
+      <div class="node dark"><span class="id">OP</span><b>회피안 만들기</b><p>접근법 ① 포기 영역 ② 결여·대체 ③ 기능식 미개시 구조 ④ 한국 자유실시기술</p></div>
+      <div class="edge"><span>한정 × 변경마다</span></div>
+      <div class="node dark"><span class="id">J</span><b>문언 → 균등 제한 법리 → 균등 판단</b><p>미국(기능·방식·결과, 금반언·헌납·선행기술·형해화)과 한국(5요건, 의식적 제외·자유실시기술)을 함께</p></div>
+      <div class="edge"><span>design_around_eval.py</span></div>
+      <div class="node"><span class="id">AG</span><b>집계</b><p>독립항마다 가장 안전한 경로 · 회피안 전체는 가장 위험한 독립항이 결정 · 결합안</p></div>
+      <div class="loop"><b>되돌아가기</b> — 모든 독립항이 LOW인 안이 없으면 다른 한정으로, 또는 결합안으로 다시 만듭니다.</div>
+      <div class="edge"><span>사업성·근거</span></div>
+      <div class="node end"><span class="id">OUT</span><b>채택·의견·감시</b><p>성능·원가 비교 · 작동 방식 차이의 시험·도면 · 설계 동결 전 비침해 의견 · 패밀리와 제품 업데이트 감시</p></div>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section id="s2">
+    <h2><span class="no">02</span>판단 순서 세 단계</h2>
+    <p>한 한정에 대한 한 변경마다 아래 순서로 봅니다. 앞 단계에서 결론이 나면 뒤로 가지 않습니다.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>단계</th><th>미국</th><th>한국</th></tr></thead>
+      <tbody>
+        <tr><th>1 문언</th><td>31편 해석으로 변경 뒤에도 한정을 충족하나? 기능식은 명세서 대응 구조(대안 포함)+구조적 균등물까지 문언</td><td>구성요소와 그 유기적 결합관계를 모두 갖추나? 기능적 표현은 원칙적으로 기능 전체 / 자유실시기술이면 문언이어도 권리범위 밖</td></tr>
+        <tr><th>2 균등을 막는 법리</th><td>출원경과 금반언(포기 영역) · 공중헌납 · 가상 청구항의 선행기술 포섭 · 한정 형해화 · 한정과 기능의 완전 제거</td><td>의식적 제외(출원경과 제반 사정) · 자유실시기술(제품 전체 기준) · 정반대 개념</td></tr>
+        <tr><th>3 균등 판단</th><td>기능·방식·결과 — 방식(Way)의 실질적 차이와 근거가 핵심. 알려진 상호교환이면 위험</td><td>과제해결원리 동일 → 작용효과 동일 → 치환 용이. 핵심 원리가 공지면 개별 구성의 기능으로 비교</td></tr>
+      </tbody>
+    </table></div>
+    <div class="note"><b>집계 규칙</b> — 독립항 하나는 그 독립항에서 가장 안전한 회피 경로가 정하고, 회피안 전체는 <b>가장 위험한 독립항</b>이 정합니다. 어떤 독립항의 한정도 건드리지 않았다면 그 독립항은 그대로 침해 위험입니다.</div>
+  </section>
+
+  <!-- 3 -->
+  <section id="s3">
+    <h2><span class="no">03</span>네 가지 접근법</h2>
+    <div class="grid2">
+      <div class="box"><span class="tag">① 포기 영역</span><h4>출원경과 금반언 / 의식적 제외</h4><p>보정·의견서로 버린 범위 안에 대체 구성을 둡니다. 미국은 특허성 관련 축소 보정이면 포기가 추정되고 번복 사유(예측 불가·주변적 관련 등)만 따집니다. 한국은 감축 사실만으로 단정하지 않고 제반 사정을 봅니다.</p></div>
+      <div class="box"><span class="tag">② 결여·대체</span><h4>전구성요소 / 방식 차이</h4><p>최선은 덜 중요한 한정과 <b>그 기능</b>까지 제거. 다음은 방식이 실질적으로 다른 대체(통상의 치환은 피함), 그다음은 형상·배치·운동 방향 변형. 부정한정은 그 구성을 추가해 벗어날 수 있습니다.</p></div>
+      <div class="box"><span class="tag">③ 기능식</span><h4>명세서에 없는 구조</h4><p>명세서의 대응 구조를 <b>대안까지</b> 매핑한 뒤, 구조·방식이 다른 미개시 구조를 고릅니다. 등록 뒤 등장한 기술이면 균등론 판단이 남고, 한국은 기능 전체를 덮는 것이 원칙이라 이 접근만으로 부족합니다.</p></div>
+      <div class="box"><span class="tag">④ 한국 경로</span><h4>자유실시기술 · 확인심판</h4><p>제품 <b>전체</b>가 공지기술이거나 그로부터 쉽게 실시할 수 있으면 문언침해 사안에도 권리범위 밖. 설계 확정 뒤 소극적 권리범위확인심판으로 공식 확인할 수 있습니다.</p></div>
+    </div>
+    <ol class="steps">
+      <li><b>모든 독립항을 나열</b>패밀리의 계속·분할출원까지. 독립항마다 사업상 덜 중요한 후보 한정 1~3개.</li>
+      <li><b>회피안 3~5개</b>접근법별로. 바꾼 한정이 하던 기능이 사라지는지, 다른 부품으로 옮겨 가는지 적습니다.</li>
+      <li><b>근거부터</b>포기 영역은 거절이유·보정서·의견서의 쪽, 방식 차이는 시험 데이터·도면·흐름도.</li>
+      <li><b>평가·결합</b>도구로 미국·한국 위험을 집계하고, 모든 독립항이 LOW인 안(필요하면 결합안)을 찾습니다.</li>
+      <li><b>사업성·의견</b>성능·원가·일정을 비교해 채택하고, 설계 동결 전에 비침해 의견을 받습니다.</li>
+    </ol>
+  </section>
+
+  <!-- 4 -->
+  <section id="s4">
+    <h2><span class="no">04</span>판례로 보는 회피설계</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>판례</th><th>청구 한정 → 회피 구성</th><th>결과와 배울 점</th></tr></thead>
+      <tbody>
+        <tr><th><i>Pennwalt</i> (en banc 1987)</th><td>과일 위치를 연속 추적하는 수단 → 연속 추적을 하지 않는 구조</td><td>비침해. 한정이나 그 균등물이 하나라도 없으면 침해 아님(② 결여)</td></tr>
+        <tr><th><i>Slimfold</i> (1991)</th><td>머리 부분과 슬리브 사이의 해제 가능한 걸쇠 수단 → 걸쇠를 없애고 피벗 로드와 문짝 사이에 끼우는 탈착식 스티로폼 쐐기</td><td>비침해. “의도적 회피설계는 그 자체로 잘못이 아니다” — 변경이 실질적이면 균등 아님(② 대체)</td></tr>
+        <tr><th><i>Dolly</i> (1994)</th><td>시트·등받이와 별도인 강성 프레임 → 패널 자체로 구조를 이룸</td><td>비침해. 균등으로 보면 ‘별도 프레임’ 한정이 사라짐(② 형해화)</td></tr>
+        <tr><th><i>Mas-Hamilton</i> (1998)</th><td>레버 작동 수단(명세서 구조: 솔레노이드) → 스테퍼 모터</td><td>비침해. 실질적으로 다른 방식으로 동력 제공(③ 기능식)</td></tr>
+        <tr><th><i>Talbert</i> (2002, <i>Festo</i> 뒤 2003 재확인)</th><td>끝 비등점 345°F 이하로 축소 보정 → 그보다 높은 끝 비등점의 가솔린</td><td>비침해. 축소 보정으로 버린 영역은 균등으로 되찾지 못함(① 포기 영역)</td></tr>
+        <tr><th><i>Warner-Jenkinson</i> (1997)</th><td>pH 약 6.0~9.0(하한은 선행기술 회피용) → pH 5.0</td><td>환송. 보정 이유가 특허성 관련인지, 추정이 번복되는지 심리(① 번복 분석)</td></tr>
+        <tr><th><i>Kustom Signals</i> (2001) — 30편</th><td>크기 또는 주파수 기준 중 하나로 검색 → 둘을 항상 함께</td><td>비침해. 문언 불충족 + 방식 차이 + 출원경과 금반언(①+②)</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <!-- 5 -->
+  <section id="s5">
+    <h2><span class="no">05</span>처음 접근과 바뀐 점</h2>
+
+    <div class="note"><b>① “유효해 보이는 가장 넓은 청구항 하나를 표적으로” → 모든 독립항, 무효는 보조 방어선</b> — 표적을 하나로 좁히면 다른 독립항이 그대로 남습니다. 또 등록 특허는 유효로 추정되고 법원에서 무효는 명백하고 설득력 있는 증거가 필요합니다(<i>Microsoft v. i4i</i>, 2011). 그래서 회피안은 모든 독립항을 피하도록 짜고, 무효 검토는 병행하되 대체재로 쓰지 않습니다.</div>
+
+    <div class="note"><b>② “한 청구항에서 피하면 성공” → 회피안의 위험은 가장 위험한 독립항이 정한다</b> — 시범에서 리브 경사를 포기 영역(20°)으로 옮긴 안은 청구항 1에서 LOW였지만, 리브가 없는 방법 청구항 7은 전혀 건드리지 못해 전체 HIGH가 됐습니다(6장).</div>
+
+    <div class="note"><b>③ “기능식은 명세서에 없는 구조면 되고, 명세서의 대안은 헌납” → 대응 구조의 대안은 문언 범위 안</b> — §112(f) 한정의 문언 범위는 명세서의 대응 구조와 그 구조적 균등물입니다. 명세서가 그 기능의 구조로 대안(예: 직결 구동)을 적었다면 헌납이 아니라 <b>문언 침해</b>입니다. 또 등록 뒤 등장한 기술은 구조적 균등이 아니어도 균등론 판단이 남습니다(<i>Al-Site</i>, 1999).</div>
+
+    <div class="note"><b>④ “명세서에 쓰고 청구하지 않은 대안은 언제나 안전” → 미국 균등론 단계의 법리, 한국은 명문 법리 없음</b> — 공중헌납(<i>Johnson &amp; Johnston</i>, 2002)은 미국에서 균등 주장을 막는 법리입니다. 기능식 한정의 대응 구조에는 통하지 않고(③), 한국에는 같은 이름의 법리가 없어 의식적 제외·과제해결원리 단계에서 참작을 주장하는 정도입니다.</div>
+
+    <div class="note"><b>⑤ “감축 보정이 있으면 그 사이는 모두 포기” → 미국은 추정과 번복, 한국은 제반 사정</b> — 미국은 특허성 관련 축소 보정이면 포기가 추정되지만 예측 불가·주변적 관련 등으로 번복될 수 있어, 그 가능성을 따로 평가합니다(도구는 번복 위험을 적으면 MED로 올립니다). 한국은 감축 사실만으로 단정하지 않고, 거절이유의 선행기술을 피하려던 방향인지·의견서가 무엇을 구별했는지를 종합합니다(대법원 2017. 4. 26. 선고 2014후638). 그래서 한국에서는 포기 영역을 의견서 문장과 함께 특정해 둡니다.</div>
+
+    <div class="note"><b>⑥ “바꾼 구성이 공지기술이면 자유실시기술” → 비교 대상은 제품 전체</b> — 한국 자유실시기술 항변은 확인대상발명 <b>전체</b>를 공지기술과 대비합니다. 그 대신 문언침해 사안에도 적용된다는 점이 미국 가상 청구항(균등 범위만 제한)과 다릅니다(대법원 2017. 11. 14. 선고 2016후366).</div>
+
+    <div class="note"><b>⑦ “한국도 기능식은 미국처럼 피한다” → 한국은 기능 전체가 원칙</b> — 한국에서 기능적 표현은 원칙적으로 그 기능을 가진 모든 구성으로 해석합니다(2007후4977). 시범의 직결 모터 안은 미국에서는 명세서 대안 구조라서, 한국에서는 기능이 그대로라서 둘 다 HIGH였습니다. 한국에서 기능식 한정을 피하려면 기능 자체를 피하거나 균등 요건에서 다툽니다.</div>
+
+    <div class="note"><b>⑧ “비침해 의견서를 받으면 고의침해는 원천 차단” → 유용한 방패일 뿐</b> — 미국에서 고의·악의적 침해의 증액 배상(최대 3배)은 행위 당시 인식 중심으로 판단하고(<i>Halo</i>, 2016), 의견을 받지 않은 사실만으로 고의를 입증할 수 없습니다(35 U.S.C. §298). 의견서는 회피설계를 대신하지 않습니다. 한국은 2024. 8. 21.부터 고의 침해 배상 한도가 손해액의 <b>5배</b>로 올랐습니다(특허법 제128조 제8항). 검토 기록과 의견은 고의 판단에서 유리한 사정이 될 수 있습니다.</div>
+
+    <div class="note"><b>⑨ “정반대 개념이면 균등은 자동 불가” → 결론을 뒷받침할 근거가 필요</b> — 형해화는 예외 규칙이 아니라 “합리적 판단자라면 균등을 인정할 수 없다”는 결론의 표현입니다(<i>Deere v. Bush Hog</i>, 2012). ‘별도 ↔ 일체’, ‘없음 ↔ 있음’처럼 분명한 경우에도 왜 정반대인지 해석·구조 근거를 남깁니다.</div>
+
+    <div class="note"><b>⑩ “부품을 없앴으니 끝” → 기능이 어디로 갔는지 본다</b> — 균등물은 제품 어딘가에 있으면 족하고 한정과 부품이 1:1일 필요도 없습니다(<i>Corning Glass</i>, 1989). 시범의 ‘간격 일정 + 스크루 심 테이퍼’ 안은 압착 기능을 다른 부품이 대신해 HIGH였습니다. 최선의 결여 회피는 한정과 <b>그 기능</b>을 함께 없애는 것입니다.</div>
+
+    <div class="note"><b>⑪ “설계가 끝나면 회피도 끝” → 패밀리와 제품 업데이트를 감시</b> — 특허권자는 명세서가 뒷받침하는 범위에서 계속출원으로 경쟁 제품을 겨냥한 청구항을 만들 수 있습니다(<i>Kingsdown</i>, 1988). 펌웨어 업데이트로 없앤 기능이 되살아나는 경우도 있습니다. 회피안은 명세서 전체가 뒷받침하는 범위까지 보고, 제품이 바뀔 때마다 다시 평가합니다.</div>
+
+    <div class="note"><b>⑫ “판례 이름과 결론만 기억” → 사실관계까지 짝짓기</b> — 판례를 회피 근거로 쓰려면 무엇을 무엇으로 바꿨는지가 중요합니다. 예를 들어 <i>Slimfold</i>는 ‘해제 가능한 걸쇠 수단’을 탈착식 스티로폼 쐐기로 바꾼 사례이고, <i>Talbert</i>는 2002년 판결이 <i>Festo</i> 뒤 다시 검토되어 2003년에 재확인됐으며, <i>Mas-Hamilton</i>은 솔레노이드를 스테퍼 모터로 바꾼 기능식 사례입니다. 4장 표는 판결 원문으로 맞춘 사실관계입니다.</div>
+  </section>
+
+  <!-- 6 -->
+  <section id="s6">
+    <h2><span class="no">06</span>직접 돌려 본 시범 (30·31편 가상 착즙기 특허)</h2>
+    <p>청구항 1(장치)과 방법 청구항 7을 독립항으로 두고, 개발안 JX-600에 대한 회피안 6개를 평가했습니다. 31편 해석 반영 차트를 함께 읽어 해석 일치와 ‘재검토’ 한정을 확인합니다.</p>
+    <div class="code">
+      <div class="head"><span>평가 결과(요약)</span><button class="copy">복사</button></div>
+<pre><code>$ python tools/design_around_eval.py sample/design_input.json --chart sample/chart_construed_31.json
+
+| 회피안                              | 미국 | 한국 | 사업 메모 |
+| O1 리브 경사 20°(포기 영역)          | HIGH | HIGH | 청구항 1은 LOW, 청구항 7을 못 건드림 |
+| O2 배즙구 앞 미세 메시 추가          | HIGH | HIGH | 청구항 1은 LOW(부정한정·정반대), 청구항 7 남음 |
+| O3 두 모드 자동 동시 운용            | LOW  | LOW  | 펌웨어 변경만 — 1f·7c 둘 다 포기 영역/의식적 제외 |
+| O4 감속기어 없는 저속 직결 모터      | HIGH | HIGH | 미국: 명세서 대안 구조 = 문언 / 한국: 기능 전체 |
+| O5 간격 일정 + 스크루 심 테이퍼      | HIGH | HIGH | 기능을 다른 부품이 대신 |
+| O6 O2 + O3 결합                      | LOW  | LOW  | 비용 합산 |
+- W12 1d: 31편에서 '재검토' 표시된 한정 — 해석·사실 확정 전에는 회피 근거로 쓰기 이릅니다.
+- W11 계속출원·분할출원이 살아 있음 — 패밀리를 감시하세요.</code></pre>
+    </div>
+    <div class="note"><b>무엇을 배우나</b> — 가장 싸고 넓게 통하는 안은 O3였습니다. 출원 중 특허권자가 “두 모드를 동시에 하는 인용발명과 다르다”고 스스로 구별한 범위(30편 <i>Kustom Signals</i>와 같은 구조)에 제품을 두니, 장치·방법 두 독립항을 한 번에 벗어났습니다. O1은 31편에서 ‘재검토’로 표시된 [1d]에 기대고 있어, 해석·사실이 확정되기 전에는 근거로 쓰기 이르다는 경고도 함께 나왔습니다. 결과: <a href="templates/starter/sample/da_report.md">da_report.md</a> · 입력: <a href="templates/starter/sample/design_input.json">design_input.json</a></div>
+    <div class="btns">
+      <a class="btn primary" href="downloads/design-around-kit.zip" download>전체 템플릿 내려받기 (ZIP)</a>
+      <a class="btn" href="templates/">파일 하나씩 보기</a>
+    </div>
+  </section>
+
+  <!-- 7 -->
+  <section id="s7">
+    <h2><span class="no">07</span>한국 법리와 비교</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>항목</th><th>미국</th><th>한국</th></tr></thead>
+      <tbody>
+        <tr><th>균등 기준</th><td>기능·방식·결과 / 비본질적 차이</td><td>5요건 — 과제해결원리 동일(명세서·공지기술 참작, 2013다14361·2017후424; 핵심이 공지면 개별 구성 기능으로 비교, 2018다267252) · 작용효과 · 치환 용이 · 공지기술 아님 · 의식적 제외 없음</td></tr>
+        <tr><th>출원경과</th><td><i>Festo</i> 추정적 포기, 번복 3사유</td><td>의식적 제외 — 제반 사정 종합, 감축만으로 단정 안 함(2014후638)</td></tr>
+        <tr><th>명세서 개시·미청구</th><td>공중헌납(균등 불가)</td><td>명문 법리 없음</td></tr>
+        <tr><th>선행기술</th><td>가상 청구항 — 균등 범위만 제한</td><td>자유실시기술 — 제품 전체 기준, 문언침해에도(2016후366)</td></tr>
+        <tr><th>기능식</th><td>명세서 구조 + 균등물</td><td>원칙적으로 기능 전체(2007후4977)</td></tr>
+        <tr><th>고의 배상</th><td>최대 3배(§284)</td><td>최대 5배(제128조 제8항, 2024. 8. 21.~)</td></tr>
+        <tr><th>공식 확인</th><td>확인소송(DJ) 등</td><td>소극적 권리범위확인심판 — 확인대상발명을 실제 제품과 같게 특정. 진보성 부정으로 권리범위를 부정할 수는 없음(2012후4162 전합)</td></tr>
+      </tbody>
+    </table></div>
+    <div class="note"><b>실무 팁</b> — 같은 회피안이라도 미국과 한국에서 위험이 다를 수 있어 도구는 두 기준을 나란히 냅니다. 한국에서 의식적 제외를 주장하려면 거절이유의 선행기술과 의견서 문장을 원장의 ‘출원경과’ 칸에 그대로 적어 두세요. 자세히: <a href="templates/starter/.agents/skills/design-around/references/doctrine-kr.md">doctrine-kr.md</a></div>
+  </section>
+
+  <!-- 8 -->
+  <section id="s8">
+    <h2><span class="no">08</span>플랫폼 설치와 Antigravity 구축 (선택)</h2>
+    <p>30·31편 스킬과 함께 등록하면 분해 → 해석 → 회피가 이어집니다. 회피안 아이디어 정리는 어느 AI에서도 되고, 평가 도구는 코드 실행이 되는 곳에서 돌아갑니다. 개발안·도면·원가는 영업비밀이니 승인된 환경에서만 다룹니다.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>플랫폼</th><th>설정</th><th>도구 실행</th></tr></thead>
+      <tbody>
+        <tr><th>Claude 웹·데스크톱</th><td>설정에서 코드 실행·파일 생성 켜기 → Skills에 <code>design-around.zip</code>(+30·31편 zip)</td><td>가능</td></tr>
+        <tr><th>Claude Code·Cowork</th><td><code>.agents/skills/design-around</code>를 <code>.claude/skills/</code>로, CLAUDE.md에 <code>@AGENTS.md</code></td><td>가능(로컬)</td></tr>
+        <tr><th>ChatGPT</th><td>Skills(지원 요금제)에 zip, 또는 프로젝트 지침에 SKILL.md</td><td>대체로 가능</td></tr>
+        <tr><th>Gemini 앱(Gem) / CLI</th><td>Gem 지침에 SKILL.md+AGENTS.md / CLI는 GEMINI.md에 <code>@AGENTS.md</code></td><td>Gem 제한적 / CLI 가능</td></tr>
+        <tr><th>Microsoft 365 Copilot</th><td>에이전트 지침에 SKILL.md 요약, 지식에 references·사내 R&D 문서 / 조직이 허용하면 <code>-flat.zip</code></td><td>환경에 따라 확인</td></tr>
+        <tr><th>Google Antigravity</th><td>starter 폴더를 작업 공간으로 — <code>.agents/rules/design-around.md</code>가 요청 시 적용</td><td>가능(로컬)</td></tr>
+      </tbody>
+    </table></div>
+    <h3>Antigravity에서 AI 도움으로 구축하기</h3>
+    <ol class="steps">
+      <li><b>세 키트 나란히</b>30·31·32편 ZIP을 한 사건 폴더 아래 풀고 상위 폴더를 작업 공간으로 엽니다(숨김 <code>.agents</code> 포함).</li>
+      <li><b>시험부터</b>“세 키트의 시험을 모두 실행해 결과를 보여 줘” → 20 + 16 + 13개 통과. 명령 실행은 승인 후로 둡니다.</li>
+      <li><b>사건 넣기</b><code>inbox/</code>에 특허·출원경과·개발안 사양을 넣고 “30편 원장 → 31편 해석 → 모든 독립항 → design-around로 회피안 3~5개 → design_around_eval로 미국·한국 평가 → 모든 독립항 LOW인 안과 사업 메모”를 요청합니다.</li>
+      <li><b>사람 검토</b>근거(시험·도면·출원경과 위치)를 확인하고, 채택안은 설계 동결 전에 비침해 의견을 받습니다.</li>
+    </ol>
+    <div class="note"><b>프롬프트 5종</b> — <a href="templates/starter/prompts/01-scope.md">01 범위</a> · <a href="templates/starter/prompts/02-candidates.md">02 후보 한정</a> · <a href="templates/starter/prompts/03-options.md">03 회피안</a> · <a href="templates/starter/prompts/04-evaluate.md">04 평가</a> · <a href="templates/starter/prompts/05-report.md">05 보고·의견 준비</a>. 세부 절차: <a href="templates/starter/.agents/skills/design-around/references/platform-setup.md">platform-setup.md</a>. 메뉴·요금제별 기능은 바뀌니 각 서비스의 현재 안내를 확인하세요.</div>
+  </section>
+
+  <!-- 9 -->
+  <section id="s9">
+    <h2><span class="no">09</span>주의할 점</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>상황</th><th>이렇게</th></tr></thead>
+      <tbody>
+        <tr><th>범위</th><td>특허 패밀리 전체, 모든 독립항. 한 청구항만 피하고 끝내지 않음.</td></tr>
+        <tr><th>해석</th><td>31편 해석을 그대로. 재검토 중인 한정은 확정 뒤에.</td></tr>
+        <tr><th>기능</th><td>부품만이 아니라 기능까지 제거. 다른 부품·소프트웨어·서버가 대신하지 않는지.</td></tr>
+        <tr><th>방식 차이</th><td>시험 데이터·도면·흐름도로 근거. 통상의 치환은 피함.</td></tr>
+        <tr><th>포기 영역</th><td>출원경과 위치를 특정. 미국은 번복 사유, 한국은 제반 사정까지.</td></tr>
+        <tr><th>기능식</th><td>명세서의 대안 구조는 문언 범위 안. 한국은 기능 전체가 원칙.</td></tr>
+        <tr><th>자유실시기술</th><td>제품 전체를 공지기술과 대비(한국, 문언침해에도).</td></tr>
+        <tr><th>무효</th><td>보조 방어선. 유효 추정을 전제로.</td></tr>
+        <tr><th>일정·의견</th><td>설계 동결 전 검토와 비침해 의견. 의견서는 방패이지 면책이 아님.</td></tr>
+        <tr><th>사후</th><td>계속출원·제품 업데이트 감시, 바뀌면 다시 평가.</td></tr>
+      </tbody>
+    </table></div>
+    <div class="btns">
+      <a class="btn primary" href="downloads/design-around-kit.zip" download>전체 템플릿 내려받기 (ZIP)</a>
+      <a class="btn" href="templates/">파일 하나씩 보기</a>
+    </div>
+  </section>
+
+  <!-- 10 -->
+  <section id="s10">
+    <h2><span class="no">10</span>통합 오케스트레이터 — 네 스킬을 한 프로젝트에서</h2>
+    <p>30~32편의 네 스킬은 같은 한정 원장 ID로 이어지지만, 각각 따로 켜 두면 어느 순서로 부를지·어디서 멈출지를 매번 사람이 정해야 합니다. 그래서 순서와 관문을 맡는 지휘 스킬 <code>claim-suite</code>와 프로젝트 지침, 사건 상태 점검 도구를 더했습니다. 지휘 스킬은 직접 분석하지 않고, 단계마다 맞는 스킬을 불러 산출물을 다음 단계에 넘깁니다.</p>
+    <div class="graph">
+      <div class="node dark"><span class="id">SU</span><b>claim-suite (지휘)</b><p>목적·관할 확인 → 사건 폴더 → <code>suite_status.py</code>가 알려 주는 다음 단계의 스킬 호출 → 관문에서 멈춤</p></div>
+      <div class="edge"><span>S1</span></div>
+      <div class="node"><span class="id">DC</span><b>claim-decompose</b><p><code>work/01_ledger.json</code> — 사람이 3대 시험으로 확정(G1)</p></div>
+      <div class="edge"><span>S2 · S3 (목적에 따라 순서 바뀜)</span></div>
+      <div class="node"><span class="id">CC</span><b>claim-chart · claim-construe</b><p><code>02_chart.json</code> · <code>03_construction.json</code>(G2) → <code>04_chart_construed.json</code>(G3: 오류 0 + 재검토 0)</p></div>
+      <div class="edge"><span>S5 (FTO·회피일 때)</span></div>
+      <div class="node"><span class="id">DA</span><b>design-around</b><p><code>05_design_input.json</code> — 모든 독립항이 LOW인 회피안(G4)</p></div>
+      <div class="edge"><span>S6</span></div>
+      <div class="node end"><span class="id">OUT</span><b>보고·사람 검토</b><p><code>out/report.md</code> · 변리사·변호사 검토(G5)</p></div>
+    </div>
+    <div class="tbl"><table>
+      <thead><tr><th>목적</th><th>순서</th><th>왜 이 순서인가</th></tr></thead>
+      <tbody>
+        <tr><th>침해</th><td>분해 → 차트 → 해석 → 반영·재점검</td><td>차트를 써 봐야 다툼 용어가 드러남</td></tr>
+        <tr><th>무효</th><td>분해 → 해석 → 신규성·진보성 차트 → 반영·재점검</td><td>절차별 기준(법원·PTAB Phillips, 심사 BRI)으로 먼저 해석해야 차트가 흔들리지 않음</td></tr>
+        <tr><th>FTO·회피</th><td>분해 → 자사 제품 차트 → 해석 → 반영·재점검 → 회피설계</td><td>해석이 확정된 원장 위에서만 회피 판단</td></tr>
+        <tr><th>해석만</th><td>분해 → 해석</td><td>해석 의견서용</td></tr>
+      </tbody>
+    </table></div>
+    <h3>시범 — 예시 사건 한 번 돌리기</h3>
+    <div class="code">
+      <div class="head"><span>suite_status.py 실행 결과(요약)</span><button class="copy">복사</button></div>
+<pre><code>$ python tools/suite_status.py cases/example          # 상태만
+  다음 할 일: [S4] 해석 반영·차트 재점검 — 스킬 claim-construe
+
+$ python tools/suite_status.py cases/example --run    # 점검 도구 실행
+  04_chart_construed.json을 새로 만들었습니다(apply_to_ledger)
+  통과 G1 원장 확정 · 통과 G2 해석 점검 오류 0
+  미통과 G3 차트 오류 0 · 재검토 0   ← 31편 [1d] '리브 높이' 재검토 1행
+  통과 G4 모든 독립항 LOW인 회피안 (O3, O6) · 미통과 G5 사람 최종 검토
+  다음 할 일: [G3] 차트 오류·'재검토' 행을 고치세요 — 스킬 claim-chart</code></pre>
+    </div>
+    <div class="note"><b>무엇을 배우나</b> — 도구가 단계와 관문을 기계적으로 알려 주니, AI는 “다음에 무엇을 할지”를 추측하지 않고 지정된 스킬만 부릅니다. 회피안 평가(G4)는 통과했어도, 해석이 요구하는 사실이 비어 있는 행(G3)이 남아 있으면 최종 보고로 가지 않습니다. 시험에서 재검토 행을 보강하자 다음 할 일이 G5(사람 검토)로, 서명 표시 뒤에는 ‘완료’로 바뀌는 것까지 확인했습니다.</div>
+    <h3>프로젝트에서 켜는 법</h3>
+    <ol class="steps">
+      <li><b>통합 키트 받기</b><a href="downloads/claim-suite-kit.zip" download>claim-suite-kit.zip</a>을 풀면 <code>suite/</code>(다섯 스킬·도구 7종·시험·예시 사건)과 <code>upload-suite/</code>(스킬별 업로드 zip)가 나옵니다. 먼저 <code>tools</code>의 시험 57개가 통과하는지 확인합니다.</li>
+      <li><b>스킬 다섯 개 켜기</b>Claude는 설정에서 코드 실행·파일 생성을 켜고 스킬 화면에 <code>claim-suite.zip</code>과 네 스킬 zip을 올려 모두 켭니다. ChatGPT도 스킬을 지원하면 같은 zip을, Copilot 등은 <code>-flat.zip</code>을 씁니다.</li>
+      <li><b>프로젝트 지침 붙여 넣기</b>새 프로젝트(Claude·ChatGPT 프로젝트, Gemini Gem, Copilot 에이전트)의 지침 칸에 <a href="templates/suite/PROJECT_INSTRUCTIONS.md">PROJECT_INSTRUCTIONS.md</a>를 그대로 붙여 넣습니다. 길이 제한이 있으면 ‘0. 시작·1. 순서·2. 관문’만.</li>
+      <li><b>사건 시작</b>“claim-suite로 새 사건을 시작해 줘. 목적은 FTO, 관할은 미국·한국” — 이후는 <a href="templates/suite/prompts/01-next.md">01 다음 단계</a> 한 줄을 반복하면 됩니다.</li>
+      <li><b>Antigravity</b><code>suite/</code>를 작업 공간으로 열면 <code>AGENTS.md</code>와 <code>.agents/rules/claim-suite.md</code>가 적용됩니다. “cases/example을 복사해 사건을 만들고 claim-suite 순서대로, 관문마다 멈춰서 확인받아”라고 요청합니다.</li>
+    </ol>
+    <div class="note"><b>주의할 점</b> — 웹 앱의 코드 실행 환경은 대화마다 새로 만들어질 수 있어, 사건 폴더 결과물은 단계마다 내려받아 보관하세요. 관문 G1(원장 확정)과 G5(최종 검토)는 사람이 <code>case.json</code>에 직접 표시하도록 했습니다 — AI가 스스로 통과시키지 않게 하기 위해서입니다. 자세히: <a href="templates/suite/.agents/skills/claim-suite/SKILL.md">claim-suite/SKILL.md</a> · <a href="templates/suite/.agents/skills/claim-suite/references/routing.md">routing.md</a> · <a href="templates/suite/.agents/skills/claim-suite/references/handoffs.md">handoffs.md</a> · <a href="templates/suite/.agents/skills/claim-suite/references/platform-setup.md">platform-setup.md</a></div>
+    <div class="btns">
+      <a class="btn primary" href="downloads/claim-suite-kit.zip" download>통합 키트 내려받기 (ZIP)</a>
+      <a class="btn" href="templates/#suite">파일 하나씩 보기</a>
+    </div>
+  </section>
+
+  <!-- 11 -->
+  <section id="s11">
+    <h2><span class="no">부록</span>출처</h2>
+    <p>모두 2026. 11. 10. 확인. 이 편은 유튜브 링크가 제공되지 않아 영상 자료는 쓰지 않았습니다.</p>
+    <ul>
+      <li>작성자 원고 「특허 회피설계 및 청구범위 해석 지식 엔진: AI Agent 및 Custom Skill 탑재용 상세 규칙과 실무 프레임워크」 — 이 편의 기초.</li>
+      <li><a href="https://case-law.vlex.com/vid/slimfold-mfg-co-inc-884699303"><i>Slimfold v. Kinkead</i> (Fed. Cir. 1991)</a> · <a href="https://caselaw.findlaw.com/court/us-federal-circuit/1432830.html"><i>Masco v. United States</i> (2002)에 정리된 <i>Mas-Hamilton</i> (1998)</a> · <a href="https://www.leagle.com/decision/20021646275f3d137111495"><i>Talbert v. Unocal</i> (2002)</a> · <a href="https://law.justia.com/cases/federal/appellate-courts/F3/347/1355/565274/"><i>Talbert</i> 재검토 (2003)</a> · <a href="https://www.finnegan.com/en/insights/articles/designing-around-patents.html">Finnegan, Designing Around Patents</a></li>
+      <li>미국 판례(개념 근거): <i>Pennwalt</i>(en banc 1987) · <i>Warner-Jenkinson</i>(1997) · <i>Festo</i>(2002) · <i>Johnson &amp; Johnston</i>(en banc 2002) · <i>Wilson Sporting Goods</i>(1990) · <i>Deere v. Bush Hog</i>(2012) · <i>Corning Glass</i>(1989) · <i>Laitram</i>(1991) · <i>Al-Site</i>(1999) · <i>Dolly</i>(1994) · <i>Microsoft v. i4i</i>(2011) · <i>Halo v. Pulse</i>(2016) · <i>Global-Tech</i>(2011) · <i>Kingsdown</i>(1988) · 35 U.S.C. §§284, 298. 권호는 키트 references에.</li>
+      <li>한국: <a href="https://www.nepla.ai/case/%EB%8C%80%EB%B2%95%EC%9B%90/2014%ED%9B%84638">대법원 2017. 4. 26. 선고 2014후638</a> · <a href="https://www.nepla.ai/wiki/%EC%A7%80%EC%8B%9D%EC%9E%AC%EC%82%B0/%ED%8A%B9%ED%97%88-%EC%8B%A4%EC%9A%A9%EC%8B%A0%EC%95%88/%ED%8A%B9%ED%97%88%EC%B9%A8%ED%95%B4%EC%86%8C%EC%86%A1%EC%97%90%EC%84%9C-%EC%9E%90%EC%9C%A0%EC%8B%A4%EC%8B%9C%EA%B8%B0%EC%88%A0%ED%95%AD%EB%B3%80-mo59yevwn1vj">자유실시기술 항변 해설(대법원 2017. 11. 14. 선고 2016후366)</a> · <a href="https://www.nepla.ai/case/%EB%8C%80%EB%B2%95%EC%9B%90/2018%EB%8B%A4267252">대법원 2019. 1. 31. 선고 2018다267252</a> · <a href="https://www.nepla.ai/case/%EB%8C%80%EB%B2%95%EC%9B%90/2017%ED%9B%84424">대법원 2019. 1. 31. 선고 2017후424</a> · <a href="https://www.law.go.kr/LSW//precInfoP.do?precSeq=138432">대법원 2009. 7. 23. 선고 2007후4977</a> · 대법원 2014. 7. 24. 선고 2013다14361 · 2014. 3. 20. 선고 2012후4162 전원합의체 · <a href="https://www.newsseoul.co.kr/news/view/1065579624231488">개정 특허법 2024. 8. 21. 시행(징벌 배상 5배)</a> · 특허법 제97조·제128조.</li>
+      <li>동봉 도구(<code>design_around_eval.py</code>)를 직접 만들어 시험 13개 통과, 31편 해석 반영 차트에 연결해 검증. 1.1판 통합 키트는 30~32편 도구와 <code>suite_status.py</code>를 한 폴더에 모아 시험 57개 통과.</li>
+    </ul>
+    <p>함께 읽기: <a href="../claim-chart/">30편 분해와 Claim Chart</a> · <a href="../claim-construction/">31편 청구범위 해석</a> · <a href="../prior-art-search/">28편 선행기술조사</a> · <a href="../patent-pair/">15편 텍스트쌍 특허 분석(FTO)</a></p>
+    <p><b>시리즈를 마치며</b> — 30편에서 쪼갠 한정 원장이 31편에서 해석을 얻고, 32편에서 회피 판단의 바탕이 됐습니다. 세 키트를 한 사건 폴더에 두면 같은 행 ID로 침해·무효·회피를 한 번에 추적할 수 있습니다.</p>
+  </section>
+
+  <footer>
+    작성: 이진수 (변리사) · 2026. 11. 10.(1.1판) · CC BY-NC 4.0<br>
+    작성자의 원고를 판결 원문과 2026년 기준 자료로 확인해 기초로 삼고, 한국 해석·균등 법리를 대법원 판결과 법령으로 따로 조사해 반영했습니다. 동봉한 평가 도구를 직접 만들어 가상 데이터로 시험(13개 통과)하고 31편 해석 반영 차트에 연결했으며, 사람이 검토했습니다. 예시 특허·제품은 모두 가상입니다. 유튜브 링크는 제공되지 않아 영상 자료는 쓰지 않았습니다. 위험 등급은 법적 결론이 아니며 최종 판단과 비침해 의견은 변리사·변호사가 합니다. 오류 제보는 <a href="https://github.com/sonovman/ai-practice-handbooks/issues">Issues</a>로 남겨 주세요.
+  </footer>
+</main>
+</div>
+
+<script>
+  document.querySelectorAll('.copy').forEach(function (b) {
+    b.addEventListener('click', function () {
+      navigator.clipboard.writeText(b.closest('.code').querySelector('pre').innerText).then(function () {
+        b.textContent = '복사됨'; setTimeout(function () { b.textContent = '복사'; }, 1500);
+      });
+    });
+  });
+  var links = [].slice.call(document.querySelectorAll('.side a'));
+  var io = new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+      if (e.isIntersecting) links.forEach(function (a) { a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id); });
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  document.querySelectorAll('main section[id]').forEach(function (s) { io.observe(s); });
+</script>
+</body>
+</html>

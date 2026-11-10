@@ -37,6 +37,7 @@
 | 29 | AI 세 개를 한 팀으로 — AI DEV DIRECTOR 점검·설치·운용 | [화면](https://sonovman.github.io/ai-practice-handbooks/ai-dev-director/) | [템플릿](ai-dev-director/templates/) |
 | 30 | 청구항 구성요소 분해와 Claim Chart 작성 — 절차와 규칙 | [화면](https://sonovman.github.io/ai-practice-handbooks/claim-chart/) | [템플릿](claim-chart/templates/) |
 | 31 | 청구범위 해석 — 절차와 규칙 | [화면](https://sonovman.github.io/ai-practice-handbooks/claim-construction/) | [템플릿](claim-construction/templates/) |
+| 32 | 회피설계 판단 — 절차와 규칙 (+30~32편 통합 오케스트레이터) | [화면](https://sonovman.github.io/ai-practice-handbooks/design-around/) | [템플릿](design-around/templates/) · [통합 키트](design-around/downloads/claim-suite-kit.zip) |
 
 ## 폴더 구성
 
@@ -79,6 +80,7 @@ ai-practice-handbooks/
 ├── ai-dev-director/    29편 (templates/ starter 작업 폴더·triad-dev-review 스킬·director_preflight.py·apply_gate.py·role_matrix.py·mini_triad.py·프롬프트 4종·점검 기록, upload/ 웹 앱용, downloads/ ZIP)
 ├── claim-chart/        30편 (templates/ starter 작업 폴더·claim-decompose·claim-chart 스킬·claim_parse.py·chart_lint.py·render_chart.py·프롬프트 5종·가상 시범, upload/ 웹 앱용, downloads/ ZIP)
 ├── claim-construction/  31편 (templates/ starter 작업 폴더·claim-construe 스킬·construe_check.py·apply_to_ledger.py·프롬프트 5종·미국·한국 가상 시범, upload/ 웹 앱용, downloads/ ZIP)
+├── design-around/      32편 (templates/ starter 작업 폴더·design-around 스킬·design_around_eval.py·프롬프트 5종·미국·한국 가상 시범, upload/ 웹 앱용, suite/ 30~32편 통합 오케스트레이터(claim-suite·PROJECT_INSTRUCTIONS·suite_status.py·예시 사건), upload-suite/ 스킬 5종, downloads/ ZIP 2종)
 └── data/               공용 자료
 ```
 

@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>회피설계 템플릿</title>
+<link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+<div class="bar"><div class="bar-in">
+  <a class="brand" href="../../">AI 실무 핸드북</a>
+  <div class="links"><a href="../">← 본문으로</a></div>
+</div></div>
+<div class="wrap">
+  <div class="eyebrow">핸드북 32 · 자료</div>
+  <h1>템플릿 내려받기</h1>
+  <p class="lead"><code>starter</code>에는 숨김 <code>.agents</code> 폴더가 있어 <a href="../downloads/design-around-kit.zip" download>전체(ZIP)</a>로 받는 편이 확실합니다. 받은 뒤 <code>python tools/test_design_around_eval.py</code>로 13개 시험 통과를 먼저 확인하세요. <a href="../../claim-chart/templates/">30편</a>·<a href="../../claim-construction/templates/">31편</a> 키트와 함께 쓰면 분해 → 해석 → 회피가 이어집니다. 예시는 모두 가상입니다.</p>
+
+  <h2>바로 붙여 넣는 프롬프트</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>파일</th><th>용도</th></tr></thead>
+    <tbody>
+      <tr><th><a href="starter/prompts/01-scope.md">01-scope.md</a></th><td>패밀리·모든 독립항·일정·사업 조건</td></tr>
+      <tr><th><a href="starter/prompts/02-candidates.md">02-candidates.md</a></th><td>독립항별 회피 후보 한정</td></tr>
+      <tr><th><a href="starter/prompts/03-options.md">03-options.md</a></th><td>접근법 ①~④로 회피안 만들기</td></tr>
+      <tr><th><a href="starter/prompts/04-evaluate.md">04-evaluate.md</a></th><td>입력 JSON·평가 도구·결합안</td></tr>
+      <tr><th><a href="starter/prompts/05-report.md">05-report.md</a></th><td>보고와 비침해 의견 준비</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>웹 앱 업로드용 스킬 (upload)</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>스킬</th><th>Claude · ChatGPT</th><th>Copilot 등</th><th>Gemini · 내용 보기</th></tr></thead>
+    <tbody>
+      <tr><th>design-around</th><td><a href="upload/design-around.zip" download>design-around.zip</a></td><td><a href="upload/design-around-flat.zip" download>flat.zip</a></td><td><a href="upload/design-around/SKILL.md">SKILL.md</a></td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>작업 폴더 (starter)</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>파일</th><th>내용</th></tr></thead>
+    <tbody>
+      <tr><th><a href="starter/AGENTS.md">AGENTS.md</a> · <a href="starter/.agents/rules/design-around.md">.agents/rules/design-around.md</a></th><td>항상 적용 규칙, 회피설계 작업 흐름</td></tr>
+      <tr><th><a href="starter/.agents/skills/design-around/SKILL.md">design-around/SKILL.md</a></th><td>판단 순서·접근법·함정</td></tr>
+      <tr><th><a href="starter/.agents/skills/design-around/references/doctrine-us.md">doctrine-us.md</a> · <a href="starter/.agents/skills/design-around/references/doctrine-kr.md">doctrine-kr.md</a></th><td>미국 법리 · 한국 법리(5요건·의식적 제외·자유실시기술·5배 배상)</td></tr>
+      <tr><th><a href="starter/.agents/skills/design-around/references/approaches.md">approaches.md</a> · <a href="starter/.agents/skills/design-around/references/opinion-and-process.md">opinion-and-process.md</a></th><td>접근법 단계·판례 표 · 일정·의견서·기록·감시</td></tr>
+      <tr><th><a href="starter/.agents/skills/design-around/references/schema.md">schema.md</a> · <a href="starter/.agents/skills/design-around/references/platform-setup.md">platform-setup.md</a></th><td>입력 형식·평가 규칙 · 플랫폼 설치</td></tr>
+      <tr><th><a href="starter/tools/design_around_eval.py" download>design_around_eval.py</a></th><td>회피안·독립항별 미국/한국 위험 평가</td></tr>
+      <tr><th><a href="starter/tools/test_design_around_eval.py" download>test_design_around_eval.py</a> · <a href="starter/build_upload.py" download>build_upload.py</a></th><td>시험 13개 · 업로드 묶음 만들기</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2 id="suite">통합 오케스트레이터 (30~32편, 1.1판)</h2>
+  <p><a href="../downloads/claim-suite-kit.zip" download>claim-suite-kit.zip</a> 하나에 다섯 스킬·도구 7종·시험 57개·예시 사건이 들어 있습니다.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>파일</th><th>내용</th></tr></thead>
+    <tbody>
+      <tr><th><a href="suite/PROJECT_INSTRUCTIONS.md">PROJECT_INSTRUCTIONS.md</a></th><td>프로젝트 지침 칸에 붙여 넣는 통합 지침</td></tr>
+      <tr><th><a href="suite/AGENTS.md">AGENTS.md</a> · <a href="suite/.agents/rules/claim-suite.md">.agents/rules/claim-suite.md</a></th><td>Antigravity·Code용 항상 규칙 · 요청 시 규칙</td></tr>
+      <tr><th><a href="suite/.agents/skills/claim-suite/SKILL.md">claim-suite/SKILL.md</a></th><td>지휘 스킬: 목적별 순서·관문 G1~G5·넘겨주기</td></tr>
+      <tr><th><a href="suite/.agents/skills/claim-suite/references/routing.md">routing.md</a> · <a href="suite/.agents/skills/claim-suite/references/handoffs.md">handoffs.md</a> · <a href="suite/.agents/skills/claim-suite/references/platform-setup.md">platform-setup.md</a></th><td>라우팅·되돌아가기 · 파일 계약 · 프로젝트별 설정</td></tr>
+      <tr><th><a href="suite/tools/suite_status.py" download>suite_status.py</a> · <a href="suite/tools/test_suite_status.py" download>test_suite_status.py</a></th><td>사건 상태·관문 점검, 다음 할 일 안내 · 시험 8개</td></tr>
+      <tr><th><a href="suite/cases/example/case.json">cases/example/case.json</a></th><td>예시 사건(FTO, 미국·한국)</td></tr>
+      <tr><th><a href="suite/sample/status_example.md">status_example.md</a> · <a href="suite/sample/test-output.txt">test-output.txt</a></th><td>예시 사건 실행 결과 · 시험 57개 통과 로그</td></tr>
+      <tr><th>prompts: <a href="suite/prompts/00-start.md">00 시작</a> · <a href="suite/prompts/01-next.md">01 다음</a> · <a href="suite/prompts/02-gate-review.md">02 관문</a> · <a href="suite/prompts/03-change.md">03 변경</a> · <a href="suite/prompts/04-report.md">04 보고</a></th><td>프로젝트에서 쓰는 요청문</td></tr>
+    </tbody>
+  </table></div>
+  <div class="tbl"><table>
+    <thead><tr><th>업로드 묶음</th><th>Claude · ChatGPT</th><th>Copilot 등</th></tr></thead>
+    <tbody>
+      <tr><th>claim-suite (지휘)</th><td><a href="upload-suite/claim-suite.zip" download>claim-suite.zip</a></td><td><a href="upload-suite/claim-suite-flat.zip" download>flat.zip</a></td></tr>
+      <tr><th>claim-decompose</th><td><a href="upload-suite/claim-decompose.zip" download>zip</a></td><td><a href="upload-suite/claim-decompose-flat.zip" download>flat.zip</a></td></tr>
+      <tr><th>claim-chart</th><td><a href="upload-suite/claim-chart.zip" download>zip</a></td><td><a href="upload-suite/claim-chart-flat.zip" download>flat.zip</a></td></tr>
+      <tr><th>claim-construe</th><td><a href="upload-suite/claim-construe.zip" download>zip</a></td><td><a href="upload-suite/claim-construe-flat.zip" download>flat.zip</a></td></tr>
+      <tr><th>design-around</th><td><a href="upload-suite/design-around.zip" download>zip</a></td><td><a href="upload-suite/design-around-flat.zip" download>flat.zip</a></td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>시범 자료 (직접 실행 결과, 가상 데이터)</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>파일</th><th>내용</th></tr></thead>
+    <tbody>
+      <tr><th><a href="starter/sample/design_input.json">design_input.json</a></th><td>독립항 2개(장치·방법) · 회피안 6개</td></tr>
+      <tr><th><a href="starter/sample/chart_construed_31.json">chart_construed_31.json</a></th><td>31편 해석 반영 차트(연결 확인용)</td></tr>
+      <tr><th><a href="starter/sample/da_report.md">da_report.md</a></th><td>평가 결과(O3·O6 LOW, 나머지 HIGH)</td></tr>
+      <tr><th><a href="starter/sample/test-output.txt">test-output.txt</a></th><td>시험 13개 통과 로그</td></tr>
+    </tbody>
+  </table></div>
+</div>
+</body>
+</html>

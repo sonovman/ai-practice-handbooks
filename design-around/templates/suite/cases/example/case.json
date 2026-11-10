@@ -1,0 +1,12 @@
+{
+  "title": "가상 착즙기 특허 A — JX-600 개발안 FTO·회피설계(교육용 예시)",
+  "purpose": "fto",
+  "forum": "us+kr",
+  "patent": "가상특허 A",
+  "claims": [1, 7],
+  "priority_date": "2021-03-15",
+  "target": "JX-500(현행) / JX-600(개발안)",
+  "ledger_approved": true,
+  "human_signoff": false,
+  "note": "purpose: infringement | invalidity | fto | design-around | construction"
+}

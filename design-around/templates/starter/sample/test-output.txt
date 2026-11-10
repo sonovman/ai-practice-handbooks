@@ -1,0 +1,14 @@
+ok   t_construction_mismatch_with_31
+ok   t_festo_rebuttal_med
+ok   t_function_moved_elsewhere_high
+ok   t_known_interchangeable_beats_way
+ok   t_kr_free_art_whole_product_beats_literal
+ok   t_kr_functional_literal_override
+ok   t_mpf_disclosed_structure_is_literal_us
+ok   t_overall_levels
+ok   t_report_renders
+ok   t_review_flag_from_31
+ok   t_surrender_without_record_errors
+ok   t_untouched_independent_claim_is_high
+ok   t_way_without_evidence_is_med
+design_around_eval: 13개 시험 통과

@@ -1,0 +1,196 @@
+{
+  "meta": {
+    "patent": "가상특허 A (교육용 예시)",
+    "product": "JX-600 개발안(가상)",
+    "stage": "설계 동결 전",
+    "pending_family": true,
+    "note": "30편 원장·31편 해석을 이어 쓴 회피설계 시범"
+  },
+  "claims": [
+    {
+      "claim": 1,
+      "independent": true,
+      "limitations": [
+        {
+          "id": "1c.2",
+          "text": "a gap … decreases toward a lower end of the drum",
+          "type": "relation",
+          "construction": "같은 축 높이에서 잰 날개–내벽 간격이 드럼의 배출측 끝(사용 상태의 아래쪽)으로 갈수록 줄어듦(감소율 무관, 단조 감소)"
+        },
+        {
+          "id": "1d",
+          "text": "ribs … at an inclination of 5 to 15 degrees",
+          "type": "numeric",
+          "construction": "내벽에서 0.3mm 이상 돌출되어 길게 뻗은 부재(명칭 불문) / 내벽에 투영한 회전축 선을 기준으로 잰 리브 길이 방향의 각도가 5°~15°",
+          "amended_narrowing": true,
+          "amendment_reason": "patentability",
+          "prosecution": "원 청구항 '경사진 리브' → D1(평행 돌기) 거절 극복 위해 5~15°로 보정(2022-08-10 보정서)"
+        },
+        {
+          "id": "1e",
+          "text": "means for rotating the screw at 40 to 60 rpm",
+          "type": "mpf",
+          "construction": "§112(f): 기능=스크루를 40~60rpm으로 회전 / 구조=BLDC 모터 M1 + 감속기어 G1(1:30) 및 그 균등물",
+          "spec_alternatives": "¶[0022] '감속기어 없이 저속 직결 구동 모터를 써도 된다'"
+        },
+        {
+          "id": "1f",
+          "text": "controller configured to select either a juice mode or a smoothie mode",
+          "type": "alternative",
+          "construction": "사용자 입력에 따라 두 모드 중 하나만 활성으로 두도록 설계·프로그램된 제어부(두 모드 동시 수행 제외)",
+          "argument_estoppel": true,
+          "amendment_reason": "patentability",
+          "prosecution": "2022-08-10 의견서 p.4: 두 모드 동시 수행 인용발명 1과 구별"
+        },
+        {
+          "id": "1g",
+          "text": "a juice outlet …, without a mesh filter between the drum and the juice outlet",
+          "type": "negative"
+        }
+      ]
+    },
+    {
+      "claim": 7,
+      "independent": true,
+      "limitations": [
+        {
+          "id": "7a",
+          "text": "feeding produce into a drum",
+          "type": "step"
+        },
+        {
+          "id": "7b",
+          "text": "rotating a screw in the drum",
+          "type": "step"
+        },
+        {
+          "id": "7c",
+          "text": "operating in only one of a juice mode and a smoothie mode selected by a user",
+          "type": "step",
+          "argument_estoppel": true,
+          "amendment_reason": "patentability",
+          "prosecution": "1f와 같은 의견서 진술"
+        }
+      ]
+    }
+  ],
+  "options": [
+    {
+      "id": "O1",
+      "name": "리브 경사 20°(포기 영역)",
+      "business": "성능 시험 필요(착즙률 −3% 예상), 금형 수정",
+      "changes": [
+        {
+          "limitation": "1d",
+          "action": "modify",
+          "literal_met_after": false,
+          "in_surrendered_territory": true,
+          "way_differs": false,
+          "kr": {
+            "consciously_excluded": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "O2",
+      "name": "배즙구 앞 미세 메시 추가",
+      "business": "세척 부담 증가, 원가 +",
+      "changes": [
+        {
+          "limitation": "1g",
+          "action": "add_absent_feature",
+          "literal_met_after": false,
+          "antithetical": true
+        }
+      ]
+    },
+    {
+      "id": "O3",
+      "name": "두 모드 자동 동시 운용(모드 버튼 제거)",
+      "business": "펌웨어 변경만, 원가 영향 작음, 사용자 선택 기능 축소",
+      "changes": [
+        {
+          "limitation": "1f",
+          "action": "substitute",
+          "literal_met_after": false,
+          "in_surrendered_territory": true,
+          "way_differs": true,
+          "way_evidence": "펌웨어 흐름도 v3 · 동시 연산 로그",
+          "kr": {
+            "consciously_excluded": true
+          }
+        },
+        {
+          "limitation": "7c",
+          "action": "substitute",
+          "literal_met_after": false,
+          "in_surrendered_territory": true,
+          "way_differs": true,
+          "way_evidence": "펌웨어 흐름도 v3",
+          "kr": {
+            "consciously_excluded": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "O4",
+      "name": "감속기어 없는 저속 직결 모터",
+      "business": "부품 수 감소, 모터 단가 +",
+      "changes": [
+        {
+          "limitation": "1e",
+          "action": "substitute",
+          "literal_met_after": false,
+          "structure_disclosed_in_spec": true,
+          "known_interchangeable": true,
+          "kr": {
+            "literal_met_after": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "O5",
+      "name": "간격 일정 + 스크루 심 테이퍼",
+      "business": "스크루 금형 변경",
+      "changes": [
+        {
+          "limitation": "1c.2",
+          "action": "substitute",
+          "literal_met_after": false,
+          "function_moved_to": "테이퍼진 스크루 심",
+          "way_differs": false,
+          "kr": {
+            "easy_substitution": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "O6",
+      "name": "O2 + O3 결합",
+      "business": "O2·O3 비용 합산",
+      "changes": [
+        {
+          "limitation": "1g",
+          "action": "add_absent_feature",
+          "literal_met_after": false,
+          "antithetical": true
+        },
+        {
+          "limitation": "7c",
+          "action": "substitute",
+          "literal_met_after": false,
+          "in_surrendered_territory": true,
+          "way_differs": true,
+          "way_evidence": "펌웨어 흐름도 v3",
+          "kr": {
+            "consciously_excluded": true
+          }
+        }
+      ]
+    }
+  ]
+}

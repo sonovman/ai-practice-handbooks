@@ -1,0 +1,63 @@
+ok   t_fills_construction
+ok   t_flags_review_for_missing_fact
+ok   t_input_not_mutated
+ok   t_mpf_sets_sam
+ok   t_report_markdown
+ok   t_unknown_id_reported
+apply_to_ledger: 6개 시험 통과
+ok   t_102_single_reference
+ok   t_103_needs_motivation
+ok   t_103_passes
+ok   t_bad_catches_all
+ok   t_code_lines_not_pages
+ok   t_dead_code_method
+ok   t_directionality
+ok   t_good_passes
+ok   t_invalidity_date
+ok   t_pic_stage_softens_placeholder
+ok   t_render_three_column_and_ledger
+ok   t_representative_basis
+chart_lint·render_chart: 12개 시험 통과
+ok   t_antecedent
+ok   t_en_split
+ok   t_en_types
+ok   t_ko_split
+ok   t_ko_types
+ok   t_markdown
+ok   t_markush_and_whereby
+ok   t_method
+claim_parse: 8개 시험 통과
+ok   t_bad_catches
+ok   t_ex_parte_bri
+ok   t_forfeiture_exception
+ok   t_good_passes
+ok   t_kr_only_warnings
+ok   t_kr_pbp_needs_reason
+ok   t_lexicography_needs_quote
+ok   t_missing_standard_warns
+ok   t_ptab_before_2018_is_bri
+ok   t_software_mpf_needs_algorithm
+construe_check: 10개 시험 통과
+ok   t_construction_mismatch_with_31
+ok   t_festo_rebuttal_med
+ok   t_function_moved_elsewhere_high
+ok   t_known_interchangeable_beats_way
+ok   t_kr_free_art_whole_product_beats_literal
+ok   t_kr_functional_literal_override
+ok   t_mpf_disclosed_structure_is_literal_us
+ok   t_overall_levels
+ok   t_report_renders
+ok   t_review_flag_from_31
+ok   t_surrender_without_record_errors
+ok   t_untouched_independent_claim_is_high
+ok   t_way_without_evidence_is_med
+design_around_eval: 13개 시험 통과
+ok   t_dry_status_next_is_s4
+ok   t_id_mismatch_note
+ok   t_invalidity_order_construe_before_chart
+ok   t_ledger_not_approved_blocks
+ok   t_markdown
+ok   t_missing_ledger_starts_s1
+ok   t_review_fixed_moves_to_g5
+ok   t_run_creates_construed_and_reports
+suite_status: 8개 시험 통과

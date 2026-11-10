@@ -547,5 +547,23 @@ window.CATALOG = [
       { label: "화면으로 읽기", href: "claim-construction/", primary: true },
       { label: "템플릿 내려받기", href: "claim-construction/templates/" }
     ]
+  },
+  {
+    id: "design-around",
+    no: "32",
+    category: "IP 실무",
+    title: "회피설계 판단 — 절차와 규칙",
+    subtitle: "30편 원장·31편 해석 위에서 모든 독립항을 대상으로, 문언→균등 제한 법리→균등 판단 순 미국·한국 위험 평가",
+    summary: "회피설계를 정당한 경쟁으로 보고, 포기 영역·결여·대체·기능식 미개시 구조·한국 자유실시기술의 네 접근법과 판단 순서를 정리했습니다. 한국 균등 5요건·의식적 제외·자유실시기술과 미국 Festo·공중헌납·기능식 법리를 나란히 두고, 위험 평가 도구(시험 13개)로 30·31편 시범 특허의 회피안 6개를 평가했습니다. 4개 AI 앱·Antigravity 설치까지 초보자용 단계별로 담았습니다. 1.1판에서 네 스킬을 한 프로젝트에서 순서대로 부르는 통합 오케스트레이터(claim-suite·프로젝트 지침·사건 상태 점검기)를 더했습니다.",
+    reader: "제품 개발 단계에서 특허 위험을 줄이려는 변리사·특허 실무자, 기업 IP·R&D 담당자, 입문자",
+    version: "1.1",
+    date: "2026-11-10",
+    length: "읽기 약 30분",
+    status: "published",
+    links: [
+      { label: "화면으로 읽기", href: "design-around/", primary: true },
+      { label: "템플릿 내려받기", href: "design-around/templates/" },
+      { label: "통합 오케스트레이터", href: "design-around/#s10" }
+    ]
   }
 ];
