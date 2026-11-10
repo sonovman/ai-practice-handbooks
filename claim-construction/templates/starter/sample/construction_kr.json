@@ -1,0 +1,91 @@
+{
+  "meta": {
+    "patent": "가상 한국특허 B (교육용 예시)",
+    "claim": 1,
+    "forum": "kr_court",
+    "standard": "kr",
+    "stage": "trial"
+  },
+  "terms": [
+    {
+      "term": "스크루를 40 내지 60 rpm으로 회전시키기 위한 수단",
+      "ledger_id": "1e",
+      "claim_text": "상기 스크루를 40 내지 60 rpm으로 회전시키기 위한 수단",
+      "disputed": true,
+      "construction": "스크루를 40~60rpm으로 회전시키는 기능을 가진 구성(원칙적으로 그 기능을 가진 모든 구성; 발명의 설명은 기술적 의의를 파악하는 데 참작)",
+      "mpf": {
+        "applies": true,
+        "function": "40~60rpm 회전",
+        "structure": "모터+감속기어(발명의 설명 [0021])",
+        "structure_cite": "[0021]"
+      },
+      "evidence": [
+        {
+          "type": "claim",
+          "cite": "청구항 1"
+        },
+        {
+          "type": "spec",
+          "cite": "발명의 설명 [0021]"
+        }
+      ],
+      "used_for": {
+        "infringement": "기능 기준",
+        "validity": "기능 기준"
+      }
+    },
+    {
+      "term": "냉압착으로 얻은 농축즙",
+      "ledger_id": "3a",
+      "claim_text": "냉압착 방법으로 제조된 농축즙",
+      "disputed": true,
+      "construction": "제조방법 기재를 포함한 청구범위 전체로 특정되는 구조·성질을 가진 농축즙(물건 자체). 침해에서도 같은 해석",
+      "product_by_process": {
+        "infringement_limited_to_process": false,
+        "validity_limited_to_process": false
+      },
+      "evidence": [
+        {
+          "type": "claim",
+          "cite": "청구항 3"
+        },
+        {
+          "type": "spec",
+          "cite": "발명의 설명 [0040]"
+        }
+      ],
+      "used_for": {
+        "infringement": "물건 자체",
+        "validity": "물건 자체"
+      }
+    },
+    {
+      "term": "착즙 모드 또는 스무디 모드 중 어느 하나",
+      "ledger_id": "1f",
+      "claim_text": "착즙 모드 또는 스무디 모드 중 어느 하나를 선택하도록 구성된 제어부",
+      "disputed": true,
+      "construction": "두 모드 중 하나만 선택해 작동(출원경과에서 동시 수행 인용발명과 구별)",
+      "disclaimer": {
+        "quote": "두 모드 중 하나만 선택하여 작동시키는 점에서 인용발명 1과 다르다",
+        "cite": "2022. 8. 10. 의견서 4쪽",
+        "source": "prosecution",
+        "clarity": "명백",
+        "is_estoppel_only": true
+      },
+      "evidence": [
+        {
+          "type": "claim",
+          "cite": "청구항 1"
+        },
+        {
+          "type": "prosecution",
+          "cite": "2022. 8. 10. 의견서 4쪽"
+        }
+      ],
+      "used_for": {
+        "infringement": "배타적 선택",
+        "validity": "배타적 선택"
+      }
+    }
+  ]
+}

@@ -530,5 +530,22 @@ window.CATALOG = [
       { label: "화면으로 읽기", href: "claim-chart/", primary: true },
       { label: "템플릿 내려받기", href: "claim-chart/templates/" }
     ]
+  },
+  {
+    id: "claim-construction",
+    no: "31",
+    category: "IP 실무",
+    title: "청구범위 해석 — 절차와 규칙",
+    subtitle: "미국 실무 기준(Phillips·BRI·증거 위계·특수 형식·명확성)에 한국 법리 비교, 30편 한정 원장에 반영까지",
+    summary: "절차별 해석 기준, 청구항→명세서→출원경과 증거 순서, 실시예 한정 금지와 두 예외, 기능식·전제부·제법한정물건, 해석과 명확성의 순서, 항소 실권을 정리하고 한국 대법원 법리와 같은 점·다른 점을 나란히 적었습니다. 해석 점검기와 30편 원장 반영 도구(시험 16개)로 해석이 바뀌면 어느 행을 다시 봐야 하는지까지, 4개 AI 앱·Antigravity 설치와 함께 초보자용 단계별로 담았습니다.",
+    reader: "청구범위 해석을 근거와 함께 정리하려는 변리사·특허 실무자, 기업 IP 담당자, 입문자",
+    version: "1.0",
+    date: "2026-11-10",
+    length: "읽기 약 30분",
+    status: "published",
+    links: [
+      { label: "화면으로 읽기", href: "claim-construction/", primary: true },
+      { label: "템플릿 내려받기", href: "claim-construction/templates/" }
+    ]
   }
 ];

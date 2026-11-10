@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>청구범위 해석 절차와 규칙</title>
+<meta name="description" content="미국 청구범위 해석(Phillips·BRI, 내재적 증거 위계, 실시예 한정 금지와 두 예외, 기능식·전제부·제법한정, 명확성, 항소 실권)을 기준으로 한국 법리와의 같은 점·다른 점을 함께 정리하고, 해석 결과를 30편 한정 원장·Claim Chart에 반영하는 절차를 점검 도구와 함께 초보자용 단계별로.">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<div class="bar"><div class="bar-in">
+  <a class="brand" href="../">AI 실무 핸드북</a>
+  <div class="links">
+    <a href="templates/">템플릿</a>
+    <a href="https://github.com/sonovman/ai-practice-handbooks">GitHub ↗</a>
+  </div>
+</div></div>
+
+<div class="doc">
+  <aside class="side">
+    <div class="label">차례</div>
+    <ol>
+      <li><a href="#s0">한 줄 결론</a></li>
+      <li><a href="#s1">1. 전체 흐름</a></li>
+      <li><a href="#s2">2. 누가, 어떤 기준으로</a></li>
+      <li><a href="#s3">3. 증거 순서와 두 예외</a></li>
+      <li><a href="#s4">4. 특수 형식</a></li>
+      <li><a href="#s5">5. 해석과 명확성</a></li>
+      <li><a href="#s6">6. 처음 접근과 바뀐 점</a></li>
+      <li><a href="#s7">7. 직접 돌려 본 시범</a></li>
+      <li><a href="#s8">8. 한국 법리와 비교</a></li>
+      <li><a href="#s9">9. 플랫폼 설치·Antigravity</a></li>
+      <li><a href="#s10">10. 주의할 점</a></li>
+      <li><a href="#s11">부록 · 출처</a></li>
+    </ol>
+  </aside>
+
+<main>
+  <div class="eyebrow">핸드북 31 · IP 실무 · 청구항 분석 시리즈 ②</div>
+  <h1>청구범위 해석 — 절차와 규칙</h1>
+  <p class="lead">30편에서 청구항을 한정 원장으로 쪼개고 Claim Chart를 썼다면, 이제 그 원장의 <strong>‘해석’ 칸</strong>을 채울 차례입니다. 다툼 용어의 의미가 바뀌면 같은 차트의 ‘충족’이 ‘불충족’으로, 신규성 ‘미개시’가 ‘개시’로 뒤집힙니다. 이 편은 미국 실무를 기준으로 해석의 절차와 규칙을 정리하고, 한국 법리를 따로 조사해 같은 점과 다른 점을 나란히 적었습니다. 해석 기록을 점검하고 30편 차트에 반영하는 도구 두 개를 직접 만들어 시험했습니다.</p>
+  <div class="meta">
+    <b>독자</b><span>청구범위 해석을 근거와 함께 정리하려는 변리사·특허 실무자, 기업 IP 담당자, 입문자</span>
+    <b>분량</b><span>읽기 약 30분 · 템플릿(해석 스킬 · 해석 점검기 · 원장 반영 도구 · 프롬프트 5종 · 미국·한국 시범 데이터)</span>
+    <b>판</b><span>1.0 · 2026. 11. 10.</span>
+  </div>
+
+  <section id="s0">
+    <div class="key">
+      <div class="eyebrow">한 줄 결론</div>
+      <p style="font-size:19px;font-weight:600;line-height:1.6;margin:8px 0 10px">해석하되 다시 쓰지 마세요 — 청구항 문언에서 출발해 명세서·출원경과 순으로 근거를 적고, 그 해석을 침해와 무효에 똑같이 쓰세요.</p>
+      <p style="opacity:.75;font-size:15px">실시예를 끌어들여 좁히거나, 사전으로 내재적 기록을 뒤집거나, 침해 때와 무효 때 해석을 바꾸는 것이 가장 흔한 실수입니다. 해석이 바뀌면 30편 원장의 어느 행이 흔들리는지까지 확인해야 일이 끝납니다.</p>
+    </div>
+    <div class="note"><b>무엇을 확인했나</b> — 원고 두 편(청구범위 해석 마스터 가이드, 해석 룰북)의 판례·규칙을 판결 원문과 2026년 기준 자료로 하나씩 확인했습니다. 고친 부분은 6장에 모았습니다. 한국 법리는 대법원 판결 원문(2007후4977, 2011후927 전원합의체, 2013후1726 등)으로 따로 조사했습니다. 해석 점검기(시험 10개)와 원장 반영 도구(시험 6개)를 표준 라이브러리로 만들어 30편 시범 차트에 실제로 연결했습니다. 예시 특허·제품은 <b>모두 가상</b>입니다. 법리는 개념 안내이며 <b>최종 판단은 변리사·변호사</b>가 합니다. 이 편은 유튜브 링크가 제공되지 않아 영상 자료는 쓰지 않았습니다.</div>
+    <div class="note"><b>시리즈 안내</b> — ① <a href="../claim-chart/">30편 분해와 Claim Chart</a> → ② 이 편: 청구범위 해석 → ③ 다음 편: 회피설계 판단. 세 편이 같은 한정 원장 ID를 이어 씁니다.</div>
+  </section>
+
+  <!-- 1 -->
+  <section id="s1">
+    <h2><span class="no">01</span>전체 흐름 — 30편 원장에서 시작해 30편 차트로 돌아간다</h2>
+    <div class="graph">
+      <div class="node"><span class="id">IN</span><b>다툼 용어 고르기</b><p>30편 원장에서 승패를 가르는 용어만. 결론을 바꾸지 않는 용어는 해석하지 않음</p></div>
+      <div class="edge"><span>절차 확인</span></div>
+      <div class="node"><span class="id">STD</span><b>기준 선택</b><p>법원·ITC·PTAB(2018. 11. 13. 이후 청구) = Phillips / 심사·재심사 = BRI / 한국 = 청구범위 기준·발명의 설명 참작</p></div>
+      <div class="edge"><span>근거 위치 필수</span></div>
+      <div class="node dark"><span class="id">EV</span><b>증거 순서대로</b><p>청구항 문언 → 명세서·도면(정의·포기·실시예) → 출원경과(명백한 포기) → 사전·전문가(보조)</p></div>
+      <div class="edge"><span>해당하면</span></div>
+      <div class="node"><span class="id">SP</span><b>특수 형식</b><p>기능식 · 전제부 · 전환구 · 제법한정물건 · 방법 단계 순서 · 정도 표현</p></div>
+      <div class="edge"><span>construe_check.py</span></div>
+      <div class="node dark"><span class="id">G1</span><b>해석 점검</b><p>기준·위계·실시예 수입·포기의 명백성·대칭성·인위적 불명확성 등 C01~C16</p></div>
+      <div class="edge"><span>apply_to_ledger.py</span></div>
+      <div class="node dark"><span class="id">G2</span><b>30편 원장 반영</b><p>‘해석’ 칸 채움(3열 차트) · 해석이 더한 조건의 근거가 없는 행은 <b>재검토</b> 표시</p></div>
+      <div class="loop"><b>되돌아가기</b> — 재검토 행은 사실을 보강하거나 결론을 바꾸고, 30편 <code>chart_lint.py</code>를 다시 돌립니다. 같은 해석으로 유효성 열도 다시 봅니다.</div>
+      <div class="edge"><span>마지막</span></div>
+      <div class="node end"><span class="id">OUT</span><b>명확성 점검·보고</b><p>해석을 확정한 뒤 원래 문언이 합리적 확실성을 주는지 · 해석표 · 영향 보고 · 확인하지 못한 것</p></div>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section id="s2">
+    <h2><span class="no">02</span>누가, 어떤 기준으로 해석하나</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>절차</th><th>기준</th><th>요점</th></tr></thead>
+      <tbody>
+        <tr><th>연방지방법원·ITC</th><td>Phillips</td><td>유효출원일 당시 통상의 기술자가 명세서·출원경과의 맥락에서 이해하는 의미</td></tr>
+        <tr><th>PTAB IPR·PGR</th><td>Phillips(2018. 11. 13. 이후 청구분)</td><td>그 전 청구분은 BRI. 법원과 같은 기준으로 통일</td></tr>
+        <tr><th>심사·재심사·재발행</th><td>BRI</td><td>‘가능한 가장 넓은’이 아니라 명세서와 부합하는 가장 넓은 <b>합리적</b> 해석. 보정 기회가 있기 때문</td></tr>
+        <tr><th>한국(심사·심판·소송)</th><td>청구범위 기준</td><td>발명의 설명·도면 참작, 제한·확장 해석 금지. 절차별로 기준을 바꾸지 않음</td></tr>
+      </tbody>
+    </table></div>
+    <div class="grid2">
+      <div class="box"><span class="tag">who</span><h4>해석은 법관이</h4><p>배심이 아니라 법관이 청구항의 의미를 정합니다(<i>Markman</i>, 1996). 공시 기능과 통일성 때문입니다.</p></div>
+      <div class="box"><span class="tag">review</span><h4>항소심은 둘로 나눠 본다</h4><p>내재적 증거로 낸 해석 결론은 전면 재심사, 전문가 증언 등 외재적 증거로 한 사실인정은 ‘명백한 오류’ 기준(<i>Teva</i>, 2015).</p></div>
+    </div>
+    <div class="note"><b>언제 해석하나</b> — 당사자가 범위를 실질적으로 다투고 그 다툼이 결론을 가르면 ‘통상의 의미’라고만 하고 넘기면 안 됩니다(<i>O2 Micro</i>, 2008). 반대로 결론에 필요한 만큼만 해석하면 됩니다. 적격성(§101) 판단 전에도 결론을 좌우하는 해석 다툼은 먼저 풉니다(<i>MyMail v. ooVoo</i>, 2019).</div>
+  </section>
+
+  <!-- 3 -->
+  <section id="s3">
+    <h2><span class="no">03</span>증거 순서와 두 예외</h2>
+    <ol class="steps">
+      <li><b>청구항 문언</b>출발점입니다. 같은 용어는 특허 전체에서 같은 의미로 추정하고, 종속항이 더한 한정은 독립항에 없다고 추정합니다(청구항 차별화, 반증 가능).</li>
+      <li><b>명세서·도면</b>‘가장 좋은 단일 지침’. 명시적 정의가 있으면 그 정의를 따릅니다. 실시예가 하나뿐이어도 청구항을 그 실시예로 좁히지 않습니다.</li>
+      <li><b>출원경과</b>거절 극복을 위한 보정·의견서, IPR에서의 특허권자 진술. <b>명백하고 확실한</b> 포기만 범위를 줄입니다.</li>
+      <li><b>외재적 증거</b>사전·논문·전문가 증언은 배경 이해용입니다. 내재적 기록과 충돌하면 쓰지 않습니다.</li>
+      <li><b>결론과 근거</b>해석 문장 + 근거 위치 + 침해·유효성 양쪽에 같은 해석. 30편 원장 ID에 연결합니다.</li>
+    </ol>
+    <div class="tbl"><table>
+      <thead><tr><th>통상 의미에서 벗어나는 경우</th><th>필요한 것</th><th>예</th></tr></thead>
+      <tbody>
+        <tr><th>① 자기 정의</th><td>통상 의미와 다른 뜻을 명확히 밝힌 정의 문장</td><td>“본 명세서에서 ‘리브’란 내벽에서 0.3mm 이상 돌출되어 길게 뻗은 부재를 말한다.”</td></tr>
+        <tr><th>② 명백한 권리 포기</th><td>명세서나 출원경과에서 범위를 분명히 버린 진술</td><td>“본원은 두 모드 중 하나만 선택해 작동시키는 점에서 두 처리를 항상 함께 하는 인용발명 1과 다르다.”</td></tr>
+      </tbody>
+    </table></div>
+    <div class="note"><b>권리 포기와 금반언은 다르다</b> — 권리 포기(prosecution disclaimer)는 해석 단계에서 <b>문언 범위</b>를 줄이고, 출원경과 금반언(prosecution history estoppel)은 <b>균등론</b> 범위를 막습니다(30편 균등론 모듈). 해석표에 어느 효과로 쓰는지 적습니다.</div>
+  </section>
+
+  <!-- 4 -->
+  <section id="s4">
+    <h2><span class="no">04</span>특수 형식</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>형식</th><th>미국</th><th>확인할 점</th></tr></thead>
+      <tbody>
+        <tr><th>기능식(§112(f))</th><td>① 청구된 기능 특정 ② 명세서의 대응 구조(소프트웨어는 알고리즘)와 그 균등물로 한정</td><td>‘means’ 없는 module·unit도 구조를 알려 주지 않으면 해당(<i>Williamson</i>). 대응 구조가 없으면 불명확성. 구조 존재 여부는 당사자 합의와 무관하게 판단(<i>Intel v. Qualcomm</i>)</td></tr>
+        <tr><th>전제부</th><td>원칙 비한정</td><td>본문의 선행사 제공·출원경과에서 전제부로 구별·Jepson·발명의 본질이면 한정</td></tr>
+        <tr><th>전환구</th><td>comprising 개방 / consisting of 폐쇄 / consisting essentially of 반폐쇄</td><td>반폐쇄는 발명의 기본적·신규 특성에 실질 영향 없는 추가만</td></tr>
+        <tr><th>제법한정물건</th><td>침해: 제법이 한정 / 유효성: 물건 자체</td><td>한국은 반대 방향(8장)</td></tr>
+        <tr><th>방법 단계 순서</th><td>문언·논리상 필요할 때만 순서 한정</td><td>앞 단계의 결과를 뒤 단계가 쓰는가(<i>Altiris</i>, <i>Mformation</i>)</td></tr>
+        <tr><th>정도 표현</th><td>명세서가 객관적 기준을 주면 명확</td><td>‘visually negligible’은 명확, ‘unobtrusive manner’는 불명확으로 본 예</td></tr>
+        <tr><th>겉보기 모순</th><td>한정은 누적 조건 — 둘 다 만족하는 영역을 청구한 것으로 읽음(<i>Maxell</i>, 2024)</td><td>기술적으로 말이 되는 해석을 찾되 청구항을 다시 쓰지 않음(6장 ④)</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <!-- 5 -->
+  <section id="s5">
+    <h2><span class="no">05</span>해석과 명확성 — 순서가 있다</h2>
+    <div class="grid3">
+      <div class="box"><span class="tag">ambiguity</span><h4>애매성</h4><p>합리적 의미가 둘 이상. 해석으로 하나를 정합니다(예: or의 포괄/배타).</p></div>
+      <div class="box"><span class="tag">vagueness</span><h4>모호성</h4><p>의미는 하나인데 경계가 흐림. 명세서의 객관적 기준으로 경계를 확인합니다(예: substantially).</p></div>
+      <div class="box"><span class="tag">§112(b)</span><h4>불명확성</h4><p>내재적 기록으로도 풀리지 않아 범위를 ‘합리적 확실성’으로 알리지 못함 → 무효(<i>Nautilus</i>, 2014).</p></div>
+    </div>
+    <ol class="steps">
+      <li><b>해석이 먼저</b>해석 도구를 다 쓴 뒤, 그 의미 아래 경계가 확실한지 봅니다.</li>
+      <li><b>평가 대상은 원래 문언</b>해석문이 아니라 특허에 적힌 청구항 문언이 명확성의 대상입니다.</li>
+      <li><b>인위적 불명확성 금지</b>청구항에 없는 말(예: ‘small’)을 해석에 넣고 그 말 때문에 불명확하다고 하지 않습니다(<i>Finjan v. ESET</i>, 2022).</li>
+      <li><b>의미 합의 ≠ 명확성</b>당사자가 의미에 합의해도 명확성은 따로 다툴 수 있습니다(<i>MeadWestVaco</i>, 2013).</li>
+    </ol>
+  </section>
+
+  <!-- 6 -->
+  <section id="s6">
+    <h2><span class="no">06</span>처음 접근과 바뀐 점</h2>
+
+    <div class="note"><b>① “해석은 순수한 법률문제” → 법률 판단이되 사실 기초가 있다</b> — 해석은 법관이 하지만, 전문가 증언 같은 외재적 증거로 한 보조적 사실인정은 항소심이 ‘명백한 오류’ 기준으로 존중합니다. 그래서 해석표에 <b>어떤 결론이 내재적 기록에, 어떤 판단이 외재적 증거에 기댔는지</b> 나눠 적습니다.</div>
+
+    <div class="note"><b>② “명세서에 한 형태만 있어도 기능 전체를 덮도록 기능적으로 해석해야” → 근거 없이 좁히지 말라는 뜻까지만</b> — 유선 실시예만 있어도 ‘datalink’를 유선으로 좁히지 않은 판례(<i>Hill-Rom</i>)는 <b>실시예 한정 금지</b>의 예입니다. ‘기능 범위 전체로 넓혀야 한다’는 규칙이 아닙니다. 기능으로 넓게 읽은 범위는 명세서 기재 요건(§112(a))·기능식(§112(f)) 문제와 무효 쪽 대칭성까지 함께 봐야 합니다. 같은 기능적 용어라도 청구항마다 경계가 달리 드러날 수 있어 청구항별로 봅니다(<i>Vascular Solutions</i>, 2024).</div>
+
+    <div class="note"><b>③ “출원경과 금반언 = 권리 포기” → 둘을 나눈다</b> — 해석 단계의 권리 포기는 문언 범위를 줄이고, 금반언은 균등론을 막습니다. 섞어 쓰면 해석표에서 이미 줄인 범위를 균등 단계에서 또 줄이거나, 그 반대가 생깁니다. IPR에서 특허권자가 한 진술도 권리 포기가 될 수 있으니(<i>Aylus</i>, 2017) 침해 쪽에도 같은 범위를 적용합니다.</div>
+
+    <div class="note"><b>④ “말이 되는 해석을 단행한다” → 다시 쓰기의 한계를 함께</b> — 겉보기 모순은 누적 조건으로 읽고 기술적으로 말이 되는 해석을 찾는 것이 맞습니다(<i>Maxell</i>, 2024). 다만 법원은 유효성을 살리려고 청구항을 고쳐 쓰지 않습니다. “반죽을 400~850°F로 가열”을 ‘오븐 온도’로 바꿔 읽지 않은 판례(<i>Chef America</i>, 2004)처럼 문언이 명백하면 결과가 이상해도 문언대로이고, 오기 정정은 합리적 다툼의 여지가 없는 명백한 오류일 때만입니다(<i>Novo</i>, 2003).</div>
+
+    <div class="note"><b>⑤ “BRI = 가장 넓은 해석” → 합리적인 가장 넓은 해석, 그리고 기준일</b> — BRI도 명세서·출원경과와 부합해야 합니다. PTAB은 <b>청구일 기준</b> 2018. 11. 13. 이후 사건부터 Phillips라서, 오래된 IPR 결정을 인용할 때는 어느 기준이었는지 확인합니다. 점검기 C01이 이것을 봅니다.</div>
+
+    <div class="note"><b>⑥ “약식판결에서 기각된 쟁점은 다시 내지 않으면 모두 실권” → 사실 쟁점과 순수 법률 쟁점을 나눈다</b> — 사실 다툼 때문에 기각된 쟁점은 본안 뒤 다시 다투어야 보존되지만(<i>Ortiz v. Jordan</i>, 2011), 약식판결 단계에서 판단된 순수 법률 쟁점은 되풀이하지 않아도 보존됩니다(<i>Dupree v. Younger</i>, 2023). 해석·명확성은 사실 기초가 섞일 수 있어, 실무에서는 본안에서도 다시 기록해 두는 편이 안전합니다.</div>
+
+    <div class="note"><b>⑦ “판례 이름으로 규칙을 묶는다” → 판결의 실제 쟁점과 다시 짝짓는다</b> — 규칙마다 근거 판례를 원문으로 대조해, 쟁점이 맞는 판례로 연결했습니다. 예를 들어 §101 판단 전 해석 의무는 <i>MyMail v. ooVoo</i>, 934 F.3d 1373 (Fed. Cir. 2019)으로, 결론과 무관한 용어는 해석하지 않아도 된다는 원칙은 <i>Vivid Technologies</i>(1999)로, 방법 단계의 순서는 <i>Altiris</i>·<i>Mformation</i>으로 정리했습니다. 정도 표현의 명확성은 <i>Niazi</i>(2022, ‘resilient’·‘pliable’)·<i>Sonix</i>·<i>Interval Licensing</i>으로 봅니다.</div>
+
+    <div class="note"><b>⑧ “항소에서 해석을 조금 바꿔 다시 다툰다” → 원심 입장의 범위에 묶인다</b> — 심판원에서 한 해석 입장의 범위를 항소에서 바꾸려 한 시도는 받아들여지지 않았습니다(<i>ST Case1Tech v. Squires</i>, 2025, 비선례; <i>In re Google Tech.</i>, 2020). 기존 주장의 정교화는 가능하고, 심판원이 통지 없이 새 해석을 채택했다면 예외입니다(<i>Qualcomm v. Intel</i>, 2021). 그래서 1심·심판 단계의 해석표가 곧 항소의 한계선입니다.</div>
+
+    <div class="note"><b>⑨ “미국식 기능식 해석을 한국에도” → 한국은 원칙이 다르다</b> — 한국 대법원은 기능·효과·성질로 특정된 구성을 원칙적으로 <b>그 기능 등을 가지는 모든 발명</b>으로 해석하고, 명세서는 용어의 기술적 의의를 살피는 데 참작합니다(2007후4977). 미국 §112(f)처럼 명세서 구조로 자동 축소하는 명문 규정이 없습니다. 제법한정물건도 방향이 반대입니다(8장).</div>
+
+    <div class="note"><b>⑩ “해석은 해석, 차트는 차트” → 해석이 바뀌면 원장의 행이 흔들린다</b> — 해석은 30편 원장의 ‘해석’ 칸에 들어가고, 해석이 새 조건(예: ‘0.3mm 이상 돌출’)을 더하면 그 조건의 사실이 있는지 행을 다시 봐야 합니다. 시범에서 30편 차트는 형식 점검을 그대로 통과했지만, 해석을 반영하자 [1d] 행이 <b>재검토</b>로 바뀌었습니다(7장). 형식 점검과 실체 점검은 따로입니다.</div>
+  </section>
+
+  <!-- 7 -->
+  <section id="s7">
+    <h2><span class="no">07</span>직접 돌려 본 시범 (30편 가상 착즙기 특허)</h2>
+    <h3>① 해석 점검 — construe_check.py</h3>
+    <div class="code">
+      <div class="head"><span>세 가지 해석 기록 점검(요약)</span><button class="copy">복사</button></div>
+<pre><code>$ python tools/construe_check.py sample/construction_good.json   → 오류 0 · 경고 0
+$ python tools/construe_check.py sample/construction_kr.json     → 오류 0 · 경고 2
+  - C06 한국: 기능적 표현은 원칙적으로 그 기능을 가진 모든 구성으로 … (2007후4977)
+  - C05 출원경과 '금반언'(균등 제한)과 '권리 포기'(문언 범위 축소)는 다름
+$ python tools/construe_check.py sample/construction_bad.json    → 오류 13 · 경고 4
+  - C01 ptab → phillips 기준이어야 함 (입력: bri)
+  - C11 범위를 다투는데 '통상의 의미'로만 정함
+  - C03 실시예의 구성을 청구항에 끌어들임
+  - C02 내재적 기록과 충돌하는 외재적 증거(사전)를 결론에 사용
+  - C05 권리 포기는 '명백하고 확실'해야 함
+  - C06 기능식인데 명세서의 대응 구조와 위치가 없음
+  - C10 침해와 유효성에 다른 해석을 씀
+  - C12 청구항에 없는 말(small)을 넣고 불명확하다고 판단
+  - C14 미국: 침해에서는 제법 한정이 한정으로 작동
+  - C15 원심 기록에 없던 새 해석 — 실권
+  - C08(경고) 해석이 종속항 2a의 추가 한정과 겹침</code></pre>
+    </div>
+    <h3>② 30편 원장 반영 — apply_to_ledger.py</h3>
+    <div class="code">
+      <div class="head"><span>영향 보고(요약)</span><button class="copy">복사</button></div>
+<pre><code>$ python tools/apply_to_ledger.py sample/chart_from_30.json sample/construction_good.json \
+      --out work/chart_construed.json --report work/impact.md
+| [1c.2] | a gap … decreases toward a lower end | 반영   | 같은 축 높이에서 잰 간격이 배출측 끝으로 단조 감소 |
+| [1d]   | ribs                                  | 재검토 | 내벽에서 0.3mm 이상 돌출되어 길게 뻗은 부재        |
+|        |   → 해석이 요구하는 조건의 근거가 대응 사실에 없음: 돌출 높이 0.3mm 이상
+| [1e]   | means for rotating …                  | 반영   | §112(f): 기능=40~60rpm 회전 / 구조=M1+G1 및 균등물 |
+| [1f]   | configured to select either … or …    | 반영   | 두 모드 중 하나만 활성(동시 수행 제외)             |
+재검토 1건 — 30편 chart_lint.py를 다시 돌리고, 표시된 행의 사실을 보강하거나 결론을 바꾸세요.</code></pre>
+    </div>
+    <div class="note"><b>무엇을 배우나</b> — 명세서의 자기 정의 때문에 ‘리브’가 ‘0.3mm 이상 돌출’을 요구하게 되자, 30편에서 경사각만 측정했던 [1d] 행은 그대로 둘 수 없게 됐습니다. 30편 점검기는 형식만 보므로 반영 뒤에도 오류 0이지만, 이 도구가 <b>실체 재검토</b>를 표시합니다. 다음 할 일은 분해 측정 기록에 돌기 높이를 더하는 것이고, 같은 해석으로 선행문헌 D1의 ‘평행 돌기’가 0.3mm 이상인지도 다시 봐야 합니다(대칭성). 결과: <a href="templates/starter/sample/impact.md">impact.md</a> · <a href="templates/starter/sample/chart_construed.md">3열 차트</a> · <a href="templates/starter/sample/check_bad.md">나쁜 예 점검</a></div>
+    <div class="btns">
+      <a class="btn primary" href="downloads/claim-construction-kit.zip" download>전체 템플릿 내려받기 (ZIP)</a>
+      <a class="btn" href="templates/">파일 하나씩 보기</a>
+    </div>
+  </section>
+
+  <!-- 8 -->
+  <section id="s8">
+    <h2><span class="no">08</span>한국 법리와 비교</h2>
+    <p>한국도 같은 질문을 던집니다 — 청구범위에 무엇이 적혔고, 발명의 설명이 그 말에 어떤 기술적 의미를 주는가. 다만 몇 군데는 방향이 다릅니다.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>항목</th><th>미국</th><th>한국</th></tr></thead>
+      <tbody>
+        <tr><th>기본</th><td>청구항을 명세서·출원경과에 비추어(<i>Phillips</i>)</td><td>보호범위는 청구범위에 적힌 사항으로(제97조), 발명의 설명·도면 참작, 제한·확장 해석 금지(2007후4977 등)</td></tr>
+        <tr><th>정의</th><td>자기 정의 따름</td><td>명세서가 용어를 정의·설명하면 그 기술적 의의를 살펴 객관적·합리적으로</td></tr>
+        <tr><th>기능적 표현</th><td>§112(f): 명세서 구조+균등물로 한정</td><td>원칙적으로 그 기능을 가진 모든 구성(2007후4977) — 자동 축소 규정 없음</td></tr>
+        <tr><th>제법한정물건</th><td>침해: 제법 한정 / 유효성: 물건</td><td>특허요건·침해 모두 물건 자체(2011후927 전합, 2013후1726), 명백히 불합리하면 제조방법으로 한정</td></tr>
+        <tr><th>출원경과</th><td>권리 포기(문언) / 금반언(균등) 구분</td><td>참작 자료, 주로 균등의 의식적 제외로 작동</td></tr>
+        <tr><th>절차별 기준</th><td>법원·PTAB Phillips, 심사 BRI</td><td>심사·심판·소송 모두 같은 원칙</td></tr>
+        <tr><th>무효와의 관계</th><td>법원이 무효 판단</td><td>권리범위확인심판에서는 진보성 부정으로 권리범위를 부정할 수 없음(2012후4162 전합) / 침해소송에서 무효가 명백하면 권리남용(2010다95390 전합)</td></tr>
+        <tr><th>명확성</th><td>§112(b) 합리적 확실성</td><td>제42조 제4항 제2호 — 설명을 참작해도 범위를 확정할 수 없으면 기재불비</td></tr>
+      </tbody>
+    </table></div>
+    <div class="note"><b>실무 팁</b> — 해석표 맨 위에 <b>관할·절차</b>를 적고(<code>forum: kr_court</code> 등), 같은 용어라도 미국 차트와 한국 대비표에 다른 해석 행을 둡니다. 점검기는 한국 절차에서 미국식 기능식 축소·제법 한정을 쓰면 경고·오류를 냅니다. 자세히: <a href="templates/starter/.agents/skills/claim-construe/references/korea.md">korea.md</a></div>
+  </section>
+
+  <!-- 9 -->
+  <section id="s9">
+    <h2><span class="no">09</span>플랫폼 설치와 Antigravity 구축 (선택)</h2>
+    <p>30편 키트와 함께 쓰면 분해 → 해석 → 차트 반영이 이어집니다. 해석표 초안은 어느 AI에서도 되고, 두 도구는 코드 실행이 되는 곳에서 돌아갑니다.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>플랫폼</th><th>설정</th><th>도구 실행</th></tr></thead>
+      <tbody>
+        <tr><th>Claude 웹·데스크톱</th><td>설정에서 코드 실행·파일 생성 켜기 → Skills에 <code>claim-construe.zip</code>(+30편 zip 2개) → 프로젝트 지식에 명세서·출원경과</td><td>가능</td></tr>
+        <tr><th>Claude Code·Cowork</th><td><code>.agents/skills/claim-construe</code>를 <code>.claude/skills/</code>로, CLAUDE.md에 <code>@AGENTS.md</code></td><td>가능(로컬)</td></tr>
+        <tr><th>ChatGPT</th><td>Skills(지원 요금제)에 zip 업로드, 또는 프로젝트 지침에 SKILL.md</td><td>대체로 가능</td></tr>
+        <tr><th>Gemini 앱(Gem) / CLI</th><td>Gem 지침에 SKILL.md+AGENTS.md / CLI는 starter에서 GEMINI.md에 <code>@AGENTS.md</code></td><td>Gem 제한적 / CLI 가능</td></tr>
+        <tr><th>Microsoft 365 Copilot</th><td>에이전트 지침에 SKILL.md 요약, 지식에 references·사건 문서 / 조직이 허용하면 <code>-flat.zip</code> 스킬 업로드</td><td>환경에 따라 확인</td></tr>
+        <tr><th>Google Antigravity</th><td>starter 폴더를 작업 공간으로 — <code>.agents/rules/claim-construe.md</code>가 요청 시 적용</td><td>가능(로컬)</td></tr>
+      </tbody>
+    </table></div>
+    <h3>Antigravity에서 AI 도움으로 구축하기</h3>
+    <ol class="steps">
+      <li><b>두 키트 나란히</b>30편·31편 ZIP을 한 사건 폴더 아래 풀고 상위 폴더를 작업 공간으로 엽니다(숨김 <code>.agents</code> 포함).</li>
+      <li><b>시험부터</b>“두 키트의 시험을 모두 실행해 결과를 보여 줘” → 30편 20개 + 31편 16개 통과. 명령 실행은 승인 후로 둡니다.</li>
+      <li><b>사건 넣기</b><code>inbox/</code>에 청구항·명세서·출원경과를 넣고 “30편 원장에서 다툼 용어를 골라 claim-construe로 해석표 → construe_check 오류 0 → apply_to_ledger로 반영 → 재검토 행 목록”을 요청합니다.</li>
+      <li><b>사람 검토</b>해석표·영향 보고를 확인하고, 재검토 행의 사실을 보강한 뒤 30편 <code>chart_lint.py</code>를 다시 돌립니다.</li>
+    </ol>
+    <div class="note"><b>프롬프트 5종</b> — <a href="templates/starter/prompts/01-pick-terms.md">01 다툼 용어</a> · <a href="templates/starter/prompts/02-intrinsic-walk.md">02 내재적 증거</a> · <a href="templates/starter/prompts/03-special-forms.md">03 특수 형식</a> · <a href="templates/starter/prompts/04-json-and-check.md">04 해석표·점검</a> · <a href="templates/starter/prompts/05-apply-and-definiteness.md">05 반영·명확성</a>. 세부 절차: <a href="templates/starter/.agents/skills/claim-construe/references/platform-setup.md">platform-setup.md</a>. 메뉴·요금제별 기능은 바뀌니 각 서비스의 현재 안내를 확인하세요.</div>
+  </section>
+
+  <!-- 10 -->
+  <section id="s10">
+    <h2><span class="no">10</span>주의할 점</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>상황</th><th>이렇게</th></tr></thead>
+      <tbody>
+        <tr><th>기준</th><td>절차 먼저 확인: Phillips / BRI(청구일 기준 PTAB 구분) / 한국.</td></tr>
+        <tr><th>실시예</th><td>유일한 실시예라도 끌어들이지 않음. 예외는 명시적 정의·명백한 포기뿐.</td></tr>
+        <tr><th>사전·전문가</th><td>배경 이해용. 내재적 기록과 충돌하면 배척.</td></tr>
+        <tr><th>출원경과</th><td>명백한 진술만. 권리 포기(문언)와 금반언(균등) 구분. IPR 진술 포함.</td></tr>
+        <tr><th>기능식</th><td>미국: 기능 특정 → 대응 구조(알고리즘). 한국: 자동 축소 없음.</td></tr>
+        <tr><th>말이 되는 해석</th><td>누적 조건으로 읽되, 청구항을 다시 쓰지 않음.</td></tr>
+        <tr><th>명확성</th><td>해석 먼저, 원래 문언 평가. 없는 말 넣지 않기. 합의 ≠ 명확성.</td></tr>
+        <tr><th>대칭성</th><td>침해·유효성에 같은 해석. 30편 원장의 세 열에 같은 넓이로.</td></tr>
+        <tr><th>항소</th><td>원심 해석표가 한계선. 새 해석은 실권(통지 없는 직권 변경은 예외).</td></tr>
+        <tr><th>최종 판단</th><td>변리사·변호사. AI·도구는 초안과 방법론 점검.</td></tr>
+      </tbody>
+    </table></div>
+    <div class="btns">
+      <a class="btn primary" href="downloads/claim-construction-kit.zip" download>전체 템플릿 내려받기 (ZIP)</a>
+      <a class="btn" href="templates/">파일 하나씩 보기</a>
+    </div>
+  </section>
+
+  <!-- 11 -->
+  <section id="s11">
+    <h2><span class="no">부록</span>출처</h2>
+    <p>모두 2026. 11. 10. 확인. 이 편은 유튜브 링크가 제공되지 않아 영상 자료는 쓰지 않았습니다.</p>
+    <ul>
+      <li>작성자 원고 「미국 특허 청구범위 해석 법리 및 실무 마스터 가이드」·「미국 특허 청구범위 해석 절차와 규칙」 — 이 편의 기초.</li>
+      <li>미국 판례(개념 근거): <i>Markman</i>(1996) · <i>Teva v. Sandoz</i>(2015) · <i>Phillips v. AWH</i>(en banc 2005) · <i>Thorner v. Sony</i>(2012) · <i>Hill-Rom v. Stryker</i>(2014) · <i>Omega Eng'g</i>(2003) · <i>Aylus v. Apple</i>(2017) · <i>Cuozzo</i>(2016) · <i>O2 Micro</i>(2008) · <i>Williamson</i>(en banc 2015) · <i>Noah Sys.</i>(2012) · <i>Intel v. Qualcomm</i>(2021) · <i>Abbott v. Sandoz</i>(en banc 2009) · <i>Chef America</i>(2004) · <i>Maxell v. Amperex</i>(2024) · <i>Nautilus</i>(2014) · <i>Finjan v. ESET</i>(2022) · <i>MeadWestVaco</i>(2013) · <i>Qualcomm v. Intel</i>(2021) · <i>Ortiz v. Jordan</i>(2011) · <i>Dupree v. Younger</i>(2023). 권호는 키트 references에.</li>
+      <li><a href="https://www.harnessip.com/?p=10468"><i>MyMail v. ooVoo</i> (Fed. Cir. Aug. 16, 2019) 해설</a> · <a href="https://klarquist.com/blog/federal-circuit-IP/vascular-solutions-v-medtronic/"><i>Vascular Solutions v. Medtronic</i> (2024) 해설</a> · <a href="https://patentlyo.com/patent/2025/10/case1tech-changing-construction.html"><i>ST Case1Tech v. Squires</i> (2025) 해설</a> · <a href="https://www.cafc.uscourts.gov/opinions-orders/23-2305.OPINION.10-9-2025_2585626.pdf">같은 사건 판결문</a> · <a href="https://www.schwabe.com/publication/latest-federal-court-cases-4-18-22/"><i>Niazi</i> (2022) 요약</a></li>
+      <li>한국: <a href="https://www.law.go.kr/LSW//precInfoP.do?precSeq=138432">대법원 2009. 7. 23. 선고 2007후4977</a> · <a href="https://www.law.go.kr/LSW//precInfoP.do?precSeq=192588">대법원 2015. 1. 22. 선고 2011후927 전원합의체</a> · <a href="https://www.law.go.kr/LSW//precInfoP.do?precSeq=192606">대법원 2015. 2. 12. 선고 2013후1726</a> · <a href="https://www.nepla.ai/case/%EB%8C%80%EB%B2%95%EC%9B%90/2010%EB%8B%A495390">대법원 2012. 1. 19. 선고 2010다95390 전원합의체</a> · 대법원 2014. 3. 20. 선고 2012후4162 전원합의체 · 특허법 제42조·제97조.</li>
+      <li>규정: 35 U.S.C. §112(b)·(f) · 37 C.F.R. §42.100(b)(2018. 11. 13. 시행) · FRCP 52(a)(6).</li>
+      <li>동봉 도구(<code>construe_check.py</code>·<code>apply_to_ledger.py</code>)를 직접 만들어 시험 16개 통과, 30편 시범 차트에 연결해 검증.</li>
+    </ul>
+    <p>함께 읽기: <a href="../claim-chart/">30편 분해와 Claim Chart</a> · <a href="../case-study/">9편 판례 심층 해설</a> · <a href="../cite-check/">7편 인용 검증</a> · <a href="../korean-law-mcp/">8편 법령·판례 리서치</a></p>
+    <p><b>다음 편 예고</b> — 회피설계 판단 절차와 규칙: 해석이 끝난 원장 위에서 어느 한정을 어떻게 피하면 문언·균등 양쪽을 벗어나는지, 금반언·공중헌납을 어떻게 활용하는지.</p>
+  </section>
+
+  <footer>
+    작성: 이진수 (변리사) · 2026. 11. 10. · CC BY-NC 4.0<br>
+    작성자의 원고 두 편을 판결 원문과 2026년 기준 자료로 확인해 기초로 삼고, 한국 법리를 대법원 판결 원문으로 따로 조사해 반영했습니다. 동봉한 두 도구를 직접 만들어 가상 데이터로 시험(16개 통과)하고 30편 시범 차트에 연결했으며, 사람이 검토했습니다. 예시 특허·제품은 모두 가상입니다. 유튜브 링크는 제공되지 않아 영상 자료는 쓰지 않았습니다. 법리는 개념 안내이며 최종 판단은 변리사·변호사가 합니다. 오류 제보는 <a href="https://github.com/sonovman/ai-practice-handbooks/issues">Issues</a>로 남겨 주세요.
+  </footer>
+</main>
+</div>
+
+<script>
+  document.querySelectorAll('.copy').forEach(function (b) {
+    b.addEventListener('click', function () {
+      navigator.clipboard.writeText(b.closest('.code').querySelector('pre').innerText).then(function () {
+        b.textContent = '복사됨'; setTimeout(function () { b.textContent = '복사'; }, 1500);
+      });
+    });
+  });
+  var links = [].slice.call(document.querySelectorAll('.side a'));
+  var io = new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+      if (e.isIntersecting) links.forEach(function (a) { a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id); });
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  document.querySelectorAll('main section[id]').forEach(function (s) { io.observe(s); });
+</script>
+</body>
+</html>

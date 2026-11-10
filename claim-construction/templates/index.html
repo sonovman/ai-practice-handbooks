@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>청구범위 해석 템플릿</title>
+<link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+<div class="bar"><div class="bar-in">
+  <a class="brand" href="../../">AI 실무 핸드북</a>
+  <div class="links"><a href="../">← 본문으로</a></div>
+</div></div>
+<div class="wrap">
+  <div class="eyebrow">핸드북 31 · 자료</div>
+  <h1>템플릿 내려받기</h1>
+  <p class="lead"><code>starter</code>에는 숨김 <code>.agents</code> 폴더가 있어 <a href="../downloads/claim-construction-kit.zip" download>전체(ZIP)</a>로 받는 편이 확실합니다. 받은 뒤 <code>python tools/test_construe_check.py</code>·<code>python tools/test_apply_to_ledger.py</code>로 16개 시험 통과를 먼저 확인하세요. <a href="../../claim-chart/templates/">30편 키트</a>와 함께 쓰면 분해 → 해석 → 차트 반영이 이어집니다. 예시는 모두 가상입니다.</p>
+
+  <h2>바로 붙여 넣는 프롬프트</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>파일</th><th>용도</th></tr></thead>
+    <tbody>
+      <tr><th><a href="starter/prompts/01-pick-terms.md">01-pick-terms.md</a></th><td>다툼 용어 고르기·기준 선택</td></tr>
+      <tr><th><a href="starter/prompts/02-intrinsic-walk.md">02-intrinsic-walk.md</a></th><td>청구항→명세서→출원경과→보조 증거</td></tr>
+      <tr><th><a href="starter/prompts/03-special-forms.md">03-special-forms.md</a></th><td>기능식·전제부·제법한정·순서·정도 표현</td></tr>
+      <tr><th><a href="starter/prompts/04-json-and-check.md">04-json-and-check.md</a></th><td>해석표 JSON·점검</td></tr>
+      <tr><th><a href="starter/prompts/05-apply-and-definiteness.md">05-apply-and-definiteness.md</a></th><td>30편 원장 반영·명확성</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>웹 앱 업로드용 스킬 (upload)</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>스킬</th><th>Claude · ChatGPT</th><th>Copilot 등</th><th>Gemini · 내용 보기</th></tr></thead>
+    <tbody>
+      <tr><th>claim-construe</th><td><a href="upload/claim-construe.zip" download>claim-construe.zip</a></td><td><a href="upload/claim-construe-flat.zip" download>flat.zip</a></td><td><a href="upload/claim-construe/SKILL.md">SKILL.md</a></td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>작업 폴더 (starter)</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>파일</th><th>내용</th></tr></thead>
+    <tbody>
+      <tr><th><a href="starter/AGENTS.md">AGENTS.md</a> · <a href="starter/.agents/rules/claim-construe.md">.agents/rules/claim-construe.md</a></th><td>항상 적용 규칙, 해석 작업 흐름</td></tr>
+      <tr><th><a href="starter/.agents/skills/claim-construe/SKILL.md">claim-construe/SKILL.md</a></th><td>기준·증거 순서·특수 형식·명확성·절차</td></tr>
+      <tr><th><a href="starter/.agents/skills/claim-construe/references/construction-method.md">construction-method.md</a> · <a href="starter/.agents/skills/claim-construe/references/definiteness.md">definiteness.md</a> · <a href="starter/.agents/skills/claim-construe/references/appeal-procedure.md">appeal-procedure.md</a></th><td>미국 해석 방법론 · 명확성 · 심사 기준·실권</td></tr>
+      <tr><th><a href="starter/.agents/skills/claim-construe/references/korea.md">korea.md</a> · <a href="starter/.agents/skills/claim-construe/references/schema.md">schema.md</a> · <a href="starter/.agents/skills/claim-construe/references/platform-setup.md">platform-setup.md</a></th><td>한국 법리 비교 · 해석표 형식·점검 코드 · 플랫폼 설치</td></tr>
+      <tr><th><a href="starter/tools/construe_check.py" download>construe_check.py</a></th><td>해석 기록 방법론 점검(C01~C16)</td></tr>
+      <tr><th><a href="starter/tools/apply_to_ledger.py" download>apply_to_ledger.py</a></th><td>30편 차트에 해석 반영·재검토 행 표시</td></tr>
+      <tr><th><a href="starter/tools/test_construe_check.py" download>test_construe_check.py</a> · <a href="starter/tools/test_apply_to_ledger.py" download>test_apply_to_ledger.py</a> · <a href="starter/build_upload.py" download>build_upload.py</a></th><td>시험(10+6) · 업로드 묶음 만들기</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>시범 자료 (직접 실행 결과, 가상 데이터)</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>파일</th><th>내용</th></tr></thead>
+    <tbody>
+      <tr><th><a href="starter/sample/construction_good.json">construction_good.json</a> · <a href="starter/sample/check_good.md">check_good.md</a></th><td>미국 법원 기준 해석표(6개 용어) · 점검 통과</td></tr>
+      <tr><th><a href="starter/sample/construction_bad.json">construction_bad.json</a> · <a href="starter/sample/check_bad.md">check_bad.md</a></th><td>흔한 실수 · 점검 결과(오류 13·경고 4)</td></tr>
+      <tr><th><a href="starter/sample/construction_kr.json">construction_kr.json</a> · <a href="starter/sample/check_kr.md">check_kr.md</a></th><td>한국 절차 해석표 · 경고 2(기능적 표현·금반언 구분)</td></tr>
+      <tr><th><a href="starter/sample/chart_from_30.json">chart_from_30.json</a> · <a href="starter/sample/chart_construed.json">chart_construed.json</a> · <a href="starter/sample/chart_construed.md">chart_construed.md</a> · <a href="starter/sample/impact.md">impact.md</a></th><td>30편 차트 → 해석 반영(3열) · 영향 보고(재검토 1건)</td></tr>
+      <tr><th><a href="starter/sample/test-output.txt">test-output.txt</a></th><td>시험 16개 통과 로그</td></tr>
+    </tbody>
+  </table></div>
+</div>
+</body>
+</html>
