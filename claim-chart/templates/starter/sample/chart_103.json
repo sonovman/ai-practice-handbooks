@@ -1,0 +1,257 @@
+{
+  "meta": {
+    "patent": "가상특허 A (교육용 예시)",
+    "claim": 1,
+    "priority_date": "2021-03-15",
+    "chart_type": "invalidity_103",
+    "stage": "final",
+    "target": {
+      "name": "D1(가상 선행문헌 KR-가상-001, 2019-06-10 공개) + D2(가상 선행문헌 US-가상-002, 2018-09-04 공개)",
+      "version": "-",
+      "date": "2019-06-10"
+    }
+  },
+  "limitations": [
+    {
+      "id": "1pre",
+      "text": "A juice extractor",
+      "type": "preamble",
+      "proposition": "착즙기(전제부 — 비제한 가능성, 조건부 대응)",
+      "intrinsic": "¶[0001]",
+      "prosecution": "특이사항 없음"
+    },
+    {
+      "id": "1a",
+      "text": "a housing",
+      "type": "structure",
+      "proposition": "구성품을 수용하는 하우징이 있다",
+      "intrinsic": "¶[0012], 도1 부호 10",
+      "prosecution": "특이사항 없음"
+    },
+    {
+      "id": "1b",
+      "text": "a drum disposed in the housing, the drum having an inner wall",
+      "type": "structure",
+      "proposition": "하우징 안에 내벽을 가진 드럼이 배치된다",
+      "intrinsic": "¶[0013], 도1 부호 20",
+      "prosecution": "특이사항 없음"
+    },
+    {
+      "id": "1c",
+      "text": "a screw rotatably disposed in the drum",
+      "type": "structure",
+      "proposition": "드럼 안에 회전 가능한 스크루가 있다",
+      "intrinsic": "¶[0014], 도2 부호 30",
+      "prosecution": "특이사항 없음"
+    },
+    {
+      "id": "1c.1",
+      "text": "the screw has a plurality of spiral blades",
+      "type": "structure",
+      "proposition": "스크루는 나선 날개를 둘 이상 가진다",
+      "intrinsic": "¶[0015], 도2 부호 31",
+      "prosecution": "특이사항 없음"
+    },
+    {
+      "id": "1c.2",
+      "text": "a gap between the spiral blades and the inner wall decreases toward a lower end of the drum",
+      "type": "relation",
+      "proposition": "날개–내벽 간격이 드럼 하단으로 갈수록 줄어드는 관계가 있다",
+      "intrinsic": "¶[0016], 도3 간격 g1>g2",
+      "prosecution": "1차 거절(D1) 극복 위해 보정 추가 — 균등 주장 시 금반언 점검 대상"
+    },
+    {
+      "id": "1d",
+      "text": "a plurality of ribs formed on the inner wall at an inclination of 5 to 15 degrees relative to a rotation axis of the screw",
+      "type": "numeric",
+      "proposition": "내벽에 스크루 회전축 대비 5~15° 경사의 리브가 둘 이상 있다",
+      "intrinsic": "¶[0018] 측정 기준: 회전축 투영선",
+      "prosecution": "특이사항 없음"
+    },
+    {
+      "id": "1e",
+      "text": "means for rotating the screw at a speed of 40 to 60 rpm",
+      "type": "mpf",
+      "proposition": "스크루를 40~60rpm으로 회전시키는 기능 — 명세서의 대응 구조와 그 균등물로 한정",
+      "sam": "¶[0021], 도4: BLDC 모터 M1 + 감속기어 G1(감속비 1:30)",
+      "construction": "§112(f) 기능식: 기능=40~60rpm 회전, 구조=모터+감속기어",
+      "intrinsic": "¶[0021]",
+      "prosecution": "특이사항 없음"
+    },
+    {
+      "id": "1f",
+      "text": "a controller configured to select either a juice mode or a smoothie mode in response to an operator input",
+      "type": "alternative",
+      "proposition": "제어부가 사용자 입력에 따라 착즙·스무디 모드 중 하나를 골라 작동하도록 설계돼 있다(배타적 선택)",
+      "construction": "'either…or' = 둘 중 하나(명세서 ¶[0024]·출원경과 의견서)",
+      "intrinsic": "¶[0024], 도5 흐름도 S3",
+      "prosecution": "의견서에서 '사용자 선택 단일 모드'를 강조"
+    },
+    {
+      "id": "1g",
+      "text": "a juice outlet formed at the lower end of the drum, without a mesh filter between the drum and the juice outlet",
+      "type": "negative",
+      "proposition": "드럼 하단에 착즙구가 있고, 드럼과 착즙구 사이에 망 필터가 없다",
+      "intrinsic": "¶[0027]",
+      "prosecution": "특이사항 없음"
+    }
+  ],
+  "rows": [
+    {
+      "id": "1pre",
+      "theory": "literal",
+      "assertion": "D1은 착즙기를 개시한다.",
+      "facts": [
+        {
+          "source": "D1 KR-가상-001",
+          "pin": "¶[0002]",
+          "date": "2019-06-10",
+          "text": "\"녹즙기\"",
+          "ref": "D1"
+        }
+      ],
+      "explanation": "D1의 녹즙기는 즙을 짜는 기기이므로 전제부를 개시한다. 왜냐하면 녹즙기도 착즙기의 한 종류이기 때문이다."
+    },
+    {
+      "id": "1a",
+      "theory": "literal",
+      "assertion": "D1의 '몸체 100'이 하우징을 개시한다.",
+      "facts": [
+        {
+          "source": "D1 KR-가상-001",
+          "pin": "¶[0010], 도1 부호 100",
+          "date": "2019-06-10",
+          "text": "몸체 100이 구동부를 내장",
+          "ref": "D1"
+        }
+      ],
+      "explanation": "몸체 100이 구성품을 수용하므로 하우징이다. 왜냐하면 수용·지지 기능이 같기 때문이다."
+    },
+    {
+      "id": "1b",
+      "theory": "literal",
+      "assertion": "D1의 '케이스 200'이 드럼을 개시한다.",
+      "facts": [
+        {
+          "source": "D1 KR-가상-001",
+          "pin": "¶[0011], 도1 부호 200·210",
+          "date": "2019-06-10",
+          "text": "케이스 200은 내주면 210을 가진다",
+          "ref": "D1"
+        }
+      ],
+      "explanation": "케이스 200이 몸체 안에서 스크루를 둘러싸고 내주면을 가지므로 드럼이다. 왜냐하면 구조와 위치가 같기 때문이다."
+    },
+    {
+      "id": "1c",
+      "theory": "literal",
+      "assertion": "D1의 '스크루 300'이 개시한다.",
+      "facts": [
+        {
+          "source": "D1 KR-가상-001",
+          "pin": "¶[0012], 도2 부호 300",
+          "date": "2019-06-10",
+          "text": "스크루 300은 케이스 중심에서 회전",
+          "ref": "D1"
+        }
+      ],
+      "explanation": "케이스 안 회전 스크루이므로 개시한다. 왜냐하면 문언이 같기 때문이다."
+    },
+    {
+      "id": "1c.1",
+      "theory": "literal",
+      "assertion": "D1 스크루 300의 '나선 310'이 개시한다.",
+      "facts": [
+        {
+          "source": "D1 KR-가상-001",
+          "pin": "¶[0013], 도2 부호 310",
+          "date": "2019-06-10",
+          "text": "나선 310 세 줄",
+          "ref": "D1"
+        }
+      ],
+      "explanation": "나선이 세 줄이므로 복수의 나선 날개다. 왜냐하면 복수는 둘 이상이기 때문이다."
+    },
+    {
+      "id": "1c.2",
+      "theory": "literal",
+      "assertion": "D1은 미개시, D2의 '테이퍼 간극'이 개시한다.",
+      "facts": [
+        {
+          "source": "D2 US-가상-002",
+          "pin": "col.4:12-20, Fig.3 gap G",
+          "date": "2018-09-04",
+          "text": "\"gap G narrows toward the outlet end\"",
+          "ref": "D2"
+        }
+      ],
+      "explanation": "D2의 간극 G가 배출단(하단)으로 갈수록 좁아지므로 개시한다. 왜냐하면 D2의 배출단이 하단에 있어 같은 방향의 감소 관계이기 때문이다."
+    },
+    {
+      "id": "1d",
+      "theory": "literal",
+      "assertion": "D1·D2 모두 경사 리브 미개시 — 차이점.",
+      "facts": [
+        {
+          "source": "D1 KR-가상-001",
+          "pin": "¶[0014], 도3 부호 220",
+          "date": "2019-06-10",
+          "text": "내주면 220에 회전축과 평행한 돌기",
+          "ref": "D1"
+        }
+      ],
+      "explanation": "D1의 돌기는 회전축과 평행(0°)이라 5~15° 범위 밖이므로 이 한정은 개시되지 않는다. 왜냐하면 경사각이 범위를 벗어나기 때문이다."
+    },
+    {
+      "id": "1e",
+      "theory": "literal",
+      "assertion": "D2의 '모터 40 + 감속기 42'가 대응 구조를 개시한다.",
+      "facts": [
+        {
+          "source": "D2 US-가상-002",
+          "pin": "col.5:3-15, Fig.4 부호 40·42",
+          "date": "2018-09-04",
+          "text": "\"motor 40 with reduction gear 42, output 45 rpm\"",
+          "ref": "D2"
+        }
+      ],
+      "sam_match": "명세서 SAM(모터+감속기어)과 D2의 모터 40+감속기 42가 같은 구성 원리로 같은 기능(45rpm)을 수행한다.",
+      "explanation": "45rpm이 40~60rpm 범위 안이고 구조가 SAM과 같으므로 개시한다. 왜냐하면 §112(f) 한정은 SAM 또는 균등 구조의 개시로 충족되기 때문이다."
+    },
+    {
+      "id": "1f",
+      "theory": "literal",
+      "assertion": "D1은 자동 단일 모드뿐 — 사용자 선택 미개시(차이점).",
+      "facts": [
+        {
+          "source": "D1 KR-가상-001",
+          "pin": "¶[0018]",
+          "date": "2019-06-10",
+          "text": "전원 버튼만 있고 모드 전환 없음",
+          "ref": "D1"
+        }
+      ],
+      "explanation": "D1에는 사용자 입력에 따른 모드 선택이 없으므로 이 한정은 개시되지 않는다. 왜냐하면 선택 대상인 두 모드가 없기 때문이다."
+    },
+    {
+      "id": "1g",
+      "theory": "literal",
+      "assertion": "D1은 망 필터를 둔다 — 부정한정 불일치.",
+      "facts": [
+        {
+          "source": "D1 KR-가상-001",
+          "pin": "¶[0016], 도3 부호 230",
+          "date": "2019-06-10",
+          "text": "케이스와 배출구 사이 망 필터 230",
+          "ref": "D1"
+        }
+      ],
+      "explanation": "D1에는 망 필터 230이 있으므로 '망 필터 없음' 한정은 개시되지 않는다. 왜냐하면 부정한정은 부재를 요구하기 때문이다."
+    }
+  ],
+  "combination": {
+    "motivation": "D1과 D2는 같은 분야(수직 스크루 착즙)이고, D2 col.4:21-30은 테이퍼 간극이 '착즙률을 높인다'고 밝혀 D1에 적용할 기술적 이유가 있다. 다만 [1d] 경사 리브·[1f] 사용자 모드 선택·[1g] 망 필터 제거는 D1·D2 어디에도 없어, 결합만으로는 청구항 전체에 이르지 못한다(추가 문헌 필요).",
+    "expectation": "테이퍼 간극은 스크루 형상 변경만으로 D1에 적용 가능해 성공 기대가 합리적이나, D1이 망 필터를 필수로 설명(¶[0016])하므로 [1g] 방향의 변경에는 저해 요인이 있을 수 있다."
+  },
+  "symmetry": "침해 차트에서 [1e]를 '모터+기어 감속' 수준의 구조 균등으로 넓게 봤으므로, 같은 넓이로 D2의 모터 40+감속기 42도 개시로 인정했다(대칭)."
+}

@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>청구항 분해·Claim Chart 템플릿</title>
+<link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+<div class="bar"><div class="bar-in">
+  <a class="brand" href="../../">AI 실무 핸드북</a>
+  <div class="links"><a href="../">← 본문으로</a></div>
+</div></div>
+<div class="wrap">
+  <div class="eyebrow">핸드북 30 · 자료</div>
+  <h1>템플릿 내려받기</h1>
+  <p class="lead"><code>starter</code>에는 점(.)으로 시작하는 <code>.agents</code> 폴더가 있어 <a href="../downloads/claim-chart-kit.zip" download>전체(ZIP)</a>로 받는 편이 확실합니다. 받은 뒤 <code>python tools/test_claim_parse.py</code>·<code>python tools/test_chart_lint.py</code>로 20개 시험이 통과하는지 먼저 확인하세요. 예시 특허·제품·문헌은 모두 가상입니다.</p>
+
+  <h2>바로 붙여 넣는 프롬프트</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>파일</th><th>용도</th></tr></thead>
+    <tbody>
+      <tr><th><a href="starter/prompts/01-decompose.md">01-decompose.md</a></th><td>청구항 분해 → 한정 원장 초안</td></tr>
+      <tr><th><a href="starter/prompts/02-intrinsic.md">02-intrinsic.md</a></th><td>명세서·도면·출원경과 근거 붙이기</td></tr>
+      <tr><th><a href="starter/prompts/03-chart-infringement.md">03-chart-infringement.md</a></th><td>침해 Claim Chart 작성</td></tr>
+      <tr><th><a href="starter/prompts/04-chart-invalidity.md">04-chart-invalidity.md</a></th><td>신규성·진보성 차트, 대칭성 기록</td></tr>
+      <tr><th><a href="starter/prompts/05-self-audit.md">05-self-audit.md</a></th><td>제출 전 상대방 시각 점검</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>웹 앱 업로드용 스킬 (upload)</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>스킬</th><th>Claude · ChatGPT</th><th>Copilot 등</th><th>Gemini · 내용 보기</th></tr></thead>
+    <tbody>
+      <tr><th>claim-decompose</th><td><a href="upload/claim-decompose.zip" download>claim-decompose.zip</a></td><td><a href="upload/claim-decompose-flat.zip" download>flat.zip</a></td><td><a href="upload/claim-decompose/SKILL.md">SKILL.md</a></td></tr>
+      <tr><th>claim-chart</th><td><a href="upload/claim-chart.zip" download>claim-chart.zip</a></td><td><a href="upload/claim-chart-flat.zip" download>flat.zip</a></td><td><a href="upload/claim-chart/SKILL.md">SKILL.md</a></td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>작업 폴더 (starter)</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>파일</th><th>내용</th></tr></thead>
+    <tbody>
+      <tr><th><a href="starter/AGENTS.md">AGENTS.md</a> · <a href="starter/.agents/rules/claim-chart.md">.agents/rules/claim-chart.md</a></th><td>항상 적용 규칙, 분해→차트 작업 흐름</td></tr>
+      <tr><th><a href="starter/.agents/skills/claim-decompose/SKILL.md">claim-decompose/SKILL.md</a></th><td>7단계·3대 시험·한정 원장</td></tr>
+      <tr><th><a href="starter/.agents/skills/claim-decompose/references/decomposition-rules.md">decomposition-rules.md</a> · <a href="starter/.agents/skills/claim-decompose/references/ledger-schema.md">ledger-schema.md</a> · <a href="starter/.agents/skills/claim-decompose/references/us-kr-map.md">us-kr-map.md</a></th><td>원칙·특수 한정 · 원장 형식과 Kustom 사례 · 미국↔한국 대응표</td></tr>
+      <tr><th><a href="starter/.agents/skills/claim-chart/SKILL.md">claim-chart/SKILL.md</a></th><td>차트 유형·3박자·특수 법리·점검</td></tr>
+      <tr><th><a href="starter/.agents/skills/claim-chart/references/chart-rules.md">chart-rules.md</a> · <a href="starter/.agents/skills/claim-chart/references/special-doctrines.md">special-doctrines.md</a> · <a href="starter/.agents/skills/claim-chart/references/lifecycle-us-kr.md">lifecycle-us-kr.md</a> · <a href="starter/.agents/skills/claim-chart/references/quality-gates.md">quality-gates.md</a> · <a href="starter/.agents/skills/claim-chart/references/platform-setup.md">platform-setup.md</a></th><td>작성 규칙 · 기능식·균등론·진보성 등 · 소송 단계와 한국 적용 · 점검 코드표 · 플랫폼 설치</td></tr>
+      <tr><th><a href="starter/tools/claim_parse.py" download>claim_parse.py</a></th><td>청구항(영문·국문) → 분해 후보·유형·확인할 점</td></tr>
+      <tr><th><a href="starter/tools/chart_lint.py" download>chart_lint.py</a></th><td>차트 JSON 형식 점검(E 오류 / W 경고)</td></tr>
+      <tr><th><a href="starter/tools/render_chart.py" download>render_chart.py</a></th><td>차트 JSON → Markdown 표(2열·3열·원장 9열)</td></tr>
+      <tr><th><a href="starter/tools/test_claim_parse.py" download>test_claim_parse.py</a> · <a href="starter/tools/test_chart_lint.py" download>test_chart_lint.py</a> · <a href="starter/build_upload.py" download>build_upload.py</a></th><td>시험(8+12) · 업로드 묶음 만들기</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>시범 자료 (직접 실행 결과, 가상 데이터)</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>파일</th><th>내용</th></tr></thead>
+    <tbody>
+      <tr><th><a href="starter/sample/claim_en.txt">claim_en.txt</a> · <a href="starter/sample/claim_ko.txt">claim_ko.txt</a></th><td>가상 착즙기 청구항(영문·국문)</td></tr>
+      <tr><th><a href="starter/sample/parse_en.md">parse_en.md</a> · <a href="starter/sample/parse_ko.md">parse_ko.md</a></th><td>분해 결과</td></tr>
+      <tr><th><a href="starter/sample/chart_good.json">chart_good.json</a> · <a href="starter/sample/chart_good.md">chart_good.md</a> · <a href="starter/sample/ledger_good.md">ledger_good.md</a></th><td>좋은 침해 차트(3열) · 원장 9열</td></tr>
+      <tr><th><a href="starter/sample/chart_bad.json">chart_bad.json</a> · <a href="starter/sample/lint_bad.md">lint_bad.md</a></th><td>흔한 실수를 넣은 차트 · 점검 결과(오류 12·경고 7)</td></tr>
+      <tr><th><a href="starter/sample/chart_103.json">chart_103.json</a> · <a href="starter/sample/chart_103.md">chart_103.md</a></th><td>진보성 차트(결합 동기·대칭성)</td></tr>
+      <tr><th><a href="starter/sample/test-output.txt">test-output.txt</a></th><td>시험 20개 통과 로그</td></tr>
+    </tbody>
+  </table></div>
+</div>
+</body>
+</html>

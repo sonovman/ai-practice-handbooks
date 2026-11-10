@@ -1,0 +1,22 @@
+ok   t_antecedent
+ok   t_en_split
+ok   t_en_types
+ok   t_ko_split
+ok   t_ko_types
+ok   t_markdown
+ok   t_markush_and_whereby
+ok   t_method
+claim_parse: 8개 시험 통과
+ok   t_102_single_reference
+ok   t_103_needs_motivation
+ok   t_103_passes
+ok   t_bad_catches_all
+ok   t_code_lines_not_pages
+ok   t_dead_code_method
+ok   t_directionality
+ok   t_good_passes
+ok   t_invalidity_date
+ok   t_pic_stage_softens_placeholder
+ok   t_render_three_column_and_ledger
+ok   t_representative_basis
+chart_lint·render_chart: 12개 시험 통과

@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>청구항 분해와 Claim Chart 작성</title>
+<meta name="description" content="청구항을 원자적 한정 명제로 분해해 한정 원장을 만들고, 행마다 주장·사실·설명으로 Claim Chart를 작성·점검하는 절차와 규칙. 미국 실무 기준에 한국 대비표 실무를 함께, 분해 도구·차트 점검기·스킬 2종과 4개 AI·Antigravity 설치까지 초보자용 단계별.">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<div class="bar"><div class="bar-in">
+  <a class="brand" href="../">AI 실무 핸드북</a>
+  <div class="links">
+    <a href="templates/">템플릿</a>
+    <a href="https://github.com/sonovman/ai-practice-handbooks">GitHub ↗</a>
+  </div>
+</div></div>
+
+<div class="doc">
+  <aside class="side">
+    <div class="label">차례</div>
+    <ol>
+      <li><a href="#s0">한 줄 결론</a></li>
+      <li><a href="#s1">1. 전체 흐름</a></li>
+      <li><a href="#s2">2. 세 가지 용어</a></li>
+      <li><a href="#s3">3. 분해 7단계와 3대 시험</a></li>
+      <li><a href="#s4">4. Claim Chart의 구조</a></li>
+      <li><a href="#s5">5. 처음 접근과 바뀐 점</a></li>
+      <li><a href="#s6">6. 직접 돌려 본 시범</a></li>
+      <li><a href="#s7">7. 한국 실무에 적용</a></li>
+      <li><a href="#s8">8. 플랫폼 설치·Antigravity</a></li>
+      <li><a href="#s9">9. 주의할 점</a></li>
+      <li><a href="#s10">부록 · 출처</a></li>
+    </ol>
+  </aside>
+
+<main>
+  <div class="eyebrow">핸드북 30 · IP 실무 · 청구항 분석 시리즈 ①</div>
+  <h1>청구항 구성요소 분해와 Claim Chart 작성 — 절차와 규칙</h1>
+  <p class="lead">침해든 무효든, 특허 분석은 “전체적으로 비슷하다”가 아니라 <strong>청구항의 한정 하나하나를 대상물과 1:1로 맞대는 일</strong>입니다. 이 편은 청구항을 판단 가능한 최소 단위(원자적 한정 명제)로 나눠 ‘한정 원장’을 만들고, 그 원장 위에 행마다 <strong>주장–사실–설명</strong>을 쓰는 Claim Chart 작성법을, 직접 만들어 시험한 분해 도구·차트 점검기와 함께 설명합니다. 미국 실무를 기준으로 하되 한국 청구항 대비표에도 그대로 쓸 수 있게 대응 개념을 함께 적었습니다.</p>
+  <div class="meta">
+    <b>독자</b><span>청구항 대비표·Claim Chart를 AI로 체계화하려는 변리사·특허 실무자, 기업 IP 담당자, 입문자</span>
+    <b>분량</b><span>읽기 약 30분 · 템플릿(분해 스킬 · 차트 스킬 · 분해 도구 · 차트 점검기 · 표 변환기 · 프롬프트 5종 · 시범 데이터)</span>
+    <b>판</b><span>1.0 · 2026. 11. 10.</span>
+  </div>
+
+  <section id="s0">
+    <div class="key">
+      <div class="eyebrow">한 줄 결론</div>
+      <p style="font-size:19px;font-weight:600;line-height:1.6;margin:8px 0 10px">먼저 쪼개고(한정 원장), 그다음 맞대고(주장–사실–설명), 마지막에 점검하세요 — 결론은 그 뒤입니다.</p>
+      <p style="opacity:.75;font-size:15px">세미콜론에서 기계적으로 자르거나 단어마다 행을 만들면 대응 판단이 흐려집니다. 단일·유의미한 질문이 성립하는 최소 단위로 나누고, 같은 행 ID로 침해·무효를 함께 보면 넓힌 해석이 무효 위험으로 돌아오는 순간(대칭성)도 놓치지 않습니다.</p>
+    </div>
+    <div class="note"><b>무엇을 확인했나</b> — 원고 두 편(분해 규칙 가이드, Claim Chart 작성 규칙)을 판례·조문 원문과 2026년 기준 자료로 하나씩 확인해 기초로 삼았고, 고친 부분은 5장 ‘처음 접근과 바뀐 점’에 모았습니다. 분해 도구(시험 8개)와 차트 점검기·표 변환기(시험 12개)를 표준 라이브러리로 만들어 돌렸습니다(6장). 좋은 차트는 오류 0건, 일부러 망가뜨린 차트는 오류 12·경고 7건이 나왔습니다. 예시 특허·제품·문헌은 <b>모두 가상</b>입니다. 법리는 개념 안내이며 <b>최종 판단은 변리사·변호사</b>가 합니다. 이 편은 유튜브 링크가 제공되지 않아 영상 자료는 쓰지 않았습니다.</div>
+    <div class="note"><b>시리즈 안내</b> — ① 이 편: 분해와 Claim Chart → ② 다음 편: 청구범위 해석 절차와 규칙 → ③ 그다음: 회피설계 판단 절차와 규칙. 세 편이 같은 한정 원장(행 ID)을 이어 씁니다.</div>
+  </section>
+
+  <!-- 1 -->
+  <section id="s1">
+    <h2><span class="no">01</span>전체 흐름 — 쪼개고, 맞대고, 점검한다</h2>
+    <p>한 건을 ‘사건 폴더’ 하나로 관리하고, 두 군데에서 사람이 승인합니다(G1 분해 확정, G2 차트 점검).</p>
+    <div class="graph">
+      <div class="node"><span class="id">IN</span><b>접수</b><p>청구항 원문 · 우선일 · 대상물(제품명·버전·일자 또는 선행문헌) · 차트 유형 · 단계(초기/최종)</p></div>
+      <div class="edge"><span>claim_parse.py로 후보</span></div>
+      <div class="node dark"><span class="id">G1</span><b>분해 → 한정 원장</b><p>7단계 + 3대 시험으로 원자적 한정 명제 확정, 명세서·출원경과 근거 부착</p></div>
+      <div class="edge"><span>같은 행 ID 사용</span></div>
+      <div class="node dark"><span class="id">CH</span><b>Claim Chart</b><p>행마다 [주장]–[사실(핀포인트·고유 명칭)]–[설명(왜냐하면)] · 기능식·균등론·결합 동기 모듈</p></div>
+      <div class="edge"><span>chart_lint.py</span></div>
+      <div class="node"><span class="id">G2</span><b>점검</b><p>오류(E) 0건까지 수정, 경고(W)는 사람이 판단해 기록 · 대칭성 확인</p></div>
+      <div class="loop"><b>되돌아가기</b> — 점검에서 ‘대응 행 없음’·‘가짜 요소’가 나오면 분해부터 다시 봅니다.</div>
+      <div class="edge"><span>render_chart.py</span></div>
+      <div class="node end"><span class="id">OUT</span><b>보고</b><p>차트 표 · 원장 9열 · 점검 결과 · 확인하지 못한 것 → 다음 편(해석)·그다음(회피설계)으로</p></div>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section id="s2">
+    <h2><span class="no">02</span>세 가지 용어 — 섞어 쓰면 판단이 섞인다</h2>
+    <div class="grid3">
+      <div class="box"><span class="tag">term</span><h4>청구항 용어</h4><p>청구항을 이루는 단어. 해석의 재료.</p></div>
+      <div class="box"><span class="tag">limitation</span><h4>청구한정</h4><p>해석된 청구항이 권리범위에 거는 조건. 차트의 왼쪽 열.</p></div>
+      <div class="box"><span class="tag">element</span><h4>대응 요소</h4><p>대상 제품·선행기술에서 찾은 구체적 구성. 차트의 오른쪽 열.</p></div>
+    </div>
+    <div class="tbl"><table>
+      <thead><tr><th>개념</th><th>미국</th><th>한국</th></tr></thead>
+      <tbody>
+        <tr><th>비교 단위</th><td>limitation / element</td><td>구성요소(구성)</td></tr>
+        <tr><th>모두 있어야 함</th><td>All-Elements Rule</td><td>구성요소 완비의 원칙</td></tr>
+        <tr><th>대비 문서</th><td>Claim Chart(침해·무효 주장서)</td><td>청구항 대비표(침해소송·권리범위확인심판·무효심판)</td></tr>
+        <tr><th>대상물</th><td>Accused Instrumentality / Prior Art</td><td>확인대상발명·실시제품 / 선행발명</td></tr>
+      </tbody>
+    </table></div>
+    <div class="note"><b>왜 중요한가</b> — “모든 단어가 독립된 비교 단위는 아니다.” 단어는 해석에서 중요하고, 한정은 대응 판단에서 독립합니다. 이 구분이 흐려지면 ‘피고 제품에 <code>or</code>가 있는가’ 같은 무의미한 질문이 생깁니다.</div>
+  </section>
+
+  <!-- 3 -->
+  <section id="s3">
+    <h2><span class="no">03</span>분해 7단계와 3대 시험</h2>
+    <p>원자적 한정 명제 = <b>[대상] + [행위·속성] + [관계·조건] + [대안]</b>이 묶여, “대상물이 이것을 충족하는가?”라는 단일 질문이 성립하는 최소 단위입니다.</p>
+    <ol class="steps">
+      <li><b>법적 골격 보존</b>전제부·전환구·본문·종속관계를 나눕니다. <code>comprising</code>(개방)은 추가 구성을 허용할 뿐, 본문의 배타적 선택·부정한정을 무력화하지 못합니다.</li>
+      <li><b>범위제한 명제 추출</b>대상·속성·위치/순서 관계·작동 조건·수치범위·부정한정·대안 구조를 모두 뽑습니다.</li>
+      <li><b>문법·논리 추적</b>수식어가 무엇을 꾸미는지, <code>or</code>/<code>and</code>가 어디까지 걸리는지(포괄/배타), <code>the·said·상기</code>의 선행사를 확인합니다.</li>
+      <li><b>최소 완결 단위로 묶기</b>“controller / configured to / transmit”로 쪼개지 않고 “조건에 따라 데이터를 전송하도록 구성된 제어기”로 묶습니다.</li>
+      <li><b>관계·순서·대안 보존</b><code>between·after·when·or</code>를 부품으로 만들지 않고 명제 안의 조건으로 둡니다.</li>
+      <li><b>내재적 기록 검증</b>명세서·도면·출원경과에서 근거를 찾고, 거절 극복을 위해 보정·강조된 한정을 표시합니다(균등론 금반언 점검 대상).</li>
+      <li><b>한정 원장 매핑</b>각 명제를 원장(ID·문언·명제·유형·근거·출원경과·문언·균등·유효성 9열)에 올립니다.</li>
+    </ol>
+    <div class="tbl"><table>
+      <thead><tr><th>시험</th><th>묻는 것</th><th>실패하면</th></tr></thead>
+      <tbody>
+        <tr><th>삭제시험</th><td>이 명제를 지우면 범위가 의미 있게 넓어지는가?</td><td>독립 한정이 아님 → 통합</td></tr>
+        <tr><th>대응시험</th><td>“대상물이 이것을 충족하는가?”가 단일·유의미한 질문인가?</td><td>과분해 → 묶기</td></tr>
+        <tr><th>전체성시험</th><td>명제를 합치면 발명 전체가 누락·왜곡 없이 재현되는가?</td><td>과통합(한정별 심사 회피) → 다시 나누기</td></tr>
+      </tbody>
+    </table></div>
+    <div class="note"><b>특수 한정 한눈에</b> — 전제부는 행으로 남겨 조건부 대응 · 기능식(<code>means for</code>)은 명세서 대응 구조(SAM)를 함께 · 부정한정은 ‘부재’를 입증 · 대안은 포괄/배타를 근거로 확정 · 수치는 측정 조건 확인 · <code>configured to</code>와 <code>whereby</code>는 지우지 말고 해석 단계에서 판단 · 방법 단계의 순서는 문언·논리상 필요할 때만 한정. 판례 근거는 <a href="templates/starter/.agents/skills/claim-decompose/references/decomposition-rules.md">decomposition-rules.md</a>에.</div>
+  </section>
+
+  <!-- 4 -->
+  <section id="s4">
+    <h2><span class="no">04</span>Claim Chart의 구조</h2>
+    <p>차트는 원장의 <b>모든 한정 × 모든 주장 청구항 × 모든 대상물</b>을 하나씩 대응시키는 표입니다(Each × 3). 유형에 따라 오른쪽 열에 오는 것과 요건이 다릅니다.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>유형</th><th>오른쪽 열</th><th>핵심 요건</th></tr></thead>
+      <tbody>
+        <tr><th>침해</th><td>피고 제품의 사실</td><td>모든 한정 충족(문언 또는 한정별 균등)</td></tr>
+        <tr><th>비침해</th><td>피고 제품의 사실</td><td>한정 하나의 결여면 충분 — 대신 무엇을 쓰는지 적극 설명</td></tr>
+        <tr><th>신규성</th><td>단일 선행문헌</td><td>한 문헌이 모든 한정을 명시·내재적으로 개시</td></tr>
+        <tr><th>진보성</th><td>복수 문헌</td><td>차이점 + 결합 동기 + 합리적 성공 기대를 따로</td></tr>
+        <tr><th>국내산업(ITC)</th><td>자사·실시권자 제품</td><td>특허당 청구항 하나 이상 실시(기술적 요건)</td></tr>
+      </tbody>
+    </table></div>
+    <p>오른쪽 열의 모든 칸은 같은 세 박자로 씁니다. 해석이 쟁점이거나 기능식이면 가운데에 ‘해석·명세서 대응 구조’ 열을 둔 <b>3열 차트</b>로 바꿉니다.</p>
+    <div class="code">
+      <div class="head"><span>한 행의 표준형 (가상 예시)</span><button class="copy">복사</button></div>
+<pre><code>[1g] a juice outlet formed at the lower end of the drum, without a mesh filter between …
+
+[주장] JX-500의 '배즙구 O5'가 [1g]를 충족하며, 착즙통 C2와 O5 사이에 망 필터가 없다.
+[사실] JX-500 서비스 매뉴얼 v1.2, p.11 도7 부호 O5, 부품표 p.12 7~12행 (2024-05-01):
+       배즙구 O5는 C2 하단에 형성; 부품표에 스크린·메시 부품 없음
+[설명] O5가 C2 하단에 있고 부품표·분해 사진 어디에도 C2와 O5 사이의 망 부품이 없어
+       부재가 확인된다. 왜냐하면 즙이 리브 홈을 따라 바로 O5로 흐르는 구조이기 때문이다.</code></pre>
+    </div>
+    <div class="grid2">
+      <div class="box"><h4>이렇게</h4><ul><li>대상물의 고유 명칭(부품번호·함수명·메뉴명)</li><li>쪽·단락·도면 부호·파일/함수/행</li><li>“왜냐하면”으로 해석된 의미에 연결</li><li>머리말에 우선일·버전·자료 일자</li></ul></div>
+      <div class="box"><h4>이렇게 하지 않기</h4><ul><li>결론만 쓰기, 청구항 문언 되풀이</li><li>“매뉴얼 p.1~250 참조”(덤핑)</li><li>“e.g.”·“추후 보완”(유보)</li><li>다른 제품·모드 짜깁기, “청구항 1 참조”만 쓴 종속항</li></ul></div>
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section id="s5">
+    <h2><span class="no">05</span>처음 접근과 바뀐 점</h2>
+
+    <div class="note"><b>① “세미콜론에서 자르면 된다” → 경계 후보일 뿐, 판단은 3대 시험</b> — 세미콜론·동명사(-ing)는 좋은 출발점이지만, 한 절 안의 <code>wherein</code> 조건은 [1c.1]처럼 더 나눠야 하고 의미상 하나인 절은 합쳐야 합니다. 도구도 ‘후보’만 내고, 확정은 사람이 삭제·대응·전체성 시험으로 합니다.</div>
+
+    <div class="note"><b>② “or는 요소가 아니니 균등론으로 넘을 수 있다” → 요소는 아니지만 그 관계가 범위를 정한다</b> — <i>Kustom Signals</i>(교통단속 레이더)에서 법원은 “‘or’라는 단어 자체는 요소가 아니다”라고 하면서도, “크기 <b>또는</b> 주파수 기준”을 ‘둘 중 하나(둘 다는 아님)’로 해석해 두 검색을 항상 함께 하는 피고 제품의 문언침해를 부정했습니다. 균등론도 ‘실질적으로 다른 방식’이고 출원경과상 금반언이 있다는 이유로 받아들이지 않았습니다. 그래서 관계어는 독립 행으로 세지 않되, <b>그 관계가 걸린 한정 전체를 엄격히 대응</b>시킵니다. 대안이 포괄인지 배타인지는 반대의견도 있었던 만큼 근거를 원장에 남깁니다.</div>
+
+    <div class="note"><b>③ “삭제시험 = vitiation” → 분해 시험과 균등론의 한정 형해화를 구분</b> — 삭제시험은 분해가 맞는지 보는 도구이고, 한정 형해화는 “균등을 인정하면 한정이 무의미해져 합리적 판단자라면 균등을 인정할 수 없다”는 균등론 단계의 법적 결론입니다. 이름을 섞으면 분해 단계에서 균등 결론을 미리 내리게 됩니다.</div>
+
+    <div class="note"><b>④ “configured to·capable of·whereby는 비제한” → 사안별, 일단 행에 남긴다</b> — <code>configured to</code>는 ‘그렇게 설계·프로그램됨’으로 <code>capable of</code>보다 좁게 해석될 수 있는 한정이고, <code>whereby</code>도 특허성에 중요한 조건이면 한정입니다. 지우지 말고 해석 단계(다음 편)에서 판단합니다.</div>
+
+    <div class="note"><b>⑤ “차트는 Twombly의 고도의 변론 기준” → 소장과 주장서의 기준을 구분</b> — 2015년 간이 양식 폐지 뒤 특허 <b>소장</b>은 ‘개연성’ 기준을 따르고(사기 주장의 특정성 강화 기준과는 다름), 지역특허규칙의 <b>침해·무효 주장서</b>는 “각 한정이 구체적으로 어디에서 어떻게”를 요구하는 더 자세한 ‘구체성’ 기준입니다. 문서마다 기준을 나눠 씁니다.</div>
+
+    <div class="note"><b>⑥ “출원 1년 전 판매는 §102(b) 위반” → 출원 시점에 따라 법이 다르다</b> — 2013. 3. 16. 이후 유효출원일의 특허는 AIA §102(a)(1)·(b)(1)(발명자 측 공개 1년 유예)로, 그 전 특허는 구법 §102(b)로 봅니다. 한국은 제30조(12개월). 또 침해 증거가 우선일보다 앞서면 그 자료가 오히려 자기 특허의 선행기술이 되니(“나중이면 침해, 먼저면 신규성 부정”), 머리말에 날짜를 늘 함께 적습니다.</div>
+
+    <div class="note"><b>⑦ “태만(laches)으로 손해를 막는다” → 6년 안의 손해는 못 막는다</b> — 손해배상은 §286에 따라 소 제기 전 6년까지이고, 이 기간 안의 손해는 태만으로 막을 수 없다는 것이 대법원 판단입니다(<i>SCA Hygiene</i>, 2017). 날짜 기록은 손해 기간 계산용으로 씁니다.</div>
+
+    <div class="note"><b>⑧ “소스코드는 등호(=)만 빼면 된다” → 그 사건 보호명령이 기준</b> — 코드 원문을 서면에 옮길 수 있는 범위(줄 수·인쇄·반출·등급)는 사건마다 다릅니다. 기본값은 경로·함수명·행 범위 + 동작 설명이고, 허용 범위는 보호명령으로 확인합니다. 이름이 아니라 동작으로 대응하고(같은 이름 다른 뜻), 방향(송신↔수신)과 실제 실행 여부도 확인합니다.</div>
+
+    <div class="note"><b>⑨ “AI 특허는 차트에 성능 수치를 적어 적격성을 통과” → 적격성은 청구항 자체로 판단</b> — 차트에 무엇을 적어도 청구항에 없는 한정은 생기지 않습니다. 범용 기계학습을 새 환경에 적용했을 뿐인 청구항은 부적격으로 본 예가 있습니다(<i>Recentive Analytics v. Fox</i>, 2025). 차트는 청구항에 적힌 구체적 구성을 정확히 나누고, 개선 효과의 근거는 명세서에서 찾아 적격성 분석에 따로 씁니다.</div>
+
+    <div class="note"><b>⑩ “균등론은 나중에 전문가 보고서로” → 처음부터 한정별 F·W·R</b> — 상투적 유보 문구만 두면 나중에 균등론 주장이 배제될 위험이 큽니다. 행마다 기능·방식·결과, 차이가 사소한 이유, 연결 증거(전문가 진술의 구체적 단락)를 쓰고(<i>NexStep</i>, 2024), 금반언·공중헌납·형해화 점검을 기록합니다.</div>
+
+    <div class="note"><b>⑪ “미국 규칙을 한국에 그대로” → 같은 사고방식, 다른 제도</b> — 구성요소 완비·1:1 대응·근거 특정은 그대로 통하지만, 한국엔 지역특허규칙이 없고(대신 실기한 공격·방어방법 각하), 기능식 청구항을 명세서 구조로 자동 축소하는 명문 규정도 없으며, 균등은 과제해결원리 등 판례 요건으로 봅니다(7장).</div>
+
+    <div class="note"><b>⑫ “진행 중 사건·수치를 확정처럼” → 상태와 출처를 함께</b> — 대형 평결이 나온 클라우드 특허 사건처럼 항소가 진행 중인 사건은 ‘보도 기준’으로 쓰고 최신 상태를 확인합니다. 표준필수특허 표본 차트의 통계적 추정 같은 방법론도 관할·사건마다 인정 정도가 달라 일반화하지 않습니다.</div>
+  </section>
+
+  <!-- 6 -->
+  <section id="s6">
+    <h2><span class="no">06</span>직접 돌려 본 시범 (가상 착즙기 특허)</h2>
+    <h3>① 분해 — claim_parse.py</h3>
+    <p>영문·국문 청구항을 넣으면 분해 후보와 유형·확인할 점을 냅니다.</p>
+    <div class="code">
+      <div class="head"><span>실행 결과(요약)</span><button class="copy">복사</button></div>
+<pre><code>$ python tools/claim_parse.py sample/claim_en.txt
+- 전환구: comprising — 개방형 — 추가 구성을 허용하지만 본문의 배타적 선택·부정한정을 무력화하지 못함.
+| [1pre] | A juice extractor                                   | preamble    |
+| [1c]   | a screw rotatably disposed in the drum              | structure   |
+| [1c.1] | the screw has a plurality of spiral blades          | structure   |   ← wherein 하위 한정
+| [1c.2] | a gap between … decreases toward a lower end …      | relation    |
+| [1d]   | ribs … at an inclination of 5 to 15 degrees …       | numeric     |
+| [1e]   | means for rotating the screw at … 40 to 60 rpm      | mpf         |   ← SAM 확인 안내
+| [1f]   | a controller configured to select either … or …     | alternative |   ← or는 행 안의 관계
+| [1g]   | a juice outlet …, without a mesh filter …           | negative    |</code></pre>
+    </div>
+    <div class="note"><b>무엇을 배우나</b> — <code>or</code>·<code>between</code>은 독립 행이 아니라 [1f]·[1c.2] 안의 조건으로 남고, 기능식·부정·대안 행에는 무엇을 확인할지가 붙습니다. 국문 청구항(“…를 포함하는 착즙기.”처럼 전제부가 끝에 오는 형식)도 같은 9행으로 나뉩니다. 전체: <a href="templates/starter/sample/parse_en.md">parse_en.md</a> · <a href="templates/starter/sample/parse_ko.md">parse_ko.md</a></div>
+
+    <h3>② 점검 — chart_lint.py</h3>
+    <p>같은 원장으로 쓴 좋은 차트와, 흔한 실수를 일부러 넣은 나쁜 차트를 점검했습니다.</p>
+    <div class="code">
+      <div class="head"><span>나쁜 예 점검 결과(발췌)</span><button class="copy">복사</button></div>
+<pre><code>$ python tools/chart_lint.py sample/chart_good.json   → 오류 0건 · 경고 0건
+$ python tools/chart_lint.py sample/chart_bad.json    → 오류 12건 · 경고 7건
+- [1c.2] E01 대응 행 없음 — 모든 한정은 각각 대응돼야 합니다(전구성요소 원칙).
+- [1x]   E12 접속사·관계어만으로 된 '가짜 요소'
+- [1a]   E04 사실이 청구항 문언을 되풀이함(겹침 50%)
+- [1b]   E03 인용 범위가 넓음(1~120, 119쪽)
+- [1d]   E06 상투적 균등론 문구 — 구체적 F/W/R 없이 쓰면 효력이 없습니다.
+- [1e]   E07 기능만 비교함 — 대응 구조가 SAM과 같거나 균등한지 설명하세요.
+- [1f]   E14 다른 제품(JX-700)의 증거 혼합
+- [2a]   E13 '청구항 N 참조'만으로는 결론적 기재
+- [1f]   W10 침해 증거 날짜(2020-08-01)가 우선일(2021-03-15)보다 앞섬
+- [-]    W16 균등론으로 범위를 넓혔다면 … 대칭성을 기록하세요.</code></pre>
+    </div>
+    <div class="note"><b>소스코드 행 범위는 쪽수로 보지 않음</b> — 좋은 차트의 <code>fw/mode/select.c</code> <code>mode_select()</code> 41~58행은 ‘넓은 인용’으로 잘못 잡히지 않게 행 범위를 따로 판정합니다(초기 시범에서 오탐을 발견해 고침). 초기 단계(<code>stage: pic</code>)에서는 ‘정보와 믿음’ 같은 유보를 오류 대신 경고로만 표시합니다.</div>
+
+    <h3>③ 무효 차트와 대칭성</h3>
+    <p>같은 원장으로 가상 선행문헌 D1+D2의 진보성 차트를 만들었습니다. 침해 차트에서 [1e]를 ‘모터+기어 감속’ 수준의 구조 균등으로 넓게 봤으므로, 같은 넓이로 D2의 모터+감속기도 개시로 인정했습니다. 그 결과 남는 차이점은 [1d] 경사 리브·[1f] 사용자 모드 선택·[1g] 망 필터 없음 — 결합 동기 섹션에서 “D1·D2 결합만으로는 청구항 전체에 이르지 못함”을 밝혔습니다. (<a href="templates/starter/sample/chart_103.md">chart_103.md</a> · <a href="templates/starter/sample/ledger_good.md">원장 9열</a>)</p>
+    <div class="btns">
+      <a class="btn primary" href="downloads/claim-chart-kit.zip" download>전체 템플릿 내려받기 (ZIP)</a>
+      <a class="btn" href="templates/">파일 하나씩 보기</a>
+    </div>
+  </section>
+
+  <!-- 7 -->
+  <section id="s7">
+    <h2><span class="no">07</span>한국 실무에 적용하기</h2>
+    <p>분해·대응의 사고방식은 같습니다. 제도와 판단 기준이 다른 곳만 바꿔 씁니다.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>항목</th><th>미국</th><th>한국에서는</th></tr></thead>
+      <tbody>
+        <tr><th>제출 규칙</th><td>지역특허규칙(LPR)으로 초기 제출·수정 제한</td><td>정형 규칙은 없으나 대비표 조기 제출이 실무, 늦은 주장은 민사소송법 제149조 각하 위험</td></tr>
+        <tr><th>대상물 특정</th><td>제품·모델·버전</td><td>권리범위확인심판의 확인대상발명 특정(제135조) — 특정이 흐리면 심판 자체가 문제</td></tr>
+        <tr><th>균등</th><td>한정별 기능·방식·결과 / 비본질적 차이</td><td>과제해결원리 동일·작용효과 동일·치환 용이·공지기술 아님·의식적 제외 없음. 과제해결원리는 명세서·공지기술을 참작해 실질적으로 파악(대법원 2013다14361, 2017후424)</td></tr>
+        <tr><th>기능식</th><td>§112(f): 명세서 SAM + 균등물로 한정</td><td>기능적 표현 허용(제42조 제6항), 자동 축소 명문 규정 없음 — 명세서 참작 해석</td></tr>
+        <tr><th>신규성·진보성</th><td>§102 / §103</td><td>제29조 제1항 / 제2항(같은 단일 문헌·결합 논리)</td></tr>
+        <tr><th>유예</th><td>AIA §102(b)(1) 1년</td><td>제30조 공지예외 12개월</td></tr>
+        <tr><th>간접침해</th><td>§271(b) 유도 · (c) 기여</td><td>제127조(전용물 등). 유도침해 명문 규정 없음</td></tr>
+      </tbody>
+    </table></div>
+    <div class="note"><b>대비표 서식 팁</b> — 한국 대비표도 왼쪽 ‘구성요소(원장 ID)’, 오른쪽 ‘확인대상발명의 대응 구성 + 근거(도면 부호·쪽) + 대비 설명’으로 쓰면 키트의 JSON·점검기를 그대로 씁니다. 증거 수집 수단이 미국 디스커버리보다 제한적이라 <b>분해·측정 기록과 공개 자료의 핀포인트</b>가 더 중요합니다. 대응표 전체: <a href="templates/starter/.agents/skills/claim-decompose/references/us-kr-map.md">us-kr-map.md</a></div>
+  </section>
+
+  <!-- 8 -->
+  <section id="s8">
+    <h2><span class="no">08</span>플랫폼 설치와 Antigravity 구축 (선택)</h2>
+    <p>분해·차트 초안은 어느 AI에서도 되지만, <b>점검기 실행</b>은 코드 실행이 되는 곳에서 가능합니다. 원본은 <code>starter</code> 하나이고, <code>python build_upload.py</code>가 업로드 묶음을 만듭니다.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>플랫폼</th><th>설정</th><th>도구 실행</th></tr></thead>
+      <tbody>
+        <tr><th>Claude 웹·데스크톱</th><td>설정에서 코드 실행·파일 생성 켜기 → Skills에 <code>claim-decompose.zip</code>·<code>claim-chart.zip</code> 업로드 → 프로젝트 지침에 AGENTS.md</td><td>가능</td></tr>
+        <tr><th>Claude Code·Cowork</th><td><code>.agents/skills/*</code>를 <code>.claude/skills/</code>로 복사, CLAUDE.md에 <code>@AGENTS.md</code></td><td>가능(로컬)</td></tr>
+        <tr><th>ChatGPT</th><td>Skills(지원 요금제)에 zip 업로드, 또는 프로젝트 지침에 SKILL.md 붙여넣기</td><td>대체로 가능</td></tr>
+        <tr><th>Gemini 앱(Gem) / CLI</th><td>Gem 지침에 SKILL.md+AGENTS.md, 지식에 references / CLI는 starter 폴더에서, GEMINI.md에 <code>@AGENTS.md</code></td><td>Gem 제한적 / CLI 가능</td></tr>
+        <tr><th>Microsoft 365 Copilot</th><td>에이전트 지침에 SKILL.md 요약, 지식에 references(또는 조직이 허용한 스킬 업로드에 <code>-flat.zip</code>)</td><td>환경에 따라 확인</td></tr>
+        <tr><th>Google Antigravity</th><td>starter 폴더를 작업 공간으로 열기 — <code>.agents/rules/claim-chart.md</code>가 요청 시 자동 적용</td><td>가능(로컬)</td></tr>
+      </tbody>
+    </table></div>
+    <h3>Antigravity에서 AI 도움으로 구축하기</h3>
+    <ol class="steps">
+      <li><b>작업 폴더 열기</b>키트 ZIP을 풀어 <code>starter</code>를 엽니다(숨김 <code>.agents</code> 포함). 처음부터 만들고 싶다면 에이전트에게 “핸드북 30편 키트 구조로 작업 폴더를 만들어 줘, 도구는 표준 라이브러리만, 시험 포함”이라고 요청할 수 있지만, 검증된 도구를 그대로 쓰는 편이 안전합니다.</li>
+      <li><b>시험부터</b>“tools 시험을 모두 실행해 결과를 보여 줘” → 8+12개 통과 확인. 터미널 명령은 승인 후 실행되게 둡니다.</li>
+      <li><b>사건 넣기</b><code>inbox/</code>에 청구항·명세서·대상물 자료를 넣고 “claim-decompose로 원장 초안 → 내가 승인하면 claim-chart로 침해 차트 → chart_lint 오류 0까지”라고 요청합니다.</li>
+      <li><b>사람 검토</b><code>work/</code>의 원장·차트·점검 결과를 확인하고, 경고(W) 항목마다 판단을 기록합니다.</li>
+    </ol>
+    <div class="note"><b>프롬프트 5종</b> — <a href="templates/starter/prompts/01-decompose.md">01 분해</a> · <a href="templates/starter/prompts/02-intrinsic.md">02 명세서·출원경과</a> · <a href="templates/starter/prompts/03-chart-infringement.md">03 침해 차트</a> · <a href="templates/starter/prompts/04-chart-invalidity.md">04 무효 차트</a> · <a href="templates/starter/prompts/05-self-audit.md">05 제출 전 점검</a>. 플랫폼별 세부 절차는 <a href="templates/starter/.agents/skills/claim-chart/references/platform-setup.md">platform-setup.md</a>. 메뉴·요금제별 기능은 바뀌니 각 서비스의 현재 안내를 확인하세요.</div>
+  </section>
+
+  <!-- 9 -->
+  <section id="s9">
+    <h2><span class="no">09</span>주의할 점</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>상황</th><th>이렇게</th></tr></thead>
+      <tbody>
+        <tr><th>결론부터 묻기</th><td>분해(원장) → 차트 → 점검 순서. 결론은 마지막.</td></tr>
+        <tr><th>관계어 처리</th><td>or·when·between은 독립 행 ✗, 관련 한정의 조건으로. 그러나 그 관계는 엄격히 대응.</td></tr>
+        <tr><th>사실 쓰기</th><td>대상물의 고유 명칭 + 핀포인트 + “왜냐하면”.</td></tr>
+        <tr><th>균등론</th><td>한정별 F·W·R + 차이가 사소한 이유 + 연결 증거, 금반언·공중헌납·형해화 점검.</td></tr>
+        <tr><th>기능식</th><td>미국은 명세서 SAM과 대비. 한국은 명세서 참작 해석.</td></tr>
+        <tr><th>넓은 해석</th><td>같은 넓이로 선행기술 재점검(대칭성).</td></tr>
+        <tr><th>날짜</th><td>머리말에 우선일·버전·자료 일자. 우선일 전 침해 증거는 경고.</td></tr>
+        <tr><th>소스코드</th><td>보호명령 범위 안에서, 경로·함수·행 + 동작 설명. 방향·실행 여부 확인.</td></tr>
+        <tr><th>기밀</th><td>조직이 승인한 환경에서만. 개인 운영 중계 서버 경유 금지.</td></tr>
+        <tr><th>최종 판단</th><td>침해·무효·FTO는 변리사·변호사. AI·도구는 초안과 형식 점검.</td></tr>
+      </tbody>
+    </table></div>
+    <div class="btns">
+      <a class="btn primary" href="downloads/claim-chart-kit.zip" download>전체 템플릿 내려받기 (ZIP)</a>
+      <a class="btn" href="templates/">파일 하나씩 보기</a>
+    </div>
+  </section>
+
+  <!-- 10 -->
+  <section id="s10">
+    <h2><span class="no">부록</span>출처</h2>
+    <p>모두 2026. 11. 10. 확인. 이 편은 유튜브 링크가 제공되지 않아 영상 자료는 쓰지 않았습니다.</p>
+    <ul>
+      <li>작성자 원고 「원자적 범위제한 명제 기반 청구항 분해 및 한정 원장 통합 실무 프레임워크」·「Claim Chart 작성 절차와 규칙」 — 이 편의 기초. 원고가 참조한 Andrew Schulman, <a href="https://www.softwarelitigationconsulting.com/claim-charts-book/"><i>Claim Charts: Marshaling Facts in Patent Litigation</i></a>.</li>
+      <li><i>Kustom Signals, Inc. v. Applied Concepts, Inc.</i>, 264 F.3d 1326 (Fed. Cir. 2001) — <a href="https://sambuz.com/doc/united-states-court-of-appeals-for-the-federal-circuit-pdf-document-274547">판결문</a>(or 해석, comprising, 균등론·금반언, 반대의견).</li>
+      <li><i>Hoffer v. Microsoft</i>, 405 F.3d 1326 (Fed. Cir. 2005) — <a href="https://patentlyo.com/patent/2005/04/patent_claim_co.html">whereby 절 해설</a>.</li>
+      <li>주요 판례(개념 근거): <i>Warner-Jenkinson</i>(1997) · <i>Festo</i>(2002) · <i>Johnson &amp; Johnston</i>(en banc 2002) · <i>Deere v. Bush Hog</i>(2012) · <i>Brown v. 3M</i>(2001) · <i>Williamson v. Citrix</i>(en banc 2015) · <i>Phillips v. AWH</i>(en banc 2005) · <i>KSR</i>(2007) · <i>Virtek Vision</i>(2024) · <i>NexStep v. Comcast</i>(2024) · <i>O2 Micro</i>(2006) · <i>SCA Hygiene</i>(2017) · <i>Akamai</i>(en banc 2015) · <i>Recentive Analytics v. Fox</i>(2025). 사건 번호는 키트 references에.</li>
+      <li>클라우드 특허 사건 진행 상황: <a href="https://law360.com/appellate/articles/2319997&amp;read_later=1&amp;nlsidx=0&amp;nlaidx=10">Law360 — Kove v. Amazon 항소 보도</a>(2025).</li>
+      <li>한국 균등 판례: <a href="https://www.nepla.ai/case/대법원/2017후424">대법원 2019. 1. 31. 선고 2017후424</a> · <a href="https://harisportal.hanken.fi/en/publications/%EA%B7%A0%EB%93%B1%EC%B9%A8%ED%95%B4%EC%9A%94%EA%B1%B4-%EC%A4%91-%EA%B3%BC%EC%A0%9C%ED%95%B4%EA%B2%B0%EC%9B%90%EB%A6%AC%EC%9D%98-%EB%8F%99%EC%9D%BC%EC%84%B1-%EB%8C%80%EB%B2%95%EC%9B%90-2014-7-24-%EC%84%A0%EA%B3%A0-2013%EB%8B%A414361-%ED%8C%90%EA%B2%B0/">대법원 2014. 7. 24. 선고 2013다14361 평석</a>.</li>
+      <li>조문·규칙: 35 U.S.C. §§102, 103, 112(f), 271, 286 · N.D. Cal. Patent L.R. 3-1, 3-6 · MPEP 2111.04, 2131 · 특허법 제29조·제30조·제42조·제127조·제135조 · 민사소송법 제149조.</li>
+      <li>동봉 도구(<code>claim_parse.py</code>·<code>chart_lint.py</code>·<code>render_chart.py</code>)를 직접 만들어 시험 20개 통과·가상 데이터로 검증.</li>
+    </ul>
+    <p>함께 읽기: <a href="../claim-analyzer/">6편 구성특징 분석</a> · <a href="../patent-pair/">15편 텍스트쌍 특허 분석</a> · <a href="../prior-art-search/">28편 선행기술조사</a> · <a href="../cite-check/">7편 인용 검증</a></p>
+    <p><b>다음 편 예고</b> — 청구범위 해석 절차와 규칙: 이 편의 원장에 ‘해석’ 열을 채우는 법(통상의 의미, 명세서·출원경과, 해석 결과가 차트에 미치는 영향). 그다음 편은 회피설계 판단 절차와 규칙입니다.</p>
+  </section>
+
+  <footer>
+    작성: 이진수 (변리사) · 2026. 11. 10. · CC BY-NC 4.0<br>
+    작성자의 원고 두 편을 판례·조문과 2026년 기준 자료로 확인해 기초로 삼고, 동봉한 세 도구를 직접 만들어 가상 데이터로 시험(20개 통과)했으며, 사람이 검토했습니다. 예시 특허·제품·문헌은 모두 가상입니다. 유튜브 링크는 제공되지 않아 영상 자료는 쓰지 않았습니다. 법리는 개념 안내이며 침해·무효·FTO의 최종 판단은 변리사·변호사가 합니다. 오류 제보는 <a href="https://github.com/sonovman/ai-practice-handbooks/issues">Issues</a>로 남겨 주세요.
+  </footer>
+</main>
+</div>
+
+<script>
+  document.querySelectorAll('.copy').forEach(function (b) {
+    b.addEventListener('click', function () {
+      navigator.clipboard.writeText(b.closest('.code').querySelector('pre').innerText).then(function () {
+        b.textContent = '복사됨'; setTimeout(function () { b.textContent = '복사'; }, 1500);
+      });
+    });
+  });
+  var links = [].slice.call(document.querySelectorAll('.side a'));
+  var io = new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+      if (e.isIntersecting) links.forEach(function (a) { a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id); });
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  document.querySelectorAll('main section[id]').forEach(function (s) { io.observe(s); });
+</script>
+</body>
+</html>

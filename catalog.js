@@ -513,5 +513,22 @@ window.CATALOG = [
       { label: "화면으로 읽기", href: "ai-dev-director/", primary: true },
       { label: "템플릿 내려받기", href: "ai-dev-director/templates/" }
     ]
+  },
+  {
+    id: "claim-chart",
+    no: "30",
+    category: "IP 실무",
+    title: "청구항 구성요소 분해와 Claim Chart 작성 — 절차와 규칙",
+    subtitle: "원자적 한정 명제로 쪼개고, 주장·사실·설명으로 맞대고, 점검기로 확인 (미국 실무 기준·한국 대비표 공통)",
+    summary: "청구항을 판단 가능한 최소 단위로 나눠 한정 원장을 만들고, 행마다 주장–사실(핀포인트·고유 명칭)–설명으로 침해·무효 Claim Chart를 쓰는 절차와 규칙을 정리했습니다. or 같은 관계어 처리, 기능식·균등론·결합 동기, 날짜와 대칭성 점검을 분해 도구·차트 점검기(시험 20개)와 함께, 4개 AI 앱·Antigravity 설치까지 초보자용 단계별로 담았습니다. 청구범위 해석·회피설계 편으로 이어집니다.",
+    reader: "청구항 대비표·Claim Chart를 AI로 체계화하려는 변리사·특허 실무자, 기업 IP 담당자, 입문자",
+    version: "1.0",
+    date: "2026-11-10",
+    length: "읽기 약 30분",
+    status: "published",
+    links: [
+      { label: "화면으로 읽기", href: "claim-chart/", primary: true },
+      { label: "템플릿 내려받기", href: "claim-chart/templates/" }
+    ]
   }
 ];

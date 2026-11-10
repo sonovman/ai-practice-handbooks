@@ -1,0 +1,290 @@
+{
+  "meta": {
+    "patent": "가상특허 A (나쁜 예)",
+    "claim": 1,
+    "priority_date": "2021-03-15",
+    "chart_type": "infringement",
+    "stage": "final",
+    "jurisdiction": "US·KR 공통 연습",
+    "target": {
+      "name": "JX-500",
+      "version": "펌웨어 2.3",
+      "date": "2024-05-01",
+      "representative": false,
+      "representative_basis": ""
+    }
+  },
+  "limitations": [
+    {
+      "id": "1pre",
+      "text": "A juice extractor",
+      "type": "preamble",
+      "proposition": "착즙기(전제부 — 비제한 가능성, 조건부 대응)",
+      "intrinsic": "¶[0001]",
+      "prosecution": "특이사항 없음"
+    },
+    {
+      "id": "1a",
+      "text": "a housing",
+      "type": "structure",
+      "proposition": "구성품을 수용하는 하우징이 있다",
+      "intrinsic": "¶[0012], 도1 부호 10",
+      "prosecution": "특이사항 없음"
+    },
+    {
+      "id": "1b",
+      "text": "a drum disposed in the housing, the drum having an inner wall",
+      "type": "structure",
+      "proposition": "하우징 안에 내벽을 가진 드럼이 배치된다",
+      "intrinsic": "¶[0013], 도1 부호 20",
+      "prosecution": "특이사항 없음"
+    },
+    {
+      "id": "1c",
+      "text": "a screw rotatably disposed in the drum",
+      "type": "structure",
+      "proposition": "드럼 안에 회전 가능한 스크루가 있다",
+      "intrinsic": "¶[0014], 도2 부호 30",
+      "prosecution": "특이사항 없음"
+    },
+    {
+      "id": "1c.1",
+      "text": "the screw has a plurality of spiral blades",
+      "type": "structure",
+      "proposition": "스크루는 나선 날개를 둘 이상 가진다",
+      "intrinsic": "¶[0015], 도2 부호 31",
+      "prosecution": "특이사항 없음"
+    },
+    {
+      "id": "1c.2",
+      "text": "a gap between the spiral blades and the inner wall decreases toward a lower end of the drum",
+      "type": "relation",
+      "proposition": "날개–내벽 간격이 드럼 하단으로 갈수록 줄어드는 관계가 있다",
+      "intrinsic": "¶[0016], 도3 간격 g1>g2",
+      "prosecution": "1차 거절(D1) 극복 위해 보정 추가 — 균등 주장 시 금반언 점검 대상"
+    },
+    {
+      "id": "1d",
+      "text": "a plurality of ribs formed on the inner wall at an inclination of 5 to 15 degrees relative to a rotation axis of the screw",
+      "type": "numeric",
+      "proposition": "내벽에 스크루 회전축 대비 5~15° 경사의 리브가 둘 이상 있다",
+      "intrinsic": "¶[0018] 측정 기준: 회전축 투영선",
+      "prosecution": "특이사항 없음"
+    },
+    {
+      "id": "1e",
+      "text": "means for rotating the screw at a speed of 40 to 60 rpm",
+      "type": "mpf",
+      "proposition": "스크루를 40~60rpm으로 회전시키는 기능 — 명세서의 대응 구조와 그 균등물로 한정",
+      "sam": "¶[0021], 도4: BLDC 모터 M1 + 감속기어 G1(감속비 1:30)",
+      "construction": "§112(f) 기능식: 기능=40~60rpm 회전, 구조=모터+감속기어",
+      "intrinsic": "¶[0021]",
+      "prosecution": "특이사항 없음"
+    },
+    {
+      "id": "1f",
+      "text": "a controller configured to select either a juice mode or a smoothie mode in response to an operator input",
+      "type": "alternative",
+      "proposition": "제어부가 사용자 입력에 따라 착즙·스무디 모드 중 하나를 골라 작동하도록 설계돼 있다(배타적 선택)",
+      "construction": "'either…or' = 둘 중 하나(명세서 ¶[0024]·출원경과 의견서)",
+      "intrinsic": "¶[0024], 도5 흐름도 S3",
+      "prosecution": "의견서에서 '사용자 선택 단일 모드'를 강조"
+    },
+    {
+      "id": "1g",
+      "text": "a juice outlet formed at the lower end of the drum, without a mesh filter between the drum and the juice outlet",
+      "type": "negative",
+      "proposition": "드럼 하단에 착즙구가 있고, 드럼과 착즙구 사이에 망 필터가 없다",
+      "intrinsic": "¶[0027]",
+      "prosecution": "특이사항 없음"
+    },
+    {
+      "id": "2a",
+      "text": "the ribs have a height of 0.5 to 2 mm",
+      "type": "numeric",
+      "proposition": "리브 높이 0.5~2mm"
+    },
+    {
+      "id": "1x",
+      "text": "or",
+      "type": "alternative",
+      "proposition": "or"
+    }
+  ],
+  "rows": [
+    {
+      "id": "1pre",
+      "theory": "literal",
+      "assertion": "전제부가 한정으로 해석되더라도 JX-500은 착즙기다.",
+      "facts": [
+        {
+          "source": "JX-500 사용설명서 v1.2",
+          "pin": "p.2 ¶1",
+          "date": "2024-05-01",
+          "text": "제품명 \"JX-500 슬로우 주서\""
+        }
+      ],
+      "explanation": "사용설명서가 제품을 과일·채소에서 즙을 짜는 '슬로우 주서'로 소개하므로 착즙기에 해당한다. 왜냐하면 착즙기의 통상적 의미가 즙을 분리·배출하는 기기이기 때문이다.",
+      "literal": "충족(조건부)",
+      "doe": "-",
+      "validity": "D1 개시"
+    },
+    {
+      "id": "1a",
+      "theory": "literal",
+      "assertion": "JX-500의 '본체 케이스 B1'이 [1a]를 충족한다.",
+      "facts": [
+        {
+          "source": "JX-500 서비스 매뉴얼 v1.2",
+          "pin": "p.6",
+          "date": "2024-05-01",
+          "text": "a housing is provided"
+        }
+      ],
+      "explanation": "피고 제품은 하우징을 포함한다.",
+      "literal": "충족",
+      "doe": "-",
+      "validity": "D1 개시"
+    },
+    {
+      "id": "1b",
+      "theory": "literal",
+      "assertion": "'착즙통 C2'가 [1b]를 충족한다.",
+      "facts": [
+        {
+          "source": "JX-500 서비스 매뉴얼 v1.2",
+          "pin": "p.1-120 전체",
+          "date": "2024-05-01",
+          "text": "매뉴얼 전반에 드럼이 나타남"
+        }
+      ],
+      "explanation": "C2가 B1 안에 장착되고 안쪽 면 C2a를 가지므로 내벽을 가진 드럼이다. 왜냐하면 C2가 원통형으로 스크루를 둘러싸는 용기이기 때문이다.",
+      "literal": "충족",
+      "doe": "-",
+      "validity": "D1 개시"
+    },
+    {
+      "id": "1c",
+      "theory": "literal",
+      "assertion": "'압착 스크루 S3'가 [1c]를 충족한다.",
+      "facts": [
+        {
+          "source": "JX-500 서비스 매뉴얼 v1.2",
+          "pin": "p.8 도 4 부호 S3",
+          "date": "2024-05-01",
+          "text": "압착 스크루 S3는 C2 중심축에서 회전한다"
+        }
+      ],
+      "explanation": "S3가 C2 안에서 축을 중심으로 회전하므로 회전 가능하게 배치된 스크루다. 왜냐하면 매뉴얼이 S3의 회전 구동을 명시하기 때문이다.",
+      "literal": "충족",
+      "doe": "-",
+      "validity": "D1 개시"
+    },
+    {
+      "id": "1c.1",
+      "theory": "literal",
+      "assertion": "S3의 '나선 압착날 S3-1·S3-2'가 [1c.1]을 충족한다.",
+      "facts": [
+        {
+          "source": "JX-500 분해 측정 기록(2025-02-10)",
+          "pin": "사진 7, 측정표 2행",
+          "date": "2025-02-10",
+          "text": "나선 압착날 2줄(S3-1, S3-2)"
+        }
+      ],
+      "explanation": "나선형 날이 두 줄 있으므로 '복수의 나선 날개'다. 왜냐하면 복수는 둘 이상을 뜻하기 때문이다.",
+      "literal": "충족",
+      "doe": "-",
+      "validity": "D1 개시"
+    },
+    {
+      "id": "1d",
+      "theory": "literal",
+      "assertion": "정보와 믿음에 근거하여 충족하며, 문언 침해가 아니라면 균등론에 의해 침해한다.",
+      "facts": [
+        {
+          "source": "JX-500 분해 측정 기록(2025-02-10)",
+          "pin": "사진 9, 측정표 6행",
+          "date": "2025-02-10",
+          "text": "가이드 돌기 R4 6개, 회전축 투영선 대비 경사 9°"
+        }
+      ],
+      "explanation": "세부 사항은 추후 보완한다.",
+      "literal": "충족",
+      "doe": "-",
+      "validity": "D1·D2 미개시 → 차이점"
+    },
+    {
+      "id": "1e",
+      "theory": "literal",
+      "assertion": "JX-500의 'DC 기어드 모터 GM-24'가 명세서의 대응 구조와 균등한 구조로 [1e]를 충족한다.",
+      "facts": [
+        {
+          "source": "GM-24 데이터시트 Rev.3",
+          "pin": "p.3 표 1",
+          "date": "2023-11-20",
+          "text": "DC 모터 + 유성기어(감속비 1:32), 정격 출력축 50rpm"
+        }
+      ],
+      "explanation": "GM-24도 스크루를 50rpm으로 돌리는 같은 기능을 하므로 충족한다.",
+      "literal": "충족(구조 균등)",
+      "doe": "-",
+      "validity": "D2 개시(모터+감속기어)"
+    },
+    {
+      "id": "1f",
+      "theory": "literal",
+      "assertion": "JX-500의 '모드 선택 버튼 K2'와 제어보드 MCU가 [1f]를 충족한다.",
+      "facts": [
+        {
+          "source": "JX-500 사용설명서 v1.2",
+          "pin": "p.9 ¶3, 그림 6 부호 K2",
+          "date": "2024-05-01",
+          "text": "K2를 누르면 \"주스\" 또는 \"스무디\" 중 하나가 켜지고 그 모드로만 작동"
+        },
+        {
+          "source": "JX-500 펌웨어 2.3 소스",
+          "pin": "fw/mode/select.c, 함수 mode_select() 41~58행",
+          "date": "2024-04-02",
+          "executed": true,
+          "text": "버튼 입력에 따라 두 모드 중 하나를 활성 상태로 설정(로직 원문은 보호명령에 따라 생략)"
+        },
+        {
+          "source": "JX-700 브로슈어",
+          "pin": "p.3 ¶2",
+          "date": "2020-08-01",
+          "product": "JX-700",
+          "text": "주스/스무디 선택"
+        }
+      ],
+      "explanation": "사용자 입력(K2)에 응답해 두 모드 중 하나만 켜고 그 모드로 작동하므로 배타적 선택 한정을 충족한다. 왜냐하면 mode_select()가 한 번에 하나의 모드만 활성으로 두기 때문이다.",
+      "literal": "충족",
+      "doe": "-",
+      "validity": "D1 미개시(자동 단일 모드) → 차이점"
+    },
+    {
+      "id": "1g",
+      "theory": "doe",
+      "assertion": "O5가 균등론으로 [1g]를 충족한다.",
+      "facts": [
+        {
+          "source": "JX-500 서비스 매뉴얼 v1.2",
+          "pin": "p.11 도 7 부호 O5, 부품표 p.12 7~12행",
+          "date": "2024-05-01",
+          "text": "배즙구 O5는 C2 하단에 형성; 미세 메시 M7 장착"
+        }
+      ],
+      "explanation": "망 필터가 있어도 균등하다. 왜냐하면 결과가 비슷하기 때문이다.",
+      "literal": "충족",
+      "doe": "-",
+      "validity": "D1 개시(망 필터 있음 → 불일치)"
+    },
+    {
+      "id": "2a",
+      "theory": "literal",
+      "assertion": "",
+      "facts": [],
+      "explanation": "청구항 1 참조"
+    }
+  ]
+}
