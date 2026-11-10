@@ -1,0 +1,13 @@
+Copilot용 내보내기 목록 (핸드북 34 · patent-intelligence)
+
+숫자(문헌·패밀리·기술신호·연도·점수)는 01_intake.html·02_stats.html에서만 인용한다.
+관문 상태는 state.txt를 따른다. 승인 전 단계의 산출물은 '초안'이다.
+
+- 01_intake.html
+- 02_stats.html
+- 03_analysis.html
+- report.html
+- lint_good.html
+- clusters.xlsx
+- scores.xlsx
+- state.txt

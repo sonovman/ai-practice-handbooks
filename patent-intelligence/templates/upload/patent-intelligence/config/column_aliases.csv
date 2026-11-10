@@ -1,0 +1,118 @@
+field,alias
+seq,번호
+seq,No
+seq,순번
+seq,NO.
+country,국가코드
+country,국가
+country,발행국
+country,Country
+country,Country Code
+country,Authority
+kind,문헌종류
+kind,문헌 종류
+kind,권리구분
+kind,특허/실용
+kind,Kind
+kind,Document Type
+kind,종류
+title,발명의명칭
+title,발명의 명칭
+title,명칭
+title,고안의명칭
+title,Title
+title,Invention Title
+app_no,출원번호
+app_no,Application Number
+app_no,Application No
+app_date,출원일
+app_date,출원일자
+app_date,Application Date
+app_date,Filing Date
+pub_no,공개번호
+pub_no,Publication Number
+pub_no,Publication No
+pub_no,공개공보번호
+pub_date,공개일
+pub_date,공개일자
+pub_date,Publication Date
+reg_no,등록번호
+reg_no,Registration Number
+reg_no,Patent Number
+reg_no,Grant Number
+reg_no,등록공고번호
+reg_date,등록일
+reg_date,등록일자
+reg_date,Registration Date
+reg_date,Grant Date
+reg_date,등록공고일
+applicant,출원인
+applicant,출원인명
+applicant,Applicant
+applicant,Applicants
+applicant,Assignee
+applicant,현재권리자
+applicant_en,출원인(영문)
+applicant_en,영문출원인
+applicant_en,출원인영문
+applicant_en,Applicant (English)
+applicant_en,Applicant English
+rep_applicant,출원인대표명
+rep_applicant,대표출원인
+rep_applicant,출원인 대표명
+rep_applicant,Standardized Applicant
+inventor,발명자
+inventor,Inventor
+inventor,Inventors
+ipc,IPC
+ipc,메인IPC
+ipc,IPC분류
+ipc,Main IPC
+ipc,IPC(All)
+cpc,CPC
+cpc,CPC분류
+cpc,Main CPC
+priority_no,우선권번호
+priority_no,우선권주장번호
+priority_no,Priority Number
+priority_no,Priority No
+priority_date,우선일
+priority_date,우선권주장일
+priority_date,우선권주장일자
+priority_date,최우선일
+priority_date,Priority Date
+priority_date,Earliest Priority Date
+family_id,패밀리번호
+family_id,패밀리ID
+family_id,INPADOC패밀리
+family_id,패밀리 ID
+family_id,Family ID
+family_id,DOCDB Family
+family_id,INPADOC Family
+family_countries,패밀리국가
+family_countries,패밀리 국가
+family_countries,Family Countries
+abstract,요약
+abstract,Abstract
+abstract,요약서
+claim,대표청구항
+claim,청구항
+claim,Representative Claim
+claim,First Claim
+claim,독립청구항
+status,법적상태
+status,상태정보
+status,권리상태
+status,Legal Status
+status,Status
+new_flag,신규
+new_flag,금회신규
+new_flag,금월신규
+new_flag,신규표시
+new_flag,New
+new_flag,표시
+cluster,기술군
+cluster,기술분류
+cluster,분석분류
+cluster,Cluster
+cluster,Tech Cluster

@@ -1,0 +1,38 @@
+test_country_from_number (__main__.CommonTests.test_country_from_number) ... ok
+test_dates (__main__.CommonTests.test_dates) ... ok
+test_doc_type_rules (__main__.CommonTests.test_doc_type_rules) ... ok
+test_xlsx_roundtrip_and_header_detection (__main__.CommonTests.test_xlsx_roundtrip_and_header_detection) ... ok
+test_export_formats_copilot_can_read (__main__.CopilotExportTests.test_export_formats_copilot_can_read) ... ok
+test_candidates_need_report_approval (__main__.GateTests.test_candidates_need_report_approval) ... ok
+test_cannot_skip_gate (__main__.GateTests.test_cannot_skip_gate) ... ok
+test_interpret (__main__.GateTests.test_interpret) ... ok
+test_revise_then_continue_sets_baseline (__main__.GateTests.test_revise_then_continue_sets_baseline) ... ok
+test_silence_does_not_approve (__main__.GateTests.test_silence_does_not_approve) ... ok
+test_applicant_alias_group_and_english (__main__.IntakeTests.test_applicant_alias_group_and_english) ... ok
+test_cn_dual_candidate_only (__main__.IntakeTests.test_cn_dual_candidate_only) ... ok
+test_counts (__main__.IntakeTests.test_counts) ... ok
+test_duplicate_merged_keeps_numbers (__main__.IntakeTests.test_duplicate_merged_keeps_numbers) ... ok
+test_family_and_signal (__main__.IntakeTests.test_family_and_signal) ... ok
+test_missing_pdfs (__main__.IntakeTests.test_missing_pdfs) ... ok
+test_new_flag_fallback_without_previous (__main__.IntakeTests.test_new_flag_fallback_without_previous) ... ok
+test_no_number_is_error (__main__.IntakeTests.test_no_number_is_error) ... ok
+test_application_number_used (__main__.LintTests.test_application_number_used) ... ok
+test_candidate_and_action_caps (__main__.LintTests.test_candidate_and_action_caps) ... ok
+test_corpus_legal_counts_lag_baseline (__main__.LintTests.test_corpus_legal_counts_lag_baseline) ... ok
+test_good_line (__main__.LintTests.test_good_line) ... ok
+test_missing_english_and_unknown_number (__main__.LintTests.test_missing_english_and_unknown_number) ... ok
+test_sample_reports (__main__.LintTests.test_sample_reports) ... ok
+test_trend_needs_strength (__main__.LintTests.test_trend_needs_strength) ... ok
+test_render (__main__.RenderTests.test_render) ... ok
+test_cap_over_five_warns (__main__.StatsTests.test_cap_over_five_warns) ... ok
+test_grade_candidates (__main__.StatsTests.test_grade_candidates) ... ok
+test_group_counts (__main__.StatsTests.test_group_counts) ... ok
+test_lag_year (__main__.StatsTests.test_lag_year) ... ok
+test_score_range_error (__main__.StatsTests.test_score_range_error) ... ok
+test_scores_scaling_cap_and_exception (__main__.StatsTests.test_scores_scaling_cap_and_exception) ... ok
+test_svg_written (__main__.StatsTests.test_svg_written) ... ok
+
+----------------------------------------------------------------------
+Ran 33 tests in 0.153s
+
+OK

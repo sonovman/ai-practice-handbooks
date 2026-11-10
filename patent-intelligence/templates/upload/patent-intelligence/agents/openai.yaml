@@ -1,0 +1,8 @@
+interface:
+  display_name: "공개특허 경쟁기술 인텔리전스"
+  short_description: "공개특허로 기술동향·시장 흐름 분석, 승인 관문을 거친 C레벨 보고서"
+  default_prompt: "$patent-intelligence로 이번 회차 WIPSON 자료를 단계별 승인 방식으로 분석하고 경영진 보고서를 작성해줘. 먼저 자료 검증 결과를 보여 주고 멈춰."
+  icon_small: "./assets/icon.svg"
+  icon_large: "./assets/icon.svg"
+policy:
+  allow_implicit_invocation: true

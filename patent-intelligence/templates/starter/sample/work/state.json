@@ -1,0 +1,96 @@
+{
+ "round": "2026-R4",
+ "state": "CANDIDATES_PROPOSED",
+ "current": "CANDIDATES",
+ "approved": [
+  "ANALYSIS",
+  "REPORT"
+ ],
+ "pending": {
+  "stage": "CANDIDATES",
+  "file": "work/04_candidates.md",
+  "version": 1
+ },
+ "accept_continue_as_approval": true,
+ "history": [
+  {
+   "at": "2026-11-10T14:53:56",
+   "event": "init",
+   "state": "INPUT_VALIDATION"
+  },
+  {
+   "at": "2026-11-10T14:53:56",
+   "event": "submit",
+   "stage": "ANALYSIS",
+   "file": "work/03_analysis.md",
+   "version": 1,
+   "note": ""
+  },
+  {
+   "at": "2026-11-10T14:53:56",
+   "event": "reply",
+   "stage": "ANALYSIS",
+   "version": 1,
+   "text": "D017 등급 근거 보완해 줘",
+   "kind": "revise",
+   "recorded_as": "수정 후 재제출"
+  },
+  {
+   "at": "2026-11-10T14:53:56",
+   "event": "submit",
+   "stage": "ANALYSIS",
+   "file": "work/03_analysis.md",
+   "version": 2,
+   "note": ""
+  },
+  {
+   "at": "2026-11-10T14:53:56",
+   "event": "reply",
+   "stage": "ANALYSIS",
+   "version": 2,
+   "text": "계속",
+   "kind": "implicit_approve",
+   "recorded_as": "묵시 승인('계속')",
+   "baseline": "work/03_analysis.md"
+  },
+  {
+   "at": "2026-11-10T14:54:46",
+   "event": "submit",
+   "stage": "REPORT",
+   "file": "work/reports/report.md",
+   "version": 1,
+   "note": ""
+  },
+  {
+   "at": "2026-11-10T14:54:46",
+   "event": "reply",
+   "stage": "REPORT",
+   "version": 1,
+   "text": "승인",
+   "kind": "approve",
+   "recorded_as": "명시 승인"
+  },
+  {
+   "at": "2026-11-10T14:54:46",
+   "event": "submit",
+   "stage": "FINAL",
+   "file": "out/report.html",
+   "version": 1,
+   "note": ""
+  },
+  {
+   "at": "2026-11-10T14:54:46",
+   "event": "submit",
+   "stage": "CANDIDATES",
+   "file": "work/04_candidates.md",
+   "version": 1,
+   "note": ""
+  }
+ ],
+ "baseline": {
+  "file": "work/03_analysis.md",
+  "version": 2,
+  "at": "2026-11-10T14:53:56",
+  "how": "묵시 승인('계속')"
+ }
+}

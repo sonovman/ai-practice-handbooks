@@ -1,0 +1,15 @@
+{
+  "project": "가상 예시 — 스마트 음식물 처리기 경쟁기술 모니터링",
+  "our_company": "우리회사(가상)",
+  "product": "스마트 음식물 처리기",
+  "countries": ["KR", "US", "JP", "CN", "EP"],
+  "round": "2026-R4",
+  "cadence": "분기 정기 + 경쟁사 신제품 출시 시 수시",
+  "data_date": "2026-11-01",
+  "trend_base_date": "2024-11-01",
+  "lag_months": 18,
+  "focus_areas": {"주력": ["건조·분쇄"], "인접": ["미생물 발효", "냄새 저감"], "확장": ["스마트 센서·앱"]},
+  "watch_competitors": ["가나그룹", "Alpha Home", "Gamma"],
+  "own_claims_available": false,
+  "accept_continue_as_approval": true
+}

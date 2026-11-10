@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>경쟁기술 인텔리전스 템플릿</title>
+<link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+<div class="bar"><div class="bar-in">
+  <a class="brand" href="../../">AI 실무 핸드북</a>
+  <div class="links"><a href="../">← 본문으로</a></div>
+</div></div>
+<div class="wrap">
+  <div class="eyebrow">핸드북 34 · 자료</div>
+  <h1>템플릿 내려받기</h1>
+  <p class="lead"><code>starter</code>에는 숨김 <code>.agents</code> 폴더가 있어 <a href="../downloads/patent-intelligence-kit.zip" download>전체(ZIP)</a>로 받는 편이 확실합니다. 받은 뒤 <code>python tools/test_pi_tools.py</code>로 33개 시험 통과를 먼저 확인하세요. 시범 자료의 회사·번호·내용은 모두 가상입니다.</p>
+
+  <h2>웹 앱 업로드용 스킬 (upload)</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>스킬</th><th>Claude · ChatGPT · Copilot Cowork</th><th>SKILL.md 최상위</th><th>Gemini · 내용 보기</th></tr></thead>
+    <tbody>
+      <tr><th>patent-intelligence</th><td><a href="upload/patent-intelligence.zip" download>patent-intelligence.zip</a></td><td><a href="upload/patent-intelligence-flat.zip" download>flat.zip</a></td><td><a href="upload/patent-intelligence/SKILL.md">SKILL.md</a></td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>지침 (붙여 넣기용)</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>파일</th><th>어디에</th></tr></thead>
+    <tbody>
+      <tr><th><a href="starter/PROJECT_INSTRUCTIONS.md">PROJECT_INSTRUCTIONS.md</a></th><td>Claude·ChatGPT 프로젝트 지침 칸 — 역할·순서·관문을 지휘하는 오케스트라 지침</td></tr>
+      <tr><th><a href="starter/COPILOT_AGENT_INSTRUCTIONS.md">COPILOT_AGENT_INSTRUCTIONS.md</a></th><td>Microsoft 365 Copilot 에이전트 지침 칸(짧은 판) — 지식은 SharePoint 회차 폴더</td></tr>
+      <tr><th><a href="starter/AGENTS.md">AGENTS.md</a> · <a href="starter/.agents/rules/patent-intelligence.md">.agents/rules/patent-intelligence.md</a></th><td>Antigravity·Claude Code 항상 규칙 · 요청 시 규칙</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>바로 붙여 넣는 프롬프트</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>파일</th><th>용도</th></tr></thead>
+    <tbody>
+      <tr><th><a href="starter/prompts/00-round-start.md">00-round-start.md</a></th><td>회차 시작·설정·자료 검증</td></tr>
+      <tr><th><a href="starter/prompts/01-screen-cluster.md">01-screen-cluster.md</a></th><td>1차 선별·기술군</td></tr>
+      <tr><th><a href="starter/prompts/02-score-analyze.md">02-score-analyze.md</a></th><td>정독·점수·분석결과서 → 관문 A</td></tr>
+      <tr><th><a href="starter/prompts/03-report-draft.md">03-report-draft.md</a></th><td>보고서 초안·점검 → 관문 B</td></tr>
+      <tr><th><a href="starter/prompts/04-final.md">04-final.md</a></th><td>최종본 렌더·확인</td></tr>
+      <tr><th><a href="starter/prompts/05-candidates-handoff.md">05-candidates-handoff.md</a></th><td>정밀분석 후보 → 관문 C → 인계</td></tr>
+      <tr><th><a href="starter/prompts/06-urgent-brief.md">06-urgent-brief.md</a></th><td>수시 보고 1~2쪽 브리프</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>스킬과 참고문서 (starter)</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>파일</th><th>내용</th></tr></thead>
+    <tbody>
+      <tr><th><a href="starter/.agents/skills/patent-intelligence/SKILL.md">SKILL.md</a></th><td>원칙·실행 흐름·중단 조건</td></tr>
+      <tr><th><a href="starter/.agents/skills/patent-intelligence/references/data-intake.md">data-intake.md</a></th><td>WIPSON 받는 법·열 맞추기·국가별 규칙·공개 지연·세는 단위</td></tr>
+      <tr><th><a href="starter/.agents/skills/patent-intelligence/references/analysis-rules.md">analysis-rules.md</a></th><td>표기·시간축·판독·T1~T5·회피설계·병행출원·점수·최종 검증</td></tr>
+      <tr><th><a href="starter/.agents/skills/patent-intelligence/references/market-signals.md">market-signals.md</a></th><td>특허로 읽는 시장 신호와 한계</td></tr>
+      <tr><th><a href="starter/.agents/skills/patent-intelligence/references/approval-workflow.md">approval-workflow.md</a></th><td>관문 상태·승인 해석·기준선·정기 운영</td></tr>
+      <tr><th><a href="starter/.agents/skills/patent-intelligence/references/report-spec.md">report-spec.md</a></th><td>보고서 구성·신뢰도·시각·최종 QA</td></tr>
+      <tr><th><a href="starter/.agents/skills/patent-intelligence/references/handoff.md">handoff.md</a></th><td>정밀분석 인계 패킷(claim-suite로)</td></tr>
+      <tr><th><a href="starter/.agents/skills/patent-intelligence/references/copilot-sharepoint.md">copilot-sharepoint.md</a> · <a href="starter/.agents/skills/patent-intelligence/references/platform-setup.md">platform-setup.md</a></th><td>Copilot SharePoint 폴더 방식 · 다섯 플랫폼 설치</td></tr>
+      <tr><th><a href="starter/config/project.json">project.json</a> · <a href="starter/config/column_aliases.csv">column_aliases.csv</a> · <a href="starter/config/applicant_aliases.csv">applicant_aliases.csv</a></th><td>회차 설정 · 열 별칭 · 출원인 별칭(그룹·영문명·출처)</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>도구 (표준 라이브러리 · Python 3.9+)</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>파일</th><th>하는 일</th></tr></thead>
+    <tbody>
+      <tr><th><a href="starter/tools/pi_intake.py" download>pi_intake.py</a></th><td>자료 검증: 열 맞추기·중복·번호·출원인 그룹·패밀리·중국 병행 후보·신규 관측·공개 지연·누락 공보</td></tr>
+      <tr><th><a href="starter/tools/pi_stats.py" download>pi_stats.py</a></th><td>연도·국가·그룹·시장 신호 집계, 등급 후보, 점수 환산·후보 상한, SVG 차트</td></tr>
+      <tr><th><a href="starter/tools/pi_gate.py" download>pi_gate.py</a></th><td>승인 관문 상태 기록(건너뛰기 거부, 무응답 대기, ‘계속’ 묵시 승인)</td></tr>
+      <tr><th><a href="starter/tools/report_lint.py" download>report_lint.py</a></th><td>보고서 점검 R01~R12</td></tr>
+      <tr><th><a href="starter/tools/render_report.py" download>render_report.py</a> · <a href="starter/tools/export_for_copilot.py" download>export_for_copilot.py</a></th><td>인쇄용 HTML · Copilot(SharePoint)용 .html·.xlsx·.txt</td></tr>
+      <tr><th><a href="starter/tools/pi_common.py" download>pi_common.py</a> · <a href="starter/tools/make_sample.py" download>make_sample.py</a></th><td>xlsx·CSV 읽기 등 공용 함수 · 가상 시범 자료</td></tr>
+      <tr><th><a href="starter/tools/test_pi_tools.py" download>test_pi_tools.py</a> · <a href="starter/build_upload.py" download>build_upload.py</a></th><td>시험 33개 · 업로드 묶음 만들기</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2 id="sample">시범 자료 (직접 실행 결과, 가상 데이터)</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>파일</th><th>내용</th></tr></thead>
+    <tbody>
+      <tr><th><a href="starter/sample/inbox/this_round.xlsx" download>this_round.xlsx</a> · <a href="starter/sample/inbox/prev_round.csv">prev_round.csv</a></th><td>WIPSON식 이번 회차(제목 줄 포함, 5개국 21행) · 직전 회차</td></tr>
+      <tr><th><a href="starter/sample/work/01_intake.md">01_intake.md</a></th><td>자료 검증: 문헌 20 · 신규 7 · 동향대상 16 · 오류 1 · 경고 4 · 병행 후보 1쌍</td></tr>
+      <tr><th><a href="starter/sample/work/02_stats.md">02_stats.md</a> · <a href="starter/sample/work/chart_trend.svg">chart_trend.svg</a> · <a href="starter/sample/work/chart_groups.svg">chart_groups.svg</a></th><td>집계·등급 후보·점수(추천 5) · 차트</td></tr>
+      <tr><th><a href="starter/sample/work/03_analysis.md">03_analysis.md</a> · <a href="starter/sample/work/state_status.txt">state_status.txt</a></th><td>분석결과서([B01]~[B08]) · 관문 상태(수정 → 재제출 → ‘계속’)</td></tr>
+      <tr><th><a href="starter/sample/work/reports/report.md">report.md</a> · <a href="starter/sample/work/reports/report.html">report.html</a> · <a href="starter/sample/work/reports/lint_good.md">lint_good.md</a></th><td>경영진 보고서 · 인쇄용 HTML · 점검 오류 0</td></tr>
+      <tr><th><a href="starter/sample/work/reports/report_bad.md">report_bad.md</a> · <a href="starter/sample/work/reports/lint_bad.md">lint_bad.md</a></th><td>나쁜 예 · 오류 8 · 경고 2</td></tr>
+      <tr><th><a href="starter/sample/copilot_export/copilot_manifest.txt">copilot_export/</a></th><td>Copilot용 내보내기(01_intake.html · 02_stats.html · scores.xlsx · state.txt …)</td></tr>
+      <tr><th><a href="starter/sample/work/05_handoff_example.json">05_handoff_example.json</a> · <a href="starter/sample/test-output.txt">test-output.txt</a></th><td>인계 패킷 예시 · 시험 33개 통과 로그</td></tr>
+    </tbody>
+  </table></div>
+</div>
+</body>
+</html>

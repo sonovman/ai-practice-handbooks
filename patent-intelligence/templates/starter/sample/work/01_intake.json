@@ -1,0 +1,925 @@
+{
+ "summary": {
+  "source": "this_round.xlsx",
+  "rows_read": 21,
+  "documents": 20,
+  "by_country": {
+   "CN": 5,
+   "EP": 2,
+   "JP": 3,
+   "KR": 8,
+   "US": 2
+  },
+  "by_doc_type": {
+   "invention": 18,
+   "utility": 2
+  },
+  "by_stage": {
+   "공개": 14,
+   "등록": 5,
+   "번호없음": 1
+  },
+  "families": 16,
+  "tech_signals": 15,
+  "new_observed": 7,
+  "new_basis": "직전 회차 목록과 비교",
+  "trend_scope": 16,
+  "lag_zone_docs": 1,
+  "no_number_docs": 1,
+  "cn_dual_candidates": 1,
+  "unknown_columns": [],
+  "data_date": "2026-11-01",
+  "trend_base_date": "2024-11-01",
+  "lag_months": 18.0
+ },
+ "records": [
+  {
+   "id": "D001",
+   "rows": [
+    5
+   ],
+   "country": "KR",
+   "title": "음식물 처리기의 분쇄 건조 장치",
+   "app_no": "10-2019-0099001",
+   "pub_no": "KR 10-2020-0990001 A",
+   "reg_no": "KR 10-3990001 B1",
+   "kind": "특허",
+   "ipc": "B09B 3/00",
+   "family_id": "FAM-G01",
+   "abstract": "회전 칼날과 열풍으로 음식물을 분쇄하며 건조한다.",
+   "app_date": "2019-03-04",
+   "pub_date": "2020-09-14",
+   "reg_date": "2021-05-03",
+   "doc_type": "invention",
+   "stage": "등록",
+   "kind_codes": [
+    "A",
+    "B1"
+   ],
+   "applicants": [
+    "가나전자 주식회사"
+   ],
+   "applicant_canon": "가나전자 주식회사",
+   "group": "가나그룹",
+   "applicant_en": "GANA ELECTRONICS CO. LTD.",
+   "en_status": "official",
+   "alias_hit": true,
+   "applicant_display": "가나전자 주식회사 (GANA ELECTRONICS CO. LTD.)",
+   "first_date": "2019-03-04",
+   "evidence_ok": true,
+   "is_new": false,
+   "new_basis": "직전 회차 목록과 비교",
+   "in_trend_scope": false,
+   "lag_zone": false,
+   "pdf": "KR10-2020-0990001A.pdf",
+   "family_key": "F:FAMG01",
+   "signal_key": "F:FAMG01"
+  },
+  {
+   "id": "D002",
+   "rows": [
+    6
+   ],
+   "country": "JP",
+   "title": "生ごみ処理機の脱臭フィルタ",
+   "app_no": "2020-099002",
+   "pub_no": "JP 2021-990002 A",
+   "kind": "特許",
+   "ipc": "B09B 3/00",
+   "family_id": "FAM-B01",
+   "abstract": "活性炭と触媒で臭気を低減する。",
+   "app_date": "2020-06-01",
+   "pub_date": "2021-12-10",
+   "doc_type": "invention",
+   "stage": "공개",
+   "kind_codes": [
+    "A"
+   ],
+   "applicants": [
+    "ベータ工業株式会社"
+   ],
+   "applicant_canon": "ベータ工業株式会社",
+   "group": "Beta",
+   "applicant_en": "BETA INDUSTRIES CO. LTD.",
+   "en_status": "official",
+   "alias_hit": true,
+   "applicant_display": "ベータ工業株式会社 (BETA INDUSTRIES CO. LTD.)",
+   "first_date": "2020-06-01",
+   "evidence_ok": true,
+   "is_new": false,
+   "new_basis": "직전 회차 목록과 비교",
+   "in_trend_scope": false,
+   "lag_zone": false,
+   "pdf": null,
+   "family_key": "F:FAMB01",
+   "signal_key": "F:FAMB01"
+  },
+  {
+   "id": "D003",
+   "rows": [
+    7
+   ],
+   "country": "KR",
+   "title": "건조 분쇄형 음식물 처리기 및 제어 방법",
+   "app_no": "10-2023-0099011",
+   "pub_no": "KR 10-2024-0990011 A",
+   "kind": "특허",
+   "ipc": "B09B 3/40",
+   "priority_no": "KR10-2023-0099011",
+   "family_id": "FAM-G11",
+   "abstract": "건조 단계와 분쇄 단계를 습도 센서 값으로 전환한다.",
+   "app_date": "2023-02-10",
+   "pub_date": "2024-08-19",
+   "priority_date": "2023-02-10",
+   "doc_type": "invention",
+   "stage": "공개",
+   "kind_codes": [
+    "A"
+   ],
+   "applicants": [
+    "가나전자 주식회사"
+   ],
+   "applicant_canon": "가나전자 주식회사",
+   "group": "가나그룹",
+   "applicant_en": "GANA ELECTRONICS CO. LTD.",
+   "en_status": "official",
+   "alias_hit": true,
+   "applicant_display": "가나전자 주식회사 (GANA ELECTRONICS CO. LTD.)",
+   "first_date": "2023-02-10",
+   "evidence_ok": true,
+   "is_new": false,
+   "new_basis": "직전 회차 목록과 비교",
+   "in_trend_scope": false,
+   "lag_zone": false,
+   "pdf": "KR10-2024-0990011A.pdf",
+   "family_key": "F:FAMG11",
+   "signal_key": "F:FAMG11"
+  },
+  {
+   "id": "D004",
+   "rows": [
+    8
+   ],
+   "country": "US",
+   "title": "Food waste processor with staged drying and grinding",
+   "app_no": "18/990011",
+   "pub_no": "US 2025/0900011 A1",
+   "kind": "Patent",
+   "ipc": "B09B 3/40",
+   "priority_no": "KR10-2023-0099011",
+   "family_id": "FAM-G11",
+   "abstract": "Switching between drying and grinding based on humidity.",
+   "app_date": "2024-01-20",
+   "pub_date": "2025-07-24",
+   "priority_date": "2023-02-10",
+   "doc_type": "invention",
+   "stage": "공개",
+   "kind_codes": [
+    "A1"
+   ],
+   "applicants": [
+    "GANA ELECTRONICS CO LTD"
+   ],
+   "applicant_canon": "가나전자 주식회사",
+   "group": "가나그룹",
+   "applicant_en": "GANA ELECTRONICS CO. LTD.",
+   "en_status": "official",
+   "alias_hit": true,
+   "applicant_display": "가나전자 주식회사 (GANA ELECTRONICS CO. LTD.)",
+   "first_date": "2023-02-10",
+   "evidence_ok": true,
+   "is_new": false,
+   "new_basis": "직전 회차 목록과 비교",
+   "in_trend_scope": true,
+   "lag_zone": false,
+   "pdf": "US20250900011A1.pdf",
+   "family_key": "F:FAMG11",
+   "signal_key": "F:FAMG11"
+  },
+  {
+   "id": "D005",
+   "rows": [
+    9
+   ],
+   "country": "CN",
+   "title": "分阶段干燥粉碎的厨余处理器",
+   "app_no": "202410990011.3",
+   "pub_no": "CN 129900011 A",
+   "kind": "发明",
+   "ipc": "B09B 3/40",
+   "priority_no": "KR10-2023-0099011",
+   "family_id": "FAM-G11",
+   "abstract": "根据湿度切换干燥和粉碎。",
+   "app_date": "2024-01-25",
+   "pub_date": "2025-02-14",
+   "priority_date": "2023-02-10",
+   "doc_type": "invention",
+   "stage": "공개",
+   "kind_codes": [
+    "A"
+   ],
+   "applicants": [
+    "가나전자 주식회사"
+   ],
+   "applicant_canon": "가나전자 주식회사",
+   "group": "가나그룹",
+   "applicant_en": "GANA ELECTRONICS CO. LTD.",
+   "en_status": "official",
+   "alias_hit": true,
+   "applicant_display": "가나전자 주식회사 (GANA ELECTRONICS CO. LTD.)",
+   "first_date": "2023-02-10",
+   "evidence_ok": true,
+   "is_new": false,
+   "new_basis": "직전 회차 목록과 비교",
+   "in_trend_scope": true,
+   "lag_zone": false,
+   "pdf": "CN129900011A.pdf",
+   "family_key": "F:FAMG11",
+   "signal_key": "F:FAMG11"
+  },
+  {
+   "id": "D006",
+   "rows": [
+    10,
+    25
+   ],
+   "country": "KR",
+   "title": "음식물 처리기의 분쇄날 구조",
+   "app_no": "10-2024-0099021",
+   "pub_no": "KR 10-2025-0990021 A",
+   "kind": "특허",
+   "ipc": "B02C 18/00",
+   "family_id": "FAM-G21",
+   "abstract": "분쇄날을 상하 2단으로 배치해 섬유질 엉킴을 줄인다.",
+   "app_date": "2024-03-05",
+   "pub_date": "2025-09-15",
+   "doc_type": "invention",
+   "stage": "공개",
+   "kind_codes": [
+    "A"
+   ],
+   "applicants": [
+    "가나전자(주)"
+   ],
+   "applicant_canon": "가나전자 주식회사",
+   "group": "가나그룹",
+   "applicant_en": "GANA ELECTRONICS CO. LTD.",
+   "en_status": "official",
+   "alias_hit": true,
+   "applicant_display": "가나전자 주식회사 (GANA ELECTRONICS CO. LTD.)",
+   "first_date": "2024-03-05",
+   "evidence_ok": true,
+   "is_new": false,
+   "new_basis": "직전 회차 목록과 비교",
+   "in_trend_scope": true,
+   "lag_zone": false,
+   "pdf": "KR10-2025-0990021A.pdf",
+   "family_key": "F:FAMG21",
+   "signal_key": "F:FAMG21"
+  },
+  {
+   "id": "D007",
+   "rows": [
+    11
+   ],
+   "country": "US",
+   "title": "Dehydrating grinder for kitchen waste",
+   "app_no": "18/990031",
+   "pub_no": "US 2025/0900031 A1",
+   "reg_no": "US 12,990,031 B2",
+   "kind": "Patent",
+   "ipc": "B09B 3/40",
+   "family_id": "FAM-A31",
+   "abstract": "A heater duct surrounds the grinding chamber to dry while grinding.",
+   "app_date": "2024-02-11",
+   "pub_date": "2025-08-14",
+   "reg_date": "2026-07-07",
+   "doc_type": "invention",
+   "stage": "등록",
+   "kind_codes": [
+    "A1",
+    "B2"
+   ],
+   "applicants": [
+    "ALPHA HOME INC."
+   ],
+   "applicant_canon": "ALPHA HOME INC.",
+   "group": "Alpha Home",
+   "applicant_en": "ALPHA HOME INC.",
+   "en_status": "official",
+   "alias_hit": true,
+   "applicant_display": "ALPHA HOME INC.",
+   "first_date": "2024-02-11",
+   "evidence_ok": true,
+   "is_new": false,
+   "new_basis": "직전 회차 목록과 비교",
+   "in_trend_scope": true,
+   "lag_zone": false,
+   "pdf": "US20250900031A1.pdf",
+   "family_key": "F:FAMA31",
+   "signal_key": "F:FAMA31"
+  },
+  {
+   "id": "D008",
+   "rows": [
+    12
+   ],
+   "country": "EP",
+   "title": "Kitchen waste dehydrating grinder",
+   "app_no": "24990031.0",
+   "pub_no": "EP 4 990 031 A1",
+   "kind": "Patent",
+   "ipc": "B09B 3/40",
+   "priority_no": "US18/990031",
+   "family_id": "FAM-A31",
+   "abstract": "Heater duct around grinding chamber.",
+   "app_date": "2024-03-01",
+   "pub_date": "2025-09-10",
+   "priority_date": "2024-02-11",
+   "doc_type": "invention",
+   "stage": "공개",
+   "kind_codes": [
+    "A1"
+   ],
+   "applicants": [
+    "ALPHA HOME INC."
+   ],
+   "applicant_canon": "ALPHA HOME INC.",
+   "group": "Alpha Home",
+   "applicant_en": "ALPHA HOME INC.",
+   "en_status": "official",
+   "alias_hit": true,
+   "applicant_display": "ALPHA HOME INC.",
+   "first_date": "2024-02-11",
+   "evidence_ok": true,
+   "is_new": true,
+   "new_basis": "직전 회차 목록과 비교",
+   "in_trend_scope": true,
+   "lag_zone": false,
+   "pdf": "EP4990031A1.pdf",
+   "family_key": "F:FAMA31",
+   "signal_key": "F:FAMA31"
+  },
+  {
+   "id": "D009",
+   "rows": [
+    13
+   ],
+   "country": "CN",
+   "title": "一种干燥粉碎式厨余处理装置",
+   "app_no": "202410990041.5",
+   "pub_no": "CN 129900041 A",
+   "kind": "发明",
+   "ipc": "B09B 3/40",
+   "family_id": "FAM-C41",
+   "abstract": "干燥腔与粉碎腔一体，热风循环干燥并粉碎厨余。",
+   "app_date": "2024-04-02",
+   "pub_date": "2025-06-20",
+   "doc_type": "invention",
+   "stage": "공개",
+   "kind_codes": [
+    "A"
+   ],
+   "applicants": [
+    "深圳伽马电器有限公司"
+   ],
+   "applicant_canon": "深圳伽马电器有限公司",
+   "group": "Gamma",
+   "applicant_en": "SHENZHEN GAMMA ELECTRIC APPLIANCE CO. LTD.",
+   "en_status": "unofficial",
+   "alias_hit": true,
+   "applicant_display": "深圳伽马电器有限公司 (SHENZHEN GAMMA ELECTRIC APPLIANCE CO. LTD. · 비공식 번역)",
+   "first_date": "2024-04-02",
+   "evidence_ok": true,
+   "is_new": false,
+   "new_basis": "직전 회차 목록과 비교",
+   "in_trend_scope": true,
+   "lag_zone": false,
+   "pdf": "CN129900041A.pdf",
+   "family_key": "F:FAMC41",
+   "cn_pair": [
+    "D010"
+   ],
+   "signal_key": "F:FAMC41"
+  },
+  {
+   "id": "D010",
+   "rows": [
+    14
+   ],
+   "country": "CN",
+   "title": "一种干燥粉碎式厨余处理装置",
+   "app_no": "202420990042.1",
+   "reg_no": "CN 229900042 U",
+   "kind": "实用新型",
+   "ipc": "B09B 3/40",
+   "family_id": "FAM-C42",
+   "abstract": "干燥腔与粉碎腔一体，热风循环干燥并粉碎厨余。",
+   "app_date": "2024-04-02",
+   "reg_date": "2025-01-10",
+   "doc_type": "utility",
+   "stage": "등록",
+   "kind_codes": [
+    "U"
+   ],
+   "applicants": [
+    "深圳伽马电器有限公司"
+   ],
+   "applicant_canon": "深圳伽马电器有限公司",
+   "group": "Gamma",
+   "applicant_en": "SHENZHEN GAMMA ELECTRIC APPLIANCE CO. LTD.",
+   "en_status": "unofficial",
+   "alias_hit": true,
+   "applicant_display": "深圳伽马电器有限公司 (SHENZHEN GAMMA ELECTRIC APPLIANCE CO. LTD. · 비공식 번역)",
+   "first_date": "2024-04-02",
+   "evidence_ok": true,
+   "is_new": false,
+   "new_basis": "직전 회차 목록과 비교",
+   "in_trend_scope": true,
+   "lag_zone": false,
+   "pdf": "CN229900042U.pdf",
+   "family_key": "F:FAMC42",
+   "cn_pair": [
+    "D009"
+   ],
+   "signal_key": "F:FAMC41"
+  },
+  {
+   "id": "D011",
+   "rows": [
+    15
+   ],
+   "country": "KR",
+   "title": "저소음 음식물 분쇄 건조기",
+   "app_no": "10-2024-0099051",
+   "pub_no": "KR 10-2025-0990051 A",
+   "kind": "특허",
+   "ipc": "B09B 3/40",
+   "family_id": "FAM-D51",
+   "abstract": "분쇄 모터 회전수를 단계적으로 낮춰 소음을 줄이면서 건조한다.",
+   "app_date": "2024-05-20",
+   "pub_date": "2025-11-24",
+   "doc_type": "invention",
+   "stage": "공개",
+   "kind_codes": [
+    "A"
+   ],
+   "applicants": [
+    "다라테크 주식회사"
+   ],
+   "applicant_canon": "다라테크 주식회사",
+   "group": "다라테크",
+   "applicant_en": "",
+   "en_status": "unverified",
+   "alias_hit": true,
+   "applicant_display": "다라테크 주식회사 (영문명 미확인)",
+   "first_date": "2024-05-20",
+   "evidence_ok": true,
+   "is_new": false,
+   "new_basis": "직전 회차 목록과 비교",
+   "in_trend_scope": true,
+   "lag_zone": false,
+   "pdf": null,
+   "family_key": "F:FAMD51",
+   "signal_key": "F:FAMD51"
+  },
+  {
+   "id": "D012",
+   "rows": [
+    16
+   ],
+   "country": "KR",
+   "title": "미생물 발효형 음식물 처리기",
+   "app_no": "10-2023-0099061",
+   "pub_no": "KR 10-2024-0990061 A",
+   "reg_no": "KR 10-3990061 B1",
+   "kind": "특허",
+   "ipc": "C12M 1/00",
+   "family_id": "FAM-H61",
+   "abstract": "미생물 담체 교반 주기를 투입량에 맞춰 바꾼다.",
+   "app_date": "2023-06-12",
+   "pub_date": "2024-12-20",
+   "reg_date": "2025-10-01",
+   "doc_type": "invention",
+   "stage": "등록",
+   "kind_codes": [
+    "A",
+    "B1"
+   ],
+   "applicants": [
+    "가나홈솔루션 주식회사"
+   ],
+   "applicant_canon": "가나홈솔루션 주식회사",
+   "group": "가나그룹",
+   "applicant_en": "GANA HOME SOLUTION CO. LTD.",
+   "en_status": "official",
+   "alias_hit": true,
+   "applicant_display": "가나홈솔루션 주식회사 (GANA HOME SOLUTION CO. LTD.)",
+   "first_date": "2023-06-12",
+   "evidence_ok": true,
+   "is_new": false,
+   "new_basis": "직전 회차 목록과 비교",
+   "in_trend_scope": true,
+   "lag_zone": false,
+   "pdf": "KR10-2024-0990061A.pdf",
+   "family_key": "F:FAMH61",
+   "signal_key": "F:FAMH61"
+  },
+  {
+   "id": "D013",
+   "rows": [
+    17
+   ],
+   "country": "KR",
+   "title": "발효 처리기의 담체 온도 제어",
+   "app_no": "10-2024-0099071",
+   "pub_no": "KR 10-2025-0990071 A",
+   "kind": "특허",
+   "ipc": "C12M 1/00",
+   "family_id": "FAM-H71",
+   "abstract": "담체 온도를 미생물 활성 구간으로 유지한다.",
+   "app_date": "2024-01-30",
+   "pub_date": "2025-07-31",
+   "doc_type": "invention",
+   "stage": "공개",
+   "kind_codes": [
+    "A"
+   ],
+   "applicants": [
+    "가나홈솔루션 주식회사"
+   ],
+   "applicant_canon": "가나홈솔루션 주식회사",
+   "group": "가나그룹",
+   "applicant_en": "GANA HOME SOLUTION CO. LTD.",
+   "en_status": "official",
+   "alias_hit": true,
+   "applicant_display": "가나홈솔루션 주식회사 (GANA HOME SOLUTION CO. LTD.)",
+   "first_date": "2024-01-30",
+   "evidence_ok": true,
+   "is_new": false,
+   "new_basis": "직전 회차 목록과 비교",
+   "in_trend_scope": true,
+   "lag_zone": false,
+   "pdf": "KR10-2025-0990071A.pdf",
+   "family_key": "F:FAMH71",
+   "signal_key": "F:FAMH71"
+  },
+  {
+   "id": "D014",
+   "rows": [
+    18
+   ],
+   "country": "JP",
+   "title": "微生物発酵式生ごみ処理機",
+   "app_no": "2024-099072",
+   "pub_no": "JP 2026-990072 A",
+   "kind": "特許",
+   "ipc": "C12M 1/00",
+   "priority_no": "KR10-2024-0099071",
+   "family_id": "FAM-H71",
+   "abstract": "担体温度を微生物活性域に維持する。",
+   "app_date": "2024-07-15",
+   "pub_date": "2026-01-22",
+   "priority_date": "2024-01-30",
+   "doc_type": "invention",
+   "stage": "공개",
+   "kind_codes": [
+    "A"
+   ],
+   "applicants": [
+    "가나홈솔루션 주식회사"
+   ],
+   "applicant_canon": "가나홈솔루션 주식회사",
+   "group": "가나그룹",
+   "applicant_en": "GANA HOME SOLUTION CO. LTD.",
+   "en_status": "official",
+   "alias_hit": true,
+   "applicant_display": "가나홈솔루션 주식회사 (GANA HOME SOLUTION CO. LTD.)",
+   "first_date": "2024-01-30",
+   "evidence_ok": true,
+   "is_new": true,
+   "new_basis": "직전 회차 목록과 비교",
+   "in_trend_scope": true,
+   "lag_zone": false,
+   "pdf": "JP2026-990072A.pdf",
+   "family_key": "F:FAMH71",
+   "signal_key": "F:FAMH71"
+  },
+  {
+   "id": "D015",
+   "rows": [
+    19
+   ],
+   "country": "JP",
+   "title": "生ごみ処理機の触媒脱臭装置",
+   "app_no": "2024-099081",
+   "pub_no": "JP 2025-990081 A",
+   "kind": "特許",
+   "ipc": "B01D 53/86",
+   "family_id": "FAM-B81",
+   "abstract": "加熱触媒で臭気成分を分解し、フィルタ交換周期を延ばす。",
+   "app_date": "2024-02-26",
+   "pub_date": "2025-09-04",
+   "doc_type": "invention",
+   "stage": "공개",
+   "kind_codes": [
+    "A"
+   ],
+   "applicants": [
+    "ベータ工業株式会社"
+   ],
+   "applicant_canon": "ベータ工業株式会社",
+   "group": "Beta",
+   "applicant_en": "BETA INDUSTRIES CO. LTD.",
+   "en_status": "official",
+   "alias_hit": true,
+   "applicant_display": "ベータ工業株式会社 (BETA INDUSTRIES CO. LTD.)",
+   "first_date": "2024-02-26",
+   "evidence_ok": true,
+   "is_new": false,
+   "new_basis": "직전 회차 목록과 비교",
+   "in_trend_scope": true,
+   "lag_zone": false,
+   "pdf": "JP2025-990081A.pdf",
+   "family_key": "F:FAMB81",
+   "signal_key": "F:FAMB81"
+  },
+  {
+   "id": "D016",
+   "rows": [
+    20
+   ],
+   "country": "EP",
+   "title": "Odour abatement unit for food waste appliance",
+   "app_no": "24990091.4",
+   "pub_no": "EP 4 990 091 A1",
+   "kind": "Patent",
+   "ipc": "B01D 53/86",
+   "family_id": "FAM-E91",
+   "abstract": "A heated catalyst decomposes odour compounds downstream of the dryer.",
+   "app_date": "2024-04-08",
+   "pub_date": "2025-10-15",
+   "doc_type": "invention",
+   "stage": "공개",
+   "kind_codes": [
+    "A1"
+   ],
+   "applicants": [
+    "DELTA APPLIANCES GMBH"
+   ],
+   "applicant_canon": "DELTA APPLIANCES GMBH",
+   "group": "Delta",
+   "applicant_en": "DELTA APPLIANCES GMBH",
+   "en_status": "official",
+   "alias_hit": true,
+   "applicant_display": "DELTA APPLIANCES GMBH",
+   "first_date": "2024-04-08",
+   "evidence_ok": true,
+   "is_new": true,
+   "new_basis": "직전 회차 목록과 비교",
+   "in_trend_scope": true,
+   "lag_zone": false,
+   "pdf": "EP4990091A1.pdf",
+   "family_key": "F:FAME91",
+   "signal_key": "F:FAME91"
+  },
+  {
+   "id": "D017",
+   "rows": [
+    21
+   ],
+   "country": "KR",
+   "title": "음식물 처리기의 투입량 인식 장치",
+   "app_no": "10-2024-0099101",
+   "pub_no": "KR 10-2026-0990101 A",
+   "kind": "특허",
+   "ipc": "G01G 19/00",
+   "family_id": "FAM-U01",
+   "abstract": "하중 센서와 카메라로 투입량과 종류를 인식해 처리 모드를 고른다.",
+   "app_date": "2024-09-02",
+   "pub_date": "2026-03-09",
+   "doc_type": "invention",
+   "stage": "공개",
+   "kind_codes": [
+    "A"
+   ],
+   "applicants": [
+    "한빛대학교 산학협력단"
+   ],
+   "applicant_canon": "한빛대학교 산학협력단",
+   "group": "한빛대학교",
+   "applicant_en": "",
+   "en_status": "unverified",
+   "alias_hit": true,
+   "applicant_display": "한빛대학교 산학협력단 (영문명 미확인)",
+   "first_date": "2024-09-02",
+   "evidence_ok": true,
+   "is_new": true,
+   "new_basis": "직전 회차 목록과 비교",
+   "in_trend_scope": true,
+   "lag_zone": false,
+   "pdf": "KR10-2026-0990101A.pdf",
+   "family_key": "F:FAMU01",
+   "signal_key": "F:FAMU01"
+  },
+  {
+   "id": "D018",
+   "rows": [
+    22
+   ],
+   "country": "CN",
+   "title": "一种基于手机应用的厨余处理器控制方法",
+   "app_no": "202510990111.8",
+   "pub_no": "CN 129900111 A",
+   "kind": "发明",
+   "ipc": "G05B 19/00",
+   "family_id": "FAM-C111",
+   "abstract": "通过手机应用远程监控处理进度并推送滤网更换提醒。",
+   "app_date": "2025-02-18",
+   "pub_date": "2025-08-29",
+   "doc_type": "invention",
+   "stage": "공개",
+   "kind_codes": [
+    "A"
+   ],
+   "applicants": [
+    "深圳伽马电器有限公司"
+   ],
+   "applicant_canon": "深圳伽马电器有限公司",
+   "group": "Gamma",
+   "applicant_en": "SHENZHEN GAMMA ELECTRIC APPLIANCE CO. LTD.",
+   "en_status": "unofficial",
+   "alias_hit": true,
+   "applicant_display": "深圳伽马电器有限公司 (SHENZHEN GAMMA ELECTRIC APPLIANCE CO. LTD. · 비공식 번역)",
+   "first_date": "2025-02-18",
+   "evidence_ok": true,
+   "is_new": true,
+   "new_basis": "직전 회차 목록과 비교",
+   "in_trend_scope": true,
+   "lag_zone": false,
+   "pdf": "CN129900111A.pdf",
+   "family_key": "F:FAMC111",
+   "signal_key": "F:FAMC111"
+  },
+  {
+   "id": "D019",
+   "rows": [
+    23
+   ],
+   "country": "CN",
+   "title": "一种带称重模块的厨余处理器",
+   "app_no": "202520990131.6",
+   "reg_no": "CN 229900131 U",
+   "kind": "实用新型",
+   "ipc": "G01G 19/00",
+   "family_id": "FAM-C131",
+   "abstract": "底座称重模块识别投入量并自动选择处理时间。",
+   "app_date": "2025-08-11",
+   "reg_date": "2026-03-20",
+   "doc_type": "utility",
+   "stage": "등록",
+   "kind_codes": [
+    "U"
+   ],
+   "applicants": [
+    "深圳伽马电器有限公司"
+   ],
+   "applicant_canon": "深圳伽马电器有限公司",
+   "group": "Gamma",
+   "applicant_en": "SHENZHEN GAMMA ELECTRIC APPLIANCE CO. LTD.",
+   "en_status": "unofficial",
+   "alias_hit": true,
+   "applicant_display": "深圳伽马电器有限公司 (SHENZHEN GAMMA ELECTRIC APPLIANCE CO. LTD. · 비공식 번역)",
+   "first_date": "2025-08-11",
+   "evidence_ok": true,
+   "is_new": true,
+   "new_basis": "직전 회차 목록과 비교",
+   "in_trend_scope": true,
+   "lag_zone": true,
+   "pdf": "CN229900131U.pdf",
+   "family_key": "F:FAMC131",
+   "signal_key": "F:FAMC131"
+  },
+  {
+   "id": "D020",
+   "rows": [
+    24
+   ],
+   "country": "KR",
+   "title": "건조 분쇄기의 열풍 순환 덕트",
+   "app_no": "10-2025-0099121",
+   "kind": "특허",
+   "ipc": "B09B 3/40",
+   "abstract": "열풍 덕트를 분쇄실 둘레에 배치한다.",
+   "app_date": "2025-02-03",
+   "doc_type": "invention",
+   "stage": "번호없음",
+   "kind_codes": [],
+   "applicants": [
+    "가나전자 주식회사"
+   ],
+   "applicant_canon": "가나전자 주식회사",
+   "group": "가나그룹",
+   "applicant_en": "GANA ELECTRONICS CO. LTD.",
+   "en_status": "official",
+   "alias_hit": true,
+   "applicant_display": "가나전자 주식회사 (GANA ELECTRONICS CO. LTD.)",
+   "first_date": "2025-02-03",
+   "evidence_ok": false,
+   "is_new": true,
+   "new_basis": "직전 회차 목록과 비교",
+   "in_trend_scope": false,
+   "lag_zone": false,
+   "pdf": null,
+   "family_key": "S:D020",
+   "signal_key": "S:D020"
+  }
+ ],
+ "cn_dual_candidates": [
+  {
+   "invention": "D009",
+   "utility": "D010",
+   "same_day": true,
+   "title_similarity": 1.0,
+   "status": "CN Dual-filing Candidate",
+   "confirm_with": "출원일·출원인·명세서·독립청구항·보호대상·상태 비교 후 사람이 확정"
+  }
+ ],
+ "issues": [
+  {
+   "code": "I02",
+   "level": "info",
+   "rows": [
+    10,
+    25
+   ],
+   "msg": "같은 출원번호 중복 행을 하나로 합침(공개·등록 문헌이 따로 실린 경우 정상)"
+  },
+  {
+   "code": "I03",
+   "level": "warn",
+   "id": "D002",
+   "msg": "공보 PDF 없음: JP 2021-990002 A"
+  },
+  {
+   "code": "I06",
+   "level": "warn",
+   "id": "D011",
+   "msg": "출원인 영문명 미확인: 다라테크 주식회사 → 공식 출처 확인 전에는 '영문명 미확인'으로 표기"
+  },
+  {
+   "code": "I03",
+   "level": "warn",
+   "id": "D011",
+   "msg": "공보 PDF 없음: KR 10-2025-0990051 A"
+  },
+  {
+   "code": "I06",
+   "level": "warn",
+   "id": "D017",
+   "msg": "출원인 영문명 미확인: 한빛대학교 산학협력단 → 공식 출처 확인 전에는 '영문명 미확인'으로 표기"
+  },
+  {
+   "code": "I01",
+   "level": "error",
+   "id": "D020",
+   "msg": "공개번호·등록번호가 모두 없음 → 본문 핵심근거로 쓰지 말 것(출원번호로 대체 금지)"
+  }
+ ],
+ "project": {
+  "project": "가상 예시 — 스마트 음식물 처리기 경쟁기술 모니터링",
+  "our_company": "우리회사(가상)",
+  "product": "스마트 음식물 처리기",
+  "countries": [
+   "KR",
+   "US",
+   "JP",
+   "CN",
+   "EP"
+  ],
+  "round": "2026-R4",
+  "cadence": "분기 정기 + 경쟁사 신제품 출시 시 수시",
+  "data_date": "2026-11-01",
+  "trend_base_date": "2024-11-01",
+  "lag_months": 18,
+  "focus_areas": {
+   "주력": [
+    "건조·분쇄"
+   ],
+   "인접": [
+    "미생물 발효",
+    "냄새 저감"
+   ],
+   "확장": [
+    "스마트 센서·앱"
+   ]
+  },
+  "watch_competitors": [
+   "가나그룹",
+   "Alpha Home",
+   "Gamma"
+  ],
+  "own_claims_available": false,
+  "accept_continue_as_approval": true
+ }
+}

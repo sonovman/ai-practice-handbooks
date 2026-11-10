@@ -1,0 +1,5 @@
+회차 2026-R4 · 상태 CANDIDATES_PROPOSED
+승인된 관문: ANALYSIS, REPORT
+승인된 분석 기준선: work/03_analysis.md (v2, 묵시 승인('계속'), 2026-11-10T14:53:56)
+승인 대기: CANDIDATES v1 (work/04_candidates.md)
+다음 할 일: 사용자 답 받기(승인 / 수정 / 추가자료)

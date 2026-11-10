@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>공개특허 경쟁기술 인텔리전스</title>
+<meta name="description" content="WIPSON에서 받은 공개출원 엑셀과 공보로 동종업계 특정 제품의 기술개발동향과 시장 흐름을 분석하고, 승인 관문을 거쳐 C레벨 보고서를 만드는 방법. 초기 스킬 설계를 점검해 개선한 키트(도구 7종·시험 33개), Claude·ChatGPT·Gemini·Microsoft 365 Copilot(SharePoint)·Antigravity 설정까지 초보자용 단계별로.">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<div class="bar"><div class="bar-in">
+  <a class="brand" href="../">AI 실무 핸드북</a>
+  <div class="links">
+    <a href="templates/">템플릿</a>
+    <a href="https://github.com/sonovman/ai-practice-handbooks">GitHub ↗</a>
+  </div>
+</div></div>
+
+<div class="doc">
+  <aside class="side">
+    <div class="label">차례</div>
+    <ol>
+      <li><a href="#s0">한 줄 결론</a></li>
+      <li><a href="#s1">1. 전체 흐름</a></li>
+      <li><a href="#s2">2. 처음 접근과 바뀐 점</a></li>
+      <li><a href="#s3">3. 입력 자료 준비</a></li>
+      <li><a href="#s4">4. 분석 기준</a></li>
+      <li><a href="#s5">5. 승인 관문과 보고서</a></li>
+      <li><a href="#s6">6. 직접 돌려 본 시범</a></li>
+      <li><a href="#s7">7. 네 AI 앱 설정</a></li>
+      <li><a href="#s8">8. Copilot · SharePoint 방식</a></li>
+      <li><a href="#s9">9. Antigravity 구축</a></li>
+      <li><a href="#s10">10. 프로젝트 오케스트라와 정기 운영</a></li>
+      <li><a href="#s11">11. 주의할 점</a></li>
+      <li><a href="#s12">부록 · 출처</a></li>
+    </ol>
+  </aside>
+
+<main>
+  <div class="eyebrow">핸드북 34 · IP 실무 · 특허 인텔리전스</div>
+  <h1>공개특허로 읽는 경쟁기술 동향과 C레벨 보고서</h1>
+  <p class="lead">WIPSON에서 받은 공개출원 리스트(엑셀)와 공보로 동종업계 특정 제품의 <strong>기술개발동향</strong>과 <strong>기술의 시장 흐름</strong>을 정기 또는 수시로 분석해 경영진에게 보고하는 방법입니다. 대상 국가는 한국·미국·일본·중국·유럽입니다. 작성자가 처음 구상한 스킬 패키지를 하나씩 점검했고, 좋은 뼈대는 그대로 살렸습니다. 대신 <strong>숫자는 도구가 세고, 판단은 사람과 AI가 하고, 관문에서는 멈추게</strong> 고쳐 키트로 묶었습니다.</p>
+  <div class="meta">
+    <b>독자</b><span>경쟁사 특허 동향을 경영진에게 정기 보고하는 기업 IP·R&amp;D 기획 담당자, 변리사, 입문자</span>
+    <b>분량</b><span>읽기 약 30분 · 템플릿(patent-intelligence 스킬 · 도구 7종 · 시험 33개 · 프롬프트 7종 · 프로젝트·Copilot 지침 · 가상 시범)</span>
+    <b>판</b><span>1.0 · 2026. 11. 10.</span>
+  </div>
+
+  <section id="s0">
+    <div class="key">
+      <div class="eyebrow">한 줄 결론</div>
+      <p style="font-size:19px;font-weight:600;line-height:1.6;margin:8px 0 10px">문헌 수는 AI가 아니라 도구로 세세요. 최근 18개월은 아직 공개되지 않은 구간이라는 것을 차트에 표시하세요. 그리고 분석결과가 승인된 다음에만 보고서를 쓰세요. 이 세 가지를 지키면 경영진 보고서의 숫자와 결론이 흔들리지 않습니다.</p>
+      <p style="opacity:.75;font-size:15px">흔한 실패는 세 가지입니다. ① 공개 지연 때문에 낮게 나온 최근 막대를 “출원 감소”로 읽기 ② 같은 발명의 패밀리·중국 병행출원·계열사를 여러 번 세어 “업계 트렌드”로 부풀리기 ③ 출원 국가 수를 시장점유율처럼 말하기.</p>
+    </div>
+    <div class="note"><b>무엇을 확인했나</b> — 작성자가 처음 구상한 스킬 패키지(<code>create-monthly-patent-intelligence</code>: SKILL.md, 참고문서 3종, 에이전트 설정, 아이콘)의 여섯 파일을 모두 읽고 설계 의도대로 동작하는지 점검했습니다. 무엇을 살리고 무엇을 고쳤는지는 2장에 모았습니다. 고친 내용은 표준 라이브러리 도구 7종으로 직접 만들었습니다. 가상 WIPSON 자료(5개국 20건)로 자료 검증 → 집계 → 분석 관문 → 보고서 점검 → 인쇄용 HTML → Copilot용 내보내기까지 돌렸고, 시험 33개를 통과했습니다. WIPSON 다운로드 기능, 각 AI 앱의 스킬·지식 기능은 2026년 11월 기준 공식 안내로 확인했습니다. 예시 회사·번호·내용은 <b>모두 가상</b>입니다. 유튜브 링크는 제공되지 않아 영상 자료는 쓰지 않았습니다.</div>
+    <div class="note"><b>함께 읽기</b> — 후보로 고른 특허를 정밀분석하는 단계는 <a href="../claim-chart/">30편 Claim Chart</a> → <a href="../claim-construction/">31편 해석</a> → <a href="../design-around/">32편 회피설계</a> → <a href="../obviousness/">33편 진보성</a>의 통합 오케스트레이터(claim-suite)로 이어집니다. 검색식 설계는 <a href="../prior-art-search/">28편 선행기술조사</a>, 경영진용 글쓰기는 <a href="../exec-brief/">20편 경영진 브리프</a>를 참고하세요.</div>
+  </section>
+
+  <!-- 1 -->
+  <section id="s1">
+    <h2><span class="no">01</span>전체 흐름</h2>
+    <div class="graph">
+      <div class="node"><span class="id">IN</span><b>회차 설정 · 자료 받기</b><p>정기(분기·월) 또는 수시(경쟁사 신제품·소송·투자) · WIPSON 저장 검색식으로 엑셀 + 공보 PDF · 직전 회차 목록 · <code>project.json</code></p></div>
+      <div class="edge"><span>pi_intake.py — 세는 일은 도구</span></div>
+      <div class="node"><span class="id">V</span><b>자료 검증</b><p>열 맞추기 · 중복 합치기 · 번호 없는 문헌 표시 · 출원인 정규화(계열사 그룹) · 패밀리 · 중국 병행출원 후보 · 신규 관측 · 공개 지연 구간 · 누락 공보</p></div>
+      <div class="edge"><span>1차 선별 → clusters.csv · scores.csv → pi_stats.py</span></div>
+      <div class="node"><span class="id">A</span><b>분석결과서</b><p>연도·국가·그룹 집계와 차트, T1~T5 등급 후보 → 공보 정독으로 확정 · 판단마다 [B01]… 태그 · 확정사실·추론·미확인 분리</p></div>
+      <div class="edge"><span>관문 A — 승인 / 수정 / 추가자료 · 무응답이면 멈춤</span></div>
+      <div class="node dark"><span class="id">B</span><b>보고서 초안</b><p>승인된 분석 기준선만으로 작성 · 결론마다 [B##] · report_lint.py 오류 0</p></div>
+      <div class="edge"><span>관문 B</span></div>
+      <div class="node dark"><span class="id">F</span><b>최종본</b><p>원본은 report.md 하나 → HTML/PDF(render_report.py) · DOCX(플랫폼 문서 기능) · 쪽마다 눈으로 확인</p></div>
+      <div class="edge"><span>관문 C — 정밀분석 후보 최대 5건</span></div>
+      <div class="node end"><span class="id">H</span><b>인계</b><p>05_handoff.json + 공보 원문 → claim-suite(30~33편)로 정밀분석</p></div>
+      <div class="loop"><b>다음 회차</b> — 회차 폴더를 복사하고 이번 목록을 <code>--previous</code>로 넘깁니다. 같은 검색식을 써야 회차끼리 비교할 수 있습니다.</div>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section id="s2">
+    <h2><span class="no">02</span>처음 접근과 바뀐 점</h2>
+    <p>처음 구상한 패키지는 방향이 분명했습니다. 분석과 보고서 작성을 나누고, 승인 관문에서 멈추고, 특허마다 번호와 영문 출원인명을 붙이고, T1~T5 등급과 일곱 가지 회피설계 유형으로 판단하게 했습니다. 아래는 <b>그대로 살린 것</b>과, 실제 데이터로 돌려 보며 <b>보완한 것</b>입니다.</p>
+    <h3>그대로 살린 뼈대</h3>
+    <div class="grid2">
+      <div class="box"><div class="tag">구조</div><h4>분석 ↔ 보고 분리, 승인 관문</h4><p>승인된 분석만 보고서의 기준선이 되고, 무응답이면 멈춥니다. 경영진 보고서에 검토되지 않은 결론이 섞이는 것을 막는 핵심 장치입니다.</p></div>
+      <div class="box"><div class="tag">표기</div><h4>번호·영문명 강제, 'Corpus' 금지</h4><p>공개·등록번호와 <code>원문명 (공식 영문명)</code>, 확인 못 하면 '영문명 미확인'. 경영진이 원문을 바로 찾을 수 있게 합니다.</p></div>
+      <div class="box"><div class="tag">판단</div><h4>T1~T5 · 회피설계 7유형 · 점수 100점</h4><p>업계 공통(T1)부터 단독출원(T5)까지 기준이 명확하고, 단독출원을 트렌드로 올리지 않는 중단 조건도 좋습니다.</p></div>
+      <div class="box"><div class="tag">선정</div><h4>후보 최대 5건 · Strategic Exception</h4><p>건수를 채우려고 약한 후보를 넣지 않고, 점수가 낮아도 대체원리·핵심 경쟁사 권리망이면 예외로 추천합니다.</p></div>
+    </div>
+    <h3>보완한 것</h3>
+    <div class="note"><b>① ‘월간’에 묶인 이름과 ‘금월 신규’</b> — 처음에는 월간 보고를 전제로 스킬 이름을 짓고 ‘금월 신규 관측문헌’을 셌습니다. 그런데 실제 요구는 정기(분기·월)와 수시(경쟁사 신제품·소송·투자 검토)가 섞여 있었습니다. 그래서 이름을 <code>patent-intelligence</code>로 바꾸고 ‘이번 회차 신규 관측’으로 일반화했습니다. 수시 보고용 1~2쪽 브리프 형식도 더했습니다. 신규 판정은 화면의 신규 표시 열보다 <b>직전 회차 목록과 비교</b>하는 쪽이 확실합니다(시범에서 두 기준이 1건 달랐습니다).</div>
+    <div class="note"><b>② 숫자를 AI가 세던 구조</b> — 처음에는 엑셀 전체를 AI가 읽고 대조·분류·집계까지 맡았습니다. 수십 건을 넘으면 언어 모델은 건수를 틀리기 쉽고, 틀린 숫자가 경영진 보고서에 그대로 올라갑니다. 그래서 세는 일을 도구로 옮겼습니다(<code>pi_intake.py</code>·<code>pi_stats.py</code>). 보고서의 문헌 수가 집계와 다르면 <code>report_lint.py</code>가 오류(R08)를 냅니다.</div>
+    <div class="note"><b>③ 입력 자료의 모양이 정해지지 않았던 점</b> — WIPSON 내보내기의 열 이름은 항목 설정·국가·언어에 따라 달라지고, 맨 위에 제목 줄이 붙기도 합니다. 처음 설계에는 이 부분이 없어 실행할 때마다 AI가 짐작해야 했습니다. 그래서 열 별칭표(<code>column_aliases.csv</code>)와 머리행 자동 찾기를 넣었습니다. 다운로드 때 꼭 고를 항목(우선권·패밀리 번호 등)도 3장에 정리했습니다.</div>
+    <div class="note"><b>④ 다섯 나라의 문헌 규칙</b> — 처음에는 중국 발명·실용신안 병행출원만 다뤘습니다. 실제로는 나라마다 함정이 있습니다. 일본·중국 실용신안은 공개공보 없이 곧바로 등록으로 나타나고, 미국은 비공개 요청 출원과 계속출원이 있으며, 유럽 특허 하나를 여러 나라로 세면 안 됩니다. 이 규칙을 국가별 표와 판정 도구로 정리했습니다.</div>
+    <div class="note"><b>⑤ 공개 지연의 반대쪽 착시</b> — 처음에는 “오래된 문헌을 최근 증가로 표현하지 말라”는 한쪽만 경계했습니다. 실제로 더 흔한 착시는 반대쪽입니다. 출원 후 약 18개월이 지나야 공개되므로, 최근 18개월 막대는 언제나 낮게 나옵니다. 그래서 도구가 이 구간을 ‘미완결’로 표시하고 차트에 빗금을 칩니다. 보고서에 이 구간을 ‘감소·둔화’로 쓰면 경고(R09)를 냅니다.</div>
+    <div class="note"><b>⑥ 출원인 표기는 있었지만 ‘같은 회사’ 판정은 없었던 점</b> — <code>가나전자(주)</code>, <code>가나전자 주식회사</code>, <code>GANA ELECTRONICS CO LTD</code>, 그리고 계열사가 따로 세어지면 T1(독립 출원인 2곳 이상)이 부풀려집니다. 그래서 출원인 별칭표에 정식 이름·그룹·공식 영문명·확인 상태·출처를 두고, ‘독립 출원인’을 <b>그룹 기준</b>으로 셉니다. 확인한 영문명은 별칭표에 쌓여 다음 회차에 그대로 다시 씁니다.</div>
+    <div class="note"><b>⑦ ‘시장 흐름’이 정성 서술에 머물던 점</b> — 처음에는 ‘시장 기술축 이동’을 분석자 판단에 맡겼습니다. 이번에는 특허에서 실제로 읽히는 신호만 뽑았습니다. 같은 기술을 몇 개 나라에 냈는지, 새로 들어온 출원인, 연속출원, 기술군 비중 이동입니다. 그리고 <b>출원은 권리 확보 의도일 뿐 매출·점유율이 아니라는 한계</b>를 참고문서(<code>market-signals.md</code>)로 따로 분리했습니다. 시장 규모가 결론에 필요하면 외부 시장자료를 출처와 함께 붙입니다.</div>
+    <div class="note"><b>⑧ 당사 청구항이 없을 때의 점수</b> — 처음 설계는 “근접성 점수를 확정하지 않는다”까지만 정했습니다. 그러다 보니 0점으로 채우는 경우와 빼는 경우가 섞였습니다. 이제는 칸을 비우면 도구가 80점 만점을 100점으로 환산하고 ‘근접성 미확정’을 붙입니다. 번호가 없는 문헌은 후보가 될 수 없게 막았고, 5건을 넘으면 경고합니다.</div>
+    <div class="note"><b>⑨ 승인 상태를 대화가 기억하던 점</b> — 9단계 상태가 대화 안에만 있어서, 세션이 끊기거나 다음 회차로 넘어가면 어디까지 승인됐는지 알 수 없었습니다. 이제는 <code>pi_gate.py</code>가 <code>work/state.json</code>에 기록하고, 앞 관문이 승인되지 않으면 다음 단계 제출을 거부합니다. ‘계속’을 묵시 승인으로 보는 처음 규칙은 그대로 두었습니다. 다만 AI가 “계속을 ○ 관문 승인으로 기록합니다”라고 <b>밝히게</b> 했고, 여러 사람이 쓰는 프로젝트에서는 이 규칙을 끌 수 있게 했습니다.</div>
+    <div class="note"><b>⑩ 기준선 대조를 손으로 하던 점</b> — 처음에는 “보고서의 각 결론이 기준선에 있는지 점검한다”고만 했습니다. 이제는 분석결과서의 판단마다 <code>[B01]</code> 같은 태그를 달고, 보고서 결론에도 같은 태그를 답니다. 기준선에 없는 태그가 나오면 R10 오류가 납니다. 새 결론은 ‘신규 분석사항’으로 분리해 다시 승인받습니다.</div>
+    <div class="note"><b>⑪ 자료에 없는 번호와 출원번호</b> — AI가 그럴듯한 공보번호를 지어내거나 출원번호를 공개번호처럼 쓰는 사고가 생길 수 있습니다. 그래서 보고서의 모든 번호를 자료와 대조해, 없는 번호(R03)와 출원번호 사용(R04)을 오류로 잡습니다. 번호 옆 출원인 표기도 자료의 표기 그대로인지 확인합니다(R02).</div>
+    <div class="note"><b>⑫ 최종본이 특정 문서 스킬에 묶였던 점</b> — 처음에는 DOCX 작성 스킬의 렌더 검수에 기대었습니다. 이 방식은 Claude 밖에서는 같은 절차가 없습니다. 이제 원본은 <code>report.md</code> 하나로 두고, 인쇄용 HTML/PDF는 도구로 만들고, DOCX는 각 플랫폼의 문서 기능으로 만듭니다.</div>
+    <div class="note"><b>⑬ 인계 대상이 패키지에 없던 점</b> — 정밀분석은 <code>$analyze-priority-patents</code>로 넘기게 되어 있었지만, 그 스킬은 패키지에 없었습니다. 이제는 인계 패킷 형식(<code>handoff.md</code>)을 공개하고, 30~33편 claim-suite로 이어지게 했습니다. Codex 전용이던 <code>agents/openai.yaml</code>은 이름만 맞춰 남겼고, 다섯 플랫폼용 업로드 묶음을 따로 만들었습니다.</div>
+    <div class="note"><b>⑭ 도구의 등급은 ‘후보’</b> — 기술군 이름만으로 세면 다른 원리를 같은 흐름으로 묶기 쉽습니다. 시범에서도 도구는 ‘스마트 센서·앱’을 T1 후보로 계산했습니다. 그런데 공보를 정독해 보니 영상 인식과 무게 측정으로 작동원리가 달라 T4(조기경보)로 낮췄습니다. 그래서 도구 등급과 다르게 확정할 때는 이유를 한 줄 남기게 했습니다.</div>
+  </section>
+
+  <!-- 3 -->
+  <section id="s3">
+    <h2><span class="no">03</span>입력 자료 준비 — WIPSON에서 무엇을 어떻게 받나</h2>
+    <ol class="steps">
+      <li><b>검색식을 저장하고 회차마다 같은 식으로</b>식이 바뀌면 증감이 기술 때문인지 식 때문인지 구분할 수 없습니다. 식을 바꿨으면 보고서 한계에 적습니다.</li>
+      <li><b>텍스트(엑셀) 다운로드 항목을 ‘내 저장 항목’으로</b>국가코드 · 문헌종류 · 발명의 명칭 · 출원번호/출원일 · 공개번호/공개일 · 등록번호/등록일 · 출원인(원문·영문·대표명) · <b>우선권주장번호/우선일 · 패밀리번호</b> · IPC/CPC · 요약 · 대표청구항. 우선권·패밀리 번호가 없으면 같은 발명이 여러 번 세어집니다.</li>
+      <li><b>원자료를 한 부 따로</b>중복제거·대표문헌 치환 같은 데이터 정비 옵션은 편리하지만, 권리화 활동 건수를 다시 세려면 원자료가 필요합니다. 엑셀은 한 시트로 둡니다.</li>
+      <li><b>공보 PDF는 원문 다운로드로</b>파일 이름에 공개·등록번호가 들어 있으면 도구가 자동으로 대조해 누락 공보를 알려 줍니다. 건수·포인트 한도는 계정마다 다르니 WIPSON 안내를 확인하세요.</li>
+      <li><b>직전 회차 목록도 함께</b>‘이번 회차 신규 관측’을 정확히 세는 가장 쉬운 방법입니다.</li>
+    </ol>
+    <h3>다섯 나라에서 꼭 알아야 할 것</h3>
+    <div class="tbl"><table>
+      <thead><tr><th>국가</th><th>공개</th><th>실용신안</th><th>세는 법·함정</th></tr></thead>
+      <tbody>
+        <tr><th>KR</th><td>출원 후 18개월 공개(A), 등록 B1</td><td>공개(U)·등록(Y)</td><td>출원번호 10-(특허)·20-(실용)·30-(디자인)</td></tr>
+        <tr><th>US</th><td>18개월 공개(A1), 등록 B1·B2</td><td>없음</td><td>비공개 요청 출원은 안 보임 · 계속출원이 많아 패밀리로 묶기 · 디자인(S) 제외</td></tr>
+        <tr><th>JP</th><td>18개월 공개(A), 등록 B2</td><td>공개 없이 등록(U)</td><td>실용신안은 일찍 나타남 — ‘최근 급증’으로 착각 주의</td></tr>
+        <tr><th>CN</th><td>18개월 공개(A), 조기공개 많음</td><td>공개 없이 등록공고(U)</td><td>같은 날 발명·실용 병행출원 → 기술신호 1개, 권리화 활동 2건</td></tr>
+        <tr><th>EP</th><td>18개월 공개(A1·A2), 등록 B1</td><td>없음</td><td>EP 하나를 지정국 수만큼 세지 않음</td></tr>
+      </tbody>
+    </table></div>
+    <div class="note"><b>세는 단위 세 가지</b> — <b>권리화 활동</b>(문헌 수: 투자 강도) · <b>기술신호</b>(패밀리 하나, 중국 병행 후보는 묶어서 하나: 업계 방향) · <b>출원인 그룹</b>(계열사 묶음: T1의 ‘독립 출원인’). 보고서에서 어떤 숫자가 어느 단위인지 항상 밝힙니다.</div>
+  </section>
+
+  <!-- 4 -->
+  <section id="s4">
+    <h2><span class="no">04</span>분석 기준 — 등급·점수·시장 신호</h2>
+    <h3>판독 순서</h3>
+    <p>분석대상 전부를 요약·독립청구항·대표도면·출원인·최선일·권리유형으로 1차 선별하고 <code>Problem → Mechanism → Structure → Function → Effect</code>를 한 줄씩 뽑습니다. 핵심 동향·반복출원·회피설계 신호·당사 구조 근접·신규 멀티기능만 종속항·상세설명·패밀리까지 정독합니다. 증거 순서는 <b>청구항 &gt; 상세설명·도면 &gt; 요약 &gt; 명칭</b>입니다. 연도는 <b>최선일(우선일, 없으면 출원일)</b> 기준으로 셉니다.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>등급</th><th>조건</th><th>도구가 하는 일</th></tr></thead>
+      <tbody>
+        <tr><th>T1 업계 공통</th><td>독립된 출원인 <b>그룹</b> 2곳 이상이 같은 방향·구조·원리를 반복</td><td>그룹 수 ≥2 · 기술신호 ≥2면 ‘T1 후보’, 2건뿐이면 ‘근거 최소’</td></tr>
+        <tr><th>T2 경쟁사 집중</th><td>한 그룹이 같은 축에서 기술신호 2개 이상·후속·병행</td><td>그룹별 신호 ≥2면 ‘T2 후보’</td></tr>
+        <tr><th>T3 회피설계 흐름</th><td>주류 기능을 유지하며 구성·관계·원리·순서를 반복 변경</td><td>— (정독으로)</td></tr>
+        <tr><th>T4 조기경보</th><td>반복은 약하지만 새 원리·대체구조·융합 기능</td><td>신호 1개면 ‘T4 또는 T5’</td></tr>
+        <tr><th>T5 단독</th><td>반복·연속·확산 확인 어려움</td><td>〃</td></tr>
+      </tbody>
+    </table></div>
+    <h3>중요도 점수(100점)와 후보</h3>
+    <div class="bars">
+      <div class="row"><span>핵심제품 관련성</span><div class="track"><div class="fill" style="width:100%"></div></div><span class="val">25</span></div>
+      <div class="row"><span>청구항·구조 근접</span><div class="track"><div class="fill light" style="width:80%"></div></div><span class="val">20</span></div>
+      <div class="row"><span>회피설계 신호</span><div class="track"><div class="fill" style="width:80%"></div></div><span class="val">20</span></div>
+      <div class="row"><span>경쟁사 지속성</span><div class="track"><div class="fill" style="width:60%"></div></div><span class="val">15</span></div>
+      <div class="row"><span>제품·시장 확장성</span><div class="track"><div class="fill" style="width:40%"></div></div><span class="val">10</span></div>
+      <div class="row"><span>전략적 정보가치</span><div class="track"><div class="fill" style="width:40%"></div></div><span class="val">10</span></div>
+    </div>
+    <p class="cap">회색 = 당사 청구항이 없으면 비우는 칸. 그때는 80점 만점을 100점으로 환산하고 ‘근접성 미확정’을 붙입니다. 추천은 환산 60점 이상(조정 가능) 최대 5건 + Strategic Exception.</p>
+    <h3>특허에서 읽히는 시장 신호</h3>
+    <div class="tbl"><table>
+      <thead><tr><th>보이는 것</th><th>시장 신호</th><th>함정</th></tr></thead>
+      <tbody>
+        <tr><th>같은 기술의 출원 국가 수</th><td>여러 시장 판매 계획</td><td>대기업은 원래 넓게 냄 — 그 회사의 평소 습관과 비교</td></tr>
+        <tr><th>새 출원인 그룹의 첫 출원</th><td>새 경쟁자·인접 업종 진입</td><td>대학·연구소는 제품과 거리가 있음</td></tr>
+        <tr><th>한 그룹의 연속출원(T2)</th><td>제품 세대 교체·집중 투자</td><td>분할·계속출원은 같은 기술의 재출원일 수 있음</td></tr>
+        <tr><th>기술군 비중 이동</th><td>제품 가치 중심의 이동</td><td>검색식이 바뀌었는지 먼저 확인</td></tr>
+        <tr><th>중국 실용신안 급증</th><td>빠른 제품화·저가 경쟁</td><td>심사가 약해 권리 강도와 다름</td></tr>
+      </tbody>
+    </table></div>
+    <div class="note"><b>주의</b> — 출원은 ‘어디서 무엇을 지키려 하는가’의 신호입니다. 매출·점유율이 아닙니다. 보고서에는 “관측 → 추론(근거강도) → 미확인” 순서로 쓰고, 시장 규모가 필요하면 외부 시장자료를 출처와 날짜를 밝혀 붙입니다.</div>
+  </section>
+
+  <!-- 5 -->
+  <section id="s5">
+    <h2><span class="no">05</span>승인 관문과 보고서</h2>
+    <div class="flow"><span>INPUT_VALIDATION</span><i>→</i><span class="dark">ANALYSIS 관문</span><i>→</i><span class="dark">REPORT 관문</span><i>→</i><span>FINAL</span><i>→</i><span class="dark">CANDIDATES 관문</span><i>→</i><span>HANDOFF</span></div>
+    <div class="tbl"><table>
+      <thead><tr><th>사용자 답</th><th>기록</th><th>다음</th></tr></thead>
+      <tbody>
+        <tr><th>승인 · 동의 · 확정</th><td>명시 승인</td><td>다음 단계</td></tr>
+        <tr><th>계속(만)</th><td>묵시 승인 — AI가 “계속을 ○ 관문 승인으로 기록합니다”라고 말함</td><td>다음 단계(설정으로 끌 수 있음)</td></tr>
+        <tr><th>수정·삭제·추가 지시</th><td>승인 아님</td><td>반영 → 같은 관문 재제출(v2…)</td></tr>
+        <tr><th>추가자료</th><td>승인 아님</td><td>필요한 단계부터 다시</td></tr>
+        <tr><th>무응답 · 불명확</th><td>승인 아님</td><td>멈춤 · 한 가지 질문</td></tr>
+      </tbody>
+    </table></div>
+    <div class="code"><div class="head"><span>관문 기록 — 대화가 끊겨도 상태가 남습니다</span><button class="copy">복사</button></div>
+<pre>python tools/pi_gate.py init --round 2026-R4
+python tools/pi_gate.py submit ANALYSIS --file work/03_analysis.md
+python tools/pi_gate.py reply "계속"          # → 묵시 승인으로 기록, 기준선 고정
+python tools/pi_gate.py status                 # 지금 어디까지 왔나</pre></div>
+    <h3>경영진 보고서 구성</h3>
+    <p>정기 보고는 본문 3~6쪽입니다. 표지·범위 → <b>CEO 핵심 요약 5~7문장</b>(문장마다 [B##]) → 자료 검증·신뢰도(공개 지연 차트) → 신규 관측 → 핵심 기술동향 3~7개(항목마다 근거강도·그룹 수·기술신호 수) → 경쟁사·시장 기술축 → 회피설계 → 주요 문헌 → 정밀분석 후보(5건 이하) → 위협·기회 → Action Items(5개 이하) → 한계 순서로 씁니다. 수시 보고는 요약·해당 동향·후보·Action·한계만 담은 1~2쪽 브리프입니다.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>점검(report_lint.py)</th><th>잡는 것</th></tr></thead>
+      <tbody>
+        <tr><th>R02 · R03 · R04</th><td>번호 옆 출원인·영문명 누락 · 자료에 없는 번호 · 출원번호 사용</td></tr>
+        <tr><th>R05 · R06 · R07</th><td>후보 5건 초과 · Action 5개 초과 · 동향별 근거강도 누락</td></tr>
+        <tr><th>R08 · R09</th><td>문헌 수가 집계와 다름 · 공개 지연 구간을 ‘감소’로 서술</td></tr>
+        <tr><th>R10 · R11 · R01 · R12</th><td>기준선 태그 누락·불일치 · 침해·FTO 단정 · ‘Corpus’ · 요약 문장 수</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <!-- 6 -->
+  <section id="s6">
+    <h2><span class="no">06</span>직접 돌려 본 시범 (가상 자료)</h2>
+    <p>가상의 ‘스마트 음식물 처리기’ 시장으로 WIPSON식 엑셀(제목 줄 2줄 + 21행, 5개국)을 만들어 전 과정을 돌렸습니다.</p>
+    <div class="code"><div class="head"><span>자료 검증</span><button class="copy">복사</button></div>
+<pre>python tools/make_sample.py sample/inbox
+python tools/pi_intake.py sample/inbox/this_round.xlsx --previous sample/inbox/prev_round.csv --pdf-dir sample/inbox/pdf --out work/01_intake.json
+→ 문헌 20 · 패밀리 16 · 기술신호 15 · 신규 7 · 동향대상 16 · 지연구간 1 · 병행후보 1 · 오류 1 · 경고 4</pre></div>
+    <ul>
+      <li>같은 출원번호 2행(공개·등록이 따로 실림)을 하나로 합쳤고, 출원번호만 있는 1건은 <b>핵심근거 불가</b>(I01)로 막았습니다.</li>
+      <li><code>가나전자(주)</code>·<code>GANA ELECTRONICS CO LTD</code>·계열사 <code>가나홈솔루션</code>을 한 그룹으로 묶었습니다. 다라테크·한빛대학교는 ‘영문명 미확인’으로 표시했습니다.</li>
+      <li>같은 날 출원된 중국 발명(A)과 실용신안(U) 한 쌍을 ‘CN Dual-filing Candidate’로 찾아 기술신호 1개로 묶었습니다. 확정은 사람이 합니다.</li>
+      <li>공보 PDF 2건이 빠진 것을 찾았습니다. 2025년 8월에 출원된 중국 실용신안 1건은 공개 지연 구간에 있는데도 이미 등록되어 보였습니다(실용신안은 공개 없이 등록되기 때문).</li>
+    </ul>
+    <p><img src="templates/starter/sample/work/chart_trend.svg" alt="최선일 연도별 문헌 수 차트 — 2025년은 공개 미완결로 빗금" style="width:100%;border:1px solid var(--line);border-radius:12px;background:#fff"></p>
+    <p class="cap">2025년 막대(빗금)는 공개가 끝나지 않은 구간입니다. 이 막대를 보고 “출원이 줄었다”고 쓰면 R09 경고가 납니다.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>기술군</th><th>도구 등급 후보</th><th>정독 후 확정</th></tr></thead>
+      <tbody>
+        <tr><th>건조·분쇄</th><td>T1 후보(독립 그룹 4곳, 신호 5)</td><td>T1 — 분쇄실과 건조 열원 통합, 근거강도 강</td></tr>
+        <tr><th>미생물 발효</th><td>T2 후보(가나그룹 2)</td><td>T2 — 계열사 포함 한 그룹 집중</td></tr>
+        <tr><th>냄새 저감</th><td>T1 후보 · 근거 최소(2건)</td><td>T1(근거강도 중) — 건조 후단 가열 촉매</td></tr>
+        <tr><th>스마트 센서·앱</th><td>T1 후보</td><td><b>T4로 낮춤</b> — 영상 인식 대 무게 측정, 원리가 다름</td></tr>
+      </tbody>
+    </table></div>
+    <p>점수는 당사 청구항이 없다고 보고 근접성 칸을 비웠습니다. 상위 4건과 Strategic Exception 1건(대학의 대체 작동원리)이 추천되었고, 번호 없는 문헌은 점수가 63.7이어도 빠졌습니다. 관문은 수정 요청 → 재제출 → ‘계속’(묵시 승인)으로 기준선 v2가 고정되었고, 승인 전에 보고서를 제출하려 하자 거부되었습니다.</p>
+    <div class="grid2">
+      <div class="box"><div class="tag">좋은 보고서</div><h4>report.md → 오류 0 · 경고 0</h4><p>요약 7문장 모두 [B##] 태그, 번호마다 출원인·영문명, 공개 지연 명시, 침해 판단 보류.</p></div>
+      <div class="box"><div class="tag">나쁜 보고서</div><h4>report_bad.md → 오류 8 · 경고 2</h4><p>영문명 누락, 출원번호 사용, 지어낸 번호, ‘Corpus’, 침해 단정, Action 6개, 모집단 21건(실제 20), 기준선에 없는 [B09], 2025년 ‘감소’.</p></div>
+    </div>
+    <p>시험 33개 통과 로그와 모든 산출물(검증·집계·분석결과서·보고서·인쇄용 HTML·Copilot용 내보내기·상태 파일)은 <a href="templates/#sample">템플릿 페이지</a>에 있습니다.</p>
+  </section>
+
+  <!-- 7 -->
+  <section id="s7">
+    <h2><span class="no">07</span>네 AI 앱에서 쓰는 법과 설정</h2>
+    <p>원본은 <code>starter</code> 폴더 하나입니다. <code>python build_upload.py</code>를 실행하면 업로드 묶음 세 가지가 생깁니다. 도구와 설정 예시도 묶음에 함께 들어갑니다.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>앱</th><th>설정</th><th>쓰는 법</th></tr></thead>
+      <tbody>
+        <tr><th>Claude</th><td>설정 → 기능에서 코드 실행·파일 생성 켜기 → Skills에 <code>patent-intelligence.zip</code> 업로드 → 프로젝트를 만들고 지침 칸에 <code>PROJECT_INSTRUCTIONS.md</code></td><td>회차마다 같은 프로젝트에서 엑셀·공보를 올리고 <code>00-round-start.md</code>로 시작. 도구 실행·DOCX까지 한 곳에서. 폴더 작업이면 Claude Code에 <code>.claude/skills/</code>로 복사</td></tr>
+        <tr><th>ChatGPT</th><td>워크스페이스에서 Skills가 켜져 있으면 zip 업로드(관리자 설정 필요할 수 있음). 아니면 프로젝트 지침에 PROJECT_INSTRUCTIONS, 파일에 SKILL.md·references·tools</td><td>먼저 “test_pi_tools.py를 실행해”로 도구가 도는지 확인한 뒤 같은 순서로</td></tr>
+        <tr><th>Gemini</th><td>맞춤설정 → Skills → 만들기, 또는 SKILL.md가 든 폴더 업로드(폴더 이름 = 스킬 이름, 웹·Mac 앱). 개인 계정은 2026. 11. 17.부터 Gem이 skills로 전환되고, 업무 계정은 2027년 3월 예정</td><td>파이썬 실행이 제한적이라 공보 판독·요약·초안에 씁니다. 숫자는 도구 결과 파일(01_intake·02_stats)을 함께 올려 그것만 인용하게 합니다. zip과 옛 .xls는 업로드되지 않습니다</td></tr>
+        <tr><th>Microsoft 365 Copilot</th><td><b>SharePoint 회차 폴더 + 에이전트</b>(다음 장)</td><td>회사 권한·민감도 레이블 안에서 팀이 같은 폴더를 보며 분석·보고</td></tr>
+      </tbody>
+    </table></div>
+    <div class="note"><b>공통 첫 확인</b> — ① <code>python tools/test_pi_tools.py</code> → 33개 통과 ② <code>make_sample.py</code> → <code>pi_intake.py</code> → “문헌 20 · 신규 7 · 동향대상 16 · 오류 1 · 경고 4”가 나오면 설치가 끝난 것입니다. 메뉴 이름과 요금제별 기능은 자주 바뀌니 각 서비스의 현재 안내를 확인하세요.</div>
+  </section>
+
+  <!-- 8 -->
+  <section id="s8">
+    <h2><span class="no">08</span>Microsoft 365 Copilot — SharePoint 경로에 모아 두고 분석하기</h2>
+    <p>Copilot에서는 파일을 대화창에 매번 올리지 않습니다. 회차마다 수집한 엑셀과 공개공보 PDF를 <b>SharePoint의 정해진 경로</b>에 저장해 두고, Copilot 에이전트의 지식을 그 경로로 지정해 분석합니다.</p>
+    <div class="code"><div class="head"><span>SharePoint 폴더 규칙 (사이트 IP-Intel › 문서)</span><button class="copy">복사</button></div>
+<pre>PatentIntel/
+├── 00_설정/              project.json · applicant_aliases.csv · column_aliases.csv
+│   └── 지침/             기준 문서(.docx/.pdf)
+└── rounds/
+    └── 2026-R4/          ← 회차 폴더 (수시: 2026-11-urgent-가나신제품)
+        ├── 01_원자료/     this_round.xlsx (WIPSON 원본, 한 시트) · prev_round.xlsx
+        ├── 02_공보/       공보 PDF — 파일 이름 = 공개·등록번호
+        ├── 03_검증집계/    01_intake.html · 02_stats.html · scores.xlsx · clusters.xlsx · state.txt
+        ├── 04_분석/       분석결과서 — 관문 A
+        ├── 05_보고서/     초안·최종본 — 관문 B
+        └── 06_인계/       후보·인계 패킷 — 관문 C</pre></div>
+    <ol class="steps">
+      <li><b>라이브러리를 PC에 동기화</b>SharePoint 문서 라이브러리에서 ‘동기화’ 또는 ‘내 파일에 바로 가기 추가’를 누르면 탐색기에 <code>PatentIntel</code> 폴더가 생깁니다. 여기에 WIPSON 엑셀과 공보를 넣으면 SharePoint에 그대로 올라갑니다.</li>
+      <li><b>동기화 폴더에서 도구 실행</b>Copilot은 지식 경로를 <b>검색해 관련 부분을 읽는</b> 방식이라 수백 건을 빠짐없이 세는 일에는 맞지 않습니다. 그래서 숫자는 PC에서 도구로 만듭니다. <code>pi_intake.py</code> → <code>pi_stats.py</code> → <code>export_for_copilot.py</code> 순서입니다. 파이썬을 설치할 수 없으면 Claude·ChatGPT·Antigravity에서 돌린 결과만 올려도 됩니다.</li>
+      <li><b>Copilot이 읽는 형식으로 내보내기</b>에이전트 지식은 .docx·.pdf·.pptx·.txt·.xlsx·.html 같은 파일만 읽습니다. 도구 결과(.md·.json·.csv·.svg)는 읽지 못하므로 <code>export_for_copilot.py</code>가 .html·.xlsx·.txt로 바꿔 <code>03_검증집계/</code>에 둡니다. 차트도 HTML 안에 넣습니다.</li>
+      <li><b>에이전트 만들기</b>Copilot 앱 → 에이전트 → 새 에이전트 → 구성 탭. 지침 칸에는 <code>COPILOT_AGENT_INSTRUCTIONS.md</code>(짧은 판)를 붙여 넣습니다. 지식에는 <b>회차 폴더 주소</b>를 넣습니다(예: <code>https://&lt;회사&gt;.sharepoint.com/sites/IP-Intel/Shared Documents/PatentIntel/rounds/2026-R4</code>). 에이전트는 그 주소와 하위 폴더를 검색합니다. 조직이 허용하면 코드 인터프리터도 켭니다.</li>
+      <li><b>시험 질문</b>“state.txt 기준으로 지금 어느 관문이야?”, “02_stats.html의 기술동향 분석대상은 몇 건이야?”에 맞게 답하면 연결된 것입니다. 새로 올린 파일은 반영까지 몇 분 걸릴 수 있습니다(지식이 ‘준비 중’이면 기다리기).</li>
+      <li><b>관문 진행</b>Copilot이 쓴 분석결과서·보고서 초안(Word)을 <code>04_분석/</code>·<code>05_보고서/</code>에 저장합니다. 담당자가 사용자 답을 <code>pi_gate.py reply</code>로 기록하고 export를 다시 돌리면 <code>state.txt</code>가 갱신됩니다.</li>
+    </ol>
+    <div class="code"><div class="head"><span>동기화 폴더에서 (Windows 예)</span><button class="copy">복사</button></div>
+<pre>cd "%USERPROFILE%\&lt;회사명&gt;\IP-Intel - 문서\PatentIntel"
+python 키트\tools\pi_intake.py rounds\2026-R4\01_원자료\this_round.xlsx --project 00_설정\project.json --previous rounds\2026-R4\01_원자료\prev_round.xlsx --pdf-dir rounds\2026-R4\02_공보 --out rounds\2026-R4\work\01_intake.json
+python 키트\tools\pi_stats.py rounds\2026-R4\work\01_intake.json --clusters rounds\2026-R4\work\clusters.csv --scores rounds\2026-R4\work\scores.csv --out rounds\2026-R4\work\02_stats.json
+python 키트\tools\export_for_copilot.py rounds\2026-R4\work rounds\2026-R4\03_검증집계</pre></div>
+    <div class="note"><b>주의할 점</b> — 에이전트는 <b>질문한 사람이 볼 권한이 있는 파일만</b> 근거로 씁니다. 그래서 권한이 다른 사람은 같은 질문에도 다른 답을 받을 수 있습니다. 경영진에게는 최종본을 PDF로 고정해 배포하세요. 당사 청구항·제품 로드맵은 별도 하위 폴더에 두고 권한을 IP팀으로 제한합니다. 조직이 ‘Restricted SharePoint Search’를 켜 두었으면 SharePoint를 지식으로 쓸 수 없으니 IT 담당에게 확인하세요. 엑셀은 한 시트일 때 가장 잘 읽힙니다.</div>
+  </section>
+
+  <!-- 9 -->
+  <section id="s9">
+    <h2><span class="no">09</span>Google Antigravity에서 AI 도움으로 구축하기</h2>
+    <p>Antigravity는 작업 공간의 <code>.agents/skills/</code>(스킬), <code>.agents/rules/</code>(규칙), <code>AGENTS.md</code>(항상 규칙)를 자동으로 읽습니다. 여러 작업 공간에서 함께 쓰려면 <code>~/.gemini/config/skills/</code>에 복사합니다. starter 폴더를 그대로 열면 됩니다.</p>
+    <ol class="steps">
+      <li><b>열고 시험부터</b>“AGENTS.md와 patent-intelligence 스킬을 읽고 tools 시험을 실행해 결과를 보여 줘.” 명령 실행은 승인한 뒤에 진행됩니다.</li>
+      <li><b>설정을 대화로</b>“config/project.json을 이번 회차에 맞게 같이 채우자. 모르는 칸은 하나씩 물어봐.”</li>
+      <li><b>자료 검증</b>WIPSON 엑셀을 <code>inbox/</code>, 공보를 <code>inbox/pdf/</code>에 넣고 “pi_intake로 자료 검증하고 오류·경고를 표로 보여 준 뒤 멈춰.”</li>
+      <li><b>분석 → 관문</b>“1차 선별로 clusters.csv·scores.csv 초안을 만들고 pi_stats 결과로 분석결과서를 써. ANALYSIS 관문에 제출하고 멈춰.”</li>
+      <li><b>보고서 → 점검 → 최종본</b>관문마다 승인이나 수정 의견을 주면 보고서 → report_lint 오류 0 → render_report로 HTML/PDF가 나옵니다.</li>
+      <li><b>다음 회차</b>“rounds/2026-R4를 복사해 2027-R1을 만들고 직전 목록을 --previous로 써.”</li>
+    </ol>
+  </section>
+
+  <!-- 10 -->
+  <section id="s10">
+    <h2><span class="no">10</span>프로젝트 오케스트라 지침과 정기·수시 운영</h2>
+    <p>Claude·ChatGPT 프로젝트(또는 Copilot 에이전트)에 <b>오케스트라 지침</b>을 넣으면, 같은 AI가 자료 검증 → 분석가 → 보고서 작성자 → 편집자로 역할을 바꿔 가며 한 단계씩 진행하고 관문에서 멈춥니다. 보고서 작성자는 승인된 기준선만 보고 쓰고, 새 결론은 ‘신규 분석사항’으로 분리합니다.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>단계</th><th>역할</th><th>산출물</th><th>끝나면</th></tr></thead>
+      <tbody>
+        <tr><th>① 자료 검증</th><td>도구</td><td>01_intake</td><td>오류·경고 보고</td></tr>
+        <tr><th>② 선별·집계</th><td>분석가 + 도구</td><td>clusters · scores · 02_stats · 차트</td><td>—</td></tr>
+        <tr><th>③ 분석결과서</th><td>분석가</td><td>03_analysis ([B##])</td><td><b>관문 A</b></td></tr>
+        <tr><th>④ 보고서 초안</th><td>보고서 작성자</td><td>report.md (lint 0)</td><td><b>관문 B</b></td></tr>
+        <tr><th>⑤ 최종본</th><td>편집자</td><td>HTML·PDF·DOCX</td><td>쪽마다 확인</td></tr>
+        <tr><th>⑥ 후보</th><td>분석가</td><td>≤5건</td><td><b>관문 C</b></td></tr>
+        <tr><th>⑦ 인계</th><td>분석가</td><td>05_handoff.json</td><td>claim-suite</td></tr>
+      </tbody>
+    </table></div>
+    <h3>정기와 수시</h3>
+    <ul>
+      <li><b>정기</b>: 회차 폴더(<code>rounds/2026-R4</code>)를 만들고, 같은 검색식으로 받은 자료와 직전 목록을 넣고 <code>00-round-start.md</code>로 시작합니다. Claude·ChatGPT의 예약 작업 기능에 “inbox에 새 파일이 있으면 검증과 분석결과서 초안까지 만들고 관문에서 멈춰”라고 맡길 수 있습니다. WIPSON 다운로드는 로그인·포인트가 걸려 있으니 사람이 하는 편이 안전합니다. 예약 실행도 관문을 넘지 않습니다.</li>
+      <li><b>수시</b>: <code>06-urgent-brief.md</code>로 경쟁사·기술군 범위를 좁혀 같은 절차를 거친 1~2쪽 브리프를 만듭니다. 정기 기준선과 다른 결론은 차이표로 보입니다.</li>
+    </ul>
+    <div class="code"><div class="head"><span>prompts/00-round-start.md</span><button class="copy">복사</button></div>
+<pre>회차 시작: &lt;회차명 예) 2026-R4&gt;, &lt;정기/수시&gt;, 자료일 &lt;YYYY-MM-DD&gt;.
+첨부: 이번 회차 WIPSON 엑셀, 직전 회차 목록, 공보 PDF(가능한 만큼).
+patent-intelligence 스킬로 진행해 줘. 먼저 config/project.json(국가·제품·기술영역·관심 경쟁사·당사명·기술동향 기준일·당사 청구항 유무)을 같이 채우고, 모르는 칸은 하나씩 물어봐. 그다음 자료 검증 결과(오류·경고)를 표로 보여 주고 멈춰.</pre></div>
+  </section>
+
+  <!-- 11 -->
+  <section id="s11">
+    <h2><span class="no">11</span>주의할 점</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>상황</th><th>주의</th><th>대응</th></tr></thead>
+      <tbody>
+        <tr><th>최근 막대가 낮다</th><td>공개 지연(약 18개월)</td><td>‘미완결’ 표시, 감소로 쓰지 않기(R09)</td></tr>
+        <tr><th>같은 회사가 여러 이름</th><td>계열사·표기 차이로 T1 부풀림</td><td>출원인 별칭표에 그룹과 출처</td></tr>
+        <tr><th>패밀리 번호 없음</th><td>기술신호 과다 계산</td><td>다운로드 항목에 우선권·패밀리 추가(I08)</td></tr>
+        <tr><th>중국 발명·실용 같은 날</th><td>지우면 활동 과소, 따로 세면 신호 과다</td><td>신호 1개 · 활동 2건, 확정은 사람</td></tr>
+        <tr><th>출원 국가 수</th><td>점유율이 아님</td><td>‘권리 확보 의도’로만, 시장자료는 따로</td></tr>
+        <tr><th>도구 등급</th><td>기술군 이름만으로 셈</td><td>정독해 확정, 바꾸면 이유</td></tr>
+        <tr><th>영문 출원인명</th><td>AI 번역을 공식명처럼</td><td>공시·공보 영문 서지로 확인, 아니면 ‘미확인’·‘비공식 번역’</td></tr>
+        <tr><th>침해·FTO 표현</th><td>당사 청구항 대조 없이 단정</td><td>‘판단하지 않음’ 명시(R11), 정밀분석으로 인계</td></tr>
+        <tr><th>당사 자료 업로드</th><td>청구항·로드맵은 기밀</td><td>회사 승인 계정(학습 제외·데이터 보호)만, 개인 운영 중계 서버 금지</td></tr>
+        <tr><th>Copilot 권한</th><td>권한 따라 답이 달라짐</td><td>최종본은 PDF로 고정, 기밀 폴더는 권한 제한</td></tr>
+      </tbody>
+    </table></div>
+    <div class="btns">
+      <a class="btn primary" href="downloads/patent-intelligence-kit.zip" download>전체 키트 ZIP</a>
+      <a class="btn" href="templates/">템플릿 하나씩 보기</a>
+      <a class="btn" href="templates/upload/patent-intelligence.zip" download>스킬 업로드 묶음</a>
+    </div>
+  </section>
+
+  <!-- 12 -->
+  <section id="s12">
+    <h2><span class="no">부록</span>출처</h2>
+    <ul>
+      <li>작성자 원고: 초기 스킬 패키지 <code>create-monthly-patent-intelligence</code> v1.0.0(SKILL.md · references/analysis-rules.md · approval-workflow.md · report-spec.md · agents/openai.yaml · assets/icon.svg) — 이 편의 기초.</li>
+      <li>WIPSON: <a href="https://kudos.knu.ac.kr/download/2024WIPS%20ON.pdf">WIPS ON 이용 매뉴얼(2024, 경북대학교 도서관 배포본)</a> — 텍스트·원문 다운로드 건수, 데이터 정비(중복제거·대표문헌 치환), 저장 항목.</li>
+      <li>Microsoft 365 Copilot: <a href="https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/agent-builder-add-knowledge">Agent Builder — Add knowledge sources</a>(SharePoint 폴더 주소·하위 경로 검색·파일 형식·한 시트 권장·반영 지연·권한·Restricted SharePoint Search) · <a href="https://learn.microsoft.com/en-us/microsoft-365-copilot/extensibility/agent-builder-build-agents">Build agents with Agent Builder</a> · <a href="https://www.aguidetocloud.com/blog/microsoft-365-copilot-skills-explained/">Microsoft 365 Copilot Skills, Explained</a>(Cowork·Excel·PowerPoint 스킬).</li>
+      <li>Gemini: <a href="https://support.google.com/gemini/answer/18560919?hl=en">About the transition from Gems to skills</a> — 개인 계정 2026. 11. 17. 전환, 업무 계정 2027년 3월, 업로드 형식.</li>
+      <li>ChatGPT: <a href="https://academy.openai.com/public/resources/skills">OpenAI Academy — Skills</a>.</li>
+      <li>Google Antigravity: <a href="https://antigravity.google/docs/skills">Antigravity Skills 문서</a>(작업 공간 <code>.agents/skills</code>, 전역 <code>~/.gemini/config/skills</code>) · <a href="https://codelabs.developers.google.com/getting-started-with-antigravity-skills?hl=ko">Antigravity 스킬 작성 코드랩</a>.</li>
+      <li>출원공개 제도(18개월): 한국 특허법 제64조 · 미국 35 U.S.C. §122(b) · 일본 特許法 第64条 · 중국 专利法 第34条 · 유럽특허조약 제93조. 중국·일본 실용신안은 공개 절차 없이 등록·공고.</li>
+      <li>동봉 도구 7종(<code>pi_intake · pi_stats · pi_gate · report_lint · render_report · export_for_copilot · make_sample</code>)을 표준 라이브러리로 직접 만들어 시험 33개 통과, 스킬 형식 검사 통과.</li>
+    </ul>
+    <p>함께 읽기: <a href="../obviousness/">33편 진보성(통합 오케스트레이터 v2)</a> · <a href="../design-around/">32편 회피설계</a> · <a href="../prior-art-search/">28편 선행기술조사</a> · <a href="../exec-brief/">20편 경영진 브리프</a></p>
+  </section>
+
+  <footer>
+    작성: 이진수 (변리사) · 2026. 11. 10. · CC BY-NC 4.0<br>
+    작성자가 처음 구상한 스킬 패키지를 모두 점검해 기초로 삼았습니다. 개선점은 표준 라이브러리 도구로 직접 만들어 가상 자료로 시험(33개 통과)했고, 각 AI 앱의 기능은 2026년 11월 기준 공식 안내로 확인했으며, 사람이 검토했습니다. 예시 회사·번호·내용은 모두 가상입니다. 유튜브 링크는 제공되지 않아 영상 자료는 쓰지 않았습니다. 도구 결과와 점수는 판단 재료이고 법적 결론이 아니며, 최종 판단은 사람이 합니다. 오류 제보는 <a href="https://github.com/sonovman/ai-practice-handbooks/issues">Issues</a>로 남겨 주세요.
+  </footer>
+</main>
+</div>
+
+<script>
+  document.querySelectorAll('.copy').forEach(function (b) {
+    b.addEventListener('click', function () {
+      navigator.clipboard.writeText(b.closest('.code').querySelector('pre').innerText).then(function () {
+        b.textContent = '복사됨'; setTimeout(function () { b.textContent = '복사'; }, 1500);
+      });
+    });
+  });
+  var links = [].slice.call(document.querySelectorAll('.side a'));
+  var io = new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+      if (e.isIntersecting) links.forEach(function (a) { a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id); });
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  document.querySelectorAll('main section[id]').forEach(function (s) { io.observe(s); });
+</script>
+</body>
+</html>

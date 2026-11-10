@@ -1,0 +1,513 @@
+{
+ "scope": "trend",
+ "scope_docs": 16,
+ "lag_start_year": 2025,
+ "trend": {
+  "2019": {
+   "by_country": {
+    "KR": 1
+   },
+   "docs": 1,
+   "signals": 1,
+   "incomplete": false
+  },
+  "2020": {
+   "by_country": {
+    "JP": 1
+   },
+   "docs": 1,
+   "signals": 1,
+   "incomplete": false
+  },
+  "2023": {
+   "by_country": {
+    "KR": 2,
+    "US": 1,
+    "CN": 1
+   },
+   "docs": 4,
+   "signals": 2,
+   "incomplete": false
+  },
+  "2024": {
+   "by_country": {
+    "KR": 4,
+    "US": 1,
+    "EP": 2,
+    "CN": 2,
+    "JP": 2
+   },
+   "docs": 11,
+   "signals": 8,
+   "incomplete": false
+  },
+  "2025": {
+   "by_country": {
+    "CN": 2,
+    "KR": 1
+   },
+   "docs": 3,
+   "signals": 3,
+   "incomplete": true
+  }
+ },
+ "groups": [
+  {
+   "group": "가나그룹",
+   "display": "가나전자 주식회사 (GANA ELECTRONICS CO. LTD.)",
+   "members": [
+    "가나전자 주식회사",
+    "가나홈솔루션 주식회사"
+   ],
+   "docs": 9,
+   "signals": 6,
+   "trend_docs": 6,
+   "countries": {
+    "KR": 6,
+    "US": 1,
+    "CN": 1,
+    "JP": 1
+   },
+   "first_date": "2019-03-04",
+   "last_date": "2025-02-03",
+   "new_entrant": false
+  },
+  {
+   "group": "Gamma",
+   "display": "深圳伽马电器有限公司 (SHENZHEN GAMMA ELECTRIC APPLIANCE CO. LTD. · 비공식 번역)",
+   "members": [
+    "深圳伽马电器有限公司"
+   ],
+   "docs": 4,
+   "signals": 3,
+   "trend_docs": 4,
+   "countries": {
+    "CN": 4
+   },
+   "first_date": "2024-04-02",
+   "last_date": "2025-08-11",
+   "new_entrant": false
+  },
+  {
+   "group": "Beta",
+   "display": "ベータ工業株式会社 (BETA INDUSTRIES CO. LTD.)",
+   "members": [
+    "ベータ工業株式会社"
+   ],
+   "docs": 2,
+   "signals": 2,
+   "trend_docs": 1,
+   "countries": {
+    "JP": 2
+   },
+   "first_date": "2020-06-01",
+   "last_date": "2024-02-26",
+   "new_entrant": false
+  },
+  {
+   "group": "Alpha Home",
+   "display": "ALPHA HOME INC.",
+   "members": [
+    "ALPHA HOME INC."
+   ],
+   "docs": 2,
+   "signals": 1,
+   "trend_docs": 2,
+   "countries": {
+    "US": 1,
+    "EP": 1
+   },
+   "first_date": "2024-02-11",
+   "last_date": "2024-02-11",
+   "new_entrant": false
+  },
+  {
+   "group": "Delta",
+   "display": "DELTA APPLIANCES GMBH",
+   "members": [
+    "DELTA APPLIANCES GMBH"
+   ],
+   "docs": 1,
+   "signals": 1,
+   "trend_docs": 1,
+   "countries": {
+    "EP": 1
+   },
+   "first_date": "2024-04-08",
+   "last_date": "2024-04-08",
+   "new_entrant": false
+  },
+  {
+   "group": "다라테크",
+   "display": "다라테크 주식회사 (영문명 미확인)",
+   "members": [
+    "다라테크 주식회사"
+   ],
+   "docs": 1,
+   "signals": 1,
+   "trend_docs": 1,
+   "countries": {
+    "KR": 1
+   },
+   "first_date": "2024-05-20",
+   "last_date": "2024-05-20",
+   "new_entrant": false
+  },
+  {
+   "group": "한빛대학교",
+   "display": "한빛대학교 산학협력단 (영문명 미확인)",
+   "members": [
+    "한빛대학교 산학협력단"
+   ],
+   "docs": 1,
+   "signals": 1,
+   "trend_docs": 1,
+   "countries": {
+    "KR": 1
+   },
+   "first_date": "2024-09-02",
+   "last_date": "2024-09-02",
+   "new_entrant": false
+  }
+ ],
+ "family_coverage": {
+  "1": 12,
+  "2": 2,
+  "3": 1
+ },
+ "multi_country_signals_by_group": {
+  "가나그룹": 1
+ },
+ "country_targets": {
+  "KR": 8,
+  "JP": 3,
+  "CN": 4,
+  "US": 2,
+  "EP": 2
+ },
+ "clusters": {
+  "건조·분쇄": {
+   "docs": 8,
+   "signals": 5,
+   "independent_groups": 4,
+   "per_group": {
+    "가나그룹": 2,
+    "Alpha Home": 1,
+    "Gamma": 1,
+    "다라테크": 1
+   },
+   "grade_candidate": "T1 후보",
+   "note": "T2 신호도 있음: 가나그룹",
+   "ids": [
+    "D004",
+    "D005",
+    "D006",
+    "D007",
+    "D008",
+    "D009",
+    "D010",
+    "D011"
+   ],
+   "year_span": [
+    2023,
+    2024
+   ]
+  },
+  "미생물 발효": {
+   "docs": 3,
+   "signals": 2,
+   "independent_groups": 1,
+   "per_group": {
+    "가나그룹": 2
+   },
+   "grade_candidate": "T2 후보",
+   "note": "",
+   "ids": [
+    "D012",
+    "D013",
+    "D014"
+   ],
+   "year_span": [
+    2023,
+    2024
+   ]
+  },
+  "냄새 저감": {
+   "docs": 2,
+   "signals": 2,
+   "independent_groups": 2,
+   "per_group": {
+    "Beta": 1,
+    "Delta": 1
+   },
+   "grade_candidate": "T1 후보",
+   "note": "근거 최소(2건) — 문제해결 방향·구조가 같은지 정독으로 확인",
+   "ids": [
+    "D015",
+    "D016"
+   ],
+   "year_span": [
+    2024,
+    2024
+   ]
+  },
+  "스마트 센서·앱": {
+   "docs": 3,
+   "signals": 3,
+   "independent_groups": 2,
+   "per_group": {
+    "한빛대학교": 1,
+    "Gamma": 2
+   },
+   "grade_candidate": "T1 후보",
+   "note": "T2 신호도 있음: Gamma",
+   "ids": [
+    "D017",
+    "D018",
+    "D019"
+   ],
+   "year_span": [
+    2024,
+    2025
+   ]
+  }
+ },
+ "scores": [
+  {
+   "id": "D007",
+   "number": "US 12,990,031 B2",
+   "applicant": "ALPHA HOME INC.",
+   "parts": {
+    "relevance": 23.0,
+    "design_around": 16.0,
+    "persistence": 10.0,
+    "expansion": 8.0,
+    "info_value": 8.0
+   },
+   "raw": 65.0,
+   "full": 80,
+   "scaled": 81.2,
+   "proximity_pending": true,
+   "exception": false,
+   "reason": "가열 덕트로 분쇄와 건조를 한 공간에서 — 주력 구조와 같은 축",
+   "evidence_ok": true,
+   "rank": 1,
+   "recommend": true,
+   "basis": "점수 ≥ 60"
+  },
+  {
+   "id": "D004",
+   "number": "US 2025/0900011 A1",
+   "applicant": "가나전자 주식회사 (GANA ELECTRONICS CO. LTD.)",
+   "parts": {
+    "relevance": 22.0,
+    "design_around": 10.0,
+    "persistence": 14.0,
+    "expansion": 9.0,
+    "info_value": 7.0
+   },
+   "raw": 62.0,
+   "full": 80,
+   "scaled": 77.5,
+   "proximity_pending": true,
+   "exception": false,
+   "reason": "가나그룹 3개국 패밀리",
+   "evidence_ok": true,
+   "rank": 2,
+   "recommend": true,
+   "basis": "점수 ≥ 60"
+  },
+  {
+   "id": "D009",
+   "number": "CN 129900041 A",
+   "applicant": "深圳伽马电器有限公司 (SHENZHEN GAMMA ELECTRIC APPLIANCE CO. LTD. · 비공식 번역)",
+   "parts": {
+    "relevance": 20.0,
+    "design_around": 14.0,
+    "persistence": 8.0,
+    "expansion": 7.0,
+    "info_value": 7.0
+   },
+   "raw": 56.0,
+   "full": 80,
+   "scaled": 70.0,
+   "proximity_pending": true,
+   "exception": false,
+   "reason": "중국 발명·실용 병행 후보",
+   "evidence_ok": true,
+   "rank": 3,
+   "recommend": true,
+   "basis": "점수 ≥ 60"
+  },
+  {
+   "id": "D006",
+   "number": "KR 10-2025-0990021 A",
+   "applicant": "가나전자 주식회사 (GANA ELECTRONICS CO. LTD.)",
+   "parts": {
+    "relevance": 18.0,
+    "design_around": 12.0,
+    "persistence": 14.0,
+    "expansion": 4.0,
+    "info_value": 5.0
+   },
+   "raw": 53.0,
+   "full": 80,
+   "scaled": 66.2,
+   "proximity_pending": true,
+   "exception": false,
+   "reason": "가나 분쇄날 후속출원",
+   "evidence_ok": true,
+   "rank": 4,
+   "recommend": true,
+   "basis": "점수 ≥ 60"
+  },
+  {
+   "id": "D020",
+   "number": "번호 없음",
+   "applicant": "가나전자 주식회사 (GANA ELECTRONICS CO. LTD.)",
+   "parts": {
+    "relevance": 15.0,
+    "design_around": 14.0,
+    "persistence": 10.0,
+    "expansion": 6.0,
+    "info_value": 6.0
+   },
+   "raw": 51.0,
+   "full": 80,
+   "scaled": 63.7,
+   "proximity_pending": true,
+   "exception": false,
+   "reason": "번호 없음(출원번호만) — 후보 불가 시험용",
+   "evidence_ok": false,
+   "rank": 5,
+   "recommend": false,
+   "basis": ""
+  },
+  {
+   "id": "D015",
+   "number": "JP 2025-990081 A",
+   "applicant": "ベータ工業株式会社 (BETA INDUSTRIES CO. LTD.)",
+   "parts": {
+    "relevance": 10.0,
+    "design_around": 8.0,
+    "persistence": 6.0,
+    "expansion": 6.0,
+    "info_value": 9.0
+   },
+   "raw": 39.0,
+   "full": 80,
+   "scaled": 48.8,
+   "proximity_pending": true,
+   "exception": false,
+   "reason": "촉매 탈취 — 업계 공통 방향(2개 그룹)",
+   "evidence_ok": true,
+   "rank": 6,
+   "recommend": false,
+   "basis": ""
+  },
+  {
+   "id": "D017",
+   "number": "KR 10-2026-0990101 A",
+   "applicant": "한빛대학교 산학협력단 (영문명 미확인)",
+   "parts": {
+    "relevance": 9.0,
+    "design_around": 6.0,
+    "persistence": 3.0,
+    "expansion": 6.0,
+    "info_value": 9.0
+   },
+   "raw": 33.0,
+   "full": 80,
+   "scaled": 41.2,
+   "proximity_pending": true,
+   "exception": true,
+   "reason": "투입량·종류 인식 — 대체 작동원리(대학)",
+   "evidence_ok": true,
+   "rank": 7,
+   "recommend": true,
+   "basis": "Strategic Exception"
+  }
+ ],
+ "threshold": 60.0,
+ "issues": [
+  {
+   "code": "S06",
+   "level": "info",
+   "msg": "당사 청구항이 없어 근접성(20점)을 비우고 80점 만점을 100점으로 환산 — 보고서에 '근접성 미확정'으로 표기"
+  },
+  {
+   "code": "S07",
+   "level": "warn",
+   "msg": "D020는 공개·등록번호가 없어 후보에서 뺌"
+  }
+ ],
+ "summary": {
+  "source": "this_round.xlsx",
+  "rows_read": 21,
+  "documents": 20,
+  "by_country": {
+   "CN": 5,
+   "EP": 2,
+   "JP": 3,
+   "KR": 8,
+   "US": 2
+  },
+  "by_doc_type": {
+   "invention": 18,
+   "utility": 2
+  },
+  "by_stage": {
+   "공개": 14,
+   "등록": 5,
+   "번호없음": 1
+  },
+  "families": 16,
+  "tech_signals": 15,
+  "new_observed": 7,
+  "new_basis": "직전 회차 목록과 비교",
+  "trend_scope": 16,
+  "lag_zone_docs": 1,
+  "no_number_docs": 1,
+  "cn_dual_candidates": 1,
+  "unknown_columns": [],
+  "data_date": "2026-11-01",
+  "trend_base_date": "2024-11-01",
+  "lag_months": 18.0
+ },
+ "project": {
+  "project": "가상 예시 — 스마트 음식물 처리기 경쟁기술 모니터링",
+  "our_company": "우리회사(가상)",
+  "product": "스마트 음식물 처리기",
+  "countries": [
+   "KR",
+   "US",
+   "JP",
+   "CN",
+   "EP"
+  ],
+  "round": "2026-R4",
+  "cadence": "분기 정기 + 경쟁사 신제품 출시 시 수시",
+  "data_date": "2026-11-01",
+  "trend_base_date": "2024-11-01",
+  "lag_months": 18,
+  "focus_areas": {
+   "주력": [
+    "건조·분쇄"
+   ],
+   "인접": [
+    "미생물 발효",
+    "냄새 저감"
+   ],
+   "확장": [
+    "스마트 센서·앱"
+   ]
+  },
+  "watch_competitors": [
+   "가나그룹",
+   "Alpha Home",
+   "Gamma"
+  ],
+  "own_claims_available": false,
+  "accept_continue_as_approval": true
+ }
+}

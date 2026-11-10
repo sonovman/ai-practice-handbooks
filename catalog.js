@@ -583,5 +583,23 @@ window.CATALOG = [
       { label: "템플릿 내려받기", href: "obviousness/templates/" },
       { label: "통합 오케스트레이터 v2", href: "obviousness/#s10" }
     ]
+  },
+  {
+    id: "patent-intelligence",
+    no: "34",
+    category: "IP 실무",
+    title: "공개특허로 읽는 경쟁기술 동향과 C레벨 보고서",
+    subtitle: "WIPSON 엑셀·공보로 한·미·일·중·유럽 기술개발동향과 시장 흐름을 — 숫자는 도구로, 판단은 관문을 거쳐",
+    summary: "정기·수시로 받은 공개 출원군을 검증·집계·분석해 승인 관문(분석→보고서→후보)을 거친 경영진 보고서를 만드는 방법입니다. 처음 구상한 스킬 패키지를 점검해 뼈대는 살리고, 공개 지연 착시·패밀리·중국 병행출원·계열사 중복·시장 신호의 한계·승인 상태 기록·보고서 점검을 도구 7종(시험 33개)으로 보완했습니다. Claude·ChatGPT·Gemini와 SharePoint 경로 기반 Microsoft 365 Copilot, Antigravity 구축까지 초보자용 단계별로 담았습니다.",
+    reader: "경쟁사 특허 동향을 경영진에게 정기 보고하는 기업 IP·R&D 기획 담당자, 변리사, 입문자",
+    version: "1.0",
+    date: "2026-11-10",
+    length: "읽기 약 30분",
+    status: "published",
+    links: [
+      { label: "화면으로 읽기", href: "patent-intelligence/", primary: true },
+      { label: "템플릿 내려받기", href: "patent-intelligence/templates/" },
+      { label: "Copilot · SharePoint 방식", href: "patent-intelligence/#s8" }
+    ]
   }
 ];
