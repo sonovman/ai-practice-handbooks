@@ -1,0 +1,34 @@
+test_01_sample_no_errors (__main__.T.test_01_sample_no_errors) ... ok
+test_02_classification (__main__.T.test_02_classification) ... ok
+test_03_examiner_ref_not_closest (__main__.T.test_03_examiner_ref_not_closest) ... ok
+test_04_full_disclosure_is_A (__main__.T.test_04_full_disclosure_is_A) ... ok
+test_05_difference_without_cgk_research (__main__.T.test_05_difference_without_cgk_research) ... ok
+test_06_cgk_evidence_after_priority (__main__.T.test_06_cgk_evidence_after_priority) ... ok
+test_07_cgk_without_evidence (__main__.T.test_07_cgk_without_evidence) ... ok
+test_08_single_patent_is_weak (__main__.T.test_08_single_patent_is_weak) ... ok
+test_09_three_applicants_is_strong (__main__.T.test_09_three_applicants_is_strong) ... ok
+test_10_missing_limitation_in_combination (__main__.T.test_10_missing_limitation_in_combination) ... ok
+test_11_secondary_ref_must_disclose (__main__.T.test_11_secondary_ref_must_disclose) ... ok
+test_12_motivation_required (__main__.T.test_12_motivation_required) ... ok
+test_13_hindsight_from_patent_itself (__main__.T.test_13_hindsight_from_patent_itself) ... ok
+test_14_expectation_required_us (__main__.T.test_14_expectation_required_us) ... ok
+test_15_teaching_away_warns (__main__.T.test_15_teaching_away_warns) ... ok
+test_16_post_priority_ref_in_combination (__main__.T.test_16_post_priority_ref_in_combination) ... ok
+test_17_non_analogous (__main__.T.test_17_non_analogous) ... ok
+test_18_secondary_must_be_reviewed (__main__.T.test_18_secondary_must_be_reviewed) ... ok
+test_19_aapa_in_ipr (__main__.T.test_19_aapa_in_ipr) ... ok
+test_20_missing_pin (__main__.T.test_20_missing_pin) ... ok
+test_21_chart_passes_lint (__main__.T.test_21_chart_passes_lint) ... ok
+test_22_posita_required (__main__.T.test_22_posita_required) ... ok
+test_23_analogous_vs_other_reference (__main__.T.test_23_analogous_vs_other_reference) ... ok
+test_24_obvious_to_try_needs_three_axes (__main__.T.test_24_obvious_to_try_needs_three_axes) ... ok
+test_25_could_without_would (__main__.T.test_25_could_without_would) ... ok
+test_26_cross_combination_rationale (__main__.T.test_26_cross_combination_rationale) ... ok
+test_27_mere_preference_is_not_teaching_away (__main__.T.test_27_mere_preference_is_not_teaching_away) ... ok
+test_28_known_feature_weakens_nexus (__main__.T.test_28_known_feature_weakens_nexus) ... ok
+test_29_invention_type_note (__main__.T.test_29_invention_type_note) ... ok
+
+----------------------------------------------------------------------
+Ran 29 tests in 0.014s
+
+OK

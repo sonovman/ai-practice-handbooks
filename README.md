@@ -38,6 +38,7 @@
 | 30 | 청구항 구성요소 분해와 Claim Chart 작성 — 절차와 규칙 | [화면](https://sonovman.github.io/ai-practice-handbooks/claim-chart/) | [템플릿](claim-chart/templates/) |
 | 31 | 청구범위 해석 — 절차와 규칙 | [화면](https://sonovman.github.io/ai-practice-handbooks/claim-construction/) | [템플릿](claim-construction/templates/) |
 | 32 | 회피설계 판단 — 절차와 규칙 (+30~32편 통합 오케스트레이터) | [화면](https://sonovman.github.io/ai-practice-handbooks/design-around/) | [템플릿](design-around/templates/) · [통합 키트](design-around/downloads/claim-suite-kit.zip) |
+| 33 | 진보성(비자명성) 판단 — 절차·심리 기준·판단 방법 (+30~33편 통합 오케스트레이터 v2) | [화면](https://sonovman.github.io/ai-practice-handbooks/obviousness/) | [템플릿](obviousness/templates/) · [통합 키트 v2](obviousness/downloads/claim-suite-kit.zip) |
 
 ## 폴더 구성
 
@@ -81,6 +82,7 @@ ai-practice-handbooks/
 ├── claim-chart/        30편 (templates/ starter 작업 폴더·claim-decompose·claim-chart 스킬·claim_parse.py·chart_lint.py·render_chart.py·프롬프트 5종·가상 시범, upload/ 웹 앱용, downloads/ ZIP)
 ├── claim-construction/  31편 (templates/ starter 작업 폴더·claim-construe 스킬·construe_check.py·apply_to_ledger.py·프롬프트 5종·미국·한국 가상 시범, upload/ 웹 앱용, downloads/ ZIP)
 ├── design-around/      32편 (templates/ starter 작업 폴더·design-around 스킬·design_around_eval.py·프롬프트 5종·미국·한국 가상 시범, upload/ 웹 앱용, suite/ 30~32편 통합 오케스트레이터(claim-suite·PROJECT_INSTRUCTIONS·suite_status.py·예시 사건), upload-suite/ 스킬 5종, downloads/ ZIP 2종)
+├── obviousness/        33편 (templates/ starter 작업 폴더·obviousness 스킬·obviousness_check.py·chart_lint.py·프롬프트 5종·가상 시범, upload/ 웹 앱용, suite/ 30~33편 통합 오케스트레이터 v2(claim-suite·PROJECT_INSTRUCTIONS·suite_status.py·예시 사건 2개), upload-suite/ 스킬 6종, downloads/ ZIP 2종)
 └── data/               공용 자료
 ```
 

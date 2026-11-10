@@ -1,0 +1,244 @@
+{
+  "meta": {
+    "patent": "가상특허 A (나쁜 예)",
+    "claim": 1,
+    "forum": "ptab",
+    "standard": "bri",
+    "stage": "appeal",
+    "priority_date": "2021-03-15",
+    "note": "30편 착즙기 청구항 1의 다툼 용어 해석 기록",
+    "petition_date": "2020-05-01"
+  },
+  "dependent_limitations": [
+    {
+      "id": "2a",
+      "parent": "1",
+      "text": "the ribs have a height of 0.5 to 2 mm"
+    }
+  ],
+  "terms": [
+    {
+      "term": "A juice extractor",
+      "ledger_id": "1pre",
+      "claim_text": "A juice extractor",
+      "disputed": false,
+      "construction": "전제부 — 한정 아님(본문이 완결된 구조를 모두 적고, 전제부는 용도·명칭만 표시)",
+      "preamble_limiting": false,
+      "evidence": [
+        {
+          "type": "claim",
+          "cite": "청구항 1 본문 [1a]~[1g]"
+        },
+        {
+          "type": "spec",
+          "cite": "¶[0001]"
+        }
+      ],
+      "used_for": {
+        "infringement": "비한정",
+        "validity": "비한정"
+      }
+    },
+    {
+      "term": "a gap ... decreases toward a lower end of the drum",
+      "ledger_id": "1c.2",
+      "claim_text": "a gap between the spiral blades and the inner wall decreases toward a lower end of the drum",
+      "disputed": true,
+      "construction": "plain and ordinary meaning",
+      "evidence": [
+        {
+          "type": "claim",
+          "cite": "청구항 1 [1c.2]"
+        },
+        {
+          "type": "spec",
+          "cite": "¶[0016], 도3 g1>g2"
+        },
+        {
+          "type": "expert",
+          "cite": "갑 제7호증 전문가 진술서 ¶12",
+          "contradicts_intrinsic": false
+        }
+      ],
+      "basis": "intrinsic",
+      "used_for": {
+        "infringement": "단조 감소",
+        "validity": "단조 감소"
+      }
+    },
+    {
+      "term": "ribs",
+      "ledger_id": "1d",
+      "claim_text": "a plurality of ribs formed on the inner wall",
+      "disputed": true,
+      "construction": "the ribs have a height of 0.5 to 2 mm, as in the preferred embodiment",
+      "evidence": [
+        {
+          "type": "dictionary",
+          "cite": "Webster's 'rib' 정의",
+          "contradicts_intrinsic": true
+        }
+      ],
+      "requires": [
+        {
+          "text": "돌출 높이 0.3mm 이상",
+          "evidence_hint": "높이 mm 돌출"
+        }
+      ],
+      "used_for": {
+        "infringement": "0.3mm 이상 돌출 부재",
+        "validity": "0.3mm 이상 돌출 부재"
+      },
+      "imports_embodiment": true,
+      "basis": "extrinsic"
+    },
+    {
+      "term": "at an inclination of 5 to 15 degrees relative to a rotation axis",
+      "ledger_id": "1d",
+      "claim_text": "at an inclination of 5 to 15 degrees relative to a rotation axis of the screw",
+      "disputed": false,
+      "construction": "내벽에 투영한 회전축 선을 기준으로 잰 리브 길이 방향의 각도가 5°~15°",
+      "evidence": [
+        {
+          "type": "spec",
+          "cite": "¶[0018] 측정 기준"
+        },
+        {
+          "type": "drawing",
+          "cite": "도3 각도 θ"
+        }
+      ],
+      "used_for": {
+        "infringement": "투영선 기준",
+        "validity": "투영선 기준"
+      }
+    },
+    {
+      "term": "means for rotating the screw at a speed of 40 to 60 rpm",
+      "ledger_id": "1e",
+      "claim_text": "means for rotating the screw at a speed of 40 to 60 rpm",
+      "disputed": true,
+      "construction": "§112(f): 기능=스크루를 40~60rpm으로 회전 / 구조=BLDC 모터 M1 + 감속기어 G1(1:30) 및 그 균등물",
+      "mpf": {
+        "applies": true,
+        "function": "스크루 회전",
+        "structure": "",
+        "structure_cite": "",
+        "software": false
+      },
+      "evidence": [
+        {
+          "type": "claim",
+          "cite": "청구항 1 [1e]"
+        },
+        {
+          "type": "spec",
+          "cite": "¶[0021], 도4"
+        }
+      ],
+      "used_for": {
+        "infringement": "M1+G1 및 균등물",
+        "validity": "M1+G1 및 균등물"
+      }
+    },
+    {
+      "term": "configured to select either a juice mode or a smoothie mode",
+      "ledger_id": "1f",
+      "claim_text": "a controller configured to select either a juice mode or a smoothie mode in response to an operator input",
+      "disputed": true,
+      "construction": "사용자 입력에 따라 두 모드 중 하나만 활성으로 두도록 설계·프로그램된 제어부(두 모드 동시 수행 제외)",
+      "disclaimer": {
+        "quote": "",
+        "cite": "2022-08-10 의견서 p.4",
+        "source": "prosecution",
+        "clarity": "ambiguous"
+      },
+      "evidence": [
+        {
+          "type": "claim",
+          "cite": "'either … or' 문언"
+        },
+        {
+          "type": "spec",
+          "cite": "¶[0024], 도5 S3"
+        },
+        {
+          "type": "prosecution",
+          "cite": "2022-08-10 의견서 p.4"
+        }
+      ],
+      "requires": [
+        {
+          "text": "한 번에 한 모드만 활성",
+          "evidence_hint": "모드로만 작동"
+        }
+      ],
+      "used_for": {
+        "infringement": "포괄적 선택(둘 다 포함)",
+        "validity": "배타적 선택"
+      }
+    },
+    {
+      "term": "substantially rigid portion",
+      "ledger_id": "1b",
+      "claim_text": "a substantially rigid portion of the drum",
+      "disputed": true,
+      "construction": "작은(small) 변형만 허용되는 부분",
+      "evidence": [
+        {
+          "type": "spec",
+          "cite": "¶[0013]"
+        }
+      ],
+      "indefinite": true,
+      "added_words": [
+        "small"
+      ],
+      "stipulated": true,
+      "definite_because_stipulated": true
+    },
+    {
+      "term": "juice concentrate obtained by cold pressing",
+      "ledger_id": "1g",
+      "claim_text": "juice concentrate obtained by cold pressing",
+      "disputed": true,
+      "construction": "냉압착으로 얻은 농축즙",
+      "evidence": [
+        {
+          "type": "claim",
+          "cite": "청구항 5"
+        }
+      ],
+      "product_by_process": {
+        "infringement_limited_to_process": false,
+        "validity_limited_to_process": true
+      }
+    },
+    {
+      "term": "controller",
+      "ledger_id": "1f",
+      "claim_text": "a controller",
+      "disputed": true,
+      "construction": "마이크로컨트롤러",
+      "evidence": [
+        {
+          "type": "spec",
+          "cite": "¶[0023]"
+        }
+      ],
+      "new_on_appeal": true
+    },
+    {
+      "term": "ribs",
+      "ledger_id": "1d",
+      "claim_text": "ribs",
+      "construction": "돌기 전체",
+      "evidence": [
+        {
+          "type": "spec",
+          "cite": "¶[0017]"
+        }
+      ]
+    }
+  ]
+}

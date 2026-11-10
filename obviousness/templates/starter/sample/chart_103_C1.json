@@ -1,0 +1,273 @@
+{
+  "meta": {
+    "patent": "가상특허 A (교육용 예시)",
+    "claim": 1,
+    "priority_date": "2021-03-15",
+    "chart_type": "invalidity_103",
+    "stage": "final",
+    "target": {
+      "name": "D3 KR-가상-003 + D2 US-가상-002 + K1 기술상식",
+      "version": "-",
+      "date": "2020-01-20"
+    },
+    "source": "obviousness_check.py --chart C1"
+  },
+  "limitations": [
+    {
+      "id": "1pre",
+      "text": "A juice extractor",
+      "type": "preamble",
+      "proposition": "착즙기(전제부 — 비제한 가능성, 조건부 대응)",
+      "intrinsic": "¶[0001]",
+      "prosecution": "특이사항 없음"
+    },
+    {
+      "id": "1a",
+      "text": "a housing",
+      "type": "structure",
+      "proposition": "구성품을 수용하는 하우징이 있다",
+      "intrinsic": "¶[0012], 도1 부호 10",
+      "prosecution": "특이사항 없음"
+    },
+    {
+      "id": "1b",
+      "text": "a drum disposed in the housing, the drum having an inner wall",
+      "type": "structure",
+      "proposition": "하우징 안에 내벽을 가진 드럼이 배치된다",
+      "intrinsic": "¶[0013], 도1 부호 20",
+      "prosecution": "특이사항 없음"
+    },
+    {
+      "id": "1c",
+      "text": "a screw rotatably disposed in the drum",
+      "type": "structure",
+      "proposition": "드럼 안에 회전 가능한 스크루가 있다",
+      "intrinsic": "¶[0014], 도2 부호 30",
+      "prosecution": "특이사항 없음"
+    },
+    {
+      "id": "1c.1",
+      "text": "the screw has a plurality of spiral blades",
+      "type": "structure",
+      "proposition": "스크루는 나선 날개를 둘 이상 가진다",
+      "intrinsic": "¶[0015], 도2 부호 31",
+      "prosecution": "특이사항 없음"
+    },
+    {
+      "id": "1c.2",
+      "text": "a gap between the spiral blades and the inner wall decreases toward a lower end of the drum",
+      "type": "relation",
+      "proposition": "날개–내벽 간격이 드럼 하단으로 갈수록 줄어드는 관계가 있다",
+      "intrinsic": "¶[0016], 도3 간격 g1>g2",
+      "prosecution": "1차 거절(D1) 극복 위해 보정 추가 — 균등 주장 시 금반언 점검 대상"
+    },
+    {
+      "id": "1d",
+      "text": "a plurality of ribs formed on the inner wall at an inclination of 5 to 15 degrees relative to a rotation axis of the screw",
+      "type": "numeric",
+      "proposition": "내벽에 스크루 회전축 대비 5~15° 경사의 리브가 둘 이상 있다",
+      "intrinsic": "¶[0018] 측정 기준: 회전축 투영선",
+      "prosecution": "특이사항 없음"
+    },
+    {
+      "id": "1e",
+      "text": "means for rotating the screw at a speed of 40 to 60 rpm",
+      "type": "mpf",
+      "proposition": "스크루를 40~60rpm으로 회전시키는 기능 — 명세서의 대응 구조와 그 균등물로 한정",
+      "intrinsic": "¶[0021]",
+      "prosecution": "특이사항 없음",
+      "sam": "¶[0021], 도4: BLDC 모터 M1 + 감속기어 G1(감속비 1:30)",
+      "construction": "§112(f) 기능식: 기능=40~60rpm 회전, 구조=모터+감속기어"
+    },
+    {
+      "id": "1f",
+      "text": "a controller configured to select either a juice mode or a smoothie mode in response to an operator input",
+      "type": "alternative",
+      "proposition": "제어부가 사용자 입력에 따라 착즙·스무디 모드 중 하나를 골라 작동하도록 설계돼 있다(배타적 선택)",
+      "intrinsic": "¶[0024], 도5 흐름도 S3",
+      "prosecution": "의견서에서 '사용자 선택 단일 모드'를 강조",
+      "construction": "'either…or' = 둘 중 하나(명세서 ¶[0024]·출원경과 의견서)"
+    },
+    {
+      "id": "1g",
+      "text": "a juice outlet formed at the lower end of the drum, without a mesh filter between the drum and the juice outlet",
+      "type": "negative",
+      "proposition": "드럼 하단에 착즙구가 있고, 드럼과 착즙구 사이에 망 필터가 없다",
+      "intrinsic": "¶[0027]",
+      "prosecution": "특이사항 없음"
+    }
+  ],
+  "rows": [
+    {
+      "id": "1pre",
+      "theory": "literal",
+      "assertion": "주인용 D3(KR-가상-003)가 개시한다 — ¶[0001].",
+      "facts": [
+        {
+          "source": "D3 KR-가상-003",
+          "pin": "¶[0001]",
+          "date": "2020-01-20",
+          "text": "\"수직형 착즙기\"",
+          "ref": "D3"
+        }
+      ],
+      "explanation": "D3의 ¶[0001] 기재는 '착즙기(전제부 — 비제한 가능성, 조건부 대응)'에 해당하므로 개시한다. 왜냐하면 같은 기기이기 때문이다."
+    },
+    {
+      "id": "1a",
+      "theory": "literal",
+      "assertion": "주인용 D3(KR-가상-003)가 개시한다 — ¶[0011], 도1 부호 1.",
+      "facts": [
+        {
+          "source": "D3 KR-가상-003",
+          "pin": "¶[0011], 도1 부호 1",
+          "date": "2020-01-20",
+          "text": "\"본체 1\"",
+          "ref": "D3"
+        }
+      ],
+      "explanation": "D3의 ¶[0011], 도1 부호 1 기재는 '구성품을 수용하는 하우징이 있다'에 해당하므로 개시한다. 왜냐하면 구성품을 수용하는 외장이기 때문이다."
+    },
+    {
+      "id": "1b",
+      "theory": "literal",
+      "assertion": "주인용 D3(KR-가상-003)가 개시한다 — ¶[0012], 도1 부호 2·21.",
+      "facts": [
+        {
+          "source": "D3 KR-가상-003",
+          "pin": "¶[0012], 도1 부호 2·21",
+          "date": "2020-01-20",
+          "text": "\"착즙통 2\"는 내벽 21을 가진다",
+          "ref": "D3"
+        }
+      ],
+      "explanation": "D3의 ¶[0012], 도1 부호 2·21 기재는 '하우징 안에 내벽을 가진 드럼이 배치된다'에 해당하므로 개시한다. 왜냐하면 본체 안에 있는 내벽을 가진 통이기 때문이다."
+    },
+    {
+      "id": "1c",
+      "theory": "literal",
+      "assertion": "주인용 D3(KR-가상-003)가 개시한다 — ¶[0013], 도2 부호 3.",
+      "facts": [
+        {
+          "source": "D3 KR-가상-003",
+          "pin": "¶[0013], 도2 부호 3",
+          "date": "2020-01-20",
+          "text": "\"스크루 3\"이 착즙통 안에서 회전",
+          "ref": "D3"
+        }
+      ],
+      "explanation": "D3의 ¶[0013], 도2 부호 3 기재는 '드럼 안에 회전 가능한 스크루가 있다'에 해당하므로 개시한다. 왜냐하면 문언과 배치가 같기 때문이다."
+    },
+    {
+      "id": "1c.1",
+      "theory": "literal",
+      "assertion": "주인용 D3(KR-가상-003)가 개시한다 — ¶[0013], 도2 부호 31.",
+      "facts": [
+        {
+          "source": "D3 KR-가상-003",
+          "pin": "¶[0013], 도2 부호 31",
+          "date": "2020-01-20",
+          "text": "\"나선날 31\" 두 줄",
+          "ref": "D3"
+        }
+      ],
+      "explanation": "D3의 ¶[0013], 도2 부호 31 기재는 '스크루는 나선 날개를 둘 이상 가진다'에 해당하므로 개시한다. 왜냐하면 복수는 둘 이상이기 때문이다."
+    },
+    {
+      "id": "1c.2",
+      "theory": "literal",
+      "assertion": "주인용 D3에는 없음(차이점) → 보조 문헌 D2(US-가상-002)가 개시한다.",
+      "facts": [
+        {
+          "source": "D2 US-가상-002",
+          "pin": "col.4:12-20, Fig.3 gap G",
+          "date": "2018-09-04",
+          "text": "\"gap G narrows toward the outlet end\"",
+          "ref": "D2"
+        }
+      ],
+      "explanation": "D2의 col.4:12-20, Fig.3 gap G 기재는 '날개–내벽 간격이 드럼 하단으로 갈수록 줄어드는 관계가 있다'에 해당하므로 개시한다. 왜냐하면 배출단이 하단에 있어 같은 방향의 감소 관계이기 때문이다."
+    },
+    {
+      "id": "1d",
+      "theory": "literal",
+      "assertion": "주인용 D3(KR-가상-003)가 개시한다 — ¶[0016], 도3 부호 22.",
+      "facts": [
+        {
+          "source": "D3 KR-가상-003",
+          "pin": "¶[0016], 도3 부호 22",
+          "date": "2020-01-20",
+          "text": "\"분쇄 리브 22\"는 회전축에 대해 약 8° 기울어져 있다",
+          "ref": "D3"
+        }
+      ],
+      "explanation": "D3의 ¶[0016], 도3 부호 22 기재는 '내벽에 스크루 회전축 대비 5~15° 경사의 리브가 둘 이상 있다'에 해당하므로 개시한다. 왜냐하면 8°가 5~15° 범위 안이고 측정 기준(회전축)이 같기 때문이다."
+    },
+    {
+      "id": "1e",
+      "theory": "literal",
+      "assertion": "주인용 D3에는 없음(차이점) → 보조 문헌 D2(US-가상-002)가 개시한다.",
+      "facts": [
+        {
+          "source": "D2 US-가상-002",
+          "pin": "col.5:3-15, Fig.4 부호 40·42",
+          "date": "2018-09-04",
+          "text": "\"motor 40 with reduction gear 42, output 45 rpm\"",
+          "ref": "D2"
+        }
+      ],
+      "explanation": "D2의 col.5:3-15, Fig.4 부호 40·42 기재는 '스크루를 40~60rpm으로 회전시키는 기능 — 명세서의 대응 구조와 그 균등물로 한정'에 해당하므로 개시한다. 왜냐하면 45rpm이 40~60rpm 범위 안이고 구조가 같기 때문이다.",
+      "sam_match": "명세서 대응 구조(BLDC 모터+감속기어 1:30)와 D2의 모터 40+감속기 42가 같은 구성 원리로 같은 기능(45rpm)을 수행한다."
+    },
+    {
+      "id": "1f",
+      "theory": "literal",
+      "assertion": "주인용 D3에는 없음(차이점) → 기준일 당시 기술상식 K1로 보완한다: 가정용 조리가전에서 사용자가 버튼·다이얼로 작동 모드(프로그램)를 골라 회전 속도·시간을 바꾸는 제어",
+      "facts": [
+        {
+          "source": "교재 『가전기기 제어 입문』(가상, 2016)",
+          "pin": "p.112-115, 그림 6-3",
+          "date": "2016-03-02",
+          "text": "\"모드 선택 스위치 입력에 따라 미리 저장한 구동 프로파일을 호출\"",
+          "ref": "K1"
+        },
+        {
+          "source": "블렌더 BX-100 사용설명서(가상, 2019)",
+          "pin": "p.7 '스무디 모드'",
+          "date": "2019-02-01",
+          "text": "\"스무디 버튼을 누르면 고속·저속을 번갈아 작동\"",
+          "ref": "K1"
+        },
+        {
+          "source": "KR-가상-006(가상, 2018)",
+          "pin": "¶[0021], 도4",
+          "date": "2018-05-11",
+          "text": "\"사용자가 선택한 조리 모드에 따라 모터 속도 제어\"",
+          "ref": "K1"
+        }
+      ],
+      "explanation": "기준일 전 자료들이 '가정용 조리가전에서 사용자가 버튼·다이얼로 작동 모드(프로그램)를 골라 회전 속도·시간을 바꾸는 제어'를 통상의 기술자가 널리 아는 기술로 보여 주므로 차이점을 메운다. 왜냐하면 기준일 전 조리가전 일반에 모드 선택 제어가 널리 쓰였고(K1), 스무디 수요에 맞춰 한 기기로 두 동작을 고르게 하려는 시장 요구가 있었다이기 때문이다.",
+      "basis": "cgk"
+    },
+    {
+      "id": "1g",
+      "theory": "literal",
+      "assertion": "주인용 D3(KR-가상-003)가 개시한다 — ¶[0020], 도3 부호 5.",
+      "facts": [
+        {
+          "source": "D3 KR-가상-003",
+          "pin": "¶[0020], 도3 부호 5",
+          "date": "2020-01-20",
+          "text": "\"배출구 5\"는 착즙통 하단에 있고 \"별도의 그물망 없이\" 즙을 배출",
+          "ref": "D3"
+        }
+      ],
+      "explanation": "D3의 ¶[0020], 도3 부호 5 기재는 '드럼 하단에 착즙구가 있고, 드럼과 착즙구 사이에 망 필터가 없다'에 해당하므로 개시한다. 왜냐하면 하단 배출구가 있고 망 필터가 없다고 적혀 있기 때문이다."
+    }
+  ],
+  "combination": {
+    "motivation": "[1c.2] D2: D2는 테이퍼 간극이 착즙률을 높인다고 밝히고, D3도 착즙률 향상을 과제로 삼아 같은 이점을 얻으려 적용할 이유가 있다 (근거 D2 col.4:21-30; D3 ¶[0003]) / [1e] D2: D3는 저속 회전만 적고 회전수를 정하지 않아, 같은 분야 D2의 45rpm 감속 구동을 그대로 채택하는 것이 자연스럽다 (근거 D3 ¶[0018]; D2 col.5:3-15; K3 KR-가상-005 ¶[0009]) / [1f] K1: 기준일 전 조리가전 일반에 모드 선택 제어가 널리 쓰였고(K1), 스무디 수요에 맞춰 한 기기로 두 동작을 고르게 하려는 시장 요구가 있었다 (근거 K1 교재 p.112-115; BX-100 사용설명서 p.7)",
+    "expectation": "[1c.2] 스크루 날 외경만 바꾸면 되는 형상 변경이고 D2가 같은 수직 구조에서 효과를 보였다(D2 Fig.3) / [1e] 모터+감속기 조합은 D2에서 같은 용도로 작동이 확인됐다 / [1f] 모드별 회전 프로파일 호출은 통상의 제어 회로로 구현할 수 있다(K1 그림 6-3)"
+  },
+  "symmetry": "침해 쪽에서 [1e]를 '모터+기어 감속' 수준의 구조 균등으로 넓게 봤으므로, 같은 넓이로 D2의 모터 40+감속기 42도 개시로 인정했다(대칭)."
+}

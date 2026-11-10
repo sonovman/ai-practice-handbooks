@@ -1,0 +1,8 @@
+1. A juice extractor, comprising:
+a housing;
+a drum disposed in the housing, the drum having an inner wall;
+a screw rotatably disposed in the drum, wherein the screw has a plurality of spiral blades, and wherein a gap between the spiral blades and the inner wall decreases toward a lower end of the drum;
+a plurality of ribs formed on the inner wall at an inclination of 5 to 15 degrees relative to a rotation axis of the screw;
+means for rotating the screw at a speed of 40 to 60 rpm;
+a controller configured to select either a juice mode or a smoothie mode in response to an operator input; and
+a juice outlet formed at the lower end of the drum, without a mesh filter between the drum and the juice outlet.

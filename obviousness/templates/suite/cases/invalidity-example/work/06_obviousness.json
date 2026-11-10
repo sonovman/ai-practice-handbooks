@@ -1,0 +1,572 @@
+{
+  "meta": {
+    "patent": "가상특허 A (교육용 예시)",
+    "claim": 1,
+    "priority_date": "2021-03-15",
+    "forum": "us+kr",
+    "proceeding": "kr_trial",
+    "field": "가정용 수직 스크루 착즙기",
+    "problem": "망 없이 막힘을 줄이고 착즙·스무디를 한 기기로",
+    "symmetry": "침해 쪽에서 [1e]를 '모터+기어 감속' 수준의 구조 균등으로 넓게 봤으므로, 같은 넓이로 D2의 모터 40+감속기 42도 개시로 인정했다(대칭)."
+  },
+  "posita": {
+    "definition": "기계공학 또는 관련 학사 학위와 소형 주방가전(착즙기·블렌더) 설계 실무 2~3년, 모터·감속기와 간단한 제어 회로를 다룰 수 있는 사람",
+    "basis": [
+      "D2·D3의 기술 수준(감속 구동·리브 설계를 상세 설명 없이 기재)",
+      "K1 교재의 대상 독자(학부 3~4학년)"
+    ]
+  },
+  "limitations": [
+    {
+      "id": "1pre",
+      "text": "A juice extractor",
+      "type": "preamble",
+      "proposition": "착즙기(전제부 — 비제한 가능성, 조건부 대응)",
+      "intrinsic": "¶[0001]",
+      "prosecution": "특이사항 없음"
+    },
+    {
+      "id": "1a",
+      "text": "a housing",
+      "type": "structure",
+      "proposition": "구성품을 수용하는 하우징이 있다",
+      "intrinsic": "¶[0012], 도1 부호 10",
+      "prosecution": "특이사항 없음"
+    },
+    {
+      "id": "1b",
+      "text": "a drum disposed in the housing, the drum having an inner wall",
+      "type": "structure",
+      "proposition": "하우징 안에 내벽을 가진 드럼이 배치된다",
+      "intrinsic": "¶[0013], 도1 부호 20",
+      "prosecution": "특이사항 없음"
+    },
+    {
+      "id": "1c",
+      "text": "a screw rotatably disposed in the drum",
+      "type": "structure",
+      "proposition": "드럼 안에 회전 가능한 스크루가 있다",
+      "intrinsic": "¶[0014], 도2 부호 30",
+      "prosecution": "특이사항 없음"
+    },
+    {
+      "id": "1c.1",
+      "text": "the screw has a plurality of spiral blades",
+      "type": "structure",
+      "proposition": "스크루는 나선 날개를 둘 이상 가진다",
+      "intrinsic": "¶[0015], 도2 부호 31",
+      "prosecution": "특이사항 없음"
+    },
+    {
+      "id": "1c.2",
+      "text": "a gap between the spiral blades and the inner wall decreases toward a lower end of the drum",
+      "type": "relation",
+      "proposition": "날개–내벽 간격이 드럼 하단으로 갈수록 줄어드는 관계가 있다",
+      "intrinsic": "¶[0016], 도3 간격 g1>g2",
+      "prosecution": "1차 거절(D1) 극복 위해 보정 추가 — 균등 주장 시 금반언 점검 대상",
+      "core": true
+    },
+    {
+      "id": "1d",
+      "text": "a plurality of ribs formed on the inner wall at an inclination of 5 to 15 degrees relative to a rotation axis of the screw",
+      "type": "numeric",
+      "proposition": "내벽에 스크루 회전축 대비 5~15° 경사의 리브가 둘 이상 있다",
+      "intrinsic": "¶[0018] 측정 기준: 회전축 투영선",
+      "prosecution": "특이사항 없음",
+      "core": true
+    },
+    {
+      "id": "1e",
+      "text": "means for rotating the screw at a speed of 40 to 60 rpm",
+      "type": "mpf",
+      "proposition": "스크루를 40~60rpm으로 회전시키는 기능 — 명세서의 대응 구조와 그 균등물로 한정",
+      "sam": "¶[0021], 도4: BLDC 모터 M1 + 감속기어 G1(감속비 1:30)",
+      "construction": "§112(f) 기능식: 기능=40~60rpm 회전, 구조=모터+감속기어",
+      "intrinsic": "¶[0021]",
+      "prosecution": "특이사항 없음"
+    },
+    {
+      "id": "1f",
+      "text": "a controller configured to select either a juice mode or a smoothie mode in response to an operator input",
+      "type": "alternative",
+      "proposition": "제어부가 사용자 입력에 따라 착즙·스무디 모드 중 하나를 골라 작동하도록 설계돼 있다(배타적 선택)",
+      "construction": "'either…or' = 둘 중 하나(명세서 ¶[0024]·출원경과 의견서)",
+      "intrinsic": "¶[0024], 도5 흐름도 S3",
+      "prosecution": "의견서에서 '사용자 선택 단일 모드'를 강조",
+      "core": true
+    },
+    {
+      "id": "1g",
+      "text": "a juice outlet formed at the lower end of the drum, without a mesh filter between the drum and the juice outlet",
+      "type": "negative",
+      "proposition": "드럼 하단에 착즙구가 있고, 드럼과 착즙구 사이에 망 필터가 없다",
+      "intrinsic": "¶[0027]",
+      "prosecution": "특이사항 없음",
+      "core": true
+    }
+  ],
+  "references": [
+    {
+      "id": "D1",
+      "pub": "KR-가상-001",
+      "title": "녹즙기(가상)",
+      "date": "2019-06-10",
+      "kind": "patent",
+      "applicant": "가상전자 갑",
+      "same_field": true,
+      "same_problem": true,
+      "note": "1차 거절이유에서 심사관이 인용한 문헌",
+      "map": {
+        "1pre": {
+          "grade": "●",
+          "pin": "¶[0002]",
+          "text": "\"녹즙기\"",
+          "why": "녹즙기도 즙을 짜는 착즙기의 한 종류이기"
+        },
+        "1a": {
+          "grade": "●",
+          "pin": "¶[0010], 도1 부호 100",
+          "text": "\"몸체 100\"이 구동부를 내장",
+          "why": "구성품을 수용·지지하는 기능이 같기"
+        },
+        "1b": {
+          "grade": "●",
+          "pin": "¶[0011], 도1 부호 200·210",
+          "text": "\"케이스 200\"은 내주면 210을 가진다",
+          "why": "몸체 안에서 스크루를 둘러싸는 위치·구조가 같기"
+        },
+        "1c": {
+          "grade": "●",
+          "pin": "¶[0012], 도2 부호 300",
+          "text": "\"스크루 300\"이 케이스 중심에서 회전",
+          "why": "문언이 같기"
+        },
+        "1c.1": {
+          "grade": "●",
+          "pin": "¶[0013], 도2 부호 310",
+          "text": "\"나선 310\" 세 줄",
+          "why": "복수는 둘 이상이기"
+        },
+        "1c.2": {
+          "grade": "○",
+          "pin": "",
+          "text": "",
+          "note": "간극 변화 기재 없음"
+        },
+        "1d": {
+          "grade": "◐",
+          "pin": "¶[0014], 도3 부호 220",
+          "text": "\"돌기 220\"은 회전축과 평행",
+          "note": "경사 0° — 5~15° 범위 밖"
+        },
+        "1e": {
+          "grade": "◐",
+          "pin": "¶[0015]",
+          "text": "\"저속 모터\"",
+          "note": "회전수·감속 구조 기재 없음"
+        },
+        "1f": {
+          "grade": "○",
+          "pin": "",
+          "text": "",
+          "note": "전원 버튼만, 모드 전환 없음(¶[0018])"
+        },
+        "1g": {
+          "grade": "○",
+          "pin": "",
+          "text": "",
+          "note": "망 필터 230 있음(¶[0016])",
+          "teaches_away": "D1 ¶[0016]은 망 필터 230이 '찌꺼기 혼입을 막는 필수 구성'이라고 설명",
+          "ta_kind": "principle"
+        }
+      }
+    },
+    {
+      "id": "D2",
+      "pub": "US-가상-002",
+      "title": "Screw press juicer(가상)",
+      "date": "2018-09-04",
+      "kind": "patent",
+      "applicant": "Virtual Appliance Inc.",
+      "same_field": true,
+      "same_problem": true,
+      "map": {
+        "1pre": {
+          "grade": "●",
+          "pin": "col.1:10-12",
+          "text": "\"juicer\"",
+          "why": "같은 기기이기"
+        },
+        "1a": {
+          "grade": "●",
+          "pin": "col.3:5-8, Fig.1 부호 10",
+          "text": "\"base 10\"",
+          "why": "구성품을 수용하는 외장이기"
+        },
+        "1b": {
+          "grade": "●",
+          "pin": "col.3:9-15, Fig.1 부호 20",
+          "text": "\"bowl 20 with inner surface 22\"",
+          "why": "스크루를 둘러싸는 내면을 가진 통이기"
+        },
+        "1c": {
+          "grade": "●",
+          "pin": "col.3:16-20, Fig.2 부호 30",
+          "text": "\"auger 30\"",
+          "why": "통 안에서 회전하는 스크루이기"
+        },
+        "1c.1": {
+          "grade": "●",
+          "pin": "col.3:21-25, Fig.2 부호 32",
+          "text": "\"two helical flights 32\"",
+          "why": "나선 날개가 둘이기"
+        },
+        "1c.2": {
+          "grade": "●",
+          "pin": "col.4:12-20, Fig.3 gap G",
+          "text": "\"gap G narrows toward the outlet end\"",
+          "why": "배출단이 하단에 있어 같은 방향의 감소 관계이기"
+        },
+        "1d": {
+          "grade": "○",
+          "pin": "",
+          "text": "",
+          "note": "내면 리브 기재 없음"
+        },
+        "1e": {
+          "grade": "●",
+          "pin": "col.5:3-15, Fig.4 부호 40·42",
+          "text": "\"motor 40 with reduction gear 42, output 45 rpm\"",
+          "why": "45rpm이 40~60rpm 범위 안이고 구조가 같기",
+          "sam_match": "명세서 대응 구조(BLDC 모터+감속기어 1:30)와 D2의 모터 40+감속기 42가 같은 구성 원리로 같은 기능(45rpm)을 수행한다."
+        },
+        "1f": {
+          "grade": "○",
+          "pin": "",
+          "text": "",
+          "note": "모드 선택 없음"
+        },
+        "1g": {
+          "grade": "◐",
+          "pin": "col.5:40-45",
+          "text": "\"coarse strainer 50\"",
+          "note": "거친 거름망 — 망 필터 없음과 다름"
+        }
+      }
+    },
+    {
+      "id": "D3",
+      "pub": "KR-가상-003",
+      "title": "필터 없는 수직형 착즙기(가상)",
+      "date": "2020-01-20",
+      "kind": "patent",
+      "applicant": "가상가전 을",
+      "same_field": true,
+      "same_problem": true,
+      "map": {
+        "1pre": {
+          "grade": "●",
+          "pin": "¶[0001]",
+          "text": "\"수직형 착즙기\"",
+          "why": "같은 기기이기"
+        },
+        "1a": {
+          "grade": "●",
+          "pin": "¶[0011], 도1 부호 1",
+          "text": "\"본체 1\"",
+          "why": "구성품을 수용하는 외장이기"
+        },
+        "1b": {
+          "grade": "●",
+          "pin": "¶[0012], 도1 부호 2·21",
+          "text": "\"착즙통 2\"는 내벽 21을 가진다",
+          "why": "본체 안에 있는 내벽을 가진 통이기"
+        },
+        "1c": {
+          "grade": "●",
+          "pin": "¶[0013], 도2 부호 3",
+          "text": "\"스크루 3\"이 착즙통 안에서 회전",
+          "why": "문언과 배치가 같기"
+        },
+        "1c.1": {
+          "grade": "●",
+          "pin": "¶[0013], 도2 부호 31",
+          "text": "\"나선날 31\" 두 줄",
+          "why": "복수는 둘 이상이기"
+        },
+        "1c.2": {
+          "grade": "○",
+          "pin": "",
+          "text": "",
+          "note": "날–내벽 간격 일정(¶[0014])"
+        },
+        "1d": {
+          "grade": "●",
+          "pin": "¶[0016], 도3 부호 22",
+          "text": "\"분쇄 리브 22\"는 회전축에 대해 약 8° 기울어져 있다",
+          "why": "8°가 5~15° 범위 안이고 측정 기준(회전축)이 같기"
+        },
+        "1e": {
+          "grade": "◐",
+          "pin": "¶[0018]",
+          "text": "\"모터 4\"가 저속으로 스크루를 회전",
+          "note": "회전수 미기재"
+        },
+        "1f": {
+          "grade": "○",
+          "pin": "",
+          "text": "",
+          "note": "단일 착즙 동작만 기재"
+        },
+        "1g": {
+          "grade": "●",
+          "pin": "¶[0020], 도3 부호 5",
+          "text": "\"배출구 5\"는 착즙통 하단에 있고 \"별도의 그물망 없이\" 즙을 배출",
+          "why": "하단 배출구가 있고 망 필터가 없다고 적혀 있기"
+        }
+      }
+    },
+    {
+      "id": "D4",
+      "pub": "KR-가상-004",
+      "title": "스무디 겸용 착즙기(가상)",
+      "date": "2021-06-01",
+      "kind": "patent",
+      "applicant": "가상전자 갑",
+      "same_field": true,
+      "same_problem": true,
+      "map": {
+        "1pre": {
+          "grade": "●",
+          "pin": "¶[0010]",
+          "text": "\"스무디 모드\" 버튼"
+        },
+        "1a": {
+          "grade": "●",
+          "pin": "¶[0010]",
+          "text": "\"스무디 모드\" 버튼"
+        },
+        "1b": {
+          "grade": "●",
+          "pin": "¶[0010]",
+          "text": "\"스무디 모드\" 버튼"
+        },
+        "1c": {
+          "grade": "●",
+          "pin": "¶[0010]",
+          "text": "\"스무디 모드\" 버튼"
+        },
+        "1c.1": {
+          "grade": "●",
+          "pin": "¶[0010]",
+          "text": "\"스무디 모드\" 버튼"
+        },
+        "1c.2": {
+          "grade": "●",
+          "pin": "¶[0010]",
+          "text": "\"스무디 모드\" 버튼"
+        },
+        "1d": {
+          "grade": "●",
+          "pin": "¶[0010]",
+          "text": "\"스무디 모드\" 버튼"
+        },
+        "1e": {
+          "grade": "●",
+          "pin": "¶[0010]",
+          "text": "\"스무디 모드\" 버튼"
+        },
+        "1f": {
+          "grade": "●",
+          "pin": "¶[0010]",
+          "text": "\"스무디 모드\" 버튼"
+        },
+        "1g": {
+          "grade": "●",
+          "pin": "¶[0010]",
+          "text": "\"스무디 모드\" 버튼"
+        }
+      }
+    }
+  ],
+  "cgk": [
+    {
+      "id": "K1",
+      "limitations": [
+        "1f"
+      ],
+      "status": "established",
+      "statement": "가정용 조리가전에서 사용자가 버튼·다이얼로 작동 모드(프로그램)를 골라 회전 속도·시간을 바꾸는 제어",
+      "evidence": [
+        {
+          "source": "교재 『가전기기 제어 입문』(가상, 2016)",
+          "type": "textbook",
+          "date": "2016-03-02",
+          "pin": "p.112-115, 그림 6-3",
+          "text": "\"모드 선택 스위치 입력에 따라 미리 저장한 구동 프로파일을 호출\""
+        },
+        {
+          "source": "블렌더 BX-100 사용설명서(가상, 2019)",
+          "type": "product",
+          "date": "2019-02-01",
+          "pin": "p.7 '스무디 모드'",
+          "text": "\"스무디 버튼을 누르면 고속·저속을 번갈아 작동\""
+        },
+        {
+          "source": "KR-가상-006(가상, 2018)",
+          "type": "patent",
+          "applicant": "가상주방 병",
+          "date": "2018-05-11",
+          "pin": "¶[0021], 도4",
+          "text": "\"사용자가 선택한 조리 모드에 따라 모터 속도 제어\""
+        }
+      ]
+    },
+    {
+      "id": "K2",
+      "limitations": [
+        "1c.2"
+      ],
+      "status": "established",
+      "statement": "스크루 프레스에서 배출 쪽으로 갈수록 날–벽 간격(유로)을 줄여 압축비를 높이는 설계",
+      "evidence": [
+        {
+          "source": "『식품기계 핸드북』(가상, 2015)",
+          "type": "handbook",
+          "date": "2015-09-01",
+          "pin": "p.233, 표 9-2",
+          "text": "\"압축비는 출구 쪽 유로 단면을 줄여 얻는다\""
+        },
+        {
+          "source": "D2 US-가상-002",
+          "type": "patent",
+          "applicant": "Virtual Appliance Inc.",
+          "date": "2018-09-04",
+          "pin": "col.4:12-30",
+          "text": "\"gap G narrows toward the outlet end\""
+        }
+      ]
+    },
+    {
+      "id": "K3",
+      "limitations": [
+        "1e"
+      ],
+      "status": "established",
+      "statement": "가정용 저속 착즙기의 스크루 회전수를 40~80rpm 정도로 두는 것",
+      "evidence": [
+        {
+          "source": "KR-가상-005(가상, 2017)",
+          "type": "patent",
+          "applicant": "가상전자 갑",
+          "date": "2017-08-30",
+          "pin": "¶[0009]",
+          "text": "\"스크루를 60rpm 내외로 회전\""
+        }
+      ]
+    }
+  ],
+  "combinations": [
+    {
+      "id": "C1",
+      "base": "D3",
+      "steps": [
+        {
+          "limitation": "1c.2",
+          "from": "D2",
+          "rationale": "MPEP 2143(G) 교시·제안·동기",
+          "motivation": "D2는 테이퍼 간극이 착즙률을 높인다고 밝히고, D3도 착즙률 향상을 과제로 삼아 같은 이점을 얻으려 적용할 이유가 있다",
+          "motivation_source": "D2 col.4:21-30; D3 ¶[0003]",
+          "expectation": "스크루 날 외경만 바꾸면 되는 형상 변경이고 D2가 같은 수직 구조에서 효과를 보였다(D2 Fig.3)"
+        },
+        {
+          "limitation": "1e",
+          "from": "D2",
+          "rationale": "MPEP 2143(B) 알려진 요소의 단순 치환",
+          "motivation": "D3는 저속 회전만 적고 회전수를 정하지 않아, 같은 분야 D2의 45rpm 감속 구동을 그대로 채택하는 것이 자연스럽다",
+          "motivation_source": "D3 ¶[0018]; D2 col.5:3-15; K3 KR-가상-005 ¶[0009]",
+          "expectation": "모터+감속기 조합은 D2에서 같은 용도로 작동이 확인됐다"
+        },
+        {
+          "limitation": "1f",
+          "from": "K1",
+          "rationale": "MPEP 2143(A)·(D) 알려진 기법의 적용",
+          "motivation": "기준일 전 조리가전 일반에 모드 선택 제어가 널리 쓰였고(K1), 스무디 수요에 맞춰 한 기기로 두 동작을 고르게 하려는 시장 요구가 있었다",
+          "motivation_source": "K1 교재 p.112-115; BX-100 사용설명서 p.7",
+          "expectation": "모드별 회전 프로파일 호출은 통상의 제어 회로로 구현할 수 있다(K1 그림 6-3)"
+        }
+      ],
+      "analogous": {
+        "D2": "같은 분야(수직 스크루 착즙기) — 대상 특허의 과제(착즙률·막힘)와 직접 관련"
+      }
+    },
+    {
+      "id": "C2",
+      "base": "D1",
+      "steps": [
+        {
+          "limitation": "1c.2",
+          "from": "D2",
+          "motivation": "D2의 테이퍼 간극으로 착즙률 향상",
+          "motivation_source": "D2 col.4:21-30",
+          "expectation": "형상 변경으로 적용 가능"
+        },
+        {
+          "limitation": "1d",
+          "from": "D3",
+          "motivation": "D3의 경사 리브가 분쇄를 돕는다",
+          "motivation_source": "D3 ¶[0016]",
+          "expectation": "내벽 금형 변경으로 적용 가능"
+        },
+        {
+          "limitation": "1e",
+          "from": "D2",
+          "motivation": "D2의 45rpm 감속 구동 채택",
+          "motivation_source": "D2 col.5:3-15",
+          "expectation": "같은 용도에서 작동 확인"
+        },
+        {
+          "limitation": "1f",
+          "from": "K1",
+          "motivation": "조리가전 일반의 모드 선택",
+          "motivation_source": "K1 교재 p.112-115",
+          "expectation": "통상의 제어 회로로 구현"
+        },
+        {
+          "limitation": "1g",
+          "from": "D3",
+          "motivation": "D3처럼 망을 없애 세척을 쉽게",
+          "motivation_source": "D3 ¶[0020]",
+          "expectation": "배출구 구조 변경"
+        }
+      ],
+      "analogous": {
+        "D2": "같은 분야(수직 스크루 착즙기) — 대상 특허의 과제(착즙률·막힘)와 직접 관련",
+        "D3": "같은 분야 — 대상 특허의 망 없는 배출 과제와 직접 관련"
+      }
+    }
+  ],
+  "secondary": {
+    "reviewed": true,
+    "items": [
+      {
+        "type": "commercial_success",
+        "fact": "JX-500 출시 18개월 판매 30만 대",
+        "source": "특허권자 제출 매출 자료 p.3",
+        "nexus": ""
+      },
+      {
+        "type": "unexpected_results",
+        "fact": "망 없는 구조에서 스무디 모드 사용 시 배출구 막힘률이 망 필터 제품의 1/5",
+        "source": "특허권자 시험보고서 표2",
+        "nexus": "막힘 감소는 [1g] 망 없음과 [1f] 모드 선택의 결합 조건에서 측정됐고, 시험 제품은 청구항 1의 모든 한정을 갖춘 시제품",
+        "coextensive": true
+      }
+    ]
+  },
+  "effects": {
+    "claimed": "망 없이 막힘을 줄이면서 착즙·스무디를 한 기기로 처리",
+    "evidence": "명세서 ¶[0030] 표1",
+    "remarkable": "unknown"
+  }
+}

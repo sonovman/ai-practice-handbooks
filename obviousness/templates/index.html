@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>진보성 판단 템플릿</title>
+<link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+<div class="bar"><div class="bar-in">
+  <a class="brand" href="../../">AI 실무 핸드북</a>
+  <div class="links"><a href="../">← 본문으로</a></div>
+</div></div>
+<div class="wrap">
+  <div class="eyebrow">핸드북 33 · 자료</div>
+  <h1>템플릿 내려받기</h1>
+  <p class="lead"><code>starter</code>에는 숨김 <code>.agents</code> 폴더가 있어 <a href="../downloads/obviousness-kit.zip" download>전체(ZIP)</a>로 받는 편이 확실합니다. 받은 뒤 <code>python tools/test_obviousness_check.py</code>로 29개 시험 통과를 먼저 확인하세요. <a href="../../claim-chart/templates/">30편</a>·<a href="../../claim-construction/templates/">31편</a> 키트와 함께 쓰거나, 아래 통합 키트 v2를 쓰면 분해 → 해석 → 진보성 → 차트가 이어집니다. 예시는 모두 가상입니다.</p>
+
+  <h2>바로 붙여 넣는 프롬프트</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>파일</th><th>용도</th></tr></thead>
+    <tbody>
+      <tr><th><a href="starter/prompts/01-baseline.md">01-baseline.md</a></th><td>기준일·통상의 기술자·절차·해석</td></tr>
+      <tr><th><a href="starter/prompts/02-map-classify.md">02-map-classify.md</a></th><td>문헌별 ●◐○ 대비와 A/B/C/X 분류</td></tr>
+      <tr><th><a href="starter/prompts/03-cgk-research.md">03-cgk-research.md</a></th><td>차이점마다 기준일 기술상식 조사</td></tr>
+      <tr><th><a href="starter/prompts/04-combine.md">04-combine.md</a></th><td>결합 논리·2차적 고려사항·효과</td></tr>
+      <tr><th><a href="starter/prompts/05-chart-report.md">05-chart-report.md</a></th><td>30편 진보성 차트·보고</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>웹 앱 업로드용 스킬 (upload)</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>스킬</th><th>Claude · ChatGPT</th><th>Copilot 등</th><th>Gemini · 내용 보기</th></tr></thead>
+    <tbody>
+      <tr><th>obviousness</th><td><a href="upload/obviousness.zip" download>obviousness.zip</a></td><td><a href="upload/obviousness-flat.zip" download>flat.zip</a></td><td><a href="upload/obviousness/SKILL.md">SKILL.md</a></td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>작업 폴더 (starter)</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>파일</th><th>내용</th></tr></thead>
+    <tbody>
+      <tr><th><a href="starter/AGENTS.md">AGENTS.md</a> · <a href="starter/.agents/rules/obviousness.md">.agents/rules/obviousness.md</a></th><td>항상 적용 규칙, 진보성 작업 흐름</td></tr>
+      <tr><th><a href="starter/.agents/skills/obviousness/SKILL.md">obviousness/SKILL.md</a></th><td>먼저 정할 것·절차·하지 말 것</td></tr>
+      <tr><th><a href="starter/.agents/skills/obviousness/references/procedure.md">procedure.md</a> · <a href="starter/.agents/skills/obviousness/references/cgk-research.md">cgk-research.md</a></th><td>A·B·C 분류와 차이점 중심 절차 · 기준일 기술상식 조사법과 증거 강도</td></tr>
+      <tr><th><a href="starter/.agents/skills/obviousness/references/gated-review.md">gated-review.md</a></th><td>관문식 검토 순서, 처음 접근→바꾼 점, 사후적 고찰 감사</td></tr>
+      <tr><th><a href="starter/.agents/skills/obviousness/references/doctrine-us.md">doctrine-us.md</a> · <a href="starter/.agents/skills/obviousness/references/doctrine-kr.md">doctrine-kr.md</a> · <a href="starter/.agents/skills/obviousness/references/epo-comparison.md">epo-comparison.md</a></th><td>미국 · 한국 · 유럽(EPO·UPC) 법리</td></tr>
+      <tr><th><a href="starter/.agents/skills/obviousness/references/schema.md">schema.md</a> · <a href="starter/.agents/skills/obviousness/references/platform-setup.md">platform-setup.md</a></th><td>입력 형식·점검 코드 O01~O25 · 플랫폼 설치</td></tr>
+      <tr><th><a href="starter/tools/obviousness_check.py" download>obviousness_check.py</a> · <a href="starter/tools/chart_lint.py" download>chart_lint.py</a></th><td>분류·차이점·기술상식·결합 점검, 진보성 차트 변환 · 30편 차트 점검기</td></tr>
+      <tr><th><a href="starter/tools/test_obviousness_check.py" download>test_obviousness_check.py</a> · <a href="starter/build_upload.py" download>build_upload.py</a></th><td>시험 29개 · 업로드 묶음 만들기</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>시범 자료 (직접 실행 결과, 가상 데이터)</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>파일</th><th>내용</th></tr></thead>
+    <tbody>
+      <tr><th><a href="starter/sample/obviousness.json">obviousness.json</a></th><td>30편 청구항 1 · 문헌 D1~D4 · 기술상식 K1~K3 · 결합 C1·C2</td></tr>
+      <tr><th><a href="starter/sample/obviousness_report.md">obviousness_report.md</a></th><td>점검 결과(D3=B, D2=C, D1=-, D4=X · 오류 0 · 경고 8)</td></tr>
+      <tr><th><a href="starter/sample/chart_103_C1.json">chart_103_C1.json</a> · <a href="starter/sample/chart_103_C1_lint.md">chart_103_C1_lint.md</a></th><td>C1을 바꾼 30편 진보성 차트 · chart_lint 오류 0</td></tr>
+      <tr><th><a href="starter/sample/test-output.txt">test-output.txt</a></th><td>시험 29개 통과 로그</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2 id="suite">통합 오케스트레이터 v2 (30~33편)</h2>
+  <p><a href="../downloads/claim-suite-kit.zip" download>claim-suite-kit.zip</a> 하나에 여섯 스킬·도구 8종·시험 90개·예시 사건 2개(FTO, 무효·진보성)가 들어 있습니다.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>파일</th><th>내용</th></tr></thead>
+    <tbody>
+      <tr><th><a href="suite/PROJECT_INSTRUCTIONS.md">PROJECT_INSTRUCTIONS.md</a></th><td>프로젝트 지침 칸에 붙여 넣는 통합 지침(v2)</td></tr>
+      <tr><th><a href="suite/AGENTS.md">AGENTS.md</a> · <a href="suite/.agents/rules/claim-suite.md">.agents/rules/claim-suite.md</a></th><td>Antigravity·Code용 항상 규칙 · 요청 시 규칙</td></tr>
+      <tr><th><a href="suite/.agents/skills/claim-suite/SKILL.md">claim-suite/SKILL.md</a></th><td>지휘 스킬: 목적별 순서·관문 G1~G6·넘겨주기</td></tr>
+      <tr><th><a href="suite/.agents/skills/claim-suite/references/routing.md">routing.md</a> · <a href="suite/.agents/skills/claim-suite/references/handoffs.md">handoffs.md</a> · <a href="suite/.agents/skills/claim-suite/references/platform-setup.md">platform-setup.md</a></th><td>라우팅·되돌아가기 · 파일 계약 · 프로젝트별 설정</td></tr>
+      <tr><th><a href="suite/tools/suite_status.py" download>suite_status.py</a> · <a href="suite/tools/test_suite_status.py" download>test_suite_status.py</a></th><td>사건 상태·관문 점검, 다음 할 일 안내 · 시험 12개</td></tr>
+      <tr><th><a href="suite/cases/invalidity-example/case.json">cases/invalidity-example</a> · <a href="suite/cases/example/case.json">cases/example</a></th><td>무효·진보성 예시 사건 · FTO 예시 사건</td></tr>
+      <tr><th><a href="suite/sample/status_invalidity_example.md">status_invalidity_example.md</a> · <a href="suite/sample/test-output.txt">test-output.txt</a></th><td>무효 예시 사건 실행 결과 · 시험 90개 통과 로그</td></tr>
+      <tr><th>prompts: <a href="suite/prompts/00-start.md">00 시작</a> · <a href="suite/prompts/01-next.md">01 다음</a> · <a href="suite/prompts/02-gate-review.md">02 관문</a> · <a href="suite/prompts/03-change.md">03 변경</a> · <a href="suite/prompts/04-report.md">04 보고</a> · <a href="suite/prompts/05-obviousness.md">05 진보성</a></th><td>프로젝트에서 쓰는 요청문</td></tr>
+    </tbody>
+  </table></div>
+  <div class="tbl"><table>
+    <thead><tr><th>업로드 묶음</th><th>Claude · ChatGPT</th><th>Copilot 등</th></tr></thead>
+    <tbody>
+      <tr><th>claim-suite (지휘)</th><td><a href="upload-suite/claim-suite.zip" download>claim-suite.zip</a></td><td><a href="upload-suite/claim-suite-flat.zip" download>flat.zip</a></td></tr>
+      <tr><th>claim-decompose</th><td><a href="upload-suite/claim-decompose.zip" download>zip</a></td><td><a href="upload-suite/claim-decompose-flat.zip" download>flat.zip</a></td></tr>
+      <tr><th>claim-construe</th><td><a href="upload-suite/claim-construe.zip" download>zip</a></td><td><a href="upload-suite/claim-construe-flat.zip" download>flat.zip</a></td></tr>
+      <tr><th>claim-chart</th><td><a href="upload-suite/claim-chart.zip" download>zip</a></td><td><a href="upload-suite/claim-chart-flat.zip" download>flat.zip</a></td></tr>
+      <tr><th>obviousness</th><td><a href="upload-suite/obviousness.zip" download>zip</a></td><td><a href="upload-suite/obviousness-flat.zip" download>flat.zip</a></td></tr>
+      <tr><th>design-around (FTO일 때)</th><td><a href="upload-suite/design-around.zip" download>zip</a></td><td><a href="upload-suite/design-around-flat.zip" download>flat.zip</a></td></tr>
+    </tbody>
+  </table></div>
+</div>
+</body>
+</html>

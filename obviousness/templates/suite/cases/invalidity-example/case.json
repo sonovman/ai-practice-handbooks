@@ -1,0 +1,13 @@
+{
+  "title": "가상 착즙기 특허 A — 무효심판 진보성 공격(교육용 예시)",
+  "purpose": "invalidity",
+  "forum": "us+kr",
+  "patent": "가상특허 A",
+  "claims": [1],
+  "priority_date": "2021-03-15",
+  "target": "D1~D4 선행문헌(가상)",
+  "ledger_approved": true,
+  "human_signoff": false,
+  "obviousness_combo": "C1",
+  "note": "purpose: infringement | invalidity | obviousness | fto | design-around | construction"
+}

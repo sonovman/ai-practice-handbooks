@@ -1,0 +1,14 @@
+== tools/test_apply_to_ledger.py
+apply_to_ledger: 6개 시험 통과
+== tools/test_chart_lint.py
+chart_lint·render_chart: 12개 시험 통과
+== tools/test_claim_parse.py
+claim_parse: 8개 시험 통과
+== tools/test_construe_check.py
+construe_check: 10개 시험 통과
+== tools/test_design_around_eval.py
+design_around_eval: 13개 시험 통과
+== tools/test_obviousness_check.py
+OK
+== tools/test_suite_status.py
+suite_status: 12개 시험 통과

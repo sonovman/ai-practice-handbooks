@@ -565,5 +565,23 @@ window.CATALOG = [
       { label: "템플릿 내려받기", href: "design-around/templates/" },
       { label: "통합 오케스트레이터", href: "design-around/#s10" }
     ]
+  },
+  {
+    id: "obviousness",
+    no: "33",
+    category: "IP 실무",
+    title: "진보성(비자명성) 판단 — 절차·심리 기준·판단 방법",
+    subtitle: "기준일 기술상식을 먼저, 선행문헌은 A·B·C로 — 최근접 문헌과의 차이점 중심 판단",
+    summary: "미국 §103 실무를 기준으로 한국 제29조 제2항 법리를 함께 적었습니다. 선행문헌을 신규성 부정(A)·최근접(B)·보조(C)로 나누고, B와의 차이점마다 기준일 당시 기술상식을 증거로 조사한 뒤 결합 동기·성공 기대·저해·2차적 고려사항을 점검합니다. 점검 도구와 30편 진보성 차트 변환, 30~33편 통합 오케스트레이터 v2를 함께 담았습니다.",
+    reader: "거절이유 대응·무효심판·IPR을 준비하는 변리사·특허 실무자, 기업 IP 담당자, 입문자",
+    version: "1.0",
+    date: "2026-11-10",
+    length: "읽기 약 30분",
+    status: "published",
+    links: [
+      { label: "화면으로 읽기", href: "obviousness/", primary: true },
+      { label: "템플릿 내려받기", href: "obviousness/templates/" },
+      { label: "통합 오케스트레이터 v2", href: "obviousness/#s10" }
+    ]
   }
 ];
