@@ -1,0 +1,27 @@
+{
+  "roles": {
+    "head": "claude",
+    "builder": "agy",
+    "reviewer": "codex"
+  },
+  "vendors": {
+    "head": "Anthropic",
+    "builder": "Google",
+    "reviewer": "OpenAI"
+  },
+  "level": "OK",
+  "issues": [],
+  "failover": {
+    "head": [
+      "codex",
+      "agy"
+    ],
+    "builder": [
+      "codex",
+      "claude"
+    ],
+    "reviewer": [
+      "claude"
+    ]
+  }
+}

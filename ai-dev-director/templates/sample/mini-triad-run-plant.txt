@@ -1,0 +1,5 @@
+[통과] 격리 작업본: D:/work/demo/.mini_triad/20261110-085226-0ef920
+[통과] BUILDER: 종료 코드 0
+[실패] 스코프 가드: ["허용 경로 밖 변경: .mcp.json", "바뀐 파일 3개 > 상한 2개"]
+최종 판정: FAIL  보고서: D:/work/demo/.mini_triad/20261110-085226-0ef920.report.json
+exit=2

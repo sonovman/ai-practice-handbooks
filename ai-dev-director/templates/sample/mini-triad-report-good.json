@@ -1,0 +1,46 @@
+{
+  "run_id": "20261110-085225-cec395",
+  "worktree": "D:/work/demo/.mini_triad/20261110-085225-cec395",
+  "branch": "mini-triad/20261110-085225-cec395",
+  "steps": [
+    {
+      "step": "격리 작업본",
+      "ok": true,
+      "detail": "D:/work/demo/.mini_triad/20261110-085225-cec395"
+    },
+    {
+      "step": "BUILDER",
+      "ok": true,
+      "detail": "종료 코드 0"
+    },
+    {
+      "step": "스코프 가드",
+      "ok": true,
+      "detail": [
+        "src/calc.py",
+        "tests/test_calc.py"
+      ]
+    },
+    {
+      "step": "반영 관문",
+      "ok": true,
+      "detail": "PASS"
+    },
+    {
+      "step": "테스트",
+      "ok": true,
+      "detail": "종료 코드 0"
+    },
+    {
+      "step": "REVIEWER",
+      "ok": true,
+      "detail": "PASS"
+    },
+    {
+      "step": "작업본 커밋",
+      "ok": true,
+      "detail": "브랜치 mini-triad/20261110-085225-cec395 — 원본 반영은 사람이: git merge mini-triad/20261110-085225-cec395"
+    }
+  ],
+  "verdict": "PASS"
+}

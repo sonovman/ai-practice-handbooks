@@ -1,0 +1,14 @@
+# AI DEV DIRECTOR config.yaml — 처음 몇 번 돌릴 때 바꿔 둘 줄만 모았습니다.
+# 이 파일을 통째로 덮어쓰지 말고, 원본 config.yaml에서 같은 이름의 줄만 고치세요.
+
+autonomy:
+  auto_apply: off          # 기본 on_pass → off. 결과는 작업본에서 확인하고 직접 반영
+  head_proxy: true         # 그대로 두되, 사람 결정 항목(결제·자격증명·비가역)은 항상 멈춤
+  max_steps: 2             # 첫 미션은 짧게(quick 프로필과 같음)
+
+verification:
+  test_command: "python -m pytest -q"   # 내 프로젝트의 실제 테스트 명령으로
+
+# 외부 발주(솔로몬)를 쓰지 않으면 허용 루트를 비워 둡니다.
+solomon:
+  allowed_roots: []

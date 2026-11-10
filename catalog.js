@@ -496,5 +496,22 @@ window.CATALOG = [
       { label: "화면으로 읽기", href: "prior-art-search/", primary: true },
       { label: "템플릿 내려받기", href: "prior-art-search/templates/" }
     ]
+  },
+  {
+    id: "ai-dev-director",
+    no: "29",
+    category: "개발 도구",
+    title: "AI 세 개를 한 팀으로 — AI DEV DIRECTOR 점검·설치·운용",
+    subtitle: "Claude Code·Codex·Antigravity를 지휘·구현·검수로 나눠 서로 검수하게",
+    summary: "세 구독 CLI를 HEAD·BUILDER·REVIEWER로 나누는 로컬 오케스트레이터를 직접 받아 보안을 점검하고 시험을 돌렸습니다. 격리 작업본·스코프 가드·fail-closed 검수의 장점과, 자동 반영 기본값·AI 설정 파일 통과·AI가 쓴 코드 실행 같은 주의점을 점검 도구와 함께 정리하고, 설치·LLM 연동·네 AI 앱 스킬 운용·Antigravity 구축까지 초보자용 단계별로 담았습니다.",
+    reader: "구독 AI 두 개 이상으로 AI 코딩을 더 믿을 수 있게 돌리고 싶은 실무자, 코딩 입문자",
+    version: "1.0",
+    date: "2026-11-10",
+    length: "읽기 약 25분",
+    status: "published",
+    links: [
+      { label: "화면으로 읽기", href: "ai-dev-director/", primary: true },
+      { label: "템플릿 내려받기", href: "ai-dev-director/templates/" }
+    ]
   }
 ];

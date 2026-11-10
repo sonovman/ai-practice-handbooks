@@ -1,0 +1,9 @@
+[통과] 격리 작업본: D:/work/demo/.mini_triad/20261110-085225-cec395
+[통과] BUILDER: 종료 코드 0
+[통과] 스코프 가드: ["src/calc.py", "tests/test_calc.py"]
+[통과] 반영 관문: PASS
+[통과] 테스트: 종료 코드 0
+[통과] REVIEWER: PASS
+[통과] 작업본 커밋: 브랜치 mini-triad/20261110-085225-cec395 — 원본 반영은 사람이: git merge mini-triad/20261110-085225-cec395
+최종 판정: PASS  보고서: D:/work/demo/.mini_triad/20261110-085225-cec395.report.json
+exit=0

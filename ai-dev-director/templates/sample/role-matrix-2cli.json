@@ -1,0 +1,27 @@
+{
+  "roles": {
+    "head": "claude",
+    "builder": "claude",
+    "reviewer": "codex"
+  },
+  "vendors": {
+    "head": "Anthropic",
+    "builder": "Anthropic",
+    "reviewer": "OpenAI"
+  },
+  "level": "OK",
+  "issues": [
+    "HEAD와 BUILDER가 같은 회사입니다 — 허용되지만 계획 오류를 같이 놓칠 수 있습니다."
+  ],
+  "failover": {
+    "head": [
+      "codex"
+    ],
+    "builder": [
+      "codex"
+    ],
+    "reviewer": [
+      "사람 검수(대체 REVIEWER 없음)"
+    ]
+  }
+}

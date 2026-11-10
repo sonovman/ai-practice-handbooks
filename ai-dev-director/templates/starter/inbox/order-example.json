@@ -1,0 +1,8 @@
+{
+  "goal": "src/calc.py에 add(a, b)를 만들고 tests/test_calc.py에 테스트를 추가한다",
+  "allowed_paths": ["src/calc.py", "tests/test_calc.py"],
+  "max_files": 2,
+  "acceptance": ["add(1, 2) == 3", "기존 테스트를 지우거나 약하게 바꾸지 않는다"],
+  "tests": "python -m pytest -q",
+  "human_required": []
+}

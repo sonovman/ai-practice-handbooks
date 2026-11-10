@@ -1,0 +1,26 @@
+{
+  "run_id": "20261110-085226-0ef920",
+  "worktree": "D:/work/demo/.mini_triad/20261110-085226-0ef920",
+  "branch": "mini-triad/20261110-085226-0ef920",
+  "steps": [
+    {
+      "step": "격리 작업본",
+      "ok": true,
+      "detail": "D:/work/demo/.mini_triad/20261110-085226-0ef920"
+    },
+    {
+      "step": "BUILDER",
+      "ok": true,
+      "detail": "종료 코드 0"
+    },
+    {
+      "step": "스코프 가드",
+      "ok": false,
+      "detail": [
+        "허용 경로 밖 변경: .mcp.json",
+        "바뀐 파일 3개 > 상한 2개"
+      ]
+    }
+  ],
+  "verdict": "FAIL"
+}
